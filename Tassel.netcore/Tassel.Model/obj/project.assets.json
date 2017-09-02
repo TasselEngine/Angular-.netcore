@@ -4746,19 +4746,6 @@
         "runtime": {
           "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll": {}
         }
-      },
-      "Tassel.Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.0",
-        "dependencies": {
-          "Microsoft.AspNetCore.All": "2.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Tassel.Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Tassel.Model.dll": {}
-        }
       }
     }
   },
@@ -12537,18 +12524,12 @@
         "windowsazure.storage.8.1.4.nupkg.sha512",
         "windowsazure.storage.nuspec"
       ]
-    },
-    "Tassel.Model/1.0.0": {
-      "type": "project",
-      "path": "../Tassel.Model/Tassel.Model.csproj",
-      "msbuildProject": "../Tassel.Model/Tassel.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Microsoft.AspNetCore.All >= 2.0.0",
-      "Microsoft.NETCore.App >= 2.0.0",
-      "Tassel.Model >= 1.0.0"
+      "Microsoft.NETCore.App >= 2.0.0"
     ]
   },
   "packageFolders": {
@@ -12561,11 +12542,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Service\\Tassel.Service.csproj",
-      "projectName": "Tassel.Service",
-      "projectPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Service\\Tassel.Service.csproj",
+      "projectUniqueName": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Model\\Tassel.Model.csproj",
+      "projectName": "Tassel.Model",
+      "projectPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Model\\Tassel.Model.csproj",
       "packagesPath": "C:\\Users\\miao1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Service\\obj\\",
+      "outputPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Model\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12583,11 +12564,7 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "projectReferences": {
-            "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Model\\Tassel.Model.csproj": {
-              "projectPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Model\\Tassel.Model.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -12600,6 +12577,7 @@
       "netcoreapp2.0": {
         "dependencies": {
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "2.0.0",
             "autoReferenced": true

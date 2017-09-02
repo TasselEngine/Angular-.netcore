@@ -1,0 +1,6 @@
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.Model\bin\Debug\netcoreapp2.0\Tassel.Model.deps.json
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.Model\bin\Debug\netcoreapp2.0\Tassel.Model.dll
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.Model\obj\Debug\netcoreapp2.0\Tassel.Model.csprojResolveAssemblyReference.cache
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.Model\obj\Debug\netcoreapp2.0\Tassel.Model.csproj.CoreCompileInputs.cache
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.Model\obj\Debug\netcoreapp2.0\Tassel.Model.AssemblyInfoInputs.cache
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.Model\obj\Debug\netcoreapp2.0\Tassel.Model.AssemblyInfo.cs
