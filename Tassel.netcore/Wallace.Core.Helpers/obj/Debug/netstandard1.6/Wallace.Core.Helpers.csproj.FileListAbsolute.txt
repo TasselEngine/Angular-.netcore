@@ -1,0 +1,7 @@
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\bin\Debug\netstandard1.6\Wallace.Core.Helpers.deps.json
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\bin\Debug\netstandard1.6\Wallace.Core.Helpers.dll
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\bin\Debug\netstandard1.6\Wallace.Core.Helpers.pdb
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\obj\Debug\netstandard1.6\Wallace.Core.Helpers.AssemblyInfo.cs
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\obj\Debug\netstandard1.6\Wallace.Core.Helpers.dll
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\obj\Debug\netstandard1.6\Wallace.Core.Helpers.pdb
+C:\Users\miao1\Documents\Visual Studio 2017\Projects\Tassel.Engine\Wallace.Core.Helpers\obj\Debug\netstandard1.6\Wallace.Core.Helpers.csprojResolveAssemblyReference.cache
