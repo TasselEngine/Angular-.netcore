@@ -1,3 +1,4 @@
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { IdentityService } from './services/identity.service';
 import { RoutersModule } from './modules/routers/routers.module';
 import { SharedModule } from './modules/shared/shared.module';
@@ -19,6 +20,7 @@ import { RootComponent } from './modules/shared/components/root.component';
     RoutersModule,
     SharedModule,
     ExtensionsModule,
+    NgZorroAntdModule.forRoot()
   ],
   providers: [
     IdentityService

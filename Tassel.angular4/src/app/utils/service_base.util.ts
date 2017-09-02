@@ -7,8 +7,8 @@ import 'rxjs/add/operator/toPromise';
 export class AsyncableServiceBase {
 
     protected Delay = async (milisecond: number) => {
-        return new Promise<void>(() => setTimeout((one: any): void => {
-            one();
+        return new Promise<void>(() => setTimeout((owner: any): void => {
+            owner();
         }, milisecond));
     }
 
