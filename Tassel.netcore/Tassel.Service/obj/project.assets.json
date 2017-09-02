@@ -9666,11 +9666,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\miao1\\Documents\\Visual Studio 2017\\Projects\\Tassel.Engine\\Angular4+.net core\\Tassel.netcore\\Tassel.Service\\Tassel.Service.csproj",
+      "projectUniqueName": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Service\\Tassel.Service.csproj",
       "projectName": "Tassel.Service",
-      "projectPath": "C:\\Users\\miao1\\Documents\\Visual Studio 2017\\Projects\\Tassel.Engine\\Angular4+.net core\\Tassel.netcore\\Tassel.Service\\Tassel.Service.csproj",
+      "projectPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Service\\Tassel.Service.csproj",
       "packagesPath": "C:\\Users\\miao1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\miao1\\Documents\\Visual Studio 2017\\Projects\\Tassel.Engine\\Angular4+.net core\\Tassel.netcore\\Tassel.Service\\obj\\",
+      "outputPath": "C:\\Users\\miao1\\Documents\\GIT\\tassel.engine\\Angular-.netcore\\Tassel.netcore\\Tassel.Service\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\miao1\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -38,7 +38,7 @@ export class AsyncableApiServiceBase extends AsyncableServiceBase {
                 options: options,
                 type: type,
                 args: args
-            }, null]
+            }, null];
         }
     }
 
