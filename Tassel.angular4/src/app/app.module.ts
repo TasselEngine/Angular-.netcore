@@ -1,3 +1,4 @@
+import { ChartsModule } from 'ng2-charts';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { IdentityService } from './services/identity.service';
 import { RoutersModule } from './modules/routers/routers.module';
@@ -20,6 +21,7 @@ import { RootComponent } from './modules/shared/components/root.component';
     RoutersModule,
     SharedModule,
     ExtensionsModule,
+    ChartsModule,
     NgZorroAntdModule.forRoot()
   ],
   providers: [
