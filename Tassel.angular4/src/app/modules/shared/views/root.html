@@ -3,7 +3,7 @@
     <nz-header style="background-color:#fff">
       <div class="logo"></div>
       <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
-        <li nz-menu-item>nav 1</li>
+        <li nz-menu-item><a routerLink="/index" routerLinkActive="active">Index</a></li>
         <li nz-menu-item>nav 2</li>
         <li nz-menu-item>nav 3</li>
       </ul>
@@ -26,9 +26,9 @@
               </ul>
             </li>
             <li nz-submenu>
-              <span title><i class="anticon anticon-notification"></i>subnav 3</span>
+              <span title><i class="anticon anticon-notification"></i>Settings</span>
               <ul>
-                <li nz-menu-item>option9</li>
+                <li nz-menu-item><a routerLink="/settings" routerLinkActive="active">Overview</a></li>
               </ul>
             </li>
           </ul>

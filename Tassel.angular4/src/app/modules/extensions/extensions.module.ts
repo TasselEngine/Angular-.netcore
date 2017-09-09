@@ -1,4 +1,4 @@
-import { PaddingLRDirective } from './directives/padd_lr.directive';
+import { PaddingDirective } from './directives/padding.directive';
 import { FullContentDirective } from './directives/fullcontent.directive';
 import { FormatPipe } from './pipes/format.pipe';
 import { NgModule } from '@angular/core';
@@ -6,14 +6,14 @@ import { NgModule } from '@angular/core';
     declarations: [
         FormatPipe,
         FullContentDirective,
-        PaddingLRDirective
+        PaddingDirective
     ],
     imports: [],
     providers: [],
     exports: [
         FormatPipe,
         FullContentDirective,
-        PaddingLRDirective
+        PaddingDirective
     ],
 })
 export class ExtensionsModule { }
