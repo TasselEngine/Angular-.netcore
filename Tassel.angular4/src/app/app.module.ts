@@ -1,6 +1,7 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { IdentityService } from './services/identity.service';
+import { IdentityService } from './services/identity/identity.service';
 import { RoutersModule } from './modules/routers/routers.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { ExtensionsModule } from './modules/extensions/extensions.module';
@@ -22,6 +23,7 @@ import { RootComponent } from './modules/shared/components/root.component';
     SharedModule,
     ExtensionsModule,
     ChartsModule,
+    BrowserAnimationsModule,
     NgZorroAntdModule.forRoot()
   ],
   providers: [

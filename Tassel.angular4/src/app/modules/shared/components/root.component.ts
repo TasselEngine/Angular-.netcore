@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'tassel-root',
   templateUrl: './../views/root.html',
   styleUrls: ['./../styles/root.css']
 })

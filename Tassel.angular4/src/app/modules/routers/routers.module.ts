@@ -11,6 +11,8 @@ const mainRoutes: Routes = [
         RouterModule.forRoot(mainRoutes)
     ],
     providers: [],
-    exports: []
+    exports: [
+        RouterModule
+    ]
 })
 export class RoutersModule { }

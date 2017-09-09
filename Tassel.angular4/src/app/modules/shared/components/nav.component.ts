@@ -1,7 +1,7 @@
-import { IdentityService } from './../../../services/identity.service';
+import { IdentityService } from './../../../services/identity/identity.service';
 import { Component } from '@angular/core';
 @Component({
-    selector: 'app-nav',
+    selector: 'tassel-nav',
     templateUrl: './../views/nav.html',
     styleUrls: [
         './../styles/nav.css',

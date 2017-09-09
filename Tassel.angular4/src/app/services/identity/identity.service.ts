@@ -1,4 +1,4 @@
-import { AsyncableApiServiceBase } from './../utils/service_base.util';
+import { AsyncableApiServiceBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 

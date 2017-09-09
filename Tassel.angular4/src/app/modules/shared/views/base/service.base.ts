@@ -1,6 +1,6 @@
-import { IResponse, IError, APIResult } from './../model/interfaces/response.interface';
+import { IResponse, IError, APIResult } from './../../model/interfaces/response.interface';
 import { Http, RequestOptions } from '@angular/http';
-import { HttpType } from '../model/enums/response.enum';
+import { HttpType } from '../../model/enums/response.enum';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 

@@ -1,21 +1,45 @@
-<div style="width:800px;">
-  <div nz-row>
-    <div style="display: block;">
-      <canvas baseChart width="300" height="100" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-        [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-    </div>
-  </div>
-  <div nz-row style="margin-bottom: 10px">
-    <table class="table table-responsive table-condensed">
-      <tr>
-        <th *ngFor="let label of lineChartLabels">{{label}}</th>
-      </tr>
-      <tr *ngFor="let d of lineChartData">
-        <td *ngFor="let label of lineChartLabels; let j=index">{{showInt(d && d.data[j])}}</td>
-      </tr>
-    </table>
-    <div style="text-align:center">
-      <button nz-button [nzType]="'primary'" (click)="randomize()">CLICK</button>
-    </div>
-  </div>
+<div TasselFullContent>
+  <nz-layout TasselFullContent class="layout">
+    <nz-header style="background-color:#fff">
+      <div class="logo"></div>
+      <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
+        <li nz-menu-item>nav 1</li>
+        <li nz-menu-item>nav 2</li>
+        <li nz-menu-item>nav 3</li>
+      </ul>
+    </nz-header>
+
+    <nz-layout TasselFullContent style="padding:24px 48px;">
+      <nz-layout TasselFullContent style="padding:12px 0px;background:#fff;border-radius:4px;">
+        <nz-sider [nzWidth]="280" style="background:#fff">
+          <ul nz-menu [nzMode]="'inline'" style="height:100%">
+            <li nz-submenu>
+              <span title><i class="anticon anticon-user"></i>subnav 1</span>
+              <ul>
+                <li nz-menu-item>option1</li>
+              </ul>
+            </li>
+            <li nz-submenu>
+              <span title><i class="anticon anticon-laptop"></i>subnav 2</span>
+              <ul>
+                <li nz-menu-item>option5</li>
+              </ul>
+            </li>
+            <li nz-submenu>
+              <span title><i class="anticon anticon-notification"></i>subnav 3</span>
+              <ul>
+                <li nz-menu-item>option9</li>
+              </ul>
+            </li>
+          </ul>
+        </nz-sider>
+        <nz-content>
+          <div TasselFullContent>
+            <router-outlet></router-outlet>
+          </div>
+        </nz-content>
+      </nz-layout>
+    </nz-layout>
+
+  </nz-layout>
 </div>

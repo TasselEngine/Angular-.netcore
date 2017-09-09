@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 body{
-    padding-bottom: 20px;
+    padding-bottom: 0px;
+    margin-bottom:0px;
+}
+
+.full-content{
+    position: relative;
+    max-height:100%
 }
