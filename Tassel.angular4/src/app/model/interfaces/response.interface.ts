@@ -8,6 +8,7 @@ export interface IResponse {
 }
 
 export interface IError {
-    errors: any;
-    [peopName: string]: any;
+    errors?: any;
+    msg?: string;
+    [propName: string]: any;
 }

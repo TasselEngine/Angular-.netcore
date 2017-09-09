@@ -2,7 +2,7 @@ import { IError } from './../model/interfaces/response.interface';
 
 export class StrictResult<T>{
 
-    public static Success = <T>(status: number, content: T) => new StrictResult<T>(true, status, null, content).ToTuple();
+    public static Success = <T>(status: number, content: T, msg?: string) => new StrictResult<T>(true, status, { msg: msg }, content).ToTuple();
 
     public static Failed = <T>(error: IError) => new StrictResult<T>(false, -1, error, null).ToTuple();
 

@@ -21,7 +21,7 @@ export class AsyncableApiServiceBase extends AsyncableServiceBase {
     constructor(protected http: Http) { super(); }
 
     protected RequestInvokeAsync = async (url: string, options?: RequestOptions, params?: [HttpType, any]): Promise<APIResult> => {
-        const [type, args] = params || [undefined, undefined];
+        const [type, args] = params || [HttpType.GET, undefined];
         const action =
             type === HttpType.GET ? () => this.http.get(url, options) :
                 type === HttpType.POST ? () => this.http.post(url, args, options) :
