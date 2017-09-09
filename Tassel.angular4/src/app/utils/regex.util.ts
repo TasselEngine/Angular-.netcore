@@ -88,7 +88,7 @@ export class Regex {
 
     /**
      * Set keys of names pairs return
-     * 
+     *
      * @memberof Regex
      */
     public SetKeys = (...keys: string[]): Regex => {
