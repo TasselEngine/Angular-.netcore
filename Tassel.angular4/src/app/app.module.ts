@@ -1,3 +1,5 @@
+import { environment } from './../environments/environment';
+import { LOGGER_SERVICE_CONFIG, LoggerService } from './services/logger/logger.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -10,6 +12,12 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
 import { RootComponent } from './modules/shared/components/root.component';
+
+const config = new LOGGER_SERVICE_CONFIG();
+if (environment.production) {
+  config.Level = 1;
+  config.IsProduction = true;
+}
 
 @NgModule({
   declarations: [
@@ -27,7 +35,9 @@ import { RootComponent } from './modules/shared/components/root.component';
     NgZorroAntdModule.forRoot()
   ],
   providers: [
-    IdentityService
+    IdentityService,
+    { provide: LOGGER_SERVICE_CONFIG, useValue: { Level: config.Level, IsProduction: config.IsProduction } },
+    LoggerService
   ],
   bootstrap: [RootComponent]
 })
