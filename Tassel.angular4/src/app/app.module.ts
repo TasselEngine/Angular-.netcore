@@ -13,13 +13,6 @@ import { NgModule } from '@angular/core';
 
 import { RootComponent } from './modules/shared/components/root.component';
 
-let level = 0;
-let isProd = false;
-if (environment.production) {
-  level = 1;
-  isProd = true;
-}
-
 @NgModule({
   declarations: [
     RootComponent
@@ -36,9 +29,14 @@ if (environment.production) {
     NgZorroAntdModule.forRoot()
   ],
   providers: [
+    {
+      provide: LOGGER_SERVICE_CONFIG, useValue: {
+        Level: environment.production ? 1 : 0,
+        IsProduction: environment.production
+      }
+    },
+    LoggerService,
     IdentityService,
-    { provide: LOGGER_SERVICE_CONFIG, useValue: { Level: level, IsProduction: isProd } },
-    LoggerService
   ],
   bootstrap: [RootComponent]
 })

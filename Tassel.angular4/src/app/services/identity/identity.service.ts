@@ -19,6 +19,9 @@ export class IdentityService extends AsyncableApiServiceBase {
         this.UserName = 'wallace';
         this.logger = lgsrv.GetLogger(IdentityService).SetModule('service');
         this.logger.Debug(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
+        this.logger.Info(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
+        this.logger.Warn(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
+        this.logger.Error(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
     }
 
 }
