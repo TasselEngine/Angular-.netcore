@@ -22,11 +22,11 @@ export enum RegexType {
  */
 export class Regex {
 
-    private is_string: boolean;
-    private default_key = '__default';
+    private readonly is_string: boolean;
+    private readonly default_key = '__default';
 
-    private _types: string;
-    private _typeStrings: string[];
+    private readonly _types: string;
+    private readonly _typeStrings: string[];
     /**
      * Get the types string connected by ' | '
      *
@@ -44,7 +44,7 @@ export class Regex {
      */
     public get Types(): string[] { return this._typeStrings; }
 
-    private _pattern: RegExp;
+    private readonly _pattern: RegExp;
     /**
      * Get the regex pattern of this Regex instance in string format
      *
@@ -97,6 +97,15 @@ export class Regex {
     }
 
     /**
+     * Test the pattern if it is able to be matched.
+     *
+     * @memberof Regex
+     */
+    public Test = (target: string): boolean => {
+        return this._pattern.test(target);
+    }
+
+    /**
      * Return a strings collection of matched items
      *
      * @memberof Regex
@@ -111,10 +120,10 @@ export class Regex {
      * @memberof Regex
      */
     public Matches = (target: string, keys?: string[]): MapResult => {
-        const result = this.Exec(target);
+        const result = this.Exec(target) || [];
         if (this._keys || keys) {
             const coll: { [key: string]: string } = {};
-            coll[this.default_key] = (result || [undefined])[0];
+            coll[this.default_key] = result[0];
             (this._keys || keys).forEach((value, index) => {
                 coll[value] = result[index + 1];
             });
@@ -133,13 +142,23 @@ export class Regex {
 /**Read types to string[] from different type-styles */
 const regexTypeReader = (types: string | RegexType[]): string[] => {
     const strs = [] as string[];
-    for (const i of types) {
+    const nItems: string | RegexType[] = distinct(types);
+    for (const i of nItems) {
         strs.push(i === RegexType.Default ? 'Default' :
             i === RegexType.IgnoreCase ? 'IgnoreCase' :
                 i === RegexType.Multiline ? 'Multiline' :
                     'Global');
     }
     return strs;
+};
+
+/**A filter for singleton in array or a string */
+const distinct = (items: any[] | string): any[] | string => {
+    const arr = [] as any[];
+    for (const i of items) {
+        if (!arr.includes(i)) { arr.push(i); }
+    }
+    return arr;
 };
 
 
