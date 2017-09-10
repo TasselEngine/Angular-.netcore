@@ -1,5 +1,5 @@
+import { LoggerService, LOGGER_SERVICE_CONFIG } from 'ws-logger';
 import { environment } from './../environments/environment';
-import { LOGGER_SERVICE_CONFIG, LoggerService } from './services/logger/logger.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -13,10 +13,11 @@ import { NgModule } from '@angular/core';
 
 import { RootComponent } from './modules/shared/components/root.component';
 
-const config = new LOGGER_SERVICE_CONFIG();
+let level = 0;
+let isProd = false;
 if (environment.production) {
-  config.Level = 1;
-  config.IsProduction = true;
+  level = 1;
+  isProd = true;
 }
 
 @NgModule({
@@ -36,7 +37,7 @@ if (environment.production) {
   ],
   providers: [
     IdentityService,
-    { provide: LOGGER_SERVICE_CONFIG, useValue: { Level: config.Level, IsProduction: config.IsProduction } },
+    { provide: LOGGER_SERVICE_CONFIG, useValue: { Level: level, IsProduction: isProd } },
     LoggerService
   ],
   bootstrap: [RootComponent]
