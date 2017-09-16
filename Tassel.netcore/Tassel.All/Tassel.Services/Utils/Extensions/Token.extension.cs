@@ -36,6 +36,10 @@ namespace Tassel.Service.Utils.Extensionss {
 
     public class TokenDecoder {
 
+        public static TokenValidationParameters CreateParam(IConfiguration root) {
+            return CreateParam(CreateKey(root));
+        }
+
         public static TokenValidationParameters CreateParam(SecurityKey signingKey) {
             return new TokenValidationParameters {
                 ValidateIssuerSigningKey = true,
@@ -50,11 +54,11 @@ namespace Tassel.Service.Utils.Extensionss {
         }
 
         public static SecurityKey CreateKey(IConfigurationRoot root) {
-            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(root.GetSection("AccessKey")["Key"]));
+            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(root.GetSection("TokenAccess")["Key"]));
         }
 
         public static SecurityKey CreateKey(IConfiguration root) {
-            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(root.GetSection("AccessKey")["Key"]));
+            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(root.GetSection("TokenAccess")["Key"]));
         }
 
         public TokenDecoder(TokenValidationParameters param, string algorithm = SecurityAlgorithms.HmacSha256) {
@@ -116,6 +120,15 @@ namespace Tassel.Service.Utils.Extensionss {
             }
             return (validJwt, null);
         }
+    }
+
+    public class TokenProviderOptions {
+        public string Issuer { get; set; }
+        public string Audience { get; set; }
+        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(7);
+        public string RegisterPath { get; set; } = TokenProviderEntry.RegisterPath;
+        public string LoginPath { get; set; } = TokenProviderEntry.LoginPath;
+        public SigningCredentials SigningCredentials { get; set; }
     }
 
 }

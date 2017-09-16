@@ -24,15 +24,6 @@ namespace Tassel.Service.Utils.Middlewares {
             TokenProviderOptions opts) => builder.UseMiddleware<TokenCreatorMiddleware>(Options.Create(opts));
     }
 
-    public class TokenProviderOptions {
-        public string Issuer { get; set; }
-        public string Audience { get; set; }
-        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(7);
-        public string RegisterPath { get; set; } = TokenProviderEntry.RegisterPath;
-        public string LoginPath { get; set; } = TokenProviderEntry.LoginPath;
-        public SigningCredentials SigningCredentials { get; set; }
-    }
-
     enum ProviderType { Login, Register, Undefined }
 
     public class CustomJwtDataFormat : ISecureDataFormat<AuthenticationTicket> {
@@ -58,10 +49,10 @@ namespace Tassel.Service.Utils.Middlewares {
 
         private readonly RequestDelegate skip;
         private readonly TokenProviderOptions opts;
-        private IIdentityService<JwtSecurityToken, TokenProviderOptions> identity;
+        private IIdentityService<JwtSecurityToken, TokenProviderOptions, User> identity;
 
         public TokenCreatorMiddleware(
-            IIdentityService<JwtSecurityToken, TokenProviderOptions> isrv, 
+            IIdentityService<JwtSecurityToken, TokenProviderOptions, User> isrv, 
             RequestDelegate next, 
             IOptions<TokenProviderOptions> options) {
             identity = isrv;
@@ -93,7 +84,7 @@ namespace Tassel.Service.Utils.Middlewares {
             context.Response.ContentType = "application/json";
 
             model.Message = $"{type.ToString()} failed. ";
-            model.RedirectUrl = type == ProviderType.Register ? TokenProviderEntry.RegisterPath : TokenProviderEntry.LoginPath;
+            model["RedirectUrl"] = type == ProviderType.Register ? TokenProviderEntry.RegisterPath : TokenProviderEntry.LoginPath;
 
             var (user, error) = GetIdentity(username, password, type);
             if (error != null) {
@@ -103,7 +94,8 @@ namespace Tassel.Service.Utils.Middlewares {
             }
 
             model.Status = 200;
-            model.Message = model.RedirectUrl = null;
+            model.Message = null;
+            model["RedirectUrl"]  = null;
             model.Content = new {
                 token = new JwtSecurityTokenHandler().WriteToken(identity.GenerateToken(user, opts)),
                 name = user.UserName,

@@ -1,0 +1,17 @@
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\obj\Debug\netcoreapp2.0\Tassel.API.csproj.CoreCompileInputs.cache
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\obj\Debug\netcoreapp2.0\Tassel.API.AssemblyInfoInputs.cache
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\obj\Debug\netcoreapp2.0\Tassel.API.AssemblyInfo.cs
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.API.deps.json
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.API.runtimeconfig.json
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.API.runtimeconfig.dev.json
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.API.dll
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.API.pdb
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.Model.dll
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.Services.dll
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Wallace.Core.Helpers.dll
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.Services.pdb
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Tassel.Model.pdb
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\bin\Debug\netcoreapp2.0\Wallace.Core.Helpers.pdb
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\obj\Debug\netcoreapp2.0\Tassel.API.csprojResolveAssemblyReference.cache
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\obj\Debug\netcoreapp2.0\Tassel.API.dll
+C:\Users\miao1\Documents\GIT\tassel.engine\Angular-.netcore\Tassel.netcore\Tassel.All\Tassel.API\obj\Debug\netcoreapp2.0\Tassel.API.pdb

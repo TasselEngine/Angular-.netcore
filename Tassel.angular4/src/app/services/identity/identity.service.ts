@@ -1,10 +1,11 @@
+import { FormatHttpAsyncClient } from 'ws-format-httprequest';
 import { LogType, LoggerService, Logger } from 'ws-logger';
-import { AsyncableApiServiceBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { IResponse } from '../../model/interfaces/response.interface';
 
 @Injectable()
-export class IdentityService extends AsyncableApiServiceBase {
+export class IdentityService extends FormatHttpAsyncClient<IResponse> {
 
     private username: string;
     public get UserName() { return this.username; }
@@ -18,10 +19,6 @@ export class IdentityService extends AsyncableApiServiceBase {
         super(http);
         this.UserName = 'wallace';
         this.logger = lgsrv.GetLogger(IdentityService).SetModule('service');
-        this.logger.Debug(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
-        this.logger.Info(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
-        this.logger.Warn(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
-        this.logger.Error(['Identity init.', 'details for development.', { name: 'shabi' }], 'constructor');
     }
 
 }

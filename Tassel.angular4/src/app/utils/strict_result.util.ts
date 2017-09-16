@@ -1,4 +1,4 @@
-import { IError } from './../model/interfaces/response.interface';
+import { IError } from 'ws-format-httprequest';
 
 export class StrictResult<T>{
 

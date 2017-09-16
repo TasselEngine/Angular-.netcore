@@ -1,3 +1,4 @@
+import { IError } from 'ws-format-httprequest';
 
 export type APIResult = [boolean, IError, IResponse];
 
@@ -7,8 +8,3 @@ export interface IResponse {
     [propName: string]: any;
 }
 
-export interface IError {
-    errors?: any;
-    msg?: string;
-    [propName: string]: any;
-}
