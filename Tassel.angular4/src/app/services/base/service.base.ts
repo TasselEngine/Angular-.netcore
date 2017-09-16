@@ -1,5 +1,5 @@
 import { IResponse, IError, APIResult } from './../../model/interfaces/response.interface';
-import { Http, RequestOptions } from '@angular/http';
+import { Http, RequestOptions, Response } from '@angular/http';
 import { HttpType } from '../../model/enums/response.enum';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -32,13 +32,13 @@ export class AsyncableApiServiceBase extends AsyncableServiceBase {
             const result = await action().map(i => i.json() as IResponse).toPromise();
             return [true, null, result];
         } catch (error) {
-            return [true, {
-                errors: error,
-                url: url,
-                options: options,
-                type: type,
-                args: args
-            }, null];
+            if (!(error instanceof Response)) {
+                return [true, { errors: error, url: url, options: options, type: type, args: args }, null];
+            }
+            try {
+                const response = error.json() as IResponse;
+                return [true, null, response];
+            } catch (erro2) { return [true, { errors: error, url: url, options: options, type: type, args: args }, null]; }
         }
     }
 
