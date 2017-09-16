@@ -1,18 +1,12 @@
 import { IResponse, IError, APIResult } from './../../model/interfaces/response.interface';
 import { Http, RequestOptions, Response } from '@angular/http';
+import { AsyncableClassBase as AsyncableServiceBase } from 'ws-async-base';
 import { HttpType } from '../../model/enums/response.enum';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-export class AsyncableServiceBase {
+export { AsyncableServiceBase };
 
-    protected Delay = async (milisecond: number) => {
-        return new Promise<void>(() => setTimeout((owner: any): void => {
-            owner();
-        }, milisecond));
-    }
-
-}
 /**
  * 支持异步等待延时的API服务基类，封装了通用请求方法和静态类型化的返回结果
  */
