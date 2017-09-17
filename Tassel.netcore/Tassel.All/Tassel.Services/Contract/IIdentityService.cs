@@ -16,7 +16,9 @@ namespace Tassel.Services.Contract {
 
         TToken TokenDecrypt(string cookie);
 
-        IList<TUser> GetUsersListByFilter(Expression<Func<TUser, bool>> whereLambada);
+        IEnumerable<dynamic> GetUsersListByFilter(Expression<Func<TUser, bool>> whereLambada);
+
+        (TUser,bool, string) GetUserDetailsByID(string uuid);
 
     }
 }

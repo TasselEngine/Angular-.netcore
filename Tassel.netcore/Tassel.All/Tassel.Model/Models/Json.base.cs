@@ -41,6 +41,8 @@ namespace Tassel.Model.Models {
         Succeed = 0,
         LoginFailed = 1,
         RegisterFailed = 2,
+        UserNotFound = 3,
+        UserExist = 4,
         Error = 255
     }
 

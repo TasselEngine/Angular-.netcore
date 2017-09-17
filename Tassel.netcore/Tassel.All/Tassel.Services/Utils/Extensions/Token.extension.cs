@@ -34,6 +34,25 @@ namespace Tassel.Service.Utils.Extensionss {
         public const string AccessDenied = "/403";
     }
 
+    public class CustomJwtDataFormat : ISecureDataFormat<AuthenticationTicket> {
+
+        private readonly string algorithm;
+        private readonly TokenValidationParameters param;
+
+        public CustomJwtDataFormat(TokenValidationParameters param, string algorithm = SecurityAlgorithms.HmacSha256) {
+            this.algorithm = algorithm;
+            this.param = param;
+        }
+
+        public AuthenticationTicket Unprotect(string protectedText) => Unprotect(protectedText, null);
+
+        public AuthenticationTicket Unprotect(string protectedText, string purpose) => new TokenDecoder(param, algorithm).Unprotect(protectedText);
+
+        public string Protect(AuthenticationTicket data) => throw new NotImplementedException();
+
+        public string Protect(AuthenticationTicket data, string purpose) => throw new NotImplementedException();
+    }
+
     public class TokenDecoder {
 
         public static TokenValidationParameters CreateParam(IConfiguration root) {

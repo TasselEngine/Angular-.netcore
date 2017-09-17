@@ -42,8 +42,20 @@ namespace Tassel.Services.Service {
                  signingCredentials: options.SigningCredentials);
         }
 
-        public IList<User> GetUsersListByFilter(Expression<Func<User, bool>> whereLambada) {
-            throw new NotImplementedException();
+        public (User, bool, string) GetUserDetailsByID(string uuid) {
+            var usr = db.Users.Where(i => i.UUID == uuid).FirstOrDefault();
+            if (usr == null)
+                return (null, false, "user not found");
+            return (usr, true, null);
+        }
+
+        public IEnumerable<dynamic> GetUsersListByFilter(Expression<Func<User, bool>> whereLambada) {
+            return this.db.Users.Where(whereLambada).Select(i => new {
+                    UUID = i.UUID,
+                    UserName = i.UserName,
+                    Gender = i.Gender,
+                    RoleID = i.RoleID
+                });
         }
 
         public JwtSecurityToken TokenDecrypt(string cookie) {
@@ -52,8 +64,8 @@ namespace Tassel.Services.Service {
         }
 
         public (User, bool, string) TryLogin(string user, string psd) {
-            var usr = db.Set<User>().Where(i => i.UserName == user).FirstOrDefault();
-            if (user == null)
+            var usr = db.Users.Where(i => i.UserName == user).FirstOrDefault();
+            if (usr == null)
                 return (null, false, "user not found");
             if (usr.Password != IdentityProvider.CreateMD5(psd))
                 return (null, false, "password is not correct");
@@ -61,7 +73,7 @@ namespace Tassel.Services.Service {
         }
 
         public (User, bool, string) TryRegister(string user, string psd, Gender gender = Gender.Male, string avatar = null) {
-            var usrr = db.Set<User>().Where(i => i.UserName == user).FirstOrDefault();
+            var usrr = db.Users.Where(i => i.UserName == user).FirstOrDefault();
             if (usrr != null)
                 return (null, false, "user account is exist already");
             usrr = IdentityProvider.CreateUser(user, psd, gender, avatar);

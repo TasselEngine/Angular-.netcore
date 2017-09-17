@@ -36,6 +36,7 @@ namespace Tassel.Service {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddTasselJwtBearer(options => {
                     options.RequireHttpsMetadata = false;
+                    options.IncludeErrorDetails = true;
                     options.TokenValidationParameters = new TokenValidationParameters() {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
@@ -48,11 +49,11 @@ namespace Tassel.Service {
                     };
                 });
 
-            //services.AddAuthorization(options => {
-            //    options.AddPolicy(PolicyRole.Core, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "3"));
-            //    options.AddPolicy(PolicyRole.Admin, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "2", "3"));
-            //    options.AddPolicy(PolicyRole.User, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "1", "2", "3"));
-            //});
+            services.AddAuthorization(options => {
+                options.AddPolicy(PolicyRole.Core, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "3"));
+                options.AddPolicy(PolicyRole.Admin, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "2", "3"));
+                options.AddPolicy(PolicyRole.User, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "1", "2", "3"));
+            });
 
             services.AddMvc();
 

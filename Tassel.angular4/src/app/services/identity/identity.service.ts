@@ -11,11 +11,15 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
     public get UserName() { return this.username; }
     public set UserName(value: string) { this.username = value; }
 
-    private readonly formOptions: RequestOptions;
+    private _uuid: string;
+
+    public get Root() { return 'http://localhost:8081/api'; }
+
+    private formOptions: RequestOptions;
     public get FormOptions() { return this.formOptions; }
 
-    private readonly options: RequestOptions;
-    public get Options() { return this.formOptions; }
+    private options: RequestOptions;
+    public get Options() { return this.options; }
 
     private logger: Logger<IdentityService>;
 
@@ -32,7 +36,7 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
 
     public TryRegisterAsync = async (userName: string, psd: string) => {
         const [succeed, error, response] = await this.InvokeAsync(
-            'http://localhost:56285/api/user/register', this.formOptions, HttpType.POST, JSON.stringify({ user: 'miao17game', psd: '2w3e4r5t' }));
+            `${this.Root}/user/register`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
         if (succeed) {
             console.log(response);
         }
@@ -40,7 +44,25 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
 
     public TryLoginAsync = async (userName: string, psd: string) => {
         const [succeed, error, response] = await this.InvokeAsync(
-            'http://localhost:56285/api/user/login', this.formOptions, HttpType.POST, JSON.stringify({ user: 'miao17game', psd: '2w3e4r5t' }));
+            `${this.Root}/user/login`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
+        if (succeed) {
+            console.log(response);
+            this._uuid = response.content.uuid;
+            const headers = new Headers({ 'Authorization': 'Bearer ' + response.content.token });
+            this.options = new RequestOptions({ headers: headers });
+            console.log(this.options);
+        }
+    }
+
+    public TryGetAllUsersAsync = async () => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user`, this.Options);
+        if (succeed) {
+            console.log(response);
+        }
+    }
+
+    public TryGetUserDetailsAsync = async (uuid?: string) => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/${uuid || this._uuid}`, this.Options);
         if (succeed) {
             console.log(response);
         }

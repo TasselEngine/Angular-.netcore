@@ -18,6 +18,7 @@ using Tassel.Model.Models;
 using Newtonsoft.Json;
 using Wallace.Core.Helpers.Controllers;
 using System.IdentityModel.Tokens.Jwt;
+using System.Diagnostics;
 
 namespace Tassel.API.Utils.Handlers {
     /// <summary>
@@ -56,6 +57,7 @@ namespace Tassel.API.Utils.Handlers {
                 }
                 // 如果应用程序从别处检索到标记, 请使用.
                 token = messageReceivedContext.Token;
+
                 if (string.IsNullOrEmpty(token)) {
                     string authorization = Request.Headers["Authorization"];
                     // 如果未找到授权标头, 则无法进一步处理
@@ -70,6 +72,8 @@ namespace Tassel.API.Utils.Handlers {
                         return AuthenticateResult.NoResult();
                     }
                 }
+
+                Debug.WriteLine(token);
 
                 if (_configuration == null && Options.ConfigurationManager != null) {
                     _configuration = await Options.ConfigurationManager.GetConfigurationAsync(Context.RequestAborted);

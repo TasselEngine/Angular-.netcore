@@ -1,22 +1,17 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Tassel.DomainModel.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Tassel.Service.Utils.Extensionss;
 using Tassel.Services.Contract;
 using Tassel.Model.Models;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics;
 using Wallace.Core.Helpers.Controllers;
 using System.Text;
 using Wallace.Core.Helpers.Format;
@@ -30,25 +25,6 @@ namespace Tassel.Service.Utils.Middlewares {
     }
 
     enum ProviderType { Login, Register, Undefined }
-
-    public class CustomJwtDataFormat : ISecureDataFormat<AuthenticationTicket> {
-
-        private readonly string algorithm;
-        private readonly TokenValidationParameters param;
-
-        public CustomJwtDataFormat(TokenValidationParameters param, string algorithm = SecurityAlgorithms.HmacSha256) {
-            this.algorithm = algorithm;
-            this.param = param;
-        }
-
-        public AuthenticationTicket Unprotect(string protectedText) => Unprotect(protectedText, null);
-
-        public AuthenticationTicket Unprotect(string protectedText, string purpose) => new TokenDecoder(param, algorithm).Unprotect(protectedText);
-
-        public string Protect(AuthenticationTicket data) => throw new NotImplementedException();
-
-        public string Protect(AuthenticationTicket data, string purpose) => throw new NotImplementedException();
-    }
 
     public class TokenCreatorMiddleware {
 
@@ -127,6 +103,7 @@ namespace Tassel.Service.Utils.Middlewares {
                 model.Content = new {
                     token = new JwtSecurityTokenHandler().WriteToken(identity.GenerateToken(user, opts)),
                     name = user.UserName,
+                    uuid = user.UUID,
                     expires = (int)opts.Expiration.TotalSeconds
                 };
 
