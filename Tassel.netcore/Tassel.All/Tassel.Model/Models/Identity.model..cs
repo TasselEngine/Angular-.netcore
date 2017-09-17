@@ -120,4 +120,14 @@ namespace Tassel.DomainModel.Models {
 
     }
 
+    [DataContract]
+    public class ApplicationJsonParam {
+
+        [DataMember(Name = "user")]
+        public string UserName { get; set; }
+
+        [DataMember(Name = "psd")]
+        public string Password { get; set; }
+    }
+
 }

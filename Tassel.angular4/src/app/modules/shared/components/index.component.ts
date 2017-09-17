@@ -1,3 +1,4 @@
+import { IdentityService } from './../../../services/identity/identity.service';
 import { pageShowAnimation } from './../../extensions/animations/page_show.animation';
 import { Component, HostBinding } from '@angular/core';
 
@@ -13,5 +14,15 @@ export class IndexComponent {
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
+
+    constructor(private identity: IdentityService) { }
+
+    public Login = () => {
+        this.identity.TryLoginAsync('', '');
+    }
+
+    public Register = () => {
+        this.identity.TryRegisterAsync('', '');
+    }
 
 }

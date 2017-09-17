@@ -29,8 +29,8 @@ namespace Tassel.Service.Utils.Extensionss {
         public const string Audience = "Tassel_AUDN";
         public const string TokenName = "smhs_token";
         public const string CookieScheme = "Tassel_Cookie";
-        public const string RegisterPath = "/register";
-        public const string LoginPath = "/login";
+        public const string RegisterPath = "/api/user/register";
+        public const string LoginPath = "/api/user/login";
         public const string AccessDenied = "/403";
     }
 

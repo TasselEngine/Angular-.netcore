@@ -23,8 +23,13 @@ namespace Tassel.DomainModel.Models {
     public static class DbHelper {
 
         public static void SetSeedData(IServiceProvider serviceProvider) {
-            using (var context = new APIDB(
-               serviceProvider.GetRequiredService<DbContextOptions<APIDB>>())) {
+            var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope()) {
+                var context = scope.ServiceProvider.GetRequiredService<APIDB>();
+                // rest of your code
+            //}
+            //using (var context = new APIDB(
+            //   serviceProvider.GetRequiredService<DbContextOptions<APIDB>>())) {
 
                 context.Database.EnsureCreated();
 

@@ -10,6 +10,13 @@ using Tassel.Service.Utils.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Tassel.Service.Utils.Extensionss;
+using Tassel.API.Utils.Extensions;
+using Tassel.Service.Utils.Middlewares;
+using Tassel.Services.Contract;
+using System.IdentityModel.Tokens.Jwt;
+using Tassel.DomainModel.Models;
+using Tassel.Services.Service;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Tassel.Service {
     public class Startup {
@@ -21,34 +28,34 @@ namespace Tassel.Service {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc();
-            services.AddApplicationDbContext(Configuration);
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options => {
-            //        options.RequireHttpsMetadata = false;
-            //        options.TokenValidationParameters = new TokenValidationParameters() {
-            //            ValidateIssuerSigningKey = true,
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidateLifetime = true,
-            //            IssuerSigningKey = TokenDecoder.CreateKey(Configuration),
-            //            ValidIssuer = TokenProviderEntry.Issuer,
-            //            ValidAudience = TokenProviderEntry.Audience,
-            //            ClockSkew = TimeSpan.Zero
-            //        };
-            //    });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options=> {
-                options.IncludeErrorDetails = true;
-                options.TokenValidationParameters = TokenDecoder.CreateParam(Configuration);
-                options.RequireHttpsMetadata = false;
-            });
+            services.AddApplicationDbContext(Configuration);
+
+            services.AddScoped<IIdentityService<JwtSecurityToken, TokenProviderOptions, User>, IdentityService>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddTasselJwtBearer(options => {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters() {
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = TokenDecoder.CreateKey(Configuration),
+                        ValidIssuer = TokenProviderEntry.Issuer,
+                        ValidAudience = TokenProviderEntry.Audience,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 
             //services.AddAuthorization(options => {
             //    options.AddPolicy(PolicyRole.Core, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "3"));
             //    options.AddPolicy(PolicyRole.Admin, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "2", "3"));
             //    options.AddPolicy(PolicyRole.User, policy => policy.RequireClaim(TokenClaimsKey.RoleID, "1", "2", "3"));
             //});
+
+            services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +64,19 @@ namespace Tassel.Service {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+
             app.UseMvc();
+
+            app.DbSeedDataInsert();
+
+            //app.UseAuthentication();
+
+            app.AddTasselTokenCreator(new TokenProviderOptions {
+                Audience = TokenProviderEntry.Audience,
+                Issuer = TokenProviderEntry.Issuer,
+                SigningCredentials = new SigningCredentials(TokenDecoder.CreateKey(Configuration), SecurityAlgorithms.HmacSha256),
+            });
 
         }
     }

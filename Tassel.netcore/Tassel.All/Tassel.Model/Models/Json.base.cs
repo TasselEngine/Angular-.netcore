@@ -10,7 +10,7 @@ namespace Tassel.Model.Models {
     public class JsonBase : Dictionary<string, object> {
 
         public JsonBase() {
-            this.Status = 255;
+            this.Status = JsonStatus.Error;
             this.Message = "";
             this.Content = null;
         }
@@ -18,8 +18,8 @@ namespace Tassel.Model.Models {
         public JsonBase(string message) : base() => this.Message = message;
 
         [DataMember(Name = "status")]
-        public int Status {
-            get => (int)this["Status"];
+        public JsonStatus Status {
+            get => (JsonStatus)this["Status"];
             set => this["Status"] = value;
         }
 
@@ -35,6 +35,13 @@ namespace Tassel.Model.Models {
             set => this["Content"] = value;
         }
 
+    }
+
+    public enum JsonStatus {
+        Succeed = 0,
+        LoginFailed = 1,
+        RegisterFailed = 2,
+        Error = 255
     }
 
 }
