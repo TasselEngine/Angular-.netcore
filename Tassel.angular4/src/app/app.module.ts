@@ -12,6 +12,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
 import { RootComponent } from './modules/shared/components/root.component';
+import { ServerService } from './services/server/server.service';
 
 @NgModule({
   declarations: [
@@ -31,11 +32,12 @@ import { RootComponent } from './modules/shared/components/root.component';
   providers: [
     {
       provide: LOGGER_SERVICE_CONFIG, useValue: {
-        Level: environment.production ? 1 : 0,
+        Level: environment.logLevel,
         IsProduction: environment.production
       }
     },
     LoggerService,
+    ServerService,
     IdentityService,
   ],
   bootstrap: [RootComponent]

@@ -3,6 +3,7 @@ import { LogType, LoggerService, Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { RequestOptions, Http, Response, Headers } from '@angular/http';
 import { IResponse } from '../../model/interfaces/response.interface';
+import { ServerService } from '../server/server.service';
 
 @Injectable()
 export class IdentityService extends FormatHttpAsyncClient<IResponse> {
@@ -13,7 +14,7 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
 
     private _uuid: string;
 
-    public get Root() { return 'http://localhost:8081/api'; }
+    public get Root() { return this.server.ServerApiRoot; }
 
     private formOptions: RequestOptions;
     public get FormOptions() { return this.formOptions; }
@@ -25,6 +26,7 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
 
     constructor(
         protected http: Http,
+        private server: ServerService,
         private lgsrv: LoggerService) {
         super(http);
         this.UserName = 'wallace';
