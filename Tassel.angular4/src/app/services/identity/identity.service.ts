@@ -1,12 +1,13 @@
-import { FormatHttpAsyncClient, HttpType } from 'ws-format-httprequest';
+import { HttpType } from 'ws-format-httprequest';
 import { LogType, LoggerService, Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { RequestOptions, Http, Response, Headers } from '@angular/http';
 import { IResponse } from '../../model/interfaces/response.interface';
 import { ServerService } from '../server/server.service';
+import { HttpAsyncClientBase } from '../base/service.base';
 
 @Injectable()
-export class IdentityService extends FormatHttpAsyncClient<IResponse> {
+export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     private username: string;
     public get UserName() { return this.username; }
@@ -26,14 +27,12 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
 
     constructor(
         protected http: Http,
-        private server: ServerService,
-        private lgsrv: LoggerService) {
+        private server: ServerService) {
         super(http);
         this.UserName = 'wallace';
-        this.logger = lgsrv.GetLogger(IdentityService).SetModule('service');
+        this.logger = this.logsrv.GetLogger(IdentityService).SetModule('service');
         this.options = new RequestOptions();
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        this.formOptions = new RequestOptions({ headers: headers });
+        this.formOptions = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
     }
 
     public TryRegisterAsync = async (userName: string, psd: string) => {
@@ -48,11 +47,9 @@ export class IdentityService extends FormatHttpAsyncClient<IResponse> {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/user/login`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
         if (succeed) {
-            console.log(response);
             this._uuid = response.content.uuid;
             const headers = new Headers({ 'Authorization': 'Bearer ' + response.content.token });
             this.options = new RequestOptions({ headers: headers });
-            console.log(this.options);
         }
     }
 

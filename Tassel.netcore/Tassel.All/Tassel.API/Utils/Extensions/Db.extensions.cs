@@ -11,7 +11,9 @@ namespace Tassel.Service.Utils.Extensions {
     public static class DbExtensions { 
 
         public static void AddApplicationDbContext(this IServiceCollection services, IConfiguration Configuration)
-            => services.AddDbContext<APIDB>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            => services.AddDbContext<APIDB>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    bOptions => bOptions.MigrationsAssembly("Tassel.Model")));
 
         public static void DbSeedDataInsert(this IApplicationBuilder app) => DbHelper.SetSeedData(app.ApplicationServices);
 

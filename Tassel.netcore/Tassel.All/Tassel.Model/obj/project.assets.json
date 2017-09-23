@@ -1761,6 +1761,19 @@
           "lib/netstandard2.0/_._": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Tools.DotNet/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.0.0",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "compile": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -4750,13 +4763,12 @@
       },
       "Wallace.Core.Helpers/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v1.6",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Microsoft.AspNetCore": "1.1.1",
-          "Microsoft.AspNetCore.Mvc": "1.1.2",
-          "NETStandard.Library": "1.6.1",
+          "Microsoft.AspNetCore": "2.0.0",
+          "Microsoft.AspNetCore.Mvc": "2.0.0",
           "System.Runtime.Serialization.Json": "4.3.0",
-          "System.ValueTuple": "4.3.0"
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Wallace.Core.Helpers.dll": {}
@@ -6171,6 +6183,22 @@
         "tools/net461/ef.exe.config",
         "tools/net461/ef.x86.exe",
         "tools/net461/ef.x86.exe.config",
+        "tools/netcoreapp2.0/ef.dll",
+        "tools/netcoreapp2.0/ef.runtimeconfig.json"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.Tools.DotNet/2.0.0": {
+      "sha512": "TXfd6BVR0bRpVwEM24fJIpE3q3AiPHHgbeY4nnbXez9T6sJk7OSrsuhPmiF7wLPI7wpZQrpj3avyrcaE1v3yow==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.tools.dotnet/2.0.0",
+      "files": [
+        "lib/netcoreapp2.0/dotnet-ef.dll",
+        "lib/netcoreapp2.0/dotnet-ef.runtimeconfig.json",
+        "microsoft.entityframeworkcore.tools.dotnet.2.0.0.nupkg.sha512",
+        "microsoft.entityframeworkcore.tools.dotnet.nuspec",
+        "prefercliruntime",
+        "tools/net461/ef.exe",
+        "tools/net461/ef.x86.exe",
         "tools/netcoreapp2.0/ef.dll",
         "tools/netcoreapp2.0/ef.runtimeconfig.json"
       ]
@@ -12552,6 +12580,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Microsoft.AspNetCore.All >= 2.0.0",
+      "Microsoft.EntityFrameworkCore.Tools.DotNet >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Wallace.Core.Helpers >= 1.0.0"
     ]
@@ -12604,6 +12633,10 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Tools.DotNet": {
+            "target": "Package",
+            "version": "2.0.0"
+          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",

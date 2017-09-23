@@ -54,8 +54,14 @@ namespace Tassel.DomainModel.Models {
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? UpdateTime { get; set; } 
 
-        [Column("home_ip")]
-        public string HomeIP { get; set; }
+        [Column("weibo_token")]
+        public string WeiboToken { get; set; }
+
+        [Column("wechat_token")]
+        public string WechatToken { get; set; }
+
+        [Column("qq_token")]
+        public string QQToken { get; set; }
 
         [Column("avatar")]
         public string Avatar { get; set; }

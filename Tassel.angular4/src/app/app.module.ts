@@ -1,9 +1,10 @@
+import { GlobalInjection } from './utils/helpers/global_injector.helper';
+import { Injector } from '@angular/core';
 import { LoggerService, LOGGER_SERVICE_CONFIG } from 'ws-logger';
 import { environment } from './../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import { NgZorroAntdModule, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
-import { IdentityService } from './services/identity/identity.service';
 import { RoutersModule } from './modules/routers/routers.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { ExtensionsModule } from './modules/extensions/extensions.module';
@@ -12,7 +13,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
 import { RootComponent } from './modules/shared/components/root.component';
-import { ServerService } from './services/server/server.service';
+import { ToastService, ServerService, IdentityService } from './services/app.service';
 
 @NgModule({
   declarations: [
@@ -47,9 +48,16 @@ import { ServerService } from './services/server/server.service';
       }
     },
     LoggerService,
+    ToastService,
     ServerService,
     IdentityService,
   ],
   bootstrap: [RootComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private injector: Injector) {
+    GlobalInjection.Injector = injector;
+  }
+
+}

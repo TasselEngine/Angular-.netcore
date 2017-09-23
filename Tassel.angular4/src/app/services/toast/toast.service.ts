@@ -1,5 +1,7 @@
+import { Injectable } from '@angular/core';
 import { NzModalService, NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 
+@Injectable()
 export class ToastService {
 
     constructor(
