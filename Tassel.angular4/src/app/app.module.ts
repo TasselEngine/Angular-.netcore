@@ -2,7 +2,7 @@ import { LoggerService, LOGGER_SERVICE_CONFIG } from 'ws-logger';
 import { environment } from './../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { IdentityService } from './services/identity/identity.service';
 import { RoutersModule } from './modules/routers/routers.module';
 import { SharedModule } from './modules/shared/shared.module';
@@ -30,6 +30,16 @@ import { ServerService } from './services/server/server.service';
     NgZorroAntdModule.forRoot()
   ],
   providers: [
+    {
+      provide: NZ_NOTIFICATION_CONFIG, useValue: {
+        nzTop: '24px',
+        nzRight: '0px',
+        nzDuration: 3000,
+        nzMaxStack: 5,
+        nzPauseOnHover: true,
+        nzAnimate: true
+      }
+    },
     {
       provide: LOGGER_SERVICE_CONFIG, useValue: {
         Level: environment.logLevel,
