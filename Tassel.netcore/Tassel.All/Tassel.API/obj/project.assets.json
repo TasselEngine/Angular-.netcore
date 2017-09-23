@@ -4781,6 +4781,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "Tassel.Model": "1.0.0"
         },
         "compile": {
