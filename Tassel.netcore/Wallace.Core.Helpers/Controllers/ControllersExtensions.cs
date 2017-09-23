@@ -10,17 +10,19 @@ namespace Wallace.Core.Helpers.Controllers {
 
     public static class ControllersExtensions {
 
-        public static JsonResult JsonFormat(this Controller c, object model) 
-            => c.Json(model, 
+        public static JsonResult JsonFormat(this Controller c, object model)
+            => c.Json(model,
                 new JsonSerializerSettings {
                     ContractResolver = new LowercaseContractResolver(),
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                     Formatting = Formatting.Indented
                 });
 
-        public static IEnumerable<string> GetModelErrors(this Controller c) 
+        public static IEnumerable<string> GetModelErrors(this Controller c)
             => c.ModelState.Values.Select(i => i.Errors.Select(s => s.ErrorMessage).FirstOrDefault());
-        
+
+        public static string GetErrorMessage(this Controller c, bool succeed = true, string msg = "")
+            => succeed ? "success" : msg;
     }
 
     public class LowercaseContractResolver : Newtonsoft.Json.Serialization.DefaultContractResolver {

@@ -16,7 +16,6 @@ using Tassel.Services.Contract;
 using System.IdentityModel.Tokens.Jwt;
 using Tassel.DomainModel.Models;
 using Tassel.Services.Service;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Tassel.Service {
     public class Startup {
@@ -70,8 +69,6 @@ namespace Tassel.Service {
             app.UseMvc();
 
             app.DbSeedDataInsert();
-
-            //app.UseAuthentication();
 
             app.AddTasselTokenCreator(new TokenProviderOptions {
                 Audience = TokenProviderEntry.Audience,
