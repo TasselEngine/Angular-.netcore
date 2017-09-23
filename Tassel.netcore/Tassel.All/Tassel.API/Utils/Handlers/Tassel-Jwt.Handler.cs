@@ -18,7 +18,6 @@ using Tassel.Model.Models;
 using Newtonsoft.Json;
 using Wallace.Core.Helpers.Controllers;
 using System.IdentityModel.Tokens.Jwt;
-using System.Diagnostics;
 
 namespace Tassel.API.Utils.Handlers {
     /// <summary>
@@ -72,8 +71,6 @@ namespace Tassel.API.Utils.Handlers {
                         return AuthenticateResult.NoResult();
                     }
                 }
-
-                Debug.WriteLine(token);
 
                 if (_configuration == null && Options.ConfigurationManager != null) {
                     _configuration = await Options.ConfigurationManager.GetConfigurationAsync(Context.RequestAborted);
