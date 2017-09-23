@@ -4766,6 +4766,7 @@
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "Microsoft.EntityFrameworkCore.Tools.DotNet": "2.0.0",
           "Wallace.Core.Helpers": "1.0.0"
         },
@@ -4795,6 +4796,7 @@
         "dependencies": {
           "Microsoft.AspNetCore": "2.0.0",
           "Microsoft.AspNetCore.Mvc": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "System.Runtime.Serialization.Json": "4.3.0",
           "System.ValueTuple": "4.4.0"
         },
