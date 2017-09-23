@@ -53,6 +53,13 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
+    public TryWeiboAccessAsync = async (code: string, redirect_url: string) => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_access?code=${code}&redirect_url=${redirect_url}`, this.options);
+        if (succeed) {
+            console.log(response);
+        }
+    }
+
     public TryGetAllUsersAsync = async () => {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user`, this.Options);
         if (succeed) {

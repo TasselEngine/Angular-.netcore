@@ -11,6 +11,12 @@ using Wallace.Core.Helpers.Format;
 using System.Security.Claims;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json;
+using Tassel.Model.Models;
 
 namespace Tassel.Services.Service {
     public class IdentityService : IIdentityService<JwtSecurityToken, TokenProviderOptions, User> {
@@ -51,11 +57,11 @@ namespace Tassel.Services.Service {
 
         public IEnumerable<dynamic> GetUsersListByFilter(Expression<Func<User, bool>> whereLambada) {
             return this.db.Users.Where(whereLambada).Select(i => new {
-                    UUID = i.UUID,
-                    UserName = i.UserName,
-                    Gender = i.Gender,
-                    RoleID = i.RoleID
-                });
+                UUID = i.UUID,
+                UserName = i.UserName,
+                Gender = i.Gender,
+                RoleID = i.RoleID
+            });
         }
 
         public JwtSecurityToken TokenDecrypt(string cookie) {
@@ -81,6 +87,28 @@ namespace Tassel.Services.Service {
             if (db.SaveChanges() <= 0)
                 return (null, false, "save user informations failed");
             return (usrr, true, null);
+        }
+
+        public async Task<(dynamic, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url) {
+            var oars = "client_id=185930524&client_secret=389e2d039b372cf2763c4842ea1c46d1&grant_type=authorization_code";
+            HttpContent hc = new StringContent(oars, Encoding.UTF8, "application/x-www-form-urlencoded");
+            using (var client = new HttpClient()) {
+                try {
+                    var result = await client.PostAsync($"https://api.weibo.com/oauth2/access_token?code={code}&redirect_uri={redirect_url}", hc);
+                    var conStr = await result.Content.ReadAsStringAsync();
+                    try {
+                        var succ_token = JsonHelper.FromJson<WeiboSuccessToken>(conStr);
+                        return succ_token == null || succ_token.AccessToken == null ?
+                            ((object)JsonHelper.FromJson<WeiboErrorToken>(conStr), false, "invalid authentication."):
+                            (succ_token, true, null);
+                    } catch {
+                        return (null, false, "try read weibo access token from response failed.");
+                    }
+                } catch(Exception ex) {
+                    Debug.WriteLine($"error throws : {ex.StackTrace}");
+                    return (null,false,"get weibo access token failed.");
+                }
+            }
         }
     }
 }

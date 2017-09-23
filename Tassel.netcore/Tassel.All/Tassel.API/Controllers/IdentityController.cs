@@ -80,5 +80,12 @@ namespace Tassel.Service.Controllers {
         public JsonResult Delete(string id) {
             return this.JsonFormat(false, error: "deleting user is unavaliable.");
         }
+
+        [HttpGet("weibo_access")]
+        public async Task<JsonResult> WeiboAccess(string code, string redirect_url) {
+            var (result,succeed,error) = await this.identity.GetWeiboTokenByCodeAsync(code, redirect_url);
+            var status = succeed ? JsonStatus.Succeed : JsonStatus.Error;
+            return this.JsonFormat(succeed, status, error, (object)result);
+        }
     }
 }

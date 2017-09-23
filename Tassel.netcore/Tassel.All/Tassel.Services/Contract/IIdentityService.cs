@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Tassel.Services.Contract {
     public interface IIdentityService<TToken, TOptions, TUser> {
@@ -19,6 +20,8 @@ namespace Tassel.Services.Contract {
         IEnumerable<dynamic> GetUsersListByFilter(Expression<Func<TUser, bool>> whereLambada);
 
         (TUser,bool, string) GetUserDetailsByID(string uuid);
+
+        Task<(dynamic, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url);
 
     }
 }

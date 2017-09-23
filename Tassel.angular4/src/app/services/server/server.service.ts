@@ -10,6 +10,9 @@ export class ServerService extends AsyncableServiceBase {
     public get ServerRoot(): string { return this.serverRoot; }
     public get ServerApiRoot(): string { return `${this.serverRoot}/api`; }
 
+    public get WeiboOAuthHost(): string { return 'https://api.weibo.com/oauth2'; }
+    public get WeiboClientID(): string { return '185930524'; }
+
     constructor() {
         super();
         this.config = environment;

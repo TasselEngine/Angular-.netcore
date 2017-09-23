@@ -1,4 +1,4 @@
-import { pageShowAnimation } from './../../extensions/animations/page_show.animation';
+import { pageShowAnimation } from './../../../utils/app.utils';
 import { Component, HostBinding } from '@angular/core';
 
 @Component({

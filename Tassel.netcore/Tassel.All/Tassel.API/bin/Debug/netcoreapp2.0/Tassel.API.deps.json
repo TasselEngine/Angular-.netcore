@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "a9f4018bc9c65ac86da43d6fe07d56e84952931c"
+    "signature": "bd52e41b8812e040944a5f7be439b7341557140a"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
       "Tassel.API/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "Microsoft.NETCore.App": "2.0.0",
           "Tassel.Services": "1.0.0"
         },
@@ -1658,6 +1659,18 @@
       "Microsoft.EntityFrameworkCore.Tools/2.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "2.0.0"
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools.DotNet/2.0.0": {
+        "dependencies": {
+          "Microsoft.NETCore.App": "2.0.0",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
+        },
+        "compile": {
+          "lib/netcoreapp2.0/dotnet-ef.dll": {}
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/2.0.0": {
@@ -3799,6 +3812,8 @@
       "Tassel.Model/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Tools.DotNet": "2.0.0",
           "Wallace.Core.Helpers": "1.0.0"
         },
         "runtime": {
@@ -3810,6 +3825,7 @@
       },
       "Tassel.Services/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "Tassel.Model": "1.0.0"
         },
         "runtime": {
@@ -3823,7 +3839,7 @@
         "dependencies": {
           "Microsoft.AspNetCore": "2.0.0",
           "Microsoft.AspNetCore.Mvc": "2.0.0",
-          "NETStandard.Library": "2.0.0",
+          "Microsoft.EntityFrameworkCore.Design": "2.0.0",
           "System.Runtime.Serialization.Json": "4.3.0",
           "System.ValueTuple": "4.4.0"
         },
@@ -4766,6 +4782,13 @@
       "sha512": "sha512-ILVI7sbnD0Pgf6B90AL3RiRdq+XRXEG4VnvuD75Fluv6p5PbYfU2tQP2VlL0oAFCVhihSgSWIQHtDjUFEE0+nw==",
       "path": "microsoft.entityframeworkcore.tools/2.0.0",
       "hashPath": "microsoft.entityframeworkcore.tools.2.0.0.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools.DotNet/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TXfd6BVR0bRpVwEM24fJIpE3q3AiPHHgbeY4nnbXez9T6sJk7OSrsuhPmiF7wLPI7wpZQrpj3avyrcaE1v3yow==",
+      "path": "microsoft.entityframeworkcore.tools.dotnet/2.0.0",
+      "hashPath": "microsoft.entityframeworkcore.tools.dotnet.2.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/2.0.0": {
       "type": "package",

@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 const mainRoutes: Routes = [
     { path: 'index', component: IndexComponent },
     { path: 'settings', loadChildren: './../settings/settings.module#SettingsModule' },
+    { path: 'user', loadChildren: './../user/user.module#UserModule' },
+    { path: 'errors', loadChildren: './../errors/errors.module#ErrorsModule' },
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
 ];
