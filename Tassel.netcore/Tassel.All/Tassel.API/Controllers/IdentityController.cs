@@ -83,9 +83,19 @@ namespace Tassel.Service.Controllers {
 
         [HttpGet("weibo_access")]
         public async Task<JsonResult> WeiboAccess(string code, string redirect_url) {
-            var (result,succeed,error) = await this.identity.GetWeiboTokenByCodeAsync(code, redirect_url);
-            var status = succeed ? JsonStatus.Succeed : JsonStatus.Error;
-            return this.JsonFormat(succeed, status, error, (object)result);
+            var (result, succeed, error) = await this.identity.GetWeiboTokenByCodeAsync(code, redirect_url);
+            if (!succeed) {
+                return this.JsonFormat(false, JsonStatus.WeiboAccessFailed, error, null);
+            }
+            var (infos, succeed02, error02) = await this.identity.GetWeiboUserInfosAsync(result.Uid, result.AccessToken);
+            if (!succeed02) {
+                return this.JsonFormat(false, JsonStatus.WeiboInfosFetchFailed, error02, null);
+            }
+            var (user, succ03, error03) = this.identity.TryCreateOrGetUserByWeibo(infos);
+            if (!succ03) {
+                return this.JsonFormat(false, JsonStatus.WeiboUserCheckFailed, error03, null);
+            }
+            return this.JsonFormat(true, JsonStatus.Succeed, null, new { wuid = infos.idstr });
         }
     }
 }

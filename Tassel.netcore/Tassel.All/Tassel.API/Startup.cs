@@ -14,8 +14,8 @@ using Tassel.API.Utils.Extensions;
 using Tassel.Service.Utils.Middlewares;
 using Tassel.Services.Contract;
 using System.IdentityModel.Tokens.Jwt;
-using Tassel.DomainModel.Models;
 using Tassel.Services.Service;
+using Tassel.Model.Models;
 
 namespace Tassel.Service {
     public class Startup {

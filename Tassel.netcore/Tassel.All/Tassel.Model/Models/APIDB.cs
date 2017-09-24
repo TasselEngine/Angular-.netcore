@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Tassel.Model.Models;
 
 namespace Tassel.DomainModel.Models {
     public class APIDB : DbContext {
 
         public APIDB(DbContextOptions<APIDB> options) : base(options) {
-
+            this.Database.EnsureCreated();
         }
 
-        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<WeiboDBUser> WeiboUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
@@ -32,26 +33,6 @@ namespace Tassel.DomainModel.Models {
             //   serviceProvider.GetRequiredService<DbContextOptions<APIDB>>())) {
 
                 context.Database.EnsureCreated();
-
-                if (!context.Roles.Any()) {
-                    context.Roles.AddRange(
-                        new Role {
-                            ID = 1,
-                            Name = "User",
-                            Description = "The users group."
-                        },
-                        new Role {
-                            ID = 2,
-                            Name = "Admin",
-                            Description = "High access of this service to control other users."
-                        },
-                        new Role {
-                            ID = 3,
-                            Name = "CORE",
-                            Description = "The highest access of this web service."
-                        });
-                    context.SaveChanges();
-                }
 
                 if (!context.Users.Any()) {
                     context.Users.AddRange(

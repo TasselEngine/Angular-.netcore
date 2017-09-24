@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
-using System.Text; 
+using System.Text;
 
-namespace Tassel.DomainModel.Models {
+namespace Tassel.Model.Models {
 
     [Table("users")]
     public class User {
@@ -24,7 +24,6 @@ namespace Tassel.DomainModel.Models {
 
         [Column("psd")]
         [IgnoreDataMember]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Password shouldn't be empty.")]
         public string Password { get; set; }
 
         [Column("email")]
@@ -52,10 +51,10 @@ namespace Tassel.DomainModel.Models {
 
         [Column("u_time")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? UpdateTime { get; set; } 
+        public DateTime? UpdateTime { get; set; }
 
-        [Column("weibo_token")]
-        public string WeiboToken { get; set; }
+        [Column("weibo_id")]
+        public string WeiboID { get; set; }
 
         [Column("wechat_token")]
         public string WechatToken { get; set; }
@@ -65,22 +64,6 @@ namespace Tassel.DomainModel.Models {
 
         [Column("avatar")]
         public string Avatar { get; set; }
-
-    }
-
-    [Table("roles")]
-    public class Role {
-
-        [Key]
-        [Column("id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ID { get; set; }
-
-        [Column("name")]
-        public string Name { get; set; }
-
-        [Column("desc")]
-        public string Description { get; set; }
 
     }
 
@@ -101,6 +84,17 @@ namespace Tassel.DomainModel.Models {
                     RoleID = 3,
                 };
             }
+        }
+
+        public static User CreateUserByWeibo(WeiboUser wuser) {
+            var uuid = CreateGuid(GuidType.N);
+            return new User {
+                UUID = uuid,
+                UserName = "WUSER_" + uuid,
+                Gender = wuser.gender == "m" ? Gender.Male : Gender.Female,
+                WeiboID = wuser.idstr,
+                RoleID = 3,
+            };
         }
 
         public static User CreateUser(string username, string password)
@@ -134,6 +128,9 @@ namespace Tassel.DomainModel.Models {
 
         [DataMember(Name = "psd")]
         public string Password { get; set; }
+
+        [DataMember(Name = "wuid")]
+        public string WeiboUID { get; set; }
     }
 
 }

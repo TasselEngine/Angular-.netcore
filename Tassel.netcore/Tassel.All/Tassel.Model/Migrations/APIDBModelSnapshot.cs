@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using Tassel.DomainModel.Models;
+using Tassel.Model.Models;
 
 namespace Tassel.Model.Migrations
 {
@@ -20,23 +21,7 @@ namespace Tassel.Model.Migrations
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Tassel.DomainModel.Models.Role", b =>
-                {
-                    b.Property<int>("ID")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Description")
-                        .HasColumnName("desc");
-
-                    b.Property<string>("Name")
-                        .HasColumnName("name");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("roles");
-                });
-
-            modelBuilder.Entity("Tassel.DomainModel.Models.User", b =>
+            modelBuilder.Entity("Tassel.Model.Models.User", b =>
                 {
                     b.Property<string>("UUID")
                         .ValueGeneratedOnAdd()
@@ -64,7 +49,6 @@ namespace Tassel.Model.Migrations
                         .HasColumnName("g_name");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnName("psd");
 
                     b.Property<string>("QQToken")
@@ -83,12 +67,44 @@ namespace Tassel.Model.Migrations
                     b.Property<string>("WechatToken")
                         .HasColumnName("wechat_token");
 
-                    b.Property<string>("WeiboToken")
-                        .HasColumnName("weibo_token");
+                    b.Property<string>("WeiboID")
+                        .HasColumnName("weibo_id");
 
                     b.HasKey("UUID");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("Tassel.Model.Models.WeiboDBUser", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
+
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnName("avatar_url");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnName("c_time");
+
+                    b.Property<string>("Description")
+                        .HasColumnName("desc");
+
+                    b.Property<string>("Domain")
+                        .HasColumnName("domain");
+
+                    b.Property<string>("ScreenName")
+                        .HasColumnName("screen_name");
+
+                    b.Property<string>("UID")
+                        .HasColumnName("uid");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnName("u_time");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("weibo_users");
                 });
 #pragma warning restore 612, 618
         }

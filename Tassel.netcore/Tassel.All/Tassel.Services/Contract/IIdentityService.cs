@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Tassel.Model.Models;
 
 namespace Tassel.Services.Contract {
     public interface IIdentityService<TToken, TOptions, TUser> {
@@ -21,7 +22,15 @@ namespace Tassel.Services.Contract {
 
         (TUser,bool, string) GetUserDetailsByID(string uuid);
 
-        Task<(dynamic, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url);
+        Task<(WeiboSuccessToken, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url);
+
+        Task<(WeiboUser, bool, string)> GetWeiboUserInfosAsync(string uid, string access_token);
+
+        (TUser, bool, string) TryCreateOrGetUserByWeibo(WeiboUser wuser);
+
+        (TUser, bool, string) TryGetUserByWeibo(string uid);
+
+        (WeiboDBUser, bool, string) SearchWeiboUserInfoByUID(string uid);
 
     }
 }

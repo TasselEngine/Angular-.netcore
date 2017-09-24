@@ -38,7 +38,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     public TryRegisterAsync = async (userName: string, psd: string) => {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/user/register`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
-        if (succeed) {
+        if (!succeed) {
             console.log(response);
         }
     }
@@ -55,8 +55,15 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     public TryWeiboAccessAsync = async (code: string, redirect_url: string) => {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_access?code=${code}&redirect_url=${redirect_url}`, this.options);
-        if (succeed) {
-            console.log(response);
+        if (!succeed) {
+            this.logger.Error('Weibo access failed', 'server error.');
+            return;
+        }
+        if (response.status === 0) {
+            const wuid = response.content.wuid;
+            this.InvokeAsync(`${this.Root}/user/weibo_checkin`, this.formOptions, HttpType.POST, JSON.stringify({ wuid: wuid }));
+        } else {
+            this.logger.Error('Weibo access exception', error.msg);
         }
     }
 

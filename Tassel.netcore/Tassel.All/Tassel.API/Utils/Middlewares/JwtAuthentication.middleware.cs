@@ -24,7 +24,13 @@ namespace Tassel.Service.Utils.Middlewares {
             TokenProviderOptions opts) => builder.UseMiddleware<TokenCreatorMiddleware>(Options.Create(opts));
     }
 
-    enum ProviderType { Login, Register, Undefined }
+    enum ProviderType { Login, Register, Weibo ,Undefined }
+
+    class PostParams {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string WeiboUid { get; set; }
+    }
 
     public class TokenCreatorMiddleware {
 
@@ -47,6 +53,7 @@ namespace Tassel.Service.Utils.Middlewares {
             var type =
                 context.Request.Path.Equals(opts.RegisterPath, StringComparison.Ordinal) ? ProviderType.Register :
                 context.Request.Path.Equals(opts.LoginPath, StringComparison.Ordinal) ? ProviderType.Login :
+                context.Request.Path.Equals(opts.WeiboCheckPath, StringComparison.Ordinal) ? ProviderType.Weibo :
                 ProviderType.Undefined;
 
             if (type == ProviderType.Undefined)
@@ -59,20 +66,31 @@ namespace Tassel.Service.Utils.Middlewares {
             return GenerateToken(context, new JsonBase(), type);
         }
 
+        private async Task<string> GetContentAsync(HttpContext context) {
+            var bts = new byte[context.Request.ContentLength.Value];
+            await context.Request.Body.ReadAsync(bts, 0, bts.Length);
+            return Encoding.UTF8.GetString(bts);
+        }
+
         private async Task GenerateToken(HttpContext context, JsonBase model, ProviderType type) {
 
-            var username = default(string);
-            var password = default(string);
+            var param = new PostParams();
 
             if (context.Request.ContentType != "application/json") {
-                username = context.Request.Form["user"];
-                password = context.Request.Form["psd"];
+                if (type == ProviderType.Weibo) {
+                    param.WeiboUid = context.Request.Form["wuid"];
+                } else {
+                    param.UserName = context.Request.Form["user"];
+                    param.Password = context.Request.Form["psd"];
+                }
             } else {
-                var bts = new byte[context.Request.ContentLength.Value];
-                await context.Request.Body.ReadAsync(bts, 0, bts.Length);
-                var user = JsonHelper.FromJson<ApplicationJsonParam>(Encoding.UTF8.GetString(bts));
-                username = user.UserName;
-                password = user.Password;
+                var user = JsonHelper.FromJson<ApplicationJsonParam>(await GetContentAsync(context));
+                if (type == ProviderType.Weibo) {
+                    param.WeiboUid = user.WeiboUID;
+                } else {
+                    param.UserName = user.UserName;
+                    param.Password = user.Password;
+                }
             }
 
             context.Response.ContentType = "application/json";
@@ -82,7 +100,7 @@ namespace Tassel.Service.Utils.Middlewares {
 
                 identity = scope.ServiceProvider.GetRequiredService<IIdentityService<JwtSecurityToken, TokenProviderOptions, User>>();
 
-                var (user, error) = GetIdentity(username, password, type);
+                var (user, error) = GetIdentity(param, type);
                 if (error != null) {
                     model.Message = error;
                     model.Status = type == ProviderType.Register ? JsonStatus.RegisterFailed : JsonStatus.LoginFailed;
@@ -100,11 +118,18 @@ namespace Tassel.Service.Utils.Middlewares {
                 model.Status = JsonStatus.Succeed;
                 model.Message = null;
 
+                dynamic trd_user = null;
+                if (type == ProviderType.Weibo) {
+                    (trd_user, _, _) = this.identity.SearchWeiboUserInfoByUID(param.WeiboUid);
+                }
+
                 model.Content = new {
                     token = new JwtSecurityTokenHandler().WriteToken(identity.GenerateToken(user, opts)),
-                    name = user.UserName,
-                    uuid = user.UUID,
-                    expires = (int)opts.Expiration.TotalSeconds
+                    expires = (int)opts.Expiration.TotalSeconds,
+                    details = new {
+                        user = user,
+                        more = trd_user
+                    },
                 };
 
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(model, new JsonSerializerSettings {
@@ -117,10 +142,11 @@ namespace Tassel.Service.Utils.Middlewares {
 
         }
 
-        private (User, string) GetIdentity(string username, string password, ProviderType type) {
+        private (User, string) GetIdentity(PostParams param, ProviderType type) {
             var (user, ok, error) =
-                type == ProviderType.Register ? identity.TryRegister(username, password) :
-                type == ProviderType.Login ? identity.TryLogin(username, password) :
+                type == ProviderType.Register ? identity.TryRegister(param.UserName, param.Password) :
+                type == ProviderType.Login ? identity.TryLogin(param.UserName, param.Password) :
+                type == ProviderType.Weibo? identity.TryGetUserByWeibo(param.WeiboUid):
                 (null, false, "failed");
             if (ok)
                 return (user, null);

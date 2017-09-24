@@ -31,6 +31,7 @@ namespace Tassel.Service.Utils.Extensionss {
         public const string CookieScheme = "Tassel_Cookie";
         public const string RegisterPath = "/api/user/register";
         public const string LoginPath = "/api/user/login";
+        public const string WeiboCheckPath = "/api/user/weibo_checkin";
         public const string AccessDenied = "/403";
     }
 
@@ -147,6 +148,7 @@ namespace Tassel.Service.Utils.Extensionss {
         public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(7);
         public string RegisterPath { get; set; } = TokenProviderEntry.RegisterPath;
         public string LoginPath { get; set; } = TokenProviderEntry.LoginPath;
+        public string WeiboCheckPath { get; set; } = TokenProviderEntry.WeiboCheckPath;
         public SigningCredentials SigningCredentials { get; set; }
     }
 
