@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
+using Wallace.Core.Helpers.Providers;
 
 namespace Tassel.Model.Models {
 

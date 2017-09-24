@@ -35,7 +35,6 @@ using Tassel.API.Utils.Extensions;
 using Wallace.Core.Helpers.Controllers;
 using Tassel.Model.Models;
 using Tassel.Service.Utils.Extensionss;
-using Tassel.DomainModel.Models;
 using Tassel.Services.Contract;
 using System.IdentityModel.Tokens.Jwt;
 using Tassel.API.Utils.Authorization;
@@ -47,10 +46,12 @@ namespace Tassel.Service.Controllers {
     public class IdentityController : Controller {
 
         private APIDB db;
+        private IWeiboOAuthService<User> weibo;
         private IIdentityService<JwtSecurityToken, TokenProviderOptions, User> identity;
 
-        public IdentityController(APIDB db, IIdentityService<JwtSecurityToken, TokenProviderOptions, User> isrv) {
+        public IdentityController(APIDB db, IIdentityService<JwtSecurityToken, TokenProviderOptions, User> isrv, IWeiboOAuthService<User> WEOBO_SRV) {
             this.db = db;
+            this.weibo = WEOBO_SRV;
             this.identity = isrv;
         }
 
@@ -83,15 +84,15 @@ namespace Tassel.Service.Controllers {
 
         [HttpGet("weibo_access")]
         public async Task<JsonResult> WeiboAccess(string code, string redirect_url) {
-            var (result, succeed, error) = await this.identity.GetWeiboTokenByCodeAsync(code, redirect_url);
+            var (result, succeed, error) = await this.weibo.GetWeiboTokenByCodeAsync(code, redirect_url);
             if (!succeed) {
                 return this.JsonFormat(false, JsonStatus.WeiboAccessFailed, error, null);
             }
-            var (infos, succeed02, error02) = await this.identity.GetWeiboUserInfosAsync(result.Uid, result.AccessToken);
+            var (infos, succeed02, error02) = await this.weibo.GetWeiboUserInfosAsync(result.Uid, result.AccessToken);
             if (!succeed02) {
                 return this.JsonFormat(false, JsonStatus.WeiboInfosFetchFailed, error02, null);
             }
-            var (user, succ03, error03) = this.identity.TryCreateOrGetUserByWeibo(infos);
+            var (user, succ03, error03) = this.weibo.TryCreateOrGetUserByWeibo(infos);
             if (!succ03) {
                 return this.JsonFormat(false, JsonStatus.WeiboUserCheckFailed, error03, null);
             }

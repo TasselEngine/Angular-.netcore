@@ -1,12 +1,11 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Tassel.Service.Utils.Extensionss;
 using Tassel.Services.Contract;
 using System.Linq.Expressions;
-using Tassel.DomainModel.Models;
+using Tassel.Model.Models;
 using Wallace.Core.Helpers.Format;
 using System.Security.Claims;
 using System.Linq;
@@ -15,8 +14,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Diagnostics;
 using System.IO;
-using Newtonsoft.Json;
-using Tassel.Model.Models;
+using Wallace.Core.Helpers.Providers;
 
 namespace Tassel.Services.Service {
     public class IdentityService : IIdentityService<JwtSecurityToken, TokenProviderOptions, User> {
@@ -89,74 +87,74 @@ namespace Tassel.Services.Service {
             return (usrr, true, null);
         }
 
-        public async Task<(WeiboSuccessToken, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url) {
-            var oars = "client_id=185930524&client_secret=389e2d039b372cf2763c4842ea1c46d1&grant_type=authorization_code";
-            HttpContent hc = new StringContent(oars, Encoding.UTF8, "application/x-www-form-urlencoded");
-            using (var client = new HttpClient()) {
-                try {
-                    var result = await client.PostAsync($"https://api.weibo.com/oauth2/access_token?code={code}&redirect_uri={redirect_url}", hc);
-                    var conStr = await result.Content.ReadAsStringAsync();
-                    try {
-                        var succ_token = JsonHelper.FromJson<WeiboSuccessToken>(conStr);
-                        var fail_token = default(WeiboErrorToken);
-                        try {
-                            fail_token = JsonHelper.FromJson<WeiboErrorToken>(conStr);
-                        } catch {
-                            return (default(WeiboSuccessToken), false, "try get error message from response failed.");
-                        }
-                        return succ_token == null || succ_token.AccessToken == null ?
-                            (default(WeiboSuccessToken), false, fail_token?.ErrorDescription) :
-                            (succ_token, true, null);
-                    } catch {
-                        return (default(WeiboSuccessToken), false, "try read weibo access token from response failed.");
-                    }
-                } catch(Exception ex) {
-                    Debug.WriteLine($"error throws : {ex.StackTrace}");
-                    return (default(WeiboSuccessToken), false,"get weibo access token failed.");
-                }
-            }
-        }
+        //public async Task<(WeiboSuccessToken, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url) {
+        //    var oars = "client_id=185930524&client_secret=389e2d039b372cf2763c4842ea1c46d1&grant_type=authorization_code";
+        //    HttpContent hc = new StringContent(oars, Encoding.UTF8, "application/x-www-form-urlencoded");
+        //    using (var client = new HttpClient()) {
+        //        try {
+        //            var result = await client.PostAsync($"https://api.weibo.com/oauth2/access_token?code={code}&redirect_uri={redirect_url}", hc);
+        //            var conStr = await result.Content.ReadAsStringAsync();
+        //            try {
+        //                var succ_token = JsonHelper.FromJson<WeiboSuccessToken>(conStr);
+        //                var fail_token = default(WeiboErrorToken);
+        //                try {
+        //                    fail_token = JsonHelper.FromJson<WeiboErrorToken>(conStr);
+        //                } catch {
+        //                    return (default(WeiboSuccessToken), false, "try get error message from response failed.");
+        //                }
+        //                return succ_token == null || succ_token.AccessToken == null ?
+        //                    (default(WeiboSuccessToken), false, fail_token?.ErrorDescription) :
+        //                    (succ_token, true, null);
+        //            } catch {
+        //                return (default(WeiboSuccessToken), false, "try read weibo access token from response failed.");
+        //            }
+        //        } catch(Exception ex) {
+        //            Debug.WriteLine($"error throws : {ex.StackTrace}");
+        //            return (default(WeiboSuccessToken), false,"get weibo access token failed.");
+        //        }
+        //    }
+        //}
 
-        public async Task<(WeiboUser, bool, string)> GetWeiboUserInfosAsync(string uid, string access_token) {
-            using (var client = new HttpClient()) {
-                try {
-                    var result = await client.GetAsync($"https://api.weibo.com/2/users/show.json?access_token={access_token}&uid={uid}");
-                    var conStr = await result.Content.ReadAsStringAsync();
-                    return (JsonHelper.FromJson<WeiboUser>(conStr), true, conStr);
-                } catch(Exception ex) {
-                    Debug.WriteLine($"error throws : {ex.StackTrace}");
-                    return (null, false, "get weibo user infos failed.");
-                }
-            }
-        }
+        //public async Task<(WeiboUser, bool, string)> GetWeiboUserInfosAsync(string uid, string access_token) {
+        //    using (var client = new HttpClient()) {
+        //        try {
+        //            var result = await client.GetAsync($"https://api.weibo.com/2/users/show.json?access_token={access_token}&uid={uid}");
+        //            var conStr = await result.Content.ReadAsStringAsync();
+        //            return (JsonHelper.FromJson<WeiboUser>(conStr), true, conStr);
+        //        } catch(Exception ex) {
+        //            Debug.WriteLine($"error throws : {ex.StackTrace}");
+        //            return (null, false, "get weibo user infos failed.");
+        //        }
+        //    }
+        //}
 
-        public (User, bool, string) TryCreateOrGetUserByWeibo(WeiboUser wuser) {
-            var usrr = db.Users.Where(i => i.WeiboID == wuser.idstr).FirstOrDefault();
-            if (usrr != null)
-                return (usrr, true, "user is exist already");
-            usrr = IdentityProvider.CreateUserByWeibo(wuser);
-            var wusr = WeiboUserProvider.CreateUser(
-                wuser.idstr, wuser.screen_name, wuser.description, wuser.domain, wuser.avatar_large);
-            db.Add(usrr);
-            db.Add(wusr);
-            if (db.SaveChanges() <= 0)
-                return (null, false, "save user informations failed");
-            return (usrr, true, null);
-        }
+        //public (User, bool, string) TryCreateOrGetUserByWeibo(WeiboUser wuser) {
+        //    var usrr = db.Users.Where(i => i.WeiboID == wuser.idstr).FirstOrDefault();
+        //    if (usrr != null)
+        //        return (usrr, true, "user is exist already");
+        //    usrr = IdentityProvider.CreateUserByWeibo(wuser);
+        //    var wusr = WeiboUserProvider.CreateUser(
+        //        wuser.idstr, wuser.screen_name, wuser.description, wuser.domain, wuser.avatar_large);
+        //    db.Add(usrr);
+        //    db.Add(wusr);
+        //    if (db.SaveChanges() <= 0)
+        //        return (null, false, "save user informations failed");
+        //    return (usrr, true, null);
+        //}
 
-        public (User, bool, string) TryGetUserByWeibo(string uid) {
-            var usr = db.Users.Where(i => i.WeiboID == uid).FirstOrDefault();
-            if (usr == null)
-                return (null, false, "user not found");
-            return (usr, true, null);
-        }
+        //public (User, bool, string) TryGetUserByWeibo(string uid) {
+        //    var usr = db.Users.Where(i => i.WeiboID == uid).FirstOrDefault();
+        //    if (usr == null)
+        //        return (null, false, "user not found");
+        //    return (usr, true, null);
+        //}
 
-        public (WeiboDBUser, bool, string) SearchWeiboUserInfoByUID(string uid) {
-            var wuser = db.WeiboUsers.Where(i => i.UID == uid).FirstOrDefault();
-            if (wuser == null)
-                return (null, false, "weibo user info is not found");
-            return (wuser, true, null);
-        }
+        //public (WeiboDBUser, bool, string) SearchWeiboUserInfoByUID(string uid) {
+        //    var wuser = db.WeiboUsers.Where(i => i.UID == uid).FirstOrDefault();
+        //    if (wuser == null)
+        //        return (null, false, "weibo user info is not found");
+        //    return (wuser, true, null);
+        //}
 
     }
 }

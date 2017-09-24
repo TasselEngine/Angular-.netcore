@@ -16,6 +16,7 @@ using Tassel.Services.Contract;
 using System.IdentityModel.Tokens.Jwt;
 using Tassel.Services.Service;
 using Tassel.Model.Models;
+using Wallace.Core.Helpers.Providers;
 
 namespace Tassel.Service {
     public class Startup {
@@ -31,6 +32,8 @@ namespace Tassel.Service {
             services.AddApplicationDbContext(Configuration);
 
             services.AddScoped<IIdentityService<JwtSecurityToken, TokenProviderOptions, User>, IdentityService>();
+            services.AddScoped<IWeiboOAuthV2Option, WeiboOAuthV2Option>();
+            services.AddScoped<IWeiboOAuthService<User>, WeiboOAuthService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddTasselJwtBearer(options => {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Tassel.DomainModel.Models;
+using Tassel.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tassel.Service.Utils.Extensionss;
 using Tassel.Services.Contract;
-using Tassel.Model.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Wallace.Core.Helpers.Controllers;
 using System.Text;
@@ -36,6 +35,7 @@ namespace Tassel.Service.Utils.Middlewares {
 
         private readonly RequestDelegate skip;
         private readonly TokenProviderOptions opts;
+        private IWeiboOAuthService<User> weibo;
         private IIdentityService<JwtSecurityToken, TokenProviderOptions, User> identity;
         private IServiceProvider serviceProvider;
 
@@ -98,7 +98,8 @@ namespace Tassel.Service.Utils.Middlewares {
             var scopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope()) {
 
-                identity = scope.ServiceProvider.GetRequiredService<IIdentityService<JwtSecurityToken, TokenProviderOptions, User>>();
+                this.identity = scope.ServiceProvider.GetRequiredService<IIdentityService<JwtSecurityToken, TokenProviderOptions, User>>();
+                this.weibo = scope.ServiceProvider.GetRequiredService<IWeiboOAuthService<User>>();
 
                 var (user, error) = GetIdentity(param, type);
                 if (error != null) {
@@ -122,7 +123,7 @@ namespace Tassel.Service.Utils.Middlewares {
                 var wechat = default(dynamic);
                 var qq = default(dynamic);
                 if (type == ProviderType.Weibo) {
-                    (weibo, _, _) = this.identity.SearchWeiboUserInfoByUID(param.WeiboUid);
+                    (weibo, _, _) = this.weibo.SearchWeiboUserInfoByUID(param.WeiboUid);
                 }
 
                 model.Content = new {
@@ -152,7 +153,7 @@ namespace Tassel.Service.Utils.Middlewares {
             var (user, ok, error) =
                 type == ProviderType.Register ? identity.TryRegister(param.UserName, param.Password) :
                 type == ProviderType.Login ? identity.TryLogin(param.UserName, param.Password) :
-                type == ProviderType.Weibo ? identity.TryGetUserByWeibo(param.WeiboUid) :
+                type == ProviderType.Weibo ? weibo.TryGetUserByWeibo(param.WeiboUid) :
                 (null, false, "failed");
             if (ok)
                 return (user, null);

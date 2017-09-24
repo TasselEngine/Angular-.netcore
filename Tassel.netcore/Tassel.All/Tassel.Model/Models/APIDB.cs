@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using Tassel.Model.Models;
 
-namespace Tassel.DomainModel.Models {
+namespace Tassel.Model.Models {
     public class APIDB : DbContext {
 
         public APIDB(DbContextOptions<APIDB> options) : base(options) {
