@@ -1,7 +1,8 @@
 import { SrvTimeFormat } from './../../interfaces/response.interface';
 import { serializeAs, deserializeAs } from 'cerialize';
-import { FormatTime, JsonHelper } from '../../../utils/app.utils';
+import { FormatTime } from 'ws-format-time';
 import { IWeiboUser } from './user.contract';
+import { JsonHelper } from '../../../utils/app.utils';
 
 export class WeiboUser {
 

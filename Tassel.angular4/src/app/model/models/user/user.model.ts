@@ -1,6 +1,6 @@
 import { IUserBase, UserType } from './user.contract';
 import { SrvTimeFormat } from './../../interfaces/response.interface';
-import { FormatTime } from '../../../utils/app.utils';
+import { FormatTime } from 'ws-format-time';
 import { serializeAs, deserialize, deserializeAs } from 'cerialize';
 import { JsonHelper } from '../../../utils/app.utils';
 import { WeiboUser } from './weibo.model';
