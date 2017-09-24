@@ -24,7 +24,7 @@ namespace Tassel.Service.Utils.Middlewares {
             TokenProviderOptions opts) => builder.UseMiddleware<TokenCreatorMiddleware>(Options.Create(opts));
     }
 
-    enum ProviderType { Login, Register, Weibo ,Undefined }
+    enum ProviderType { Login, Register, Weibo, Undefined }
 
     class PostParams {
         public string UserName { get; set; }
@@ -40,8 +40,8 @@ namespace Tassel.Service.Utils.Middlewares {
         private IServiceProvider serviceProvider;
 
         public TokenCreatorMiddleware(
-            IServiceProvider serviceProvider, 
-            RequestDelegate next, 
+            IServiceProvider serviceProvider,
+            RequestDelegate next,
             IOptions<TokenProviderOptions> options) {
             this.serviceProvider = serviceProvider;
             skip = next;
@@ -118,9 +118,11 @@ namespace Tassel.Service.Utils.Middlewares {
                 model.Status = JsonStatus.Succeed;
                 model.Message = null;
 
-                dynamic trd_user = null;
+                var weibo = default(dynamic);
+                var wechat = default(dynamic);
+                var qq = default(dynamic);
                 if (type == ProviderType.Weibo) {
-                    (trd_user, _, _) = this.identity.SearchWeiboUserInfoByUID(param.WeiboUid);
+                    (weibo, _, _) = this.identity.SearchWeiboUserInfoByUID(param.WeiboUid);
                 }
 
                 model.Content = new {
@@ -128,7 +130,11 @@ namespace Tassel.Service.Utils.Middlewares {
                     expires = (int)opts.Expiration.TotalSeconds,
                     details = new {
                         user = user,
-                        more = trd_user
+                        more = new {
+                            weibo = weibo,
+                            wechat = wechat,
+                            qq = qq
+                        }
                     },
                 };
 
@@ -146,7 +152,7 @@ namespace Tassel.Service.Utils.Middlewares {
             var (user, ok, error) =
                 type == ProviderType.Register ? identity.TryRegister(param.UserName, param.Password) :
                 type == ProviderType.Login ? identity.TryLogin(param.UserName, param.Password) :
-                type == ProviderType.Weibo? identity.TryGetUserByWeibo(param.WeiboUid):
+                type == ProviderType.Weibo ? identity.TryGetUserByWeibo(param.WeiboUid) :
                 (null, false, "failed");
             if (ok)
                 return (user, null);
