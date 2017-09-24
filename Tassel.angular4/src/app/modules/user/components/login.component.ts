@@ -33,8 +33,6 @@ export class LoginComponent extends TasselComponentBase implements OnInit {
         private server: ServerService,
         private route: ActivatedRoute) {
         super();
-        const a = new FormatTime([1988, 1, 1, 8, 8, 3, 0], 0);
-        console.log(a.FormatDateTime);
     }
 
     ngOnInit(): void {

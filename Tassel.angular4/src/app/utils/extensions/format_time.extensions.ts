@@ -9,7 +9,7 @@ export class FormatTime {
 
     public get Years() { return this.time.getFullYear(); }
     public get Months() { return this.time.getMonth(); }
-    public get Days() { return this.time.getDay(); }
+    public get Days() { return this.time.getDate(); }
     public get Hours() { return this.time.getHours(); }
     public get Minutes() { return this.time.getMinutes(); }
     public get Seconds() { return this.time.getSeconds(); }
@@ -23,7 +23,7 @@ export class FormatTime {
 
     public static Parse = (pattern: string | RegExp, target: string, zone: number = 0, keys: string[] = ['Yr', 'Mth', 'Dy', 'h', 'm', 's', 'ms']) => {
         const coll = Regex.Create(pattern).SetKeys(...keys).Matches(target);
-        return new FormatTime([coll[target[0]], coll[target[1]], coll[target[2]], coll[target[3]], coll[target[4]], coll[target[5]], coll[target[6]]], zone);
+        return new FormatTime([coll[keys[0]], coll[keys[1]], coll[keys[2]], coll[keys[3]], coll[keys[4]], coll[keys[5]], coll[keys[6]]], zone);
     }
 
     constructor(param: TimeInput, zone: number = 0) {

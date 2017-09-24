@@ -9,5 +9,6 @@ export interface IResponse {
     [propName: string]: any;
 }
 
-export const SrvTimeFormat = '(.+?)-(.+?)-(.+?)T(.+?):(.+?):(.+?).([0-9]{3}).+';
+export const SrvTimeFormat = /(.+?)-(.+?)-(.+?)T(.+?):(.+?):(.+?).([0-9]{3}).+/;
+// export const SrvTimeFormat = '2017-09-24T03:33:03.8965564';
 
