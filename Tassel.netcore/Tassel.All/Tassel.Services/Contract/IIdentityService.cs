@@ -22,15 +22,5 @@ namespace Tassel.Services.Contract {
 
         (TUser,bool, string) GetUserDetailsByID(string uuid);
 
-        //Task<(WeiboSuccessToken, bool, string)> GetWeiboTokenByCodeAsync(string code, string redirect_url);
-
-        //Task<(WeiboUser, bool, string)> GetWeiboUserInfosAsync(string uid, string access_token);
-
-        //(TUser, bool, string) TryCreateOrGetUserByWeibo(WeiboUser wuser);
-
-        //(TUser, bool, string) TryGetUserByWeibo(string uid);
-
-        //(WeiboDBUser, bool, string) SearchWeiboUserInfoByUID(string uid);
-
     }
 }

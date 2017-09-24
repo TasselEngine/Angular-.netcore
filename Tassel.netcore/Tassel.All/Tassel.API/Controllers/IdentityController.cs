@@ -56,6 +56,17 @@ namespace Tassel.Service.Controllers {
         }
 
         [HttpGet]
+        [UserAuthorize]
+        public JsonResult GetUser() {
+            var uuid = this.HttpContext.Items.FirstOrDefault(i => i.Key == (object)TokenClaimsKey.UUID).Value as string;
+            if(uuid==null)
+                return this.JsonFormat(false, JsonStatus.Error,"user not login.");
+            var (user, succeed, error) = this.identity.GetUserDetailsByID(uuid);
+            var status = succeed ? JsonStatus.Succeed : JsonStatus.UserNotFound;
+            return this.JsonFormat(succeed, status, error, user);
+        }
+
+        [HttpGet("all")]
         [AdminAuthorize]
         public JsonResult GetAll() {
             return this.JsonFormat(true, content: this.identity.GetUsersListByFilter(i => true));
@@ -98,5 +109,14 @@ namespace Tassel.Service.Controllers {
             }
             return this.JsonFormat(true, JsonStatus.Succeed, null, new { wuid = infos.idstr });
         }
+
+        [HttpGet("weibo_details/{uid}")]
+        public JsonResult WeiboDetails(string uid) {
+            var (wuser, succeed, error) = this.weibo.SearchWeiboUserInfoByUID(uid);
+            var status = succeed ? JsonStatus.Succeed : JsonStatus.WeiboDetailsNotFound;
+            return this.JsonFormat(succeed, status, error, wuser);
+        }
+
     }
+
 }

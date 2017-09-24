@@ -46,6 +46,7 @@ namespace Tassel.Model.Models {
         WeiboAccessFailed = 120,
         WeiboInfosFetchFailed = 121,
         WeiboUserCheckFailed = 122,
+        WeiboDetailsNotFound = 123,
         Error = 255
     }
 

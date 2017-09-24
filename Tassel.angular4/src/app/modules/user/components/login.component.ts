@@ -20,7 +20,9 @@ export class LoginComponent extends TasselComponentBase implements OnInit {
     public InputPsdt: string;
 
     public get WeiboAuth() {
-        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href}`;
+        let href = window.location.href;
+        href = href.substring(0, href.indexOf('?'));
+        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${href}`;
     }
 
     private weibo_code: string;
@@ -41,8 +43,7 @@ export class LoginComponent extends TasselComponentBase implements OnInit {
             if (this.weibo_code) {
                 this.toast.SuccessToast('微博授权成功', this.weibo_code);
                 let href = window.location.href;
-                const index = href.indexOf('?');
-                href = href.substring(0, index);
+                href = href.substring(0, href.indexOf('?'));
                 this.identity.TryWeiboAccessAsync(this.weibo_code, href);
             }
         });
