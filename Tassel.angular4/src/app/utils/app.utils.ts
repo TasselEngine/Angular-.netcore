@@ -1,3 +1,4 @@
+import { NavigationDelegator } from './extensions/navigation.extensions';
 import { JsonHelper } from './helpers/typed_json.helper';
 import { FormatTime, TimeZone, TimeInput } from './extensions/format_time.extensions';
 import { GlobalInjection } from './helpers/global_injector.helper';
@@ -11,7 +12,8 @@ export {
 export {
     FormatTime,
     TimeZone,
-    TimeInput
+    TimeInput,
+    NavigationDelegator
 };
 
 export {

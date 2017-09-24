@@ -19,14 +19,6 @@ export class LoginComponent extends TasselComponentBase implements OnInit {
     public InputAccount: string;
     public InputPsdt: string;
 
-    public get WeiboAuth() {
-        let href = window.location.href;
-        href = href.substring(0, href.indexOf('?'));
-        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${href}`;
-    }
-
-    private weibo_code: string;
-
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
@@ -38,15 +30,7 @@ export class LoginComponent extends TasselComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe(queryParams => {
-            this.weibo_code = queryParams.code;
-            if (this.weibo_code) {
-                this.toast.SuccessToast('微博授权成功', this.weibo_code);
-                let href = window.location.href;
-                href = href.substring(0, href.indexOf('?'));
-                this.identity.TryWeiboAccessAsync(this.weibo_code, href);
-            }
-        });
+
     }
 
 }

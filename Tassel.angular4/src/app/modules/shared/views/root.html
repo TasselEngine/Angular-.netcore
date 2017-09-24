@@ -2,6 +2,22 @@
   <nz-layout TasselFullContent class="layout">
     <nz-header style="background-color:#fff">
       <div class="logo"></div>
+      <nz-popover *ngIf="identity.IsLogined" [nzTitle]="PopoverTitle" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'">
+        <div style="float:right" nz-popover>
+          <div *ngIf="CurrentUser.WeiboUser">
+            <img [src]="CurrentUser.WeiboUser.AvatarUrl" style="width:42px;height:42px;border-radius:50%;cursor:pointer" />
+          </div>
+          <div *ngIf="!CurrentUser.WeiboUser">
+            <i class="anticon anticon-smile-o"></i>
+          </div>
+        </div>
+        <ng-template #nzTemplate>
+          <a (click)='Logout()'>Logout</a>
+        </ng-template>
+      </nz-popover>
+      <div *ngIf="!identity.IsLogined" style="float:right">
+        <a [href]="WeiboAuth">Login</a>
+      </div>
       <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
         <li nz-menu-item><a routerLink="/index" routerLinkActive="active">Index</a></li>
         <li nz-menu-item>nav 2</li>

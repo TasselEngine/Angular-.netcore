@@ -7,32 +7,32 @@ export class WeiboUser {
 
     @serializeAs('id')
     @deserializeAs(Number, 'id')
-    id: number;
+    private id: number;
     public get ID(): number { return this.id; }
 
     @serializeAs('uid')
     @deserializeAs('uid')
-    uid: string;
+    private uid: string;
     public get UID(): string { return this.uid; }
 
     @serializeAs('screen_name')
     @deserializeAs('screen_name')
-    screen_name: string;
+    private screen_name: string;
     public get ScreenName(): string { return this.screen_name; }
 
     @serializeAs('description')
     @deserializeAs('description')
-    description: string;
+    private description: string;
     public get Description(): string { return this.description; }
 
     @serializeAs('domain')
     @deserializeAs('domain')
-    domain: string;
+    private domain: string;
     public get Domain(): string { return this.domain; }
 
     @serializeAs('avatar_url')
     @deserializeAs('avatar_url')
-    avatar_url: string;
+    private avatar_url: string;
     public get AvatarUrl(): string { return this.avatar_url; }
 
     @serializeAs('create_time')
