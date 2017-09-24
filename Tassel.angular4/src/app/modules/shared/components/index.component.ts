@@ -17,20 +17,4 @@ export class IndexComponent {
 
     constructor(private identity: IdentityService) { }
 
-    public Login = () => {
-        this.identity.TryLoginAsync('miao17game', '2w3e4r5t');
-    }
-
-    public Register = () => {
-        this.identity.TryRegisterAsync('miao17game', '2w3e4r5t');
-    }
-
-    public Get = () => {
-        this.identity.TryGetAllUsersAsync();
-    }
-
-    public GetOne = () => {
-        this.identity.TryGetUserDetailsAsync();
-    }
-
 }

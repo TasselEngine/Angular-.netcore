@@ -1,4 +1,6 @@
 
+export enum UserType { Base, Weibo, Wechat, QQ }
+
 export interface IUserBase {
     uuid: string;
     role_id: number;
