@@ -32,7 +32,7 @@
     "ws-async-base": "^1.0.2",
     "ws-format-httprequest": "^1.0.3",
     "ws-format-time": "^1.0.1",
-    "ws-logger": "^1.1.4",
+    "ws-logger": "^1.1.5",
     "ws-regex": "^1.0.4",
     "zone.js": "^0.8.4"
   },

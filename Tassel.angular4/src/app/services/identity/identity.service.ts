@@ -11,6 +11,7 @@ import { HttpType, IError } from 'ws-format-httprequest';
 import { LogType, LoggerService, Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { RequestOptions, Http, Response, Headers } from '@angular/http';
+import { IdentityUtils } from '../../model/models/user/identity.model';
 
 @Injectable()
 export class IdentityService extends HttpAsyncClientBase<IResponse> {
@@ -52,24 +53,16 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
      */
     public BuildUserStateAsync = async () => {
         const tklocal = window.localStorage.getItem(this.tokenKey);
-        const onj = JsonHelper.FromJSON(tklocal);
-        if (tklocal && onj && onj.token) {
+        if (tklocal) {
             this.logger.Debug(['Try to build user status by token exist', 'The token is read form localStorage.'], 'BuildUserStateAsync');
-            this.setOptions(onj.token, false);
-            const [succeed, code, error, user] = await this.getDetailsAsync();
+            this.setOptions(tklocal, false);
+            const [succeed, code, error, [user, vuser]] = await this.getDetailsAsync();
             if (!succeed) {
                 this.logger.Error(['Fetch user infos failed', 'Server Errors.'], 'BuildUserStateAsync');
                 return;
             }
             if (code === ServerStatus.Succeed) {
-                this.user = user;
-                if (onj.type === UserType.Weibo) {
-                    this.logger.Debug(['Need to fetch Weibo user infos', 'Because the type in localStorage is weibo-type'], 'BuildUserStateAsync');
-                    const [succ02, code02, error02, wuser] = await this.getWeiboDetailsAsync(user.WeiboID);
-                    if (succ02 && code02 === ServerStatus.Succeed) {
-                        this.user.WeiboUser = wuser;
-                    }
-                }
+                this.user = IdentityUtils.PrepareThirdUser(user, vuser);
                 this.logined = true;
             } else {
                 this.logger.Warn(['Fetch user infos bad', 'See the exceptions below.', error.msg], 'BuildUserStateAsync');
@@ -116,7 +109,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             return;
         }
         if (code === ServerStatus.Succeed) {
-            const [succ02, code02, error02, [user, wuser, token]] = await this.weiboCheckInAsync(wuid);
+            const [succ02, code02, error02, [[user, wuser], token]] = await this.weiboCheckInAsync(wuid);
             if (!succ02) {
                 this.logger.Error(['Fetch Weibo user infos failed', 'Server Errors.'], 'TryWeiboAccessAsync');
                 return;
@@ -137,7 +130,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     public Logout = () => {
         this.user = undefined;
-        window.localStorage.setItem(this.tokenKey, undefined);
+        window.localStorage.setItem(this.tokenKey, '');
         this.logined = false;
         this.toast.InfoMessage('Logout successfully.');
     }
@@ -157,7 +150,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     }
 
     private setLocalStorage = (user: User, token: string): void => {
-        window.localStorage.setItem(this.tokenKey, JsonHelper.ToJSON({ token: token, type: this.user.UserType }));
+        window.localStorage.setItem(this.tokenKey, token);
     }
 
     private registerAsync = async (userName: string, psd: string) => {
@@ -192,21 +185,20 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_checkin`, this.formOptions, HttpType.POST, JSON.stringify({ wuid: wuid }));
         this.apiLog([succeed, error, response], 'Try to checkin at server by Weibo', 'weiboCheckInAsync');
         return succeed ?
-            StrictResult.Success<[User, WeiboUser, string]>(
-                response.status, [
-                    User.Parse((response.content.details || { user: undefined }).user),
-                    WeiboUser.Parse((response.content.details.more || { weibo: undefined }).weibo),
-                    response.content.token as string
-                ], response.message) :
-            StrictResult.Failed<[User, WeiboUser, string]>(error);
+            StrictResult.Success<[[User, WeiboUser], string]>(response.status, [
+                IdentityUtils.ParseUserFor<WeiboUser>((response.content || { details: null }).details, UserType.Weibo),
+                response.content.token as string
+            ], response.message) :
+            StrictResult.Failed<[[User, WeiboUser], string]>(error);
     }
 
     private getDetailsAsync = async () => {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch current user infos', 'getDetailsAsync');
         return succeed ?
-            StrictResult.Success(response.status, User.Parse(response.content), response.message) :
-            StrictResult.Failed<User>(error);
+            StrictResult.Success<[User, any]>(response.status, [
+                User.Parse((response.content || { user: null }).user), (response.content || { more: null }).more], response.message) :
+            StrictResult.Failed<[User, any]>(error);
     }
 
     private getUserDetailsAsync = async (uuid: string) => {

@@ -16,6 +16,11 @@ export class WeiboUser {
     private uid: string;
     public get UID(): string { return this.uid; }
 
+    @serializeAs('access_token')
+    @deserializeAs('access_token')
+    private access_token: string;
+    public get AccessToken(): string { return this.access_token; }
+
     @serializeAs('screen_name')
     @deserializeAs('screen_name')
     private screen_name: string;

@@ -70,7 +70,7 @@ export class User {
 
     @serializeAs('wechat_token')
     @deserializeAs('wechat_token')
-    wechat_token: string;
+    private wechat_token: string;
     public get WechatID(): string { return this.wechat_token; }
 
     @serializeAs('qq_token')
@@ -82,6 +82,11 @@ export class User {
     @deserializeAs('avatar')
     private avatar: string;
     public get Avatar(): string { return this.avatar; }
+
+    @serializeAs('is_third_part')
+    @deserializeAs('is_third_part')
+    private is_3rd: boolean;
+    public get IsThirdPart(): boolean { return this.is_3rd; }
 
     private user_type: UserType = UserType.Base;
     public get UserType(): UserType { return this.user_type; }
