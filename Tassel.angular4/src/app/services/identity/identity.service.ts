@@ -11,7 +11,6 @@ import { HttpType, IError } from 'ws-format-httprequest';
 import { LogType, LoggerService, Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { RequestOptions, Http, Response, Headers } from '@angular/http';
-import { IdentityUtils } from '../../model/models/user/identity.model';
 
 @Injectable()
 export class IdentityService extends HttpAsyncClientBase<IResponse> {

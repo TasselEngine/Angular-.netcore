@@ -1,15 +1,6 @@
 
 export enum UserType { Base, Weibo, Wechat, QQ }
 
-export interface IServerUserReturn {
-    user?: IUserBase;
-    more?: {
-        weibo?: IWeiboUser;
-        wechat?: any;
-        qq?: any;
-    };
-}
-
 export interface IUserBase {
     uuid: string;
     role_id: number;
