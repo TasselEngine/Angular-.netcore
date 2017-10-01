@@ -15,6 +15,7 @@ export interface IUserBase {
     role_id: number;
     user_name: string;
     email: string;
+    display_name: string;
     family_name: string;
     given_name: string;
     gender: number;
@@ -29,13 +30,18 @@ export interface IUserBase {
 }
 
 export interface IWeiboUser {
-    id: number;
-    uid: string;
+    id?: number;
+    uid?: string;
     access_token: string;
     screen_name: string;
     description: string;
     domain: string;
     avatar_url: string;
-    create_time: number;
-    update_time: string;
+    create_time?: number;
+    update_time?: string;
+}
+
+export interface IUnionUser {
+    IWeiboUser;
+    IUserBase;
 }

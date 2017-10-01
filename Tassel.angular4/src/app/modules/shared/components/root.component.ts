@@ -5,6 +5,7 @@ import { IdentityService } from './../../../services/identity/identity.service';
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { ServerService } from '../../../services/server/server.service';
 import { pageShowAnimation } from '../../../utils/app.utils';
+import { UserType } from '../../../model/models/user/user.contract';
 
 @Component({
   selector: 'tassel-root',
@@ -19,7 +20,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit {
   public get CurrentUser() { return this.identity.CurrentUser; }
   public get PopoverTitle() {
     return !this.CurrentUser ? '未登录' :
-      this.CurrentUser.WeiboUser ? this.CurrentUser.WeiboUser.ScreenName :
+      this.CurrentUser.UserType !== UserType.Base ? this.CurrentUser.ScreenName :
         this.CurrentUser.UserName;
   }
 
@@ -38,17 +39,17 @@ export class RootComponent extends TasselNavigationBase implements OnInit {
     this.route.queryParams.subscribe(async queryParams => {
       this.weibo_code = queryParams.code;
       if (this.weibo_code) {
-        const href = Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0];
-        await this.identity.TryWeiboAccessAsync(this.weibo_code, href);
+        await this.identity.TryWeiboAccessAsync(this.weibo_code, Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0]);
         this.navigator.GoHome();
       }
     });
   }
 
   public Logout = () => {
-    this.identity.Logout();
-    this.ShowPopover = false;
-    this.navigator.GoHome();
+    this.identity.LogoutAsync(() => {
+      this.ShowPopover = false;
+      this.navigator.GoHome();
+    });
   }
 
 }

@@ -4,10 +4,10 @@
       <div class="logo"></div>
       <nz-popover *ngIf="identity.IsLogined" [nzTitle]="PopoverTitle" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'">
         <div style="float:right" nz-popover>
-          <div *ngIf="CurrentUser.WeiboUser">
-            <img [src]="CurrentUser.WeiboUser.AvatarUrl" style="width:42px;height:42px;border-radius:50%;cursor:pointer" />
+          <div *ngIf="CurrentUser.UserType===1">
+            <img [src]="CurrentUser.AvatarUrl" style="width:42px;height:42px;border-radius:50%;cursor:pointer" />
           </div>
-          <div *ngIf="!CurrentUser.WeiboUser">
+          <div *ngIf="CurrentUser.UserType!==1">
             <i class="anticon anticon-smile-o"></i>
           </div>
         </div>
@@ -26,7 +26,7 @@
     </nz-header>
 
     <nz-layout TasselFullContent style="padding:24px 48px;">
-      <nz-layout TasselFullContent style="padding:12px 0px;background:#fff;border-radius:4px;">
+      <nz-layout TasselFullContent style="padding:12px 0px;background:#fff;border-radius:1px;">
         <nz-sider [nzWidth]="280" style="background:#fff">
           <ul nz-menu [nzMode]="'inline'" style="height:100%">
             <li nz-submenu>

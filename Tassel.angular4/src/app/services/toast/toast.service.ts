@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NzModalService, NzMessageService, NzNotificationService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService, NzNotificationService, NzModalSubject } from 'ng-zorro-antd';
 
 @Injectable()
 export class ToastService {
@@ -60,6 +60,20 @@ export class ToastService {
 
     public readonly TryRemoveToast = (m_id: string): void => {
         this.notify.remove(m_id);
+    }
+
+    public readonly ComponentModal = (title: any, component: any, params?: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+        return this.modal.open({
+            title: title,
+            content: component,
+            width: width,
+            closable: closable,
+            maskClosable: maskClosable,
+            footer: false,
+            onOk: funcs[0],
+            onCancel: funcs[1],
+            componentParams: params,
+        });
     }
 
 }

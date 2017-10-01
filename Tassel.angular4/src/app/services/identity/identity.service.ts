@@ -1,7 +1,7 @@
 import { WeiboUser } from './../../model/models/user/weibo.model';
 import { IResponse, ServerStatus } from '../../model/interfaces/response.interface';
 import { UserType } from '../../model/models/user/user.contract';
-import { User } from './../../model/models/user/user.model';
+import { User, UnionUser } from './../../model/models/user/user.model';
 
 import { ServerService } from '../server/server.service';
 import { HttpAsyncClientBase } from '../base/service.base';
@@ -22,8 +22,8 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     private logined = false;
     public get IsLogined(): boolean { return this.logined; }
 
-    private user: User;
-    public get CurrentUser(): User { return this.user; }
+    private user: UnionUser;
+    public get CurrentUser(): UnionUser { return this.user; }
 
     private formOptions: RequestOptions;
     public get FormOptions() { return this.formOptions; }
@@ -56,13 +56,13 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         if (tklocal) {
             this.logger.Debug(['Try to build user status by token exist', 'The token is read form localStorage.'], 'BuildUserStateAsync');
             this.setOptions(tklocal, false);
-            const [succeed, code, error, [user, vuser]] = await this.getDetailsAsync();
+            const [succeed, code, error, user] = await this.getDetailsAsync();
             if (!succeed) {
                 this.logger.Error(['Fetch user infos failed', 'Server Errors.'], 'BuildUserStateAsync');
                 return;
             }
             if (code === ServerStatus.Succeed) {
-                this.user = IdentityUtils.PrepareThirdUser(user, vuser);
+                this.user = user;
                 this.logined = true;
             } else {
                 this.logger.Warn(['Fetch user infos bad', 'See the exceptions below.', error.msg], 'BuildUserStateAsync');
@@ -109,15 +109,13 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             return;
         }
         if (code === ServerStatus.Succeed) {
-            const [succ02, code02, error02, [[user, wuser], token]] = await this.weiboCheckInAsync(wuid);
+            const [succ02, code02, error02, [user, token]] = await this.weiboCheckInAsync(wuid);
             if (!succ02) {
                 this.logger.Error(['Fetch Weibo user infos failed', 'Server Errors.'], 'TryWeiboAccessAsync');
                 return;
             }
             if (code02 === ServerStatus.Succeed) {
                 this.user = user;
-                this.user.UserType = UserType.Weibo;
-                this.user.WeiboUser = wuser;
                 this.setOptions(token);
                 this.setLocalStorage(this.user, token);
             } else {
@@ -128,11 +126,20 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
-    public Logout = () => {
+    public LogoutAsync = async (then: () => void = () => null) => {
+        if (this.user.UserType === UserType.Weibo) {
+            const [succeed, code, error, result] = await this.weiboRevokeAsync(this.user.AccessToken);
+            if (!succeed || code !== ServerStatus.Succeed) {
+                this.logger.Warn(['Revoke token failed in Weibo', 'see more error below here : ', succeed ? result : error], 'LogoutAsync');
+                this.toast.WarnToast('Logout failed', 'Can not revoke from Weibo OAuth2.0');
+                return;
+            }
+        }
         this.user = undefined;
         window.localStorage.setItem(this.tokenKey, '');
         this.logined = false;
         this.toast.InfoMessage('Logout successfully.');
+        await this.WaitAndDo(then, 200);
     }
 
     private setOptions = (token: string, setStatus = true): void => {
@@ -158,9 +165,9 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             `${this.Root}/user/register`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
         this.apiLog([succeed, error, response], 'Try to register', 'registerAsync');
         return succeed ?
-            StrictResult.Success<[User, string]>(
-                response.status, [User.Parse((response.content.details || { user: undefined }).user), response.content.token as string], response.message) :
-            StrictResult.Failed<[User, string]>(error);
+            StrictResult.Success<[UnionUser, string]>(
+                response.status, [UnionUser.ParseUnion((response.content.details || { user: undefined }).user), response.content.token as string], response.message) :
+            StrictResult.Failed<[UnionUser, string]>(error);
     }
 
     private loginAsync = async (userName: string, psd: string) => {
@@ -168,9 +175,9 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             `${this.Root}/user/login`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
         this.apiLog([succeed, error, response], 'Try to checkin at server', 'loginAsync');
         return succeed ?
-            StrictResult.Success<[User, string]>(
-                response.status, [User.Parse((response.content.details || { user: undefined }).user), response.content.token as string], response.message) :
-            StrictResult.Failed<[User, string]>(error);
+            StrictResult.Success<[UnionUser, string]>(
+                response.status, [UnionUser.ParseUnion((response.content.details || { user: undefined }).user), response.content.token as string], response.message) :
+            StrictResult.Failed<[UnionUser, string]>(error);
     }
 
     private weiboAccessAsync = async (code: string, redirect_url: string) => {
@@ -185,28 +192,33 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_checkin`, this.formOptions, HttpType.POST, JSON.stringify({ wuid: wuid }));
         this.apiLog([succeed, error, response], 'Try to checkin at server by Weibo', 'weiboCheckInAsync');
         return succeed ?
-            StrictResult.Success<[[User, WeiboUser], string]>(response.status, [
-                IdentityUtils.ParseUserFor<WeiboUser>((response.content || { details: null }).details, UserType.Weibo),
-                response.content.token as string
-            ], response.message) :
-            StrictResult.Failed<[[User, WeiboUser], string]>(error);
+            StrictResult.Success<[UnionUser, string]>(response.status, [
+                UnionUser.ParseUnion((response.content || { user: undefined }).user), response.content.token as string], response.message) :
+            StrictResult.Failed<[UnionUser, string]>(error);
+    }
+
+    private weiboRevokeAsync = async (access_token: string) => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_revoke/${access_token}`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to revoke current user fron weibo oauth 2.0', 'weiboRevokeAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as boolean, response.message) :
+            StrictResult.Failed<boolean>(error);
     }
 
     private getDetailsAsync = async () => {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch current user infos', 'getDetailsAsync');
         return succeed ?
-            StrictResult.Success<[User, any]>(response.status, [
-                User.Parse((response.content || { user: null }).user), (response.content || { more: null }).more], response.message) :
-            StrictResult.Failed<[User, any]>(error);
+            StrictResult.Success<UnionUser>(response.status, UnionUser.ParseUnion((response.content || { user: null }).user)) :
+            StrictResult.Failed<UnionUser>(error);
     }
 
     private getUserDetailsAsync = async (uuid: string) => {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/${uuid}`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch someone of base user details', 'getUserDetailsAsync');
         return succeed ?
-            StrictResult.Success(response.status, User.Parse(response.content), response.message) :
-            StrictResult.Failed<User>(error);
+            StrictResult.Success(response.status, UnionUser.Parse(response.content), response.message) :
+            StrictResult.Failed<UnionUser>(error);
     }
 
     private getWeiboDetailsAsync = async (uid: string) => {
@@ -221,8 +233,8 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/all`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch user-list', 'getAllUsersAsync');
         return succeed ?
-            StrictResult.Success(response.status, User.Parse(response.content), response.message) :
-            StrictResult.Failed<User>(error);
+            StrictResult.Success(response.status, UnionUser.Parse(response.content), response.message) :
+            StrictResult.Failed<UnionUser>(error);
     }
 
     private apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {
