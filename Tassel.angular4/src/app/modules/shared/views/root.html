@@ -1,11 +1,11 @@
 <div TasselFullContent>
   <nz-layout TasselFullContent class="layout">
-    <nz-header style="background-color:#fff">
+    <nz-header style="background-color:#fff" *ngIf="!HideAll">
       <div class="logo"></div>
       <nz-popover *ngIf="identity.IsLogined" [nzTitle]="PopoverTitle" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'">
         <div style="float:right" nz-popover>
           <div *ngIf="CurrentUser.UserType===1">
-            <img [src]="CurrentUser.AvatarUrl" style="width:42px;height:42px;border-radius:50%;cursor:pointer" />
+            <img [src]="CurrentUser.AvatarUrl" style="width:32px;height:32px;border-radius:50%;cursor:pointer" />
           </div>
           <div *ngIf="CurrentUser.UserType!==1">
             <i class="anticon anticon-smile-o"></i>
@@ -16,7 +16,7 @@
         </ng-template>
       </nz-popover>
       <div *ngIf="!identity.IsLogined" style="float:right">
-        <a [href]="WeiboAuth">Login</a>
+        <a routerLink="/user/login" routerLinkActive="acrive">Login</a>
       </div>
       <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
         <li nz-menu-item><a routerLink="/index" routerLinkActive="active">Index</a></li>
@@ -25,9 +25,9 @@
       </ul>
     </nz-header>
 
-    <nz-layout TasselFullContent style="padding:24px 48px;">
+    <div TasselFullContent class="nz-layout" style="padding:24px 48px;" #rootContent>
       <nz-layout TasselFullContent style="padding:12px 0px;background:#fff;border-radius:1px;">
-        <nz-sider [nzWidth]="280" style="background:#fff">
+        <nz-sider [nzWidth]="280" [nzCollapsedWidth]="0" style="background:#fff" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null">
           <ul nz-menu [nzMode]="'inline'" style="height:100%">
             <li nz-submenu>
               <span title><i class="anticon anticon-user"></i>subnav 1</span>
@@ -55,7 +55,7 @@
           </div>
         </nz-content>
       </nz-layout>
-    </nz-layout>
+    </div>
 
   </nz-layout>
 </div>

@@ -1,0 +1,7 @@
+
+.nz-layout{
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    background: #ececec;
+}

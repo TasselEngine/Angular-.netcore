@@ -19,6 +19,7 @@ import { ToastService, ServerService, IdentityService } from './services/app.ser
   declarations: [
     RootComponent
   ],
+  entryComponents: [],
   imports: [
     BrowserModule,
     HttpModule,
