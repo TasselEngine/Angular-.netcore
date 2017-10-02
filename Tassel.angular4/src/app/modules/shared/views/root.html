@@ -1,34 +1,49 @@
 <div TasselFullContent>
   <nz-layout TasselFullContent class="layout">
     <nz-header style="background-color:#fff" *ngIf="!HideAll">
-      <div class="logo"></div>
-      <nz-popover *ngIf="identity.IsLogined" [nzTitle]="PopoverTitle" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'">
-        <div style="float:right" nz-popover>
-          <div *ngIf="CurrentUser.UserType===1">
-            <img [src]="CurrentUser.AvatarUrl" style="width:32px;height:32px;border-radius:50%;cursor:pointer" />
+      <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
+        [nzPlacement]="'bottomRight'">
+        <div style="float:right;height:64px" nz-popover>
+          <div *ngIf="CurrentUser.Photo">
+            <img [src]="CurrentUser.Photo" style="width:32px;height:32px;border-radius:50%;cursor:pointer" />
           </div>
-          <div *ngIf="CurrentUser.UserType!==1">
+          <div *ngIf="!CurrentUser.Photo" [style.margin-right]="HeaRight">
             <i class="anticon anticon-smile-o"></i>
           </div>
         </div>
         <ng-template #nzTemplate>
-          <a (click)='Logout()'>Logout</a>
+          <p> <a>Profile</a></p>
+          <p> <a (click)='Logout()'>Logout</a></p>
         </ng-template>
       </nz-popover>
-      <div *ngIf="!identity.IsLogined" style="float:right">
-        <a routerLink="/user/login" routerLinkActive="acrive">Login</a>
+      <div *ngIf="!identity.IsLogined" style="float:right;color:#108ee9;height:64px" [style.margin-right]="HeaRight">
+        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-right:5px">Register</a>
+        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-left:4px">Login</a>
       </div>
-      <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
-        <li nz-menu-item><a routerLink="/index" routerLinkActive="active">Index</a></li>
-        <li nz-menu-item>nav 2</li>
-        <li nz-menu-item>nav 3</li>
-      </ul>
+      <div style="display:flex;flex-direction:row;height:65px">
+        <div style="width:64px" [style.margin-left]="HeadLeft" *ngIf="!ShowSlider||HideAll">
+          <nz-popover [nzPlacement]="'bottomLeft'" nzTitle="MENU" [nzTrigger]="'click'">
+            <a nz-popover style="padding:24px"><i class="anticon anticon-appstore" style="font-size:18px"></i></a>
+            <ng-template #nzTemplate>
+              <div>
+                <p>List</p>
+                <p>List</p>
+              </div>
+            </ng-template>
+          </nz-popover>
+        </div>
+        <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px" #header>
+          <li nz-menu-item><a routerLink="/index" routerLinkActive="active">Index</a></li>
+          <li nz-menu-item>nav 2</li>
+          <li nz-menu-item>nav 3</li>
+        </ul>
+      </div>
     </nz-header>
 
     <div TasselFullContent class="nz-layout" style="padding:24px 48px;" #rootContent>
       <nz-layout TasselFullContent style="padding:12px 0px;background:#fff;border-radius:1px;">
         <nz-sider [nzWidth]="280" [nzCollapsedWidth]="0" style="background:#fff" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null">
-          <ul nz-menu [nzMode]="'inline'" style="height:100%">
+          <ul nz-menu [nzMode]="'inline'" style="height:100%;margin-left:-1px">
             <li nz-submenu>
               <span title><i class="anticon anticon-user"></i>subnav 1</span>
               <ul>

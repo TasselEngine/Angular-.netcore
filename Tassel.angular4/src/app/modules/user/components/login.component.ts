@@ -25,8 +25,8 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
     @HostBinding('style.display') display = 'block';
 
     public get WeiboAuth() {
-        const href = Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0];
-        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${href}user/login/`;
+        // const href = Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0];
+        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href}`;
     }
 
     constructor(
@@ -41,7 +41,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
         this.route.queryParams.subscribe(async queryParams => {
             this.weibo_code = queryParams.code;
             if (this.weibo_code) {
-                await this.identity.TryWeiboAccessAsync(this.weibo_code, Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0]);
+                await this.identity.TryWeiboAccessAsync(this.weibo_code, window.location.href.split('?')[0]);
                 this.navigator.GoHome();
             }
         });

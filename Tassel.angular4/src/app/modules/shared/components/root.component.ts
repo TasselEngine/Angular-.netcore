@@ -20,6 +20,8 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   public ShowPopover = false;
   public ShowSlider = true;
   public HideAll = false;
+  public HeadLeft = '0px';
+  public HeaRight = '0px';
 
   private route_type: string;
   public get RouteFlag(): string { return this.route_type; }
@@ -53,13 +55,17 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   }
 
   private checkView = () => {
-    // console.log('change view');
     const root = this.rootContent.nativeElement as HTMLDivElement;
-    // console.log(root.clientWidth);
     if (root.clientWidth > 1280) {
       this.ShowSlider = true;
+      this.render.setStyle(root, 'padding', '24px 48px');
+      this.HeadLeft = '0px';
+      this.HeaRight = '0px';
     } else {
       this.ShowSlider = false;
+      this.render.setStyle(root, 'padding', '24px 0px');
+      this.HeadLeft = '-50px';
+      this.HeaRight = '-28px';
     }
     setTimeout(this.checkView, 300);
   }

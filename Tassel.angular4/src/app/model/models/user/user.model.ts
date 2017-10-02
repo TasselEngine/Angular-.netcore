@@ -22,6 +22,11 @@ export class User {
     private user_name: string;
     public get UserName(): string { return this.user_name; }
 
+    @serializeAs('display_name')
+    @deserializeAs('display_name')
+    private display_name: string;
+    public get DisplayName(): string { return this.display_name; }
+
     @serializeAs('email')
     @deserializeAs('email')
     private email: string;
@@ -88,18 +93,18 @@ export class User {
     private is_3rd: boolean;
     public get IsThirdPart(): boolean { return this.is_3rd; }
 
-    @serializeAs('user_type')
-    @deserializeAs(Number, 'user_type')
-    private user_type: UserType = UserType.Base;
-    public get UserType(): UserType { return this.user_type; }
-    public set UserType(value: UserType) { this.user_type = value; }
-
     public static Parse = (iuser: IUserBase) => JsonHelper.FromJson<User>(JsonHelper.ToJSON(iuser), User);
 
 }
 
 @inheritSerialization(User)
 export class UnionUser extends User {
+
+    @serializeAs('user_type')
+    @deserializeAs(Number, 'user_type')
+    private user_type: UserType = UserType.Base;
+    public get UserType(): UserType { return this.user_type; }
+    public set UserType(value: UserType) { this.user_type = value; }
 
     @serializeAs('access_token')
     @deserializeAs('access_token')
@@ -125,6 +130,17 @@ export class UnionUser extends User {
     @deserializeAs('avatar_url')
     private avatar_url: string;
     public get AvatarUrl(): string { return this.avatar_url; }
+
+    public get Photo(): string {
+        return this.user_type !== UserType.Base ? this.avatar_url :
+            !this.Avatar ? 'data:image/png;base64,' + this.Avatar :
+                undefined;
+    }
+
+    public get FriendlyName(): string {
+        return this.user_type !== UserType.Base ? this.screen_name :
+            this.DisplayName || this.UserName;
+    }
 
     public static ParseUnion = (iuser: IUnionUser) => JsonHelper.FromJson<UnionUser>(JsonHelper.ToJSON(iuser), UnionUser);
 
