@@ -19,8 +19,8 @@ branches:
 cache:
   directories:
     - "Tassel.angular4/node_modules"
-before_script:
+before_script:  
+  - cd Tassel.angular4
   - npm install
 script:
-  - cd Tassel.angular4
   - npm run build:prod
