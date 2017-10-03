@@ -1,11 +1,25 @@
+# language: node_js
+# addons:
+#   chrome: stable
+# cache:
+#   directories:
+#     - "Tassel.angular4/node_modules"
+# node_js:
+#   - "8"
+# before_install:
+#     - "cd Tassel.angular4"
+#     - "npm install"
+
 language: node_js
-addons:
-  chrome: stable
+node_js:
+  - "8"
+branches:
+  only:
+    - master
 cache:
   directories:
     - "Tassel.angular4/node_modules"
-node_js:
-  - "8"
-before_install:
-    - "cd Tassel.angular4"
-    - "npm install"
+before_script:
+  - npm install
+script:
+  - ng build --prod
