@@ -1,76 +1,47 @@
-<div TasselFullContent>
-  <nz-layout TasselFullContent class="layout">
-    <nz-header style="background-color:#fff" *ngIf="!HideAll">
-      <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
-        [nzPlacement]="'bottomRight'">
-        <div style="float:right;height:64px" nz-popover>
-          <div *ngIf="CurrentUser.Photo">
-            <img [src]="CurrentUser.Photo" style="width:32px;height:32px;border-radius:50%;cursor:pointer" />
-          </div>
-          <div *ngIf="!CurrentUser.Photo" [style.margin-right]="HeaRight">
-            <i class="anticon anticon-smile-o"></i>
-          </div>
-        </div>
-        <ng-template #nzTemplate>
-          <p> <a>Profile</a></p>
-          <p> <a (click)='Logout()'>Logout</a></p>
-        </ng-template>
-      </nz-popover>
-      <div *ngIf="!identity.IsLogined" style="float:right;color:#108ee9;height:64px" [style.margin-right]="HeaRight">
-        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-right:5px">Register</a>
-        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-left:4px">Login</a>
-      </div>
-      <div style="display:flex;flex-direction:row;height:65px">
-        <div style="width:64px" [style.margin-left]="HeadLeft" *ngIf="!ShowSlider||HideAll">
-          <nz-popover [nzPlacement]="'bottomLeft'" nzTitle="MENU" [nzTrigger]="'click'">
-            <a nz-popover style="padding:24px"><i class="anticon anticon-appstore" style="font-size:18px"></i></a>
-            <ng-template #nzTemplate>
-              <div>
-                <p>List</p>
-                <p>List</p>
-              </div>
-            </ng-template>
-          </nz-popover>
-        </div>
-        <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px" #header>
-          <li nz-menu-item><a routerLink="/index" routerLinkActive="active">Index</a></li>
-          <li nz-menu-item>nav 2</li>
-          <li nz-menu-item>nav 3</li>
-        </ul>
-      </div>
-    </nz-header>
+<div TasselFullContent #rootContent>
+    <nz-layout TasselFullContent class="main-div">
+        <nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null" class="slider-div">
+            <div class="slider-inner">
+                <div class="slider-listgp">
+                    <img src="assets/img/icon.jpg" style="width:160;height:160px;border-radius:50%" />
+                    <p class="name-title"><span>Bruce Wayne</span></p>
+                    <p class="legend-title"><b>Desperado</b></p>
+                    <hr style="margin-top:12px;" />
+                    <div>
 
-    <div TasselFullContent class="nz-layout" style="padding:24px 48px;" #rootContent>
-      <nz-layout TasselFullContent style="padding:12px 0px;background:#fff;border-radius:1px;">
-        <nz-sider [nzWidth]="280" [nzCollapsedWidth]="0" style="background:#fff" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null">
-          <ul nz-menu [nzMode]="'inline'" style="height:100%;margin-left:-1px">
-            <li nz-submenu>
-              <span title><i class="anticon anticon-user"></i>subnav 1</span>
-              <ul>
-                <li nz-menu-item>option1</li>
-              </ul>
-            </li>
-            <li nz-submenu>
-              <span title><i class="anticon anticon-laptop"></i>subnav 2</span>
-              <ul>
-                <li nz-menu-item>option5</li>
-              </ul>
-            </li>
-            <li nz-submenu>
-              <span title><i class="anticon anticon-notification"></i>Settings</span>
-              <ul>
-                <li nz-menu-item><a routerLink="/settings" routerLinkActive="active">Overview</a></li>
-              </ul>
-            </li>
-          </ul>
+                    </div>
+                </div>
+            </div>
         </nz-sider>
-        <nz-content>
-          <div TasselFullContent>
-            <router-outlet></router-outlet>
-          </div>
+        <nz-content class="content-div">
+            <div class="content-inner" [style.background]="ShowBack?'#fff':'transparent'">
+                <link rel="stylesheet" href="assets/css/styles.css">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="user-div">
+                <nz-affix>
+                    <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
+                        [nzPlacement]="'bottomRight'">
+                        <div class="avatar-div" nz-popover>
+                            <div *ngIf="CurrentUser.Photo">
+                                <img [src]="CurrentUser.Photo" class="avatar-icon" />
+                            </div>
+                            <div *ngIf="!CurrentUser.Photo" [style.margin-right]="HeaRight">
+                                <i class="anticon anticon-smile-o"></i>
+                            </div>
+                        </div>
+                        <ng-template #nzTemplate>
+                            <p> <a>Profile</a></p>
+                            <p> <a (click)='Logout()'>Logout</a></p>
+                        </ng-template>
+                    </nz-popover>
+                    <div *ngIf="!identity.IsLogined && !HideAll" class="avatar-icon avatar-dark">
+                        <a routerLink="/user/login" routerLinkActive="acrive">
+                        <i class="anticon anticon-user nologin-icon" ></i>
+                    </a>
+                    </div>
+                </nz-affix>
+            </div>
         </nz-content>
-      </nz-layout>
-    </div>
-
-  </nz-layout>
+    </nz-layout>
 </div>

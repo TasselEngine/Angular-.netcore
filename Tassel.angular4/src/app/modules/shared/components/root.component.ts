@@ -10,7 +10,7 @@ import { UserType } from '../../../model/models/user/user.contract';
 
 @Component({
   selector: 'tassel-root',
-  templateUrl: './../views/root2.html',
+  templateUrl: './../views/root.html',
   styleUrls: [
     './../styles/root.css',
     './../styles/design.css'

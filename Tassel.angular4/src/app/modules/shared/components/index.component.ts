@@ -47,7 +47,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
 
     ngOnInit(): void {
         this._posts = [
-            { Cover: 'https://tse1-mm.cn.bing.net/th?id=OIP.C-XsFDZ4CpgjHkNFkqXQDAEsC7&p=0&pid=1.1', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 254 },
+            { Cover: 'https://tse1-mm.cn.bing.net/th?id=OIP.C-XsFDZ4CpgjHkNFkqXQDAEsC7&p=0&pid=1.1', Title: '我是一只猫', Summary: '中文测试', Like: 254 },
             { Cover: 'http://img5.duitang.com/uploads/item/201407/08/20140708235628_eGnGj.jpeg', Title: 'Europe Street beat', Like: 21, Stamp: 'XXXX-XX-XX' },
             { Title: 'No Picture Test', Summary: 'www.instagram.com', Like: 213, Stamp: 'XXXX-XX-XX' },
             { Cover: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 86 },
