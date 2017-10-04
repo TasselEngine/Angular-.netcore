@@ -12,6 +12,10 @@ interface IPost {
     Stamp?: string;
 }
 
+interface IAdaptor {
+    Col: number;
+}
+
 @Component({
     selector: 'tassel-root-index',
     templateUrl: './../views/index.html',
@@ -33,6 +37,9 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
 
     private _bindings: IPost[][] = [];
     public get Bindings() { return this._bindings; }
+
+    private _adaptor: IAdaptor = { Col: 4 };
+    public get Adaptor() { return this._adaptor; }
 
     constructor(
         private identity: IdentityService,
@@ -61,14 +68,17 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
 
     private rebuildView = async () => {
         const root = this.indexDiv.nativeElement as HTMLDivElement;
-        console.log(root.clientWidth);
-        if (root.clientWidth > 1240) {
+        if (root.clientWidth > 1200) {
+            this._adaptor.Col = 4;
             this._bindings = reselects(this._posts, 4);
-        } else if (root.clientWidth > 922) {
+        } else if (root.clientWidth > 882) {
+            this._adaptor.Col = 3;
             this._bindings = reselects(this._posts, 3);
-        } else if (root.clientWidth > 730) {
+        } else if (root.clientWidth > 690) {
+            this._adaptor.Col = 2;
             this._bindings = reselects(this._posts, 2);
         } else {
+            this._adaptor.Col = 1;
             this._bindings = [this._posts, [], [], []];
         }
         setTimeout(this.rebuildView, 150);

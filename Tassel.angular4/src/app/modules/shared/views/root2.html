@@ -1,18 +1,18 @@
 <div TasselFullContent #rootContent>
-    <nz-layout TasselFullContent>
-        <nz-sider [nzWidth]="320" [nzCollapsedWidth]="0" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null" class="slider-div">
+    <nz-layout TasselFullContent class="main-div">
+        <nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null" class="slider-div">
             <div class="slider-inner">
                 <p class="legend-title"><b>Websites</b></p>
             </div>
         </nz-sider>
         <nz-content class="content-div">
-            <div style="padding:8px;height:48px">
-                <div style="float:right;margin-top:4px;margin-right:15px;">
+            <div class="content-head" *ngIf="!HideAll">
+                <div class="avatar-group">
                     <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
                         [nzPlacement]="'bottomRight'">
-                        <div style="float:right;height:64px" nz-popover>
+                        <div class="avatar-div" nz-popover>
                             <div *ngIf="CurrentUser.Photo">
-                                <img [src]="CurrentUser.Photo" style="width:48px;height:48px;border-radius:50%;cursor:pointer" />
+                                <img [src]="CurrentUser.Photo" class="avatar-icon" />
                             </div>
                             <div *ngIf="!CurrentUser.Photo" [style.margin-right]="HeaRight">
                                 <i class="anticon anticon-smile-o"></i>
@@ -23,9 +23,9 @@
                             <p> <a (click)='Logout()'>Logout</a></p>
                         </ng-template>
                     </nz-popover>
-                    <div *ngIf="!identity.IsLogined" style="float:right;color:#108ee9;height:64px;margin-top:4px;" [style.margin-right]="HeaRight">
-                        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-right:5px">Register</a>
-                        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-left:4px;">Login</a>
+                    <div *ngIf="!identity.IsLogined" class="login-div" [style.margin-right]="HeaRight">
+                        <a routerLink="/user/login" routerLinkActive="acrive" class="register-part">Register</a>
+                        <a routerLink="/user/login" routerLinkActive="acrive" class="login-part">Login</a>
                     </div>
                 </div>
             </div>

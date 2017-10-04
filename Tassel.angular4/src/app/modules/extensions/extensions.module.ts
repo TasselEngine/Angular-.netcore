@@ -1,3 +1,4 @@
+import { AdaptorPipe } from './pipes/adaptor.pipe';
 import { PaddingDirective } from './directives/padding.directive';
 import { FullContentDirective } from './directives/fullcontent.directive';
 import { FormatPipe } from './pipes/format.pipe';
@@ -6,14 +7,16 @@ import { NgModule } from '@angular/core';
     declarations: [
         FormatPipe,
         FullContentDirective,
-        PaddingDirective
+        PaddingDirective,
+        AdaptorPipe
     ],
     imports: [],
     providers: [],
     exports: [
         FormatPipe,
         FullContentDirective,
-        PaddingDirective
+        PaddingDirective,
+        AdaptorPipe
     ],
 })
 export class ExtensionsModule { }
