@@ -32,7 +32,7 @@
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-      width: 20px;
+      width: 16px;
    }
     
    /* 滚动槽 */

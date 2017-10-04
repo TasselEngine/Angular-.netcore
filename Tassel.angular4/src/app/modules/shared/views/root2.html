@@ -23,9 +23,9 @@
                             <p> <a (click)='Logout()'>Logout</a></p>
                         </ng-template>
                     </nz-popover>
-                    <div *ngIf="!identity.IsLogined" style="float:right;color:#108ee9;height:64px" [style.margin-right]="HeaRight">
+                    <div *ngIf="!identity.IsLogined" style="float:right;color:#108ee9;height:64px;margin-top:4px;" [style.margin-right]="HeaRight">
                         <a routerLink="/user/login" routerLinkActive="acrive" style="margin-right:5px">Register</a>
-                        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-left:4px">Login</a>
+                        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-left:4px;">Login</a>
                     </div>
                 </div>
             </div>

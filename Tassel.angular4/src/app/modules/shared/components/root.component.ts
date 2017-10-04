@@ -66,12 +66,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
       this.ShowSlider = true;
       // this.render.setStyle(root, 'padding', '24px 48px');
       this.HeadLeft = '0px';
-      this.HeaRight = '0px';
+      // this.HeaRight = '0px';
     } else {
       this.ShowSlider = false;
       // this.render.setStyle(root, 'padding', '24px 0px');
       this.HeadLeft = '-50px';
-      this.HeaRight = '-28px';
+      // this.HeaRight = '-28px';
     }
     setTimeout(this.checkView, 300);
   }
