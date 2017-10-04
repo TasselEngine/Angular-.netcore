@@ -1,0 +1,55 @@
+
+:host ::ng-deep .custom-image img {
+    display: block;
+  }
+
+  :host ::ng-deep .custom-card {
+    padding: 8px 12px;
+  }
+
+  :host ::ng-deep .custom-card p {
+    color: #999;
+  }
+
+  :host ::ng-deep .ant-card-body {
+    padding: 2%;
+    min-height:120px;
+    cursor: pointer;
+    transition: 1s;
+    box-shadow: 2px 2px 12px #909090;
+  }
+
+  :host ::ng-deep .ant-card-body:hover {
+    transition: 1s;
+    box-shadow: 2px 2px 32px #686868;
+  }
+
+  .card-div{
+    width:94%;
+    margin-left:3%;
+    margin-right:3%;
+    margin-bottom:6%;
+  }
+
+  .pending{
+      margin-top:12px;
+      margin-bottom:8px;
+  }
+
+  .pending-div{
+      margin-left:12px;
+      margin-right:12px;
+  }
+
+  .pending-div span{
+    margin-left:4px;
+}
+
+.pending-right{
+    float:right;
+    margin-right:12px;
+}
+
+.pending-right span{
+    margin-left:4px;
+}

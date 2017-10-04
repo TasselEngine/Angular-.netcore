@@ -1,0 +1,40 @@
+<div TasselFullContent #rootContent>
+    <nz-layout TasselFullContent>
+        <nz-sider [nzWidth]="320" [nzCollapsedWidth]="0" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null" class="slider-div">
+            <div class="slider-inner">
+                <p class="legend-title"><b>Websites</b></p>
+            </div>
+        </nz-sider>
+        <nz-content class="content-div">
+            <div style="padding:8px;height:48px">
+                <div style="float:right;margin-top:4px;margin-right:15px;">
+                    <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
+                        [nzPlacement]="'bottomRight'">
+                        <div style="float:right;height:64px" nz-popover>
+                            <div *ngIf="CurrentUser.Photo">
+                                <img [src]="CurrentUser.Photo" style="width:48px;height:48px;border-radius:50%;cursor:pointer" />
+                            </div>
+                            <div *ngIf="!CurrentUser.Photo" [style.margin-right]="HeaRight">
+                                <i class="anticon anticon-smile-o"></i>
+                            </div>
+                        </div>
+                        <ng-template #nzTemplate>
+                            <p> <a>Profile</a></p>
+                            <p> <a (click)='Logout()'>Logout</a></p>
+                        </ng-template>
+                    </nz-popover>
+                    <div *ngIf="!identity.IsLogined" style="float:right;color:#108ee9;height:64px" [style.margin-right]="HeaRight">
+                        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-right:5px">Register</a>
+                        <a routerLink="/user/login" routerLinkActive="acrive" style="margin-left:4px">Login</a>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-left:18px">
+                <p></p>
+            </div>
+            <div class="content-inner" [style.background]="ShowBack?'#fff':'transparent'">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+    </nz-layout>
+</div>

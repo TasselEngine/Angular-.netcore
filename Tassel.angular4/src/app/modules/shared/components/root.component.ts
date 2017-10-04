@@ -10,8 +10,11 @@ import { UserType } from '../../../model/models/user/user.contract';
 
 @Component({
   selector: 'tassel-root',
-  templateUrl: './../views/root.html',
-  styleUrls: ['./../styles/root.css']
+  templateUrl: './../views/root2.html',
+  styleUrls: [
+    './../styles/root.css',
+    './../styles/design.css'
+  ]
 })
 export class RootComponent extends TasselNavigationBase implements OnInit, AfterViewInit {
 
@@ -19,6 +22,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   public ShowPopover = false;
   public ShowSlider = true;
+  public ShowBack = true;
   public HideAll = false;
   public HeadLeft = '0px';
   public HeaRight = '0px';
@@ -44,9 +48,11 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     this.router.events.subscribe(event => {
       if (!(event instanceof NavigationEnd)) { return; }
       this.HideAll = false;
+      this.ShowBack = true;
       this.route_type = undefined;
       const rs = RouteStruct.Create(this.router.routerState.snapshot.url);
       rs.DoIf(() => { this.HideAll = true; }, 'user', 'login');
+      rs.DoIf(() => { this.ShowBack = false; }, 'index');
     });
   }
 
@@ -58,12 +64,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     const root = this.rootContent.nativeElement as HTMLDivElement;
     if (root.clientWidth > 1280) {
       this.ShowSlider = true;
-      this.render.setStyle(root, 'padding', '24px 48px');
+      // this.render.setStyle(root, 'padding', '24px 48px');
       this.HeadLeft = '0px';
       this.HeaRight = '0px';
     } else {
       this.ShowSlider = false;
-      this.render.setStyle(root, 'padding', '24px 0px');
+      // this.render.setStyle(root, 'padding', '24px 0px');
       this.HeadLeft = '-50px';
       this.HeaRight = '-28px';
     }
