@@ -17,7 +17,8 @@
             </div>
             <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="validateForm.controls.password">
-                    <nz-input formControlName="password" [nzType]="'password'" [nzPlaceHolder]="'Password'" [nzSize]="'large'">
+                    <nz-input formControlName="password" [nzType]="'password'" [nzPlaceHolder]="'Password'" [nzSize]="'large'" (keyup)="OnPsdInput(psd)"
+                        #psd>
                         <ng-template #prefix>
                             <i class="anticon anticon-lock"></i>
                         </ng-template>
@@ -26,14 +27,14 @@
                 </div>
             </div>
             <div nz-form-item>
-                <div nz-form-control [nzValidateStatus]="validateForm.controls.recomf">
-                    <nz-input formControlName="recomf" [nzType]="'password'" [nzPlaceHolder]="'Password Confirm'" [nzSize]="'large'">
+                <div nz-form-control [nzValidateStatus]="validateForm.controls.recomf.valid||!validateForm.controls.recomf.dirty?'success':'error'">
+                    <nz-input formControlName="recomf" [nzType]="'password'" [nzPlaceHolder]="'Password Confirm'" [nzSize]="'large'" (keyup)="CheckConfirm()">
                         <ng-template #prefix>
                             <i class="anticon anticon-lock"></i>
                         </ng-template>
                     </nz-input>
                     <div nz-form-explain *ngIf="validateForm.controls.recomf.dirty&&validateForm.controls.recomf.hasError('required')">Please input your Password!</div>
-                    <div nz-form-explain *ngIf="validateForm.controls.recomf.dirty&&validateForm.controls.recomf!==validateForm.controls.passsword">Password confirm not matched!</div>
+                    <div nz-form-explain *ngIf="validateForm.controls.recomf.dirty&&validateForm.controls.recomf.hasError('equalFailed')">Password confirm not matched!</div>
                 </div>
             </div>
             <div nz-form-item style="margin-top:128px;">
