@@ -8,7 +8,20 @@
                     <p class="legend-title"><b>Desperado</b></p>
                     <hr style="margin-top:12px;" />
                     <div>
-
+                        <ul class="slider-ul">
+                            <li>
+                                <p><a routerLink="/index" routerLinkActive="acrive">Home</a></p>
+                            </li>
+                            <li>
+                                <p>Status</p>
+                            </li>
+                            <li>
+                                <p>Posts</p>
+                            </li>
+                            <li>
+                                <p>Notes</p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -26,7 +39,7 @@
                             <div *ngIf="CurrentUser.Photo">
                                 <img [src]="CurrentUser.Photo" class="avatar-icon" />
                             </div>
-                            <div *ngIf="!CurrentUser.Photo" [style.margin-right]="HeaRight">
+                            <div *ngIf="!CurrentUser.Photo">
                                 <i class="anticon anticon-smile-o"></i>
                             </div>
                         </div>

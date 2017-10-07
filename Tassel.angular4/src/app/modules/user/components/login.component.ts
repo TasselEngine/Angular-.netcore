@@ -5,6 +5,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { pageShowAnimation } from './../../../utils/app.utils';
 import { IdentityService } from '../../../services/app.service';
 import { Regex } from 'ws-regex';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'tassel-login',
@@ -21,6 +22,9 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
 
     private weibo_code: string;
 
+    validateForm: FormGroup;
+
+
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
@@ -30,6 +34,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
     }
 
     constructor(
+        private formbuilder: FormBuilder,
         public identity: IdentityService,
         private server: ServerService,
         private route: ActivatedRoute,
@@ -38,6 +43,11 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
     }
 
     ngOnInit(): void {
+        this.validateForm = this.formbuilder.group({
+            userName: [null, [Validators.required]],
+            password: [null, [Validators.required]],
+            remember: [true],
+        });
         this.route.queryParams.subscribe(async queryParams => {
             this.weibo_code = queryParams.code;
             if (this.weibo_code) {
@@ -45,6 +55,12 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
                 this.navigator.GoHome();
             }
         });
+    }
+
+    _submitForm() {
+        for (const i in this.validateForm.controls) {
+            if (i) { this.validateForm.controls[i].markAsDirty(); }
+        }
     }
 
 }

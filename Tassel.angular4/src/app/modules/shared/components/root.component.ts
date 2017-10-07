@@ -51,7 +51,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
       this.ShowBack = true;
       this.route_type = undefined;
       const rs = RouteStruct.Create(this.router.routerState.snapshot.url);
-      rs.DoIf(() => { this.HideAll = true; }, 'user', 'login');
+      rs.DoIf(() => { this.HideAll = true; this.ShowBack = false; }, 'user', 'login');
       rs.DoIf(() => { this.ShowBack = false; }, 'index');
     });
   }

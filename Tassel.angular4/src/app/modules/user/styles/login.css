@@ -1,0 +1,38 @@
+
+.login-page{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+
+.login-title{
+  font-size: 32px;
+  font-weight: bold;
+  color:#686868;
+  font-family: "Stencil Regular", "SimSun Regular";
+}
+
+.login-div{
+    width:500px;
+    height:600px;
+    margin-top:120px;
+    background-color:#fff;
+    padding :36px 24px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center
+}
+
+.login-form {
+    max-width: 300px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }

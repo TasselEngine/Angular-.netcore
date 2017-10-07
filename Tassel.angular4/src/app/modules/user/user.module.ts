@@ -3,7 +3,7 @@ import { LoginComponent } from './components/login.component';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../extensions/extensions.module';
 import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 const overRoutes: Routes = [
@@ -23,6 +23,7 @@ const overRoutes: Routes = [
         CommonModule,
         ExtensionsModule,
         FormsModule,
+        ReactiveFormsModule,
         NgZorroAntdModule,
         RouterModule.forChild(overRoutes)
     ],

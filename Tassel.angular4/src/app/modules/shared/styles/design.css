@@ -21,6 +21,26 @@
     padding-right:12px;
 }
 
+.slider-ul{
+    margin-top:24px;
+}
+
+.slider-ul p{
+    line-height: 2em;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Stencil Regular", "SimSun Regular";
+}
+
+.slider-ul a{
+   color: #686868;
+   text-decoration: none
+}
+
+.slider-ul a:hover{
+    color: #383838;
+ }
+
 .content-div{
     background:#cecece;
 }
@@ -71,6 +91,12 @@
 
 .avatar-dark{
     background:#484848;
+}
+
+.avatar-dark:hover{
+    width:48px;
+    height:48px;
+    transition: 0.5s;
 }
 
 .user-div{

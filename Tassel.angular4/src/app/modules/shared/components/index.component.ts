@@ -22,7 +22,8 @@ interface IAdaptor {
     animations: [pageShowAnimation],
     styleUrls: [
         './../styles/root.css',
-        './../styles/index.css'
+        './../styles/index.css',
+        './../styles/card.css'
     ]
 })
 export class IndexComponent extends TasselNavigationBase implements OnInit, AfterViewInit {
@@ -49,7 +50,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
         this._posts = [
             { Cover: 'https://tse1-mm.cn.bing.net/th?id=OIP.C-XsFDZ4CpgjHkNFkqXQDAEsC7&p=0&pid=1.1', Title: '我是一只猫', Summary: '中文测试', Like: 254 },
             { Cover: 'http://img5.duitang.com/uploads/item/201407/08/20140708235628_eGnGj.jpeg', Title: 'Europe Street beat', Like: 21, Stamp: 'XXXX-XX-XX' },
-            { Title: 'No Picture Test', Summary: 'www.instagram.com', Like: 213, Stamp: 'XXXX-XX-XX' },
+            { Title: '什么图片都没有', Summary: '别做梦了。', Like: 213, Stamp: 'XXXX-XX-XX' },
             { Cover: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 86 },
             { Cover: 'http://i5.qhimg.com/t019c2a1cad4940cf50.jpg', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 123 },
             { Cover: 'http://a0.att.hudong.com/70/82/01300000185479121382825220187.jpg', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 34 },

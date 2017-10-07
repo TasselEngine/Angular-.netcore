@@ -71,7 +71,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
-    public TryLoginAsync = async (userName: string, psd: string) => {
+    public TryLoginAsync = async (userName: string, psd: string, remember = true) => {
         const [succeed, code, error, [user, token]] = await this.loginAsync(userName, psd);
         if (!succeed) {
             this.logger.Error(['Login failed', 'Server Errors.'], 'TryLoginAsync');
@@ -80,6 +80,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         if (code === ServerStatus.Succeed) {
             this.user = user;
             this.setOptions(token);
+            if (!remember) { return; }
             this.setLocalStorage(this.user, token);
         } else {
             this.logger.Warn(['Login not done', 'See the exceptions below.', error.msg], 'TryLoginAsync');
