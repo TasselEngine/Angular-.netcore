@@ -17,6 +17,7 @@ export class RouteStruct implements IRouteStruct {
     constructor(url: string) {
         if (!url || url.length < 1) { return; }
         this.coll = url.substring(1).split('/');
+        this.coll[0] = '/' + this.coll[0] || '';
     }
 
     public CheckIf = (...routesFlag: string[]): boolean => {

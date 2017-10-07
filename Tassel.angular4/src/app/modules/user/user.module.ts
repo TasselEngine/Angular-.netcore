@@ -1,3 +1,4 @@
+import { RegisterComponent } from './components/register.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { LoginComponent } from './components/login.component';
 import { CommonModule } from '@angular/common';
@@ -10,6 +11,7 @@ const overRoutes: Routes = [
     {
         path: '', children: [
             { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
         ]
     }
@@ -17,7 +19,8 @@ const overRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     ],
     imports: [
         CommonModule,
@@ -29,7 +32,8 @@ const overRoutes: Routes = [
     ],
     providers: [],
     exports: [
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     ]
 })
 export class UserModule { }

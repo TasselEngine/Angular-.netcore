@@ -1,37 +1,39 @@
 import { ServerService } from './../../../services/server/server.service';
 import { TasselNavigationBase } from './../../shared/components/base.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, Input } from '@angular/core';
 import { pageShowAnimation } from './../../../utils/app.utils';
 import { IdentityService } from '../../../services/app.service';
 import { Regex } from 'ws-regex';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+interface IUser {
+    InputAccount: string;
+    InputPsdt: string;
+    ConfirmPsdt: string;
+    Remember: boolean;
+}
+
 @Component({
-    selector: 'tassel-login',
-    templateUrl: './../views/login.html',
+    selector: 'tassel-register',
+    templateUrl: './../views/register.html',
     animations: [pageShowAnimation],
     styleUrls: [
         './../styles/login.css'
     ]
 })
-export class LoginComponent extends TasselNavigationBase implements OnInit {
+export class RegisterComponent extends TasselNavigationBase implements OnInit {
 
-    public InputAccount: string;
-    public InputPsdt: string;
-
-    private weibo_code: string;
-
-    validateForm: FormGroup;
-
+    public validateForm: FormGroup;
+    private user: IUser = {
+        InputAccount: null,
+        InputPsdt: null,
+        ConfirmPsdt: null,
+        Remember: true
+    };
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
-
-    public get WeiboAuth() {
-        // const href = Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0];
-        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href}`;
-    }
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
 
@@ -46,24 +48,19 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
 
     ngOnInit(): void {
         this.validateForm = this.formbuilder.group({
-            userName: [null, [Validators.required]],
-            password: [null, [Validators.required]],
-            remember: [true],
-        });
-        this.route.queryParams.subscribe(async queryParams => {
-            this.weibo_code = queryParams.code;
-            if (this.weibo_code) {
-                await this.identity.TryWeiboAccessAsync(this.weibo_code, window.location.href.split('?')[0]);
-                this.navigator.GoHome();
-            }
+            userName: [this.user.InputAccount, [Validators.required]],
+            password: [this.user.InputPsdt, [Validators.required]],
+            recomf: [this.user.ConfirmPsdt, [Validators.required]],
+            remember: [this.user.Remember],
         });
     }
 
-    prepareSaveModel = (): any => {
+    prepareSaveModel = () => {
         const formModel = this.validateForm.value;
         const result = {
             user: formModel.userName as string,
             psd: formModel.password as string,
+            psd_recf: formModel.recomf as string,
             rem: formModel.remember as boolean,
         };
         return result;
@@ -75,7 +72,8 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
         }
         if (this.validateForm.invalid) { return; }
         const result = this.prepareSaveModel();
-        this.identity.TryLoginAsync(result.user, result.psd, result.rem, this.navigator.GoHome);
+        if (result.psd_recf !== result.psd) { return; }
+        this.identity.TryRegisterAsync(result.user, result.psd, result.rem, this.navigator.GoHome);
     }
 
 }

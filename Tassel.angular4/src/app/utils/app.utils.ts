@@ -1,4 +1,3 @@
-import { NavigationDelegator } from './extensions/navigation.extensions';
 import { JsonHelper } from './helpers/typed_json.helper';
 import { GlobalInjection } from './helpers/global_injector.helper';
 import { StrictResult } from './helpers/strict_result.helper';
@@ -9,7 +8,7 @@ export {
 };
 
 export {
-    NavigationDelegator
+
 };
 
 export {

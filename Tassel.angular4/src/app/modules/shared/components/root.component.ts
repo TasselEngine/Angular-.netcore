@@ -37,6 +37,8 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
         this.CurrentUser.UserName;
   }
 
+  public get RouteLinks() { return this.navigator.RouteLinks; }
+
   constructor(
     public identity: IdentityService,
     private server: ServerService,
@@ -51,8 +53,9 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
       this.ShowBack = true;
       this.route_type = undefined;
       const rs = RouteStruct.Create(this.router.routerState.snapshot.url);
-      rs.DoIf(() => { this.HideAll = true; this.ShowBack = false; }, 'user', 'login');
-      rs.DoIf(() => { this.ShowBack = false; }, 'index');
+      rs.DoIf(() => { this.HideAll = true; this.ShowBack = false; }, ...this.navigator.RouteLinks.Login);
+      rs.DoIf(() => { this.HideAll = true; this.ShowBack = false; }, ...this.navigator.RouteLinks.Register);
+      rs.DoIf(() => { this.ShowBack = false; }, ...this.navigator.RouteLinks.Home);
     });
   }
 

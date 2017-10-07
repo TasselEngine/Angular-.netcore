@@ -88,7 +88,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
-    public TryRegisterAsync = async (userName: string, psd: string) => {
+    public TryRegisterAsync = async (userName: string, psd: string, remember = true, then: () => void = () => null) => {
         const [succeed, code, error, [user, token]] = await this.registerAsync(userName, psd);
         if (!succeed) {
             this.logger.Error(['Register failed', 'Server Errors.'], 'TryRegisterAsync');
@@ -96,7 +96,9 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
         if (code === ServerStatus.Succeed) {
             this.user = user;
+            await then();
             this.setOptions(token);
+            if (!remember) { return; }
             this.setLocalStorage(this.user, token);
         } else {
             this.logger.Warn(['Register not done', 'See the exceptions below.', error.msg], 'TryRegisterAsync');
