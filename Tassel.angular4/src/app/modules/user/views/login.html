@@ -4,7 +4,7 @@
             <i class="anticon anticon-user" style="font-size:48px;"></i>
             <h3 class="login-title">Login</h3>
         </div>
-        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="_submitForm()">
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="SubmitForm()">
             <div nz-form-item>
                 <div nz-form-control [nzValidateStatus]="validateForm.controls.userName">
                     <nz-input formControlName="userName" [nzPlaceHolder]="'Username'" [nzSize]="'large'">
@@ -36,8 +36,12 @@
                 </div>
             </div>
         </form>
-        <div>
-            <a [href]="WeiboAuth"> WEIBO </a>
+        <div class="login-footer">
+            <p>Social Account Login</p>
+            <hr/>
+            <div class="trd-part-div">
+                <a [href]="WeiboAuth"> <img src="http://www.sinaimg.cn/blog/developer/wiki/32.png" width="128" /></a>
+            </div>
         </div>
     </div>
 

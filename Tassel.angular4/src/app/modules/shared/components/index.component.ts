@@ -82,7 +82,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
             this._adaptor.Col = 1;
             this._bindings = [this._posts, [], [], []];
         }
-        setTimeout(this.rebuildView, 150);
+        setTimeout(this.rebuildView, 500);
     }
 
 }

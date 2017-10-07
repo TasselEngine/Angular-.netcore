@@ -71,7 +71,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
-    public TryLoginAsync = async (userName: string, psd: string, remember = true) => {
+    public TryLoginAsync = async (userName: string, psd: string, remember = true, then: () => void = () => null) => {
         const [succeed, code, error, [user, token]] = await this.loginAsync(userName, psd);
         if (!succeed) {
             this.logger.Error(['Login failed', 'Server Errors.'], 'TryLoginAsync');
@@ -79,6 +79,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
         if (code === ServerStatus.Succeed) {
             this.user = user;
+            await then();
             this.setOptions(token);
             if (!remember) { return; }
             this.setLocalStorage(this.user, token);
@@ -176,7 +177,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         this.apiLog([succeed, error, response], 'Try to checkin at server', 'loginAsync');
         return succeed ?
             StrictResult.Success<[UnionUser, string]>(
-                response.status, [UnionUser.ParseUnion((response.content.details || { user: undefined }).user), response.content.token as string], response.message) :
+                response.status, [UnionUser.ParseUnion(response.content.user), response.content.token as string], response.message) :
             StrictResult.Failed<[UnionUser, string]>(error);
     }
 

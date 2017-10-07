@@ -57,10 +57,23 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
         });
     }
 
-    _submitForm() {
+    prepareSaveModel = (): any => {
+        const formModel = this.validateForm.value;
+        const result = {
+            user: formModel.userName as string,
+            psd: formModel.password as string,
+            rem: formModel.remember as boolean,
+        };
+        return result;
+    }
+
+    public SubmitForm = async () => {
         for (const i in this.validateForm.controls) {
             if (i) { this.validateForm.controls[i].markAsDirty(); }
         }
+        if (this.validateForm.invalid) { return; }
+        const result = this.prepareSaveModel();
+        this.identity.TryLoginAsync(result.user, result.psd, result.rem, this.navigator.GoHome);
     }
 
 }

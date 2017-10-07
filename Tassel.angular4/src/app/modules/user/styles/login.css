@@ -25,6 +25,25 @@
     align-items: center
 }
 
+.login-footer{
+  padding-bottom: 12px;
+}
+
+.login-footer p{
+  font-size: 16px;
+}
+
+.login-footer hr{
+  margin-bottom: 8px;
+}
+
+.trd-part-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center
+}
+
 .login-form {
     max-width: 300px;
   }

@@ -133,7 +133,7 @@ export class UnionUser extends User {
 
     public get Photo(): string {
         return this.user_type !== UserType.Base ? this.avatar_url :
-            !this.Avatar ? 'data:image/png;base64,' + this.Avatar :
+            this.Avatar ? 'data:image/png;base64,' + this.Avatar :
                 undefined;
     }
 
