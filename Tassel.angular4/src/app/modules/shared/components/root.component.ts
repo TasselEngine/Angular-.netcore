@@ -21,9 +21,9 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   @ViewChild('rootContent') rootContent: ElementRef;
 
   public ShowPopover = false;
-  public ShowSlider = true;
+  public ShowSlider = false;
   public ShowBack = true;
-  public HideAll = false;
+  public HideAll = true;
   public HeadLeft = '0px';
   public HeaRight = '0px';
 
@@ -44,7 +44,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     private server: ServerService,
     private render: Renderer2,
     private route: ActivatedRoute,
-    protected router: Router) { super(router); }
+    protected router: Router) { super(identity, router); }
 
   ngOnInit(): void {
     this.router.events.subscribe(event => {
@@ -84,6 +84,10 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
       this.ShowPopover = false;
       this.navigator.GoHome();
     });
+  }
+
+  public ToUserProfile = () => {
+    this.navigator.GoToCurrentProfile();
   }
 
   public OnLoginClicked = () => {

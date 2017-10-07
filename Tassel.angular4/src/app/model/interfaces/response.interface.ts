@@ -6,7 +6,7 @@ export type APIResult = [boolean, IError, IResponse];
 
 export interface IResponse {
     status: number;
-    message: string;
+    msg: string;
     content: any;
     [propName: string]: any;
 }

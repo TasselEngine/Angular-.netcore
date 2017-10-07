@@ -1,9 +1,9 @@
-import { ServerService } from './../../../services/server/server.service';
-import { TasselNavigationBase } from './../../shared/components/base.component';
+import { ServerService } from './../../../../services/server/server.service';
+import { TasselNavigationBase } from './../../../shared/components/base.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { pageShowAnimation } from './../../../utils/app.utils';
-import { IdentityService } from '../../../services/app.service';
+import { pageShowAnimation } from './../../../../utils/app.utils';
+import { IdentityService } from '../../../../services/app.service';
 import { Regex } from 'ws-regex';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -17,9 +17,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginComponent extends TasselNavigationBase implements OnInit {
 
-    public InputAccount: string;
-    public InputPsdt: string;
-
+    public showView = false;
     private weibo_code: string;
 
     validateForm: FormGroup;
@@ -41,7 +39,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
         private server: ServerService,
         private route: ActivatedRoute,
         protected router: Router) {
-        super(router);
+        super(identity, router);
     }
 
     ngOnInit(): void {
@@ -55,7 +53,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
             if (this.weibo_code) {
                 await this.identity.TryWeiboAccessAsync(this.weibo_code, window.location.href.split('?')[0]);
                 this.navigator.GoHome();
-            }
+            } else { this.showView = true; }
         });
     }
 

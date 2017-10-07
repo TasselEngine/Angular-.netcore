@@ -1,17 +1,20 @@
-import { ServerService } from './../../../services/server/server.service';
-import { TasselNavigationBase } from './../../shared/components/base.component';
+import { ServerService } from './../../../../services/server/server.service';
+import { TasselNavigationBase } from './../../../shared/components/base.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, HostBinding, OnInit, Input } from '@angular/core';
-import { pageShowAnimation } from './../../../utils/app.utils';
-import { IdentityService } from '../../../services/app.service';
+import { Component, HostBinding, OnInit, Input, OnDestroy } from '@angular/core';
+import { pageShowAnimation } from './../../../../utils/app.utils';
+import { IdentityService } from '../../../../services/app.service';
 import { Regex } from 'ws-regex';
+import { IResponse, ServerStatus } from '../../../../model/interfaces/response.interface';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { EqualValidator } from '../../extensions/directives/form_valid.directive';
+import { EqualValidator } from '../../../extensions/directives/form_valid.directive';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 interface IUser {
     InputAccount: string;
@@ -28,7 +31,7 @@ interface IUser {
         './../styles/login.css'
     ]
 })
-export class RegisterComponent extends TasselNavigationBase implements OnInit {
+export class RegisterComponent extends TasselNavigationBase implements OnInit, OnDestroy {
 
     public validateForm: FormGroup;
     private user: IUser = {
@@ -39,11 +42,21 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit {
     };
 
     private confirm = new Subject<ValidationErrors>();
+    private name = new Subject<string>();
+
+    private is_name_ok = false;
+    private name_exist_error: string;
+    public get NameAvalible() { return this.is_name_ok; }
+    public get NameError() { return this.name_exist_error; }
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
+
+    private confirmSubs: Subscription;
+    private nameSubs: Subscription;
+    private nameExistSubs: Subscription;
 
     constructor(
         private formbuilder: FormBuilder,
@@ -51,7 +64,7 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit {
         private server: ServerService,
         private route: ActivatedRoute,
         protected router: Router) {
-        super(router);
+        super(identity, router);
     }
 
     ngOnInit(): void {
@@ -61,9 +74,28 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit {
             recomf: [this.user.ConfirmPsdt, [Validators.required]],
             remember: [this.user.Remember],
         });
-        this.confirm.debounceTime(300).distinctUntilChanged().subscribe(result => {
+        this.confirmSubs = this.confirm.debounceTime(300).distinctUntilChanged().subscribe(result => {
             if (result) { this.validateForm.controls.recomf.setErrors(result); }
         });
+        this.nameSubs = this.name.debounceTime(300).distinctUntilChanged().subscribe(name => {
+            const nameRetuen = this.identity.CheckUserName(name);
+            this.nameExistSubs = nameRetuen.subscribe(i => {
+                this.is_name_ok = i.status === ServerStatus.Succeed;
+                this.name_exist_error = i.msg;
+                if (!this.is_name_ok) {
+                    this.validateForm.controls.userName.setErrors({ userNameExist: { value: i.msg } });
+                }
+            });
+        }, error => {
+            this.is_name_ok = false;
+            this.name_exist_error = 'server errors';
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.confirmSubs) { this.confirmSubs.unsubscribe(); }
+        if (this.nameSubs) { this.nameSubs.unsubscribe(); }
+        if (this.nameExistSubs) { this.nameExistSubs.unsubscribe(); }
     }
 
     prepareSaveModel = () => {
@@ -77,6 +109,10 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit {
         return result;
     }
 
+    public OnUserNameInput = () => {
+        this.name.next(this.validateForm.value.userName);
+    }
+
     public OnPsdInput = () => {
         this.user.InputPsdt = this.validateForm.value.password;
     }
@@ -86,7 +122,6 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit {
     }
 
     public SubmitForm = async () => {
-        console.log(this.validateForm.controls.recomf);
         for (const i in this.validateForm.controls) {
             if (i) { this.validateForm.controls[i].markAsDirty(); }
         }

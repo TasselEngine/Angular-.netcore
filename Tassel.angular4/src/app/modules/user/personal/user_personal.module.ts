@@ -1,8 +1,7 @@
-import { RegisterComponent } from './root/components/register.component';
+import { ProfileComponent } from './components/profile.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { LoginComponent } from './root/components/login.component';
 import { CommonModule } from '@angular/common';
-import { ExtensionsModule } from './../extensions/extensions.module';
+import { ExtensionsModule } from './../../extensions/extensions.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -10,9 +9,8 @@ import { NgModule } from '@angular/core';
 const overRoutes: Routes = [
     {
         path: '', children: [
-            { path: 'login', component: LoginComponent },
-            { path: 'register', component: RegisterComponent },
-            { path: ':uname', loadChildren: './personal/user_personal.module#UserPersonalModule' },
+            { path: 'profile', component: ProfileComponent },
+            { path: '', redirectTo: 'profile', pathMatch: 'full' },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
         ]
     }
@@ -20,8 +18,7 @@ const overRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        LoginComponent,
-        RegisterComponent
+        ProfileComponent
     ],
     imports: [
         CommonModule,
@@ -33,8 +30,7 @@ const overRoutes: Routes = [
     ],
     providers: [],
     exports: [
-        LoginComponent,
-        RegisterComponent
+        ProfileComponent
     ]
 })
-export class UserModule { }
+export class UserPersonalModule { }

@@ -43,13 +43,13 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
     public get Adaptor() { return this._adaptor; }
 
     constructor(
-        private identity: IdentityService,
-        protected router: Router) { super(router); }
+        protected identity: IdentityService,
+        protected router: Router) { super(identity, router); }
 
     ngOnInit(): void {
         this._posts = [
             { Cover: 'https://tse1-mm.cn.bing.net/th?id=OIP.C-XsFDZ4CpgjHkNFkqXQDAEsC7&p=0&pid=1.1', Title: '我是一只猫', Summary: '中文测试', Like: 254 },
-            { Cover: 'http://img5.duitang.com/uploads/item/201407/08/20140708235628_eGnGj.jpeg', Title: 'Europe Street beat', Like: 21, Stamp: 'XXXX-XX-XX' },
+            { Cover: 'http://p3.wmpic.me/article/2016/07/25/1469459240_PzFfSySK.jpg', Title: 'Europe Street beat', Like: 21, Stamp: 'XXXX-XX-XX' },
             { Title: '什么图片都没有', Summary: '别做梦了。', Like: 213, Stamp: 'XXXX-XX-XX' },
             { Cover: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 86 },
             { Cover: 'http://i5.qhimg.com/t019c2a1cad4940cf50.jpg', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 123 },
@@ -58,6 +58,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
             { Cover: 'http://pic.bizhi360.com/bpic/46/5046.jpg', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 34, Stamp: 'XXXX-XX-XX' },
             { Cover: 'http://a4.att.hudong.com/03/27/01300000066957120529279410702.jpg', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 341 },
             { Title: 'No Picture Test', Summary: 'Sorry, there is no picture for showing, if you want see more , close the browser and get out of home.', Like: 456 },
+            { Cover: 'http://pic.7y7.com/Uploads/Former/20148/2014083037415845_0_0_water.jpg', Title: 'Something Wrong', Summary: '......', Like: 34524 },
             { Cover: 'http://uploadfile.deskcity.org/2015/0907/20150907025557427.jpg', Title: 'Europe Street beat', Summary: 'www.instagram.com', Like: 3 },
         ];
         this._bindings = reselects(this._posts, 4);
@@ -69,6 +70,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
 
     private rebuildView = async () => {
         const root = this.indexDiv.nativeElement as HTMLDivElement;
+        await this.Delay(500);
         if (root.clientWidth > 1200) {
             this._adaptor.Col = 4;
             this._bindings = reselects(this._posts, 4);
@@ -82,7 +84,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
             this._adaptor.Col = 1;
             this._bindings = [this._posts, [], [], []];
         }
-        setTimeout(this.rebuildView, 500);
+        setTimeout(this.rebuildView, 150);
     }
 
 }

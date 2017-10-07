@@ -1,3 +1,4 @@
+import { IdentityService } from './../../../services/identity/identity.service';
 import { GlobalInjection } from './../../../utils/helpers/global_injector.helper';
 import { Router } from '@angular/router';
 import { AsyncableServiceBase } from '../../../services/base/service.base';
@@ -13,10 +14,12 @@ export class TasselNavigationBase extends TasselComponentBase {
     protected navigator: NavigationDelegator;
     protected logsrv: LoggerService;
 
-    constructor(protected router: Router) {
+    constructor(
+        protected identity: IdentityService,
+        protected router: Router) {
         super();
         this.logsrv = GlobalInjection.Injector.get(LoggerService);
-        this.navigator = new NavigationDelegator(router, this.logsrv);
+        this.navigator = new NavigationDelegator(identity, router, this.logsrv);
     }
 
 }
