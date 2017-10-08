@@ -1,3 +1,32 @@
+<!--Header-->
+<div *ngIf="!ShowSlider&&!HideAll" class="head-div">
+    <a class="head-icon" [routerLink]="RouteLinks.Home" routerLinkActive="active">
+            <i class="anticon anticon-inbox" ></i>
+        </a>
+    <div style="float:right">
+        <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
+            [nzPlacement]="'bottomRight'">
+            <div class="avatar-div" nz-popover>
+                <div *ngIf="CurrentUser.Photo">
+                    <img [src]="CurrentUser.Photo" class="avatar-icon avatar-small" />
+                </div>
+                <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue avatar-small">
+                    <i class="anticon anticon-user nologin-icon nologin-small"></i>
+                </div>
+            </div>
+            <ng-template #nzTemplate>
+                <p> <a (click)="ToUserProfile()">Profile</a></p>
+                <p> <a (click)='Logout()'>Logout</a></p>
+            </ng-template>
+        </nz-popover>
+        <div *ngIf="!identity.IsLogined && !HideAll" class="avatar-icon avatar-dark avatar-small">
+            <a [routerLink]="RouteLinks.Login" routerLinkActive="active">
+                <i class="anticon anticon-user nologin-icon nologin-small" ></i>
+            </a>
+        </div>
+    </div>
+</div>
+<!--Header-->
 <div TasselFullContent #rootContent>
     <nz-layout TasselFullContent class="main-div">
         <nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [(nzCollapsed)]="!ShowSlider||HideAll" [nzTrigger]="null" class="slider-div">
@@ -27,35 +56,6 @@
             </div>
         </nz-sider>
         <nz-content class="content-div">
-            <!--Header-->
-            <div *ngIf="!ShowSlider&&!HideAll" class="head-div">
-                <a class="head-icon" [routerLink]="RouteLinks.Home" routerLinkActive="active">
-                    <i class="anticon anticon-inbox" ></i>
-                </a>
-                <div style="float:right">
-                    <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
-                        [nzPlacement]="'bottomRight'">
-                        <div class="avatar-div" nz-popover>
-                            <div *ngIf="CurrentUser.Photo">
-                                <img [src]="CurrentUser.Photo" class="avatar-icon avatar-small" />
-                            </div>
-                            <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue avatar-small">
-                                <i class="anticon anticon-user nologin-icon nologin-small"></i>
-                            </div>
-                        </div>
-                        <ng-template #nzTemplate>
-                            <p> <a (click)="ToUserProfile()">Profile</a></p>
-                            <p> <a (click)='Logout()'>Logout</a></p>
-                        </ng-template>
-                    </nz-popover>
-                    <div *ngIf="!identity.IsLogined && !HideAll" class="avatar-icon avatar-dark avatar-small">
-                        <a [routerLink]="RouteLinks.Login" routerLinkActive="active">
-                        <i class="anticon anticon-user nologin-icon nologin-small" ></i>
-                    </a>
-                    </div>
-                </div>
-            </div>
-            <!--Header-->
             <div class="content-inner" [style.background]="ShowBack?'#fff':'transparent'">
                 <link rel="stylesheet" href="/assets/css/styles.css">
                 <router-outlet></router-outlet>

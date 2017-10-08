@@ -33,3 +33,22 @@
 .pending-right span{
     margin-left:4px;
 }
+
+@keyframes fadeIn {
+    0% {
+    opacity: 0; /*初始状态 透明度为0*/
+    }
+    50% {
+    opacity: 0.5; /*中间状态 透明度为0*/
+    }
+    100% {
+    opacity: 1; /*结尾状态 透明度为1*/
+    }
+    }
+
+    .card-fadin {
+        animation-name: fadeIn; /*动画名称*/
+        animation-duration: 1s; /*动画持续时间*/
+        animation-iteration-count: 1; /*动画次数*/
+        animation-delay: 0s; /*延迟时间*/
+}
