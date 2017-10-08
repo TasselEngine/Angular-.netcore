@@ -68,6 +68,14 @@
     }
 }
 
+.ctinner{
+    background:#fff;
+}
+
+.ctinner-none{
+    background:transparent;
+}
+
 .content-head{
     padding:8px;
     margin-left:11px;
@@ -82,8 +90,16 @@
     position: absolute;
     width:100%;
     height:64px;
-    background-color:#484848;
+    background: -webkit-gradient(linear, 0 0, 100% 0, from(#181818), to(#484848));
     z-index: 1;
+    display:flex;
+    justify-content:
+    space-between
+}
+
+.head-inner-left{
+    display:flex;
+    margin-right:100px;
 }
 
 .head-icon {
@@ -91,9 +107,25 @@
     color:#fff;
 }
 
+.noline-action{
+    text-decoration: none
+}
+
 .head-icon i{
     font-size:32px;
     line-height:64px;
+}
+
+.title-inhead{
+    color: #dfdfdf;
+    transition: 0.5s;
+    font-size: 32px;
+    text-decoration: none;
+}
+
+.title-inhead:hover{
+    transition: 0.5s;
+    color: #fff;
 }
 
 .avatar-group{

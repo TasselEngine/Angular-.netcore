@@ -21,6 +21,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   @ViewChild('rootContent') rootContent: ElementRef;
 
   public ShowPopover = false;
+  public ShowMenu = false;
   public ShowSlider = false;
   public ShowBack = true;
   public HideAll = true;
@@ -80,13 +81,16 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   }
 
   public Logout = () => {
-    this.identity.LogoutAsync(() => {
-      this.ShowPopover = false;
+    this.identity.LogoutAsync(async () => {
+      this.ShowPopover = this.ShowMenu = false;
+      await this.Delay(100);
       this.navigator.GoHome();
     });
   }
 
-  public ToUserProfile = () => {
+  public ToUserProfile = async () => {
+    this.ShowPopover = this.ShowMenu = false;
+    await this.Delay(100);
     this.navigator.GoToCurrentProfile();
   }
 

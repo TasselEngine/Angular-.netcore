@@ -25,6 +25,20 @@
     align-items: center
 }
 
+@media(max-width:1280px){
+  .login-div{
+    width:500px;
+    height:600px;
+    margin-top:60px;
+    background-color:#fff;
+    padding :36px 24px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center
+}
+}
+
 .login-footer{
   padding-bottom: 12px;
 }

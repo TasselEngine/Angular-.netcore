@@ -1,8 +1,22 @@
 <!--Header-->
 <div *ngIf="!ShowSlider&&!HideAll" class="head-div">
-    <a class="head-icon" [routerLink]="RouteLinks.Home" routerLinkActive="active">
-            <i class="anticon anticon-inbox" ></i>
+    <div class="head-inner-left">
+        <nz-popover *ngIf="identity.IsLogined" nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" [nzPlacement]="'bottomLeft'">
+            <a class="head-icon" nz-popover>
+                <i class="anticon anticon-inbox" ></i>
+            </a>
+            <ng-template #nzTemplate>
+                <p><a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a></p>
+                <p>Status</p>
+                <p>Posts</p>
+                <p>Notes</p>
+            </ng-template>
+        </nz-popover>
+        <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
+            <img src="assets/img/icon.jpg" style="width:36px;height:36px;border-radius:8px" />
+            <b class="title-inhead noline-action">Desperado</b>
         </a>
+    </div>
     <div style="float:right">
         <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
             [nzPlacement]="'bottomRight'">
@@ -56,7 +70,7 @@
             </div>
         </nz-sider>
         <nz-content class="content-div">
-            <div class="content-inner" [style.background]="ShowBack?'#fff':'transparent'">
+            <div class="content-inner ctinner ctinner-none" [class.ctinner-none]="!ShowBack">
                 <link rel="stylesheet" href="/assets/css/styles.css">
                 <router-outlet></router-outlet>
             </div>
