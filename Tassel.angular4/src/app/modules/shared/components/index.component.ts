@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { TasselNavigationBase } from './base.component';
 import { IdentityService } from './../../../services/identity/identity.service';
 import { pageShowAnimation } from './../../../utils/app.utils';
-import { Component, HostBinding, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 
 interface IPost {
     Cover?: string;
@@ -26,7 +26,7 @@ interface IAdaptor {
         './../styles/card.css'
     ]
 })
-export class IndexComponent extends TasselNavigationBase implements OnInit, AfterViewInit {
+export class IndexComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
@@ -50,6 +50,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
     }
 
     private shouldRecheck = false;
+    private shouldExistLoop = false;
 
     private _posts: IPost[] = [];
     public get Posts() { return this._posts; }
@@ -67,6 +68,10 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
     ngOnInit(): void {
         this._posts = this.postsProvide();
         this.reselectHeights(4, undefined, true);
+    }
+
+    ngOnDestroy(): void {
+        this.shouldExistLoop = true;
     }
 
     private postsProvide = () => {
@@ -110,6 +115,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, Afte
     }
 
     private rebuildView = async () => {
+        if (this.shouldExistLoop) { return; }
         const root = this.indexDiv.nativeElement;
         this._adaptor.Col = root.clientWidth > 1200 ? 4 : root.clientWidth > 882 ? 3 : root.clientWidth > 690 ? 2 : 1;
         if (this._adaptor.Col !== this._bindings.length) {
