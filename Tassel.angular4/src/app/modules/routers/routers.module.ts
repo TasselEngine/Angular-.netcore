@@ -7,6 +7,7 @@ const mainRoutes: Routes = [
     { path: 'settings', loadChildren: './../settings/settings.module#SettingsModule' },
     { path: 'user', loadChildren: './../user/user.module#UserModule' },
     { path: 'errors', loadChildren: './../errors/errors.module#ErrorsModule' },
+    { path: 'admin', loadChildren: './../admin/admin.module#AdminModule' },
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
 ];
