@@ -12,10 +12,10 @@ export class User {
     private uuid: string;
     public get UUID(): string { return this.uuid; }
 
-    @serializeAs('role_id')
-    @deserializeAs(Number, 'role_id')
-    private role_id: number;
-    public get RoleID(): number { return this.role_id; }
+    @serializeAs('role')
+    @deserializeAs('role')
+    private role_str: string;
+    public get RoleID(): string { return this.role_str; }
 
     @serializeAs('user_name')
     @deserializeAs('user_name')
