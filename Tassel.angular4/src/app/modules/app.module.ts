@@ -1,3 +1,4 @@
+import { CommonBaseModule } from './commons/common.module';
 import { GlobalInjection } from './../utils/helpers/global_injector.helper';
 import { Injector } from '@angular/core';
 import { LoggerService, LOGGER_SERVICE_CONFIG } from 'ws-logger';
@@ -27,6 +28,7 @@ import { ToastService, ServerService, IdentityService, RootService } from './../
     RoutersModule,
     SharedModule,
     ExtensionsModule,
+    CommonBaseModule,
     ChartsModule,
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot()

@@ -1,125 +1,29 @@
-<div TasselPadding [PaddingDetails]="[16,8,0,8]" #indexDiv>
-    <div nz-row>
-
-        <!-- <div nz-col *ngFor="let bind of Bindings; let i = index" [nzXs]="i===0?24:0" [nzSm]="i===0||i===1?12:0" [nzMd]="i===3?0:8"
-            [nzLg]="i===3?0:8" [nzXl]="6">
-            <nz-card class="card-div" *ngFor="let post of Bindings[i]" [nzBordered]="false">
-                <ng-template #body>
-                    <div *ngIf="post.Cover" class="custom-image">
-                        <img alt="example" width="100%" [src]="post.Cover" />
-                    </div>
-                    <div class="custom-card">
-                        <h3 *ngIf="post.Title">{{post.Title}}</h3>
-                        <p *ngIf="post.Summary" [style.margin-top]="post.Cover?'0px':'8px'">{{post.Summary}}</p>
-                    </div>
-                    <div class="pending">
-                        <div *ngIf="post.Stamp" class="pending-right">
-                            <i class="anticon anticon-tag"></i><span>{{post.Stamp}}</span>
+<div TasselPadding [PaddingDetails]="[16,8,0,8]">
+    <tassel-common-waterfall [data]="Posts" [loader]="postsProvide" [template]="temp">
+        <ng-template let-model="model" #temp>
+            <div *ngIf="model">
+                <nz-card class="card-div card-fadin" [nzBordered]="false">
+                    <ng-template #body>
+                        <div *ngIf="model.Cover" class="custom-image">
+                            <img alt="example" width="100%" [src]="model.Cover" />
                         </div>
-                        <div class="pending-div">
-                            <i class="anticon anticon-heart-o"></i><span>{{post.Like}}</span>
+                        <div class="custom-card">
+                            <h3 *ngIf="model.Title">{{model.Title}}</h3>
+                            <p *ngIf="model.Summary" [style.margin-top]="model.Cover?'0px':'8px'">{{model.Summary}}</p>
                         </div>
-                    </div>
-                </ng-template>
-            </nz-card>
-        </div> -->
-
-        <!-- <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="8" [nzXl]="6"> -->
-        <div nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:1" #col01>
-            <nz-card class="card-div card-fadin" *ngFor="let post of Bindings[0]" [nzBordered]="false">
-                <ng-template #body>
-                    <div *ngIf="post.Cover" class="custom-image">
-                        <img alt="example" width="100%" [src]="post.Cover" />
-                    </div>
-                    <div class="custom-card">
-                        <h3 *ngIf="post.Title">{{post.Title}}</h3>
-                        <p *ngIf="post.Summary" [style.margin-top]="post.Cover?'0px':'8px'">{{post.Summary}}</p>
-                    </div>
-                    <div class="pending">
-                        <div *ngIf="post.Stamp" class="pending-right">
-                            <i class="anticon anticon-tag"></i>
-                            <span>{{post.Stamp}}</span>
+                        <div class="pending">
+                            <div *ngIf="model.Stamp" class="pending-right">
+                                <i class="anticon anticon-tag"></i>
+                                <span>{{model.Stamp}}</span>
+                            </div>
+                            <div class="pending-div">
+                                <i class="anticon anticon-heart-o"></i>
+                                <span>{{model.Like}}</span>
+                            </div>
                         </div>
-                        <div class="pending-div">
-                            <i class="anticon anticon-heart-o"></i>
-                            <span>{{post.Like}}</span>
-                        </div>
-                    </div>
-                </ng-template>
-            </nz-card>
-        </div>
-        <!-- <div nz-col [nzXs]="0" [nzSm]="12" [nzMd]="8" [nzLg]="8" [nzXl]="6"> -->
-        <div *ngIf="Adaptor.Col>=2" nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:2" #col02>
-            <nz-card class="card-div card-fadin" *ngFor="let post of Bindings[1]" [nzBordered]="false">
-                <ng-template #body>
-                    <div *ngIf="post.Cover" class="custom-image">
-                        <img alt="example" width="100%" [src]="post.Cover" />
-                    </div>
-                    <div class="custom-card">
-                        <h3 *ngIf="post.Title">{{post.Title}}</h3>
-                        <p *ngIf="post.Summary" [style.margin-top]="post.Cover?'0px':'8px'">{{post.Summary}}</p>
-                    </div>
-                    <div class="pending">
-                        <div *ngIf="post.Stamp" class="pending-right">
-                            <i class="anticon anticon-tag"></i>
-                            <span>{{post.Stamp}}</span>
-                        </div>
-                        <div class="pending-div">
-                            <i class="anticon anticon-heart-o"></i>
-                            <span>{{post.Like}}</span>
-                        </div>
-                    </div>
-                </ng-template>
-            </nz-card>
-        </div>
-        <!-- <div nz-col [nzXs]="0" [nzSm]="0" [nzMd]="8" [nzLg]="8" [nzXl]="6"> -->
-        <div *ngIf="Adaptor.Col>=3" nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:3" #col03>
-            <nz-card class="card-div card-fadin" *ngFor="let post of Bindings[2]" [nzBordered]="false">
-                <ng-template #body>
-                    <div *ngIf="post.Cover" class="custom-image">
-                        <img alt="example" width="100%" [src]="post.Cover" />
-                    </div>
-                    <div class="custom-card">
-                        <h3 *ngIf="post.Title">{{post.Title}}</h3>
-                        <p *ngIf="post.Summary" [style.margin-top]="post.Cover?'0px':'8px'">{{post.Summary}}</p>
-                    </div>
-                    <div class="pending">
-                        <div *ngIf="post.Stamp" class="pending-right">
-                            <i class="anticon anticon-tag"></i>
-                            <span>{{post.Stamp}}</span>
-                        </div>
-                        <div class="pending-div">
-                            <i class="anticon anticon-heart-o"></i>
-                            <span>{{post.Like}}</span>
-                        </div>
-                    </div>
-                </ng-template>
-            </nz-card>
-        </div>
-        <!-- <div nz-col [nzXs]="0" [nzSm]="0" [nzMd]="0" [nzLg]="0" [nzXl]="6"> -->
-        <div *ngIf="Adaptor.Col>=4" nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:4" #col04>
-            <nz-card class="card-div card-fadin" *ngFor="let post of Bindings[3]" [nzBordered]="false">
-                <ng-template #body>
-                    <div *ngIf="post.Cover" class="custom-image">
-                        <img alt="example" width="100%" [src]="post.Cover" />
-                    </div>
-                    <div class="custom-card">
-                        <h3 *ngIf="post.Title">{{post.Title}}</h3>
-                        <p *ngIf="post.Summary" [style.margin-top]="post.Cover?'0px':'8px'">{{post.Summary}}</p>
-                    </div>
-                    <div class="pending">
-                        <div *ngIf="post.Stamp" class="pending-right">
-                            <i class="anticon anticon-tag"></i>
-                            <span>{{post.Stamp}}</span>
-                        </div>
-                        <div class="pending-div">
-                            <i class="anticon anticon-heart-o"></i>
-                            <span>{{post.Like}}</span>
-                        </div>
-                    </div>
-                </ng-template>
-            </nz-card>
-        </div>
-
-    </div>
+                    </ng-template>
+                </nz-card>
+            </div>
+        </ng-template>
+    </tassel-common-waterfall>
 </div>
