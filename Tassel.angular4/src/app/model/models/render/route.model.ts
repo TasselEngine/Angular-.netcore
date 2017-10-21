@@ -26,9 +26,17 @@ export class RouteStruct implements IRouteStruct {
         return !succs.includes(false);
     }
 
-    public DoIf = (action: Function, ...routesFlag: string[]): void => {
-        if (!this.CheckIf(...routesFlag)) { return; }
+    public DoIf = (action: Function, routesFlag: string[]): RouteStruct => {
+        if (!this.CheckIf(...routesFlag)) { return this; }
         action();
+        return this;
+    }
+
+    public DoEach = (action: Function, ...routesFlag: string[][]): RouteStruct => {
+        for (const routes of routesFlag) {
+            if (this.CheckIf(...routes)) { action(); }
+        }
+        return this;
     }
 
 }
