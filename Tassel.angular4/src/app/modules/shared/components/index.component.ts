@@ -109,23 +109,6 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
         });
     }
 
-    private prepareScroll = () => {
-        const root = this.indexDiv.nativeElement as HTMLDivElement;
-        const f_parent = root.parentElement.parentElement.parentElement;
-        const that = this;
-        const onScroll = function () {
-            if (this.scrollHeight - this.scrollTop - this.clientHeight < 100) {
-                f_parent.onscroll = null;
-                setTimeout(() => {
-                    that.reselectHeights(that._adaptor.Col, that.postsProvide());
-                    that.reselectCheck(that._adaptor.Col);
-                    f_parent.onscroll = onScroll;
-                }, 500);
-            }
-        };
-        f_parent.onscroll = onScroll;
-    }
-
     private rebuildView = async () => {
         if (this.shouldExistLoop) { return; }
         const root = this.indexDiv.nativeElement;
@@ -135,7 +118,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
         } else if (this._adaptor.Col > 1) {
             this.reselectCheck(this._adaptor.Col);
         }
-        setTimeout(this.rebuildView, 150);
+        setTimeout(this.rebuildView, 250);
     }
 
     // reselect by height
@@ -166,7 +149,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
         const devalue = (max[1] - min[1]);
         if ((max[1] - min[1]) < 400) { return; }
         let num = Math.floor(devalue / 400);
-        num = num > 10 ? 10 : num;
+        num = num > max.length ? max.length - 1 : num;
         const coll = this._bindings;
         const min_index = min[0];
         const max_index = max[0];
