@@ -8,6 +8,7 @@ const mainRoutes: Routes = [
     { path: 'user', loadChildren: './../user/user.module#UserModule' },
     { path: 'errors', loadChildren: './../errors/errors.module#ErrorsModule' },
     { path: 'admin', loadChildren: './../admin/admin.module#AdminModule' },
+    { path: 'status', loadChildren: './../status/status.module#StatusModule' },
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
 ];

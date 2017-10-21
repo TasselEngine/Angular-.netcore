@@ -1,0 +1,29 @@
+<div TasselPadding [PaddingDetails]="[16,8,0,8]">
+    <tassel-common-waterfall [data]="Posts" [loader]="postsProvide" [template]="temp"></tassel-common-waterfall>
+</div>
+
+<ng-template let-model="model" #temp>
+    <div *ngIf="model">
+        <nz-card class="card-div card-fadin" [nzBordered]="false">
+            <ng-template #body>
+                <div *ngIf="model.images" class="custom-image">
+                    <img alt="example" width="100%" [src]="'data:image/png;base64,'+model.images[0].thumb" />
+                </div>
+                <div class="custom-card">
+                    <h3 *ngIf="model.details">{{model.details}}</h3>
+                    <p *ngIf="model.Summary" [style.margin-top]="model.Cover?'0px':'8px'">{{model.Summary}}</p>
+                </div>
+                <div class="pending">
+                    <div *ngIf="model.Stamp" class="pending-right">
+                        <i class="anticon anticon-tag"></i>
+                        <span>{{model.Stamp}}</span>
+                    </div>
+                    <div class="pending-div">
+                        <i class="anticon anticon-heart-o"></i>
+                        <span>{{model.likers_count}}</span>
+                    </div>
+                </div>
+            </ng-template>
+        </nz-card>
+    </div>
+</ng-template>

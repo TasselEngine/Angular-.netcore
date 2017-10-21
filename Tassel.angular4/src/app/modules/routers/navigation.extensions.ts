@@ -8,13 +8,15 @@ export class NavigationDelegator {
     private readonly userRoot = ['/user'];
     private readonly register = [...this.userRoot, 'register'];
     private readonly login = [...this.userRoot, 'login'];
+    private readonly statusRoot = ['/status'];
 
     private readonly profile_patch = 'profile';
 
     private readonly route_maps = {
         'Home': this.index,
         'Register': this.register,
-        'Login': this.login
+        'Login': this.login,
+        'Status': this.statusRoot,
     };
     public get RouteLinks() {
         return this.route_maps;
@@ -53,6 +55,10 @@ export class NavigationDelegator {
 
     public readonly GoToCurrentProfile = (uname?: string) => {
         this.routeSafely([...this.userRoot, uname || this.user_name, this.profile_patch]);
+    }
+
+    public readonly GoToStatusIndex = () => {
+        this.routeSafely(this.statusRoot);
     }
 
 }

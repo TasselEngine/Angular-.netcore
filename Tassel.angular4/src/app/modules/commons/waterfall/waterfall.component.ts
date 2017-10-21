@@ -60,8 +60,10 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
     constructor(private root: RootService) { super(); }
 
     ngOnInit(): void {
-        this._posts = this._loader();
-        this.reselectHeights(4, undefined, true);
+        this.DoAndWait(async () => {
+            this._posts = await this._loader();
+            this.reselectHeights(4, undefined, true);
+        }, 0);
     }
 
     ngOnDestroy(): void {
@@ -74,8 +76,8 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
     ngAfterViewInit(): void {
         this.WaitAndDo(this.rebuildView, 50);
         this.scrollSubp = this.root.ScrollSubject.subscribe(scroll => {
-            this.DoAndWait(() => {
-                this.reselectHeights(this._adaptor.Col, this._loader());
+            this.DoAndWait(async () => {
+                this.reselectHeights(this._adaptor.Col, await this._loader());
                 this.reselectCheck(this._adaptor.Col);
             }, 500);
         });
@@ -118,6 +120,7 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
         const ntv = this.columns.slice(0, filt).sort((m, n) => m[1] - n[1]);
         const min = ntv[0];
         const max = ntv[ntv.length - 1];
+        if (max[1] < 800) { return; }
         const devalue = (max[1] - min[1]);
         if ((max[1] - min[1]) < 400) { return; }
         let num = Math.floor(devalue / 400);

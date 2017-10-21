@@ -1,3 +1,4 @@
+import { StatusService } from './status/status.service';
 import { RootService } from './root/root.service';
 import { HttpAsyncClientBase, AsyncableServiceBase } from './base/service.base';
 import { ToastService } from './toast/toast.service';
@@ -9,6 +10,7 @@ export {
     IdentityService,
     RootService,
     ToastService,
+    StatusService,
     HttpAsyncClientBase,
     AsyncableServiceBase
 };
