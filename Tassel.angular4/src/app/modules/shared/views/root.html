@@ -3,10 +3,12 @@
     <div class="head-inner-left">
         <nz-popover *ngIf="identity.IsLogined" nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" [nzPlacement]="'bottomLeft'">
             <a class="head-icon" nz-popover>
-                <i class="anticon anticon-inbox" ></i>
+                <i class="anticon anticon-inbox"></i>
             </a>
             <ng-template #nzTemplate>
-                <p><a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a></p>
+                <p>
+                    <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                </p>
                 <p>Status</p>
                 <p>Posts</p>
                 <p>Notes</p>
@@ -29,13 +31,17 @@
                 </div>
             </div>
             <ng-template #nzTemplate>
-                <p> <a (click)="ToUserProfile()">Profile</a></p>
-                <p> <a (click)='Logout()'>Logout</a></p>
+                <p>
+                    <a (click)="ToUserProfile()">Profile</a>
+                </p>
+                <p>
+                    <a (click)='Logout()'>Logout</a>
+                </p>
             </ng-template>
         </nz-popover>
         <div *ngIf="!identity.IsLogined && !HideAll" class="avatar-icon avatar-dark avatar-small">
             <a [routerLink]="RouteLinks.Login" routerLinkActive="active">
-                <i class="anticon anticon-user nologin-icon nologin-small" ></i>
+                <i class="anticon anticon-user nologin-icon nologin-small"></i>
             </a>
         </div>
     </div>
@@ -47,13 +53,19 @@
             <div class="slider-inner">
                 <div class="slider-listgp">
                     <img src="assets/img/icon.jpg" style="width:160;height:160px;border-radius:32px" />
-                    <p class="name-title"><span>Bruce Wayne</span></p>
-                    <p class="legend-title"><b>Desperado</b></p>
+                    <p class="name-title">
+                        <span>Bruce Wayne</span>
+                    </p>
+                    <p class="legend-title">
+                        <b>Desperado</b>
+                    </p>
                     <hr style="margin-top:12px;" />
                     <div>
                         <ul class="slider-ul">
                             <li>
-                                <p><a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a></p>
+                                <p>
+                                    <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                                </p>
                             </li>
                             <li>
                                 <p>Status</p>
@@ -70,7 +82,7 @@
             </div>
         </nz-sider>
         <nz-content class="content-div">
-            <div class="content-inner ctinner ctinner-none" [class.ctinner-none]="!ShowBack">
+            <div class="content-inner ctinner ctinner-none" [class.ctinner-none]="!ShowBack" #scrollDiv>
                 <link rel="stylesheet" href="/assets/css/styles.css">
                 <router-outlet></router-outlet>
             </div>
@@ -87,14 +99,18 @@
                             </div>
                         </div>
                         <ng-template #nzTemplate>
-                            <p> <a (click)="ToUserProfile()">Profile</a></p>
-                            <p> <a (click)='Logout()'>Logout</a></p>
+                            <p>
+                                <a (click)="ToUserProfile()">Profile</a>
+                            </p>
+                            <p>
+                                <a (click)='Logout()'>Logout</a>
+                            </p>
                         </ng-template>
                     </nz-popover>
                     <div *ngIf="!identity.IsLogined && !HideAll" class="avatar-icon avatar-dark">
                         <a [routerLink]="RouteLinks.Login" routerLinkActive="active">
-                        <i class="anticon anticon-user nologin-icon" ></i>
-                    </a>
+                            <i class="anticon anticon-user nologin-icon"></i>
+                        </a>
                     </div>
                 </nz-affix>
             </div>

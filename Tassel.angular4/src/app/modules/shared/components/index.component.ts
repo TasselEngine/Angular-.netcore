@@ -1,8 +1,10 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { TasselNavigationBase } from './base.component';
 import { IdentityService } from './../../../services/identity/identity.service';
 import { pageShowAnimation } from './../../../utils/app.utils';
-import { Component, HostBinding, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { RootService } from '../../../services/app.service';
 
 interface IPost {
     Cover?: string;
@@ -61,8 +63,11 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
     private _adaptor: IAdaptor = { Col: 4 };
     public get Adaptor() { return this._adaptor; }
 
+    private scrollSubp: Subscription;
+
     constructor(
         protected identity: IdentityService,
+        private root: RootService,
         protected router: Router) { super(identity, router); }
 
     ngOnInit(): void {
@@ -72,6 +77,9 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
 
     ngOnDestroy(): void {
         this.shouldExistLoop = true;
+        if (this.scrollSubp) {
+            this.scrollSubp.unsubscribe();
+        }
     }
 
     private postsProvide = () => {
@@ -93,7 +101,12 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
 
     ngAfterViewInit(): void {
         this.WaitAndDo(this.rebuildView, 50);
-        this.prepareScroll();
+        this.scrollSubp = this.root.ScrollSubject.subscribe(scroll => {
+            this.DoAndWait(() => {
+                this.reselectHeights(this._adaptor.Col, this.postsProvide());
+                this.reselectCheck(this._adaptor.Col);
+            }, 500);
+        });
     }
 
     private prepareScroll = () => {
@@ -101,8 +114,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
         const f_parent = root.parentElement.parentElement.parentElement;
         const that = this;
         const onScroll = function () {
-            const add_height = this.scrollTop + this.clientHeight;
-            if (this.scrollHeight - add_height < 100) {
+            if (this.scrollHeight - this.scrollTop - this.clientHeight < 100) {
                 f_parent.onscroll = null;
                 setTimeout(() => {
                     that.reselectHeights(that._adaptor.Col, that.postsProvide());

@@ -1,7 +1,9 @@
 import { environment } from './../../../environments/environment';
 import { IENV } from '../../../environments/env.contract';
 import { AsyncableServiceBase } from '../base/service.base';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class ServerService extends AsyncableServiceBase {
 
     private readonly config: IENV;

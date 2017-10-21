@@ -7,6 +7,7 @@ import { Component, OnInit, HostBinding, Renderer2, AfterViewInit, ViewChild, El
 import { ServerService } from '../../../services/server/server.service';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { UserType } from '../../../model/models/user/user.contract';
+import { RootService } from '../../../services/app.service';
 
 @Component({
   selector: 'tassel-root',
@@ -18,6 +19,7 @@ import { UserType } from '../../../model/models/user/user.contract';
 export class RootComponent extends TasselNavigationBase implements OnInit, AfterViewInit {
 
   @ViewChild('rootContent') rootContent: ElementRef;
+  @ViewChild('scrollDiv') scrollDiv: ElementRef;
 
   public ShowPopover = false;
   public ShowMenu = false;
@@ -44,6 +46,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     private server: ServerService,
     private render: Renderer2,
     private route: ActivatedRoute,
+    private root: RootService,
     protected router: Router) { super(identity, router); }
 
   ngOnInit(): void {
@@ -61,6 +64,23 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   ngAfterViewInit(): void {
     this.WaitAndDo(this.checkView, 50);
+    this.prepareScroll();
+  }
+
+  private prepareScroll = () => {
+    const root = this.scrollDiv.nativeElement;
+    const scroll_div = this.scrollDiv.nativeElement.parentElement;
+    const that = this;
+    const onScroll = function () {
+      if (this.scrollHeight - this.scrollTop - this.clientHeight < 100) {
+        scroll_div.onscroll = null;
+        setTimeout(() => {
+          that.root.OnScrollToBottom(scroll_div);
+          scroll_div.onscroll = onScroll;
+        }, 500);
+      }
+    };
+    scroll_div.onscroll = onScroll;
   }
 
   private checkView = () => {
