@@ -21,9 +21,9 @@ interface IAdaptor {
     templateUrl: './../views/index.html',
     animations: [pageShowAnimation],
     styleUrls: [
-        './../styles/root.css',
-        './../styles/index.css',
-        './../styles/card.css'
+        './../styles/root.scss',
+        './../styles/index.scss',
+        './../styles/card.scss'
     ]
 })
 export class IndexComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {

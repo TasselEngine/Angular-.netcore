@@ -12,8 +12,7 @@ import { UserType } from '../../../model/models/user/user.contract';
   selector: 'tassel-root',
   templateUrl: './../views/root.html',
   styleUrls: [
-    './../styles/root.css',
-    './../styles/design.css'
+    './../styles/root.scss',
   ]
 })
 export class RootComponent extends TasselNavigationBase implements OnInit, AfterViewInit {
