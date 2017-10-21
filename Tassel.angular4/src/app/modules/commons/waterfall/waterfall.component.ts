@@ -120,10 +120,10 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
         const ntv = this.columns.slice(0, filt).sort((m, n) => m[1] - n[1]);
         const min = ntv[0];
         const max = ntv[ntv.length - 1];
-        if (max[1] < 800) { return; }
+        if (max[1] < 1600) { return; }
         const devalue = (max[1] - min[1]);
-        if ((max[1] - min[1]) < 400) { return; }
-        let num = Math.floor(devalue / 400);
+        if ((max[1] - min[1]) < 700) { return; }
+        let num = Math.floor(devalue / 700);
         num = num > max.length ? max.length - 1 : num;
         const coll = this._bindings;
         const min_index = min[0];

@@ -5,22 +5,27 @@ import { serializeAs, deserialize, deserializeAs, inheritSerialization } from 'c
 import { JsonHelper } from '../../../utils/app.utils';
 import { WeiboUser } from './weibo.model';
 
-export class User {
+export class Creator {
 
     @serializeAs('uuid')
     @deserializeAs('uuid')
     private uuid: string;
     public get UUID(): string { return this.uuid; }
 
-    @serializeAs('role')
-    @deserializeAs('role')
-    private role_str: string;
-    public get RoleID(): string { return this.role_str; }
-
     @serializeAs('user_name')
     @deserializeAs('user_name')
     private user_name: string;
     public get UserName(): string { return this.user_name; }
+
+}
+
+@inheritSerialization(Creator)
+export class User extends Creator {
+
+    @serializeAs('role')
+    @deserializeAs('role')
+    private role_str: string;
+    public get RoleID(): string { return this.role_str; }
 
     @serializeAs('display_name')
     @deserializeAs('display_name')

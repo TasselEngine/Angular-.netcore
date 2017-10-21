@@ -78,7 +78,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
         scroll_div.onscroll = null;
         setTimeout(async () => {
           that.root.OnScrollToBottom(scroll_div);
-          await that.Delay(5000);
+          await that.Delay(1500);
           scroll_div.onscroll = onScroll;
         }, 0);
       }

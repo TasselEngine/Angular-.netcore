@@ -1,10 +1,14 @@
 
 export enum UserType { Base, Weibo, Wechat, QQ }
 
-export interface IUserBase {
+export interface ICreator {
     uuid: string;
-    role: string;
     user_name: string;
+}
+
+export interface IUserBase {
+    ICreator;
+    role: string;
     email: string;
     display_name: string;
     family_name: string;

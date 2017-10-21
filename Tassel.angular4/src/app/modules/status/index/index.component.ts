@@ -46,7 +46,7 @@ export class StatusIndexComponent extends TasselNavigationBase {
     public postsProvide = async () => {
         const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
         if (succeed && status === ServerStatus.Succeed) {
-            return response as any[];
+            return response;
         } else {
             return [];
         }

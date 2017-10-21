@@ -15,6 +15,8 @@ export class JsonHelper {
 
     public static ToJson = <T>(target: T, typeValue?: Function | ISerializable): string => Serialize(target, typeValue);
 
-    public static FromJson = <T>(jsonStr: string, typeValue?: Function | ISerializable): T => Deserialize(JsonHelper.FromJSON(jsonStr), typeValue) as T;
+    public static FromJson = <T>(source: string | any, typeValue?: Function | ISerializable): T => {
+        return Deserialize(typeof (source) === 'string' ? JsonHelper.FromJSON(source) : source, typeValue) as T;
+    }
 
 }

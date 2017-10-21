@@ -7,6 +7,7 @@ import { IResponse } from './../../model/interfaces/response.interface';
 import { HttpAsyncClientBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
 import { StrictResult } from '../../utils/app.utils';
+import { Status } from '../../model/models/status/status.model';
 
 @Injectable()
 export class StatusService extends HttpAsyncClientBase<IResponse> {
@@ -31,8 +32,8 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/all`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch status-list', 'GetAllStatusAsync');
         return succeed ?
-            StrictResult.Success(response.status, response.content as any, response.msg) :
-            StrictResult.Failed<any>(error);
+            StrictResult.Success(response.status, Status.ParseList(response.content), response.msg) :
+            StrictResult.Failed<Status[]>(error);
     }
 
     private apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {
