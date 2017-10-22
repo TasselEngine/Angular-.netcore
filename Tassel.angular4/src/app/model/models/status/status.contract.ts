@@ -1,3 +1,5 @@
+import { ILikeRelation } from './../like/like.contract';
+import { IComment } from './../comment/comment.contract';
 import { ICreator } from './../user/user.contract';
 import { EntryState } from '../../enums/model.enum';
 
@@ -6,10 +8,11 @@ export interface IStatus {
     state: EntryState;
     details: string;
     cover: string;
-    comments: any[];
+    comments: IComment[];
     comments_count: number;
-    liker_users: any[];
+    liker_users?: ILikeRelation[];
     likers_count: number;
+    liker_ids?: string[];
     creator: ICreator;
     id: string;
     create_time: number;

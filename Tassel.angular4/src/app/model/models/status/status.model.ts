@@ -77,10 +77,15 @@ export class Status {
     private comments_count: number;
     public get CommentCount(): number { return this.comments_count || 0; }
 
-    @serializeAs('likers_count')
-    @deserializeAs(LikeRelation, 'likers_count')
+    @serializeAs('liker_users')
+    @deserializeAs(LikeRelation, 'liker_users')
     private liker_users: LikeRelation[];
     public get LikeUsers(): LikeRelation[] { return this.liker_users || []; }
+
+    @serializeAs('liker_ids')
+    @deserializeAs('liker_ids')
+    private liker_ids: string[];
+    public get LikeUserIDs(): string[] { return this.liker_ids || []; }
 
     @serializeAs(Number, 'likers_count')
     @deserializeAs(Number, 'likers_count')

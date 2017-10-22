@@ -24,6 +24,8 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     private user: UnionUser;
     public get CurrentUser(): UnionUser { return this.user; }
 
+    public get CurrentUUID(): string { return (this.user || { UUID: undefined }).UUID; }
+
     private formOptions: RequestOptions;
     public get FormOptions() { return this.formOptions; }
 

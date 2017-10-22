@@ -1,0 +1,29 @@
+<div *ngIf="images||src">
+    <img *ngIf="Count===1" alt="picture" width="100%" [src]="src || images[0]" />
+    <div *ngIf="Count<=3 && Count>1 " nz-row>
+        <div nz-col [nzSpan]="24/Count" *ngFor="let img of images" style="padding:1px">
+            <img alt="picture" width="100%" [src]="img" />
+        </div>
+    </div>
+    <div *ngIf="Count>3">
+        <div nz-row>
+            <div nz-col [nzSpan]="8" *ngFor="let img of Images[0]" style="padding:1px">
+                <img alt="picture" width="100%" [src]="img" />
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="8" *ngFor="let img of Images[1]" style="padding:1px">
+                <img alt="picture" width="100%" [src]="img" />
+            </div>
+        </div>
+        <div *ngIf="Count>=6" nz-row>
+            <div nz-col [nzSpan]="8" *ngFor="let img of Images[2];let i=index" style="padding:1px">
+                <div class="img-more" *ngIf="i===2&&Count>9">
+                    <img alt="picture" width="100%" [src]="img" style="opacity:0.3" />
+                    <span>{{Count-9}} + </span>
+                </div>
+                <img *ngIf="i!==2||Count<=9" alt="picture" width="100%" [src]="img" />
+            </div>
+        </div>
+    </div>
+</div>
