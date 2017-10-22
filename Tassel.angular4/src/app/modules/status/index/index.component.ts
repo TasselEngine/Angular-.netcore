@@ -1,3 +1,4 @@
+import { ServerService } from './../../../services/server/server.service';
 import { Status } from './../../../model/models/status/status.model';
 import { pageShowAnimation } from './../../../utils/animations/page_show.animation';
 import { HostBinding, Component } from '@angular/core';
@@ -26,7 +27,10 @@ export class StatusIndexComponent extends TasselNavigationBase {
 
     public get Formator() { return this.formater; }
 
+    public get ImageSrcRoot() { return this.server.ServerApiRoot; }
+
     constructor(
+        private server: ServerService,
         private status: StatusService,
         protected identity: IdentityService,
         protected router: Router) { super(identity, router); }

@@ -4,7 +4,7 @@ import { FormatTime } from 'ws-format-time';
 import { serializeAs, deserializeAs } from 'cerialize';
 import { ICreator } from './../user/user.contract';
 import { IStatus, IImage } from './status.contract';
-import { EntryState } from '../../enums/model.enum';
+import { EntryState, ModelType } from '../../enums/model.enum';
 import { LikeRelation } from '../like/like.model';
 import { JsonHelper } from '../../../utils/helpers/typed_json.helper';
 
@@ -25,7 +25,17 @@ export class Image {
     @serializeAs('thumb')
     @deserializeAs('thumb')
     private thumb: string;
-    public get Thumbnail() { return !this.thumb ? undefined : ImageHead + this.thumb; }
+    public get Thumbnail() { return this.thumb; }
+
+    @serializeAs('normal')
+    @deserializeAs('normal')
+    private normal: string;
+    public get NormalURL() { return this.normal; }
+
+    @serializeAs('large')
+    @deserializeAs('large')
+    private large: string;
+    public get LargeURL() { return this.large; }
 
     @serializeAs('url')
     @deserializeAs('url')
@@ -50,6 +60,11 @@ export class Status {
     @deserializeAs(Number, 'state')
     private state: EntryState;
     public get State(): EntryState { return this.state || EntryState.Published; }
+
+    @serializeAs(Number, 'type')
+    @deserializeAs(Number, 'type')
+    private type: ModelType;
+    public get Type(): ModelType { return this.type || ModelType.Default; }
 
     @serializeAs('details')
     @deserializeAs('details')
@@ -120,6 +135,18 @@ export class Status {
     public static Parse = (i: IStatus) => JsonHelper.FromJson<Status>(i, Status);
 
     public static ParseList = (coll: IStatus[]) => JsonHelper.FromJson<Status[]>(coll, Status);
+
+    public readonly ParseUrls = (head: string, target?: 'origin' | 'normal' | 'large'): string[] => {
+        if (!target) {
+            return this.Thumbnails.map(i => head + i);
+        }
+        switch (target) {
+            case 'origin': return this.Images.map(i => head + i.URL);
+            case 'normal': return this.Images.map(i => head + i.NormalURL);
+            case 'large': return this.Images.map(i => head + i.LargeURL);
+            default: return this.Thumbnails.map(i => head + i);
+        }
+    }
 
 }
 

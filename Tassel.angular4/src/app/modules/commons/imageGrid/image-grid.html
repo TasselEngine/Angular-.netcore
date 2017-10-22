@@ -5,7 +5,7 @@
             <img alt="picture" width="100%" [src]="img" />
         </div>
     </div>
-    <div *ngIf="Count>3">
+    <div *ngIf="Count>3&&Count!==4">
         <div nz-row>
             <div nz-col [nzSpan]="8" *ngFor="let img of Images[0]" style="padding:1px">
                 <img alt="picture" width="100%" [src]="img" />
@@ -23,6 +23,18 @@
                     <span>{{Count-9}} + </span>
                 </div>
                 <img *ngIf="i!==2||Count<=9" alt="picture" width="100%" [src]="img" />
+            </div>
+        </div>
+    </div>
+    <div *ngIf="Count===4">
+        <div nz-row>
+            <div nz-col [nzSpan]="12" *ngFor="let img of Images[0]" style="padding:1px">
+                <img alt="picture" width="100%" [src]="img" />
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="12" *ngFor="let img of Images[1]" style="padding:1px">
+                <img alt="picture" width="100%" [src]="img" />
             </div>
         </div>
     </div>

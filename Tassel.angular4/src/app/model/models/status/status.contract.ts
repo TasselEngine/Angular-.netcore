@@ -1,10 +1,11 @@
 import { ILikeRelation } from './../like/like.contract';
 import { IComment } from './../comment/comment.contract';
 import { ICreator } from './../user/user.contract';
-import { EntryState } from '../../enums/model.enum';
+import { EntryState, ModelType } from '../../enums/model.enum';
 
 export interface IStatus {
     images: IImage;
+    type: ModelType;
     state: EntryState;
     details: string;
     cover: string;
@@ -23,5 +24,7 @@ export interface IImage {
     is_file: boolean;
     base_64: string;
     thumb: string;
+    large: string;
+    normal: string;
     url: string;
 }

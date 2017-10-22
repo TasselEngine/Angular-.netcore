@@ -21,9 +21,11 @@ export class ImageGridComponent {
         return !this.images ? !this.src ? [] : [[this.src]] :
             this.images.length <= 3 ?
                 [this.images] :
-                this.images.length <= 6 ?
-                    [this.images.slice(0, 3), this.images.slice(3)] :
-                    [this.images.slice(0, 3), this.images.slice(3, 6), this.images.slice(6, 9)];
+                this.images.length === 4 ?
+                    [this.images.slice(0, 2), this.images.slice(2)] :
+                    this.images.length <= 6 ?
+                        [this.images.slice(0, 3), this.images.slice(3)] :
+                        [this.images.slice(0, 3), this.images.slice(3, 6), this.images.slice(6, 9)];
     }
 
     public get Count(): number { return !this.images ? !this.src ? 0 : 1 : this.images.length; }

@@ -11,7 +11,7 @@
                     <!-- <p *ngIf="model.Summary" [style.margin-top]="model.Cover?'0px':'8px'">{{model.Summary}}</p> -->
                 </div>
                 <div *ngIf="model.Images.length>0" class="custom-image">
-                    <tassel-common-imggrid [images]="model.Thumbnails"></tassel-common-imggrid>
+                    <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>
                 </div>
                 <div class="pending">
                     <div *ngIf="model.CreateTime" class="pending-right">
