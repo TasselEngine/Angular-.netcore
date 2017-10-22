@@ -1,4 +1,5 @@
-import { IError } from 'ws-format-httprequest';
+import { JsonHelper } from './../../utils/helpers/typed_json.helper';
+import { IError, HttpType } from 'ws-format-httprequest';
 import { IdentityService } from './../identity/identity.service';
 import { Logger } from 'ws-logger';
 import { ServerService } from './../server/server.service';
@@ -34,6 +35,15 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         return succeed ?
             StrictResult.Success(response.status, Status.ParseList(response.content), response.msg) :
             StrictResult.Failed<Status[]>(error);
+    }
+
+    public LikeStatusAsync = async (sid: string, uid: string, uname: string) => {
+        const [succeed, error, response] = await this.InvokeAsync(
+            `${this.Root}/status/${sid}/like`, this.FormOptions, HttpType.PUT, JsonHelper.ToJSON({ uid: uid, user_name: uname }));
+        this.apiLog([succeed, error, response], 'Try to like or dislike the status', 'LikeStatusAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as string, response.msg) :
+            StrictResult.Failed<string>(error);
     }
 
     private apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {

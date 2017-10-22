@@ -24,6 +24,8 @@ export class StatusIndexComponent extends TasselNavigationBase {
     private _posts: Status[] = [];
     public get Posts() { return this._posts; }
 
+    public get Formator() { return this.formater; }
+
     constructor(
         private status: StatusService,
         protected identity: IdentityService,
@@ -43,6 +45,21 @@ export class StatusIndexComponent extends TasselNavigationBase {
         if (index >= 0) { return true; }
         index = model.LikeUsers.findIndex(i => i.Creator.UUID === this.identity.CurrentUUID);
         return index >= 0;
+    }
+
+    public readonly ClickLike = async (model: Status) => {
+        if (!this.identity.IsLogined) {
+            return;
+        }
+        const [succeed, code, error, result] = await this.status.LikeStatusAsync(model.ID, this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName);
+        if (succeed && code === ServerStatus.Succeed) {
+            if (result === 'deleted') {
+                model.LikeUserIDs = model.LikeUserIDs.filter(i => i !== this.identity.CurrentUUID);
+            } else {
+                model.LikeUserIDs.push(result);
+            }
+            model.LikersCount = model.LikeUserIDs.length;
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AsyncableServiceBase } from '../../../services/base/service.base';
 import { NavigationDelegator } from '../../routers/navigation.extensions';
 import { LoggerService } from 'ws-logger';
+import { FormatService } from '../../../services/app.service';
 
 export class TasselComponentBase extends AsyncableServiceBase {
     constructor() { super(); }
@@ -12,6 +13,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
 export class TasselNavigationBase extends TasselComponentBase {
 
     protected navigator: NavigationDelegator;
+    protected formater: FormatService;
     protected logsrv: LoggerService;
 
     constructor(
@@ -19,6 +21,7 @@ export class TasselNavigationBase extends TasselComponentBase {
         protected router: Router) {
         super();
         this.logsrv = GlobalInjection.Injector.get(LoggerService);
+        this.formater = GlobalInjection.Injector.get(FormatService);
         this.navigator = new NavigationDelegator(identity, router, this.logsrv);
     }
 

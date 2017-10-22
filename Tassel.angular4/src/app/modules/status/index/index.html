@@ -16,12 +16,14 @@
                 <div class="pending">
                     <div *ngIf="model.CreateTime" class="pending-right">
                         <i class="anticon anticon-tag"></i>
-                        <span>{{model.CreateTime.FormatDateTime}}</span>
+                        <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
                     </div>
                     <div class="pending-div">
-                        <i *ngIf="IsLiked(model)" class="anticon anticon-heart" style="color:rgb(206, 68, 89)"></i>
-                        <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o"></i>
-                        <span>{{model.likers_count}}</span>
+                        <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user" (click)="ClickLike(model)"></i>
+                        <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o like-hover" (click)="ClickLike(model)"></i>
+                        <span>{{model.LikersCount}}</span>
+                        <i class="anticon anticon-message"></i>
+                        <span>{{model.CommentCount}}</span>
                     </div>
                 </div>
             </ng-template>

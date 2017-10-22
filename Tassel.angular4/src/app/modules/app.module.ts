@@ -14,7 +14,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 
 import { RootComponent } from './../modules/shared/components/root.component';
-import { ToastService, ServerService, IdentityService, RootService, StatusService } from './../services/app.service';
+import { ToastService, ServerService, IdentityService, RootService, StatusService, FormatService } from './../services/app.service';
 
 @NgModule({
   declarations: [
@@ -55,6 +55,7 @@ import { ToastService, ServerService, IdentityService, RootService, StatusServic
     ServerService,
     RootService,
     StatusService,
+    FormatService,
     IdentityService,
   ],
   bootstrap: [RootComponent]

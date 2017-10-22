@@ -1,7 +1,7 @@
 <!--Header-->
 <div *ngIf="!ShowSlider&&!HideAll" class="head-div">
     <div class="head-inner-left">
-        <nz-popover *ngIf="identity.IsLogined" nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" [nzPlacement]="'bottomLeft'">
+        <nz-popover nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" [nzPlacement]="'bottomLeft'">
             <a class="head-icon" nz-popover>
                 <i class="anticon anticon-inbox"></i>
             </a>

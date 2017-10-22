@@ -86,11 +86,13 @@ export class Status {
     @deserializeAs('liker_ids')
     private liker_ids: string[];
     public get LikeUserIDs(): string[] { return this.liker_ids || []; }
+    public set LikeUserIDs(value: string[]) { this.liker_ids = value; }
 
     @serializeAs(Number, 'likers_count')
     @deserializeAs(Number, 'likers_count')
     private likers_count: number;
     public get LikersCount(): number { return this.likers_count || 0; }
+    public set LikersCount(value: number) { this.likers_count = value; }
 
     @serializeAs('creator')
     @deserializeAs(Creator, 'creator')

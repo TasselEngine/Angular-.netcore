@@ -1,6 +1,8 @@
 @import './base.scss';
 @import './card.scss';
 
+$red-accent:rgb(206, 68, 89);
+
 .card-div{
     width:93%;
     margin-left:3.5%;
@@ -20,6 +22,7 @@
 
   .pending-div span{
     margin-left:4px;
+    margin-right:4px;
     font-weight: bold;
 }
 
@@ -47,4 +50,17 @@
     animation-duration: 1s; 
     animation-iteration-count: 1;
     animation-delay: 0s; 
+}
+
+.card-like-pointer{
+    cursor: pointer;
+}
+
+.like-hover:hover{
+    transition: 0.5s;
+    color:$red-accent;
+}
+
+.liked-user{
+    color:$red-accent;
 }
