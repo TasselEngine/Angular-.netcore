@@ -16,7 +16,7 @@ export class FormatService extends AsyncableServiceBase {
         private identity: IdentityService,
         private server: ServerService) {
         super();
-        this.logger = this.logsrv.GetLogger(FormatService).SetModule('service');
+        this.logger = this.logsrv.GetLogger('FormatService').SetModule('service');
     }
 
     public readonly TimeFormat = (time: FormatTime) => {
