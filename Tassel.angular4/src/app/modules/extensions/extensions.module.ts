@@ -1,3 +1,4 @@
+import { ShortLinePipe } from './pipes/shortline.pipe';
 import { JsonPipe } from './pipes/json.pipe';
 import { PaddingDirective } from './directives/padding.directive';
 import { FullContentDirective } from './directives/fullcontent.directive';
@@ -8,7 +9,8 @@ import { NgModule } from '@angular/core';
         FormatPipe,
         FullContentDirective,
         PaddingDirective,
-        JsonPipe
+        JsonPipe,
+        ShortLinePipe
     ],
     imports: [],
     providers: [],
@@ -16,7 +18,8 @@ import { NgModule } from '@angular/core';
         FormatPipe,
         FullContentDirective,
         PaddingDirective,
-        JsonPipe
+        JsonPipe,
+        ShortLinePipe
     ],
 })
 export class ExtensionsModule { }

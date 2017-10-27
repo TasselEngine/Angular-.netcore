@@ -7,8 +7,7 @@
         <nz-card class="card-div card-fadin" [nzBordered]="false">
             <ng-template #body>
                 <div class="custom-card">
-                    <h3 *ngIf="model.Content">{{model.Content}}</h3>
-                    <!-- <p *ngIf="model.Summary" [style.margin-top]="model.Cover?'0px':'8px'">{{model.Summary}}</p> -->
+                    <h3 *ngIf="model.Content">{{model.Content | shortline:36}}</h3>
                 </div>
                 <div *ngIf="model.Images.length>0" class="custom-image">
                     <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>

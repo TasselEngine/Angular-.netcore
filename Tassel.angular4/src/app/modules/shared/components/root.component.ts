@@ -52,6 +52,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (!(event instanceof NavigationEnd)) { return; }
+      this.ShowMenu = false;
       this.HideAll = false;
       this.ShowBack = true;
       this.route_type = undefined;
@@ -87,17 +88,13 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   }
 
   private checkView = () => {
-    const root = this.rootContent.nativeElement as HTMLDivElement;
+    const root = this.rootContent.nativeElement;
     if (root.clientWidth > 1280) {
       this.ShowSlider = true;
-      // this.render.setStyle(root, 'padding', '24px 48px');
       this.HeadLeft = '0px';
-      // this.HeaRight = '0px';
     } else {
       this.ShowSlider = false;
-      // this.render.setStyle(root, 'padding', '24px 0px');
       this.HeadLeft = '-50px';
-      // this.HeaRight = '-28px';
     }
     setTimeout(this.checkView, 300);
   }
