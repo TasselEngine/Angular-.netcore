@@ -5,8 +5,7 @@ import { IdentityService } from './../../../services/identity/identity.service';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
-import { ServerStatus } from '../../../model/interfaces/response.interface';
-import { Status } from '../../../model/app.model';
+import { Status, ServerStatus } from '../../../model/app.model';
 
 
 

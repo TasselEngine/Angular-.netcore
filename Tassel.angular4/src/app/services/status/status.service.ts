@@ -26,7 +26,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         private identity: IdentityService,
         private server: ServerService) {
         super(http);
-        this.logger = this.logsrv.GetLogger(StatusService).SetModule('service');
+        this.logger = this.logsrv.GetLogger('StatusService').SetModule('service');
     }
 
     public GetAllStatusAsync = async () => {

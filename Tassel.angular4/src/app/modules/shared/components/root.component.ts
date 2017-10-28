@@ -7,7 +7,7 @@ import { Component, OnInit, HostBinding, Renderer2, AfterViewInit, ViewChild, El
 import { ServerService } from '../../../services/server/server.service';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { UserType } from '../../../model/models/user/user.contract';
-import { RootService } from '../../../services/app.service';
+import { RootService, AdminService } from '../../../services/app.service';
 
 @Component({
   selector: 'tassel-root',
@@ -43,6 +43,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   constructor(
     public identity: IdentityService,
+    private admin: AdminService,
     private server: ServerService,
     private render: Renderer2,
     private route: ActivatedRoute,
@@ -101,6 +102,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   public Logout = () => {
     this.identity.LogoutAsync(async () => {
+      this.admin.CheckAccess(false);
       this.ShowPopover = this.ShowMenu = false;
       await this.Delay(100);
       this.navigator.GoHome();
@@ -111,6 +113,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     this.ShowPopover = this.ShowMenu = false;
     await this.Delay(100);
     this.navigator.GoToCurrentProfile();
+  }
+
+  public ToAdminDashboard = async () => {
+    this.ShowPopover = this.ShowMenu = false;
+    await this.Delay(100);
+    this.navigator.GoToAdminDashboard();
   }
 
   public OnLoginClicked = () => {

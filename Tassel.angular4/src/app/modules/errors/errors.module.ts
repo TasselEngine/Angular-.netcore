@@ -1,3 +1,4 @@
+import { ForbiddenComponent } from './components/401.component';
 import { NotFoundComponent } from './components/404.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { Routes, RouterModule } from '@angular/router';
@@ -9,6 +10,7 @@ const overRoutes: Routes = [
     {
         path: '', children: [
             { path: '404', component: NotFoundComponent },
+            { path: '401', component: ForbiddenComponent },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
         ]
     }
@@ -16,7 +18,8 @@ const overRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        NotFoundComponent
+        NotFoundComponent,
+        ForbiddenComponent
     ],
     imports: [
         CommonModule,
@@ -26,7 +29,8 @@ const overRoutes: Routes = [
     ],
     providers: [],
     exports: [
-        NotFoundComponent
+        NotFoundComponent,
+        ForbiddenComponent
     ]
 })
 export class ErrorsModule { }

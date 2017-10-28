@@ -1,8 +1,3 @@
-import { WeiboUser } from './../../model/models/user/weibo.model';
-import { IResponse, ServerStatus } from '../../model/interfaces/response.interface';
-import { UserType } from '../../model/models/user/user.contract';
-import { User, UnionUser } from './../../model/models/user/user.model';
-
 import { ServerService } from '../server/server.service';
 import { HttpAsyncClientBase } from '../base/service.base';
 import { JsonHelper, StrictResult } from './../../utils/app.utils';
@@ -12,11 +7,16 @@ import { LogType, LoggerService, Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { RequestOptions, Http, Response, Headers } from '@angular/http';
 
+import { IResponse, UnionUser, ServerStatus, UserType, User, WeiboUser } from '../../model/app.model';
+
 @Injectable()
 export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     private get tokenKey() { return 'tassel_token'; }
     public get Root() { return this.server.ServerApiRoot; }
+
+    private isInit = false;
+    public get StatusInit(): boolean { return this.isInit; }
 
     private logined = false;
     public get IsLogined(): boolean { return this.logined; }
@@ -60,15 +60,19 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             const [succeed, code, error, user] = await this.getDetailsAsync();
             if (!succeed) {
                 this.logger.Error(['Fetch user infos failed', 'Server Errors.'], 'BuildUserStateAsync');
+                this.isInit = true;
                 return;
             }
             if (code === ServerStatus.Succeed) {
                 this.user = user;
                 this.logined = true;
+                this.isInit = true;
             } else {
+                this.isInit = true;
                 this.logger.Warn(['Fetch user infos bad', 'See the exceptions below.', error.msg], 'BuildUserStateAsync');
             }
         } else {
+            this.isInit = true;
             this.logger.Debug(['No logined status to be created', 'No logined msg cound be found in localStorage.'], 'BuildUserStateAsync');
         }
     }

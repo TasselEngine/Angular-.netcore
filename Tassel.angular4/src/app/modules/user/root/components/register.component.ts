@@ -5,9 +5,9 @@ import { Component, HostBinding, OnInit, Input, OnDestroy } from '@angular/core'
 import { pageShowAnimation } from './../../../../utils/app.utils';
 import { IdentityService } from '../../../../services/app.service';
 import { Regex } from 'ws-regex';
-import { IResponse, ServerStatus } from '../../../../model/interfaces/response.interface';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { EqualValidator } from '../../../extensions/directives/form_valid.directive';
+import { ServerStatus } from '../../../../model/app.model';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';

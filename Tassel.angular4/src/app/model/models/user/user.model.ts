@@ -25,7 +25,7 @@ export class User extends Creator {
     @serializeAs('role')
     @deserializeAs('role')
     private role_str: string;
-    public get RoleID(): string { return this.role_str; }
+    public get Role(): string { return this.role_str; }
 
     @serializeAs('display_name')
     @deserializeAs('display_name')

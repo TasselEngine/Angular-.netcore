@@ -1,3 +1,4 @@
+import { AdminService } from './admin/admin.service';
 import { FormatService } from './format/format.service';
 import { StatusService } from './status/status.service';
 import { RootService } from './root/root.service';
@@ -13,6 +14,7 @@ export {
     ToastService,
     StatusService,
     FormatService,
+    AdminService,
     HttpAsyncClientBase,
     AsyncableServiceBase
 };
