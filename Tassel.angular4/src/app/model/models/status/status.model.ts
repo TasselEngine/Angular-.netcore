@@ -132,8 +132,6 @@ export class Status {
         }
         switch (target) {
             case 'origin': return this.Images.map(i => head + i.URL);
-            case 'normal': return this.Images.map(i => head + i.NormalURL);
-            case 'large': return this.Images.map(i => head + i.LargeURL);
             default: return this.Thumbnails.map(i => head + i);
         }
     }
