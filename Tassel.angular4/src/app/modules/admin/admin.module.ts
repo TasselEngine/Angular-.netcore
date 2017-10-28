@@ -1,3 +1,5 @@
+import { AdminStatusComponent } from './status/status.component';
+import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../extensions/extensions.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -8,7 +10,8 @@ import { NgModule } from '@angular/core';
 const overRoutes: Routes = [
     {
         path: '', children: [
-            { path: 'dashboard', loadChildren: './root/admin_root.module#AdminRootModule' },
+            { path: 'dashboard', component: AdminDashboardComponent },
+            { path: 'status', component: AdminStatusComponent },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
@@ -17,7 +20,8 @@ const overRoutes: Routes = [
 
 @NgModule({
     declarations: [
-
+        AdminDashboardComponent,
+        AdminStatusComponent
     ],
     imports: [
         CommonModule,
@@ -29,7 +33,8 @@ const overRoutes: Routes = [
     ],
     providers: [],
     exports: [
-
+        AdminDashboardComponent,
+        AdminStatusComponent
     ]
 })
 export class AdminModule { }

@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'tassel-admin-dash',
-    templateUrl: './../views/dashboard.html',
+    templateUrl: './dashboard.html',
     styleUrls: [
-        './../styles/dash.css'
+        './dash.scss'
     ]
 })
-export class DashIndexComponent {
+export class AdminDashboardComponent {
 
 }

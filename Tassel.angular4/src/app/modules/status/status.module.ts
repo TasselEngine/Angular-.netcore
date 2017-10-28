@@ -1,3 +1,4 @@
+import { StatusDetailsComponent } from './details/details.component';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonBaseModule } from './../commons/common.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -10,6 +11,7 @@ const overRoutes: Routes = [
     {
         path: '', children: [
             { path: '', component: StatusIndexComponent },
+            { path: ':statusid/details', component: StatusDetailsComponent },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
         ]
     }
@@ -18,6 +20,7 @@ const overRoutes: Routes = [
 @NgModule({
     declarations: [
         StatusIndexComponent,
+        StatusDetailsComponent,
     ],
     imports: [
         CommonModule,
@@ -28,7 +31,8 @@ const overRoutes: Routes = [
     ],
     providers: [],
     exports: [
-        StatusIndexComponent
+        StatusIndexComponent,
+        StatusDetailsComponent
     ]
 })
 export class StatusModule { }

@@ -22,6 +22,7 @@ export class RouteStruct implements IRouteStruct {
 
     public CheckIf = (...routesFlag: string[]): boolean => {
         const succs = [] as boolean[];
+        if (routesFlag.length !== this.coll.length) { return false; }
         routesFlag.forEach((a, b) => succs.push(a === this.coll[b]));
         return !succs.includes(false);
     }
@@ -34,7 +35,8 @@ export class RouteStruct implements IRouteStruct {
 
     public DoEach = (action: Function, ...routesFlag: string[][]): RouteStruct => {
         for (const routes of routesFlag) {
-            if (this.CheckIf(...routes)) { action(); }
+            if (!this.CheckIf(...routes)) { continue; }
+            action();
         }
         return this;
     }

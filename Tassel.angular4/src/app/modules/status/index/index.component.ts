@@ -66,5 +66,9 @@ export class StatusIndexComponent extends TasselNavigationBase {
         }
     }
 
+    public readonly ItemClicked = (model: Status) => {
+        this.navigator.GoToStatusDetails(model.ID);
+    }
+
 }
 

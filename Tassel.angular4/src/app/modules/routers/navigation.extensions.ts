@@ -4,19 +4,32 @@ import { Router, NavigationExtras } from '@angular/router';
 
 export class NavigationDelegator {
 
+    private readonly profile_patch = 'profile';
+    private readonly details_patch = 'details';
+    private readonly dashboard_patch = 'dashboard';
+    private readonly status_patch = 'status';
+    private readonly notfound_patch = '404';
+
     private readonly index = ['/index'];
     private readonly userRoot = ['/user'];
+    private readonly statusRoot = ['/status'];
+    private readonly errorsRoot = ['/errors'];
+    private readonly adminRoot = ['/admin'];
+
     private readonly register = [...this.userRoot, 'register'];
     private readonly login = [...this.userRoot, 'login'];
-    private readonly statusRoot = ['/status'];
-
-    private readonly profile_patch = 'profile';
+    private readonly error404 = [...this.errorsRoot, this.notfound_patch];
+    private readonly adminDashboard = [...this.adminRoot, this.dashboard_patch];
+    private readonly adminStatus = [...this.adminRoot, this.status_patch];
 
     private readonly route_maps = {
         'Home': this.index,
+        'NotFound': this.error404,
         'Register': this.register,
         'Login': this.login,
         'Status': this.statusRoot,
+        'AdminDashboard': this.adminDashboard,
+        'AdminStatus': this.adminStatus,
     };
     public get RouteLinks() {
         return this.route_maps;
@@ -53,12 +66,28 @@ export class NavigationDelegator {
         this.routeSafely(this.login);
     }
 
+    public readonly GoToNotFound = (flag?: string) => {
+        this.routeSafely(this.error404, { queryParams: { type: flag } });
+    }
+
     public readonly GoToCurrentProfile = (uname?: string) => {
         this.routeSafely([...this.userRoot, uname || this.user_name, this.profile_patch]);
     }
 
     public readonly GoToStatusIndex = () => {
         this.routeSafely(this.statusRoot);
+    }
+
+    public readonly GoToStatusDetails = (statusid: string) => {
+        this.routeSafely([...this.statusRoot, statusid, this.details_patch]);
+    }
+
+    public readonly GoToAdminStatus = () => {
+        this.routeSafely(this.adminStatus);
+    }
+
+    public readonly GoToAdminDashboard = () => {
+        this.routeSafely(this.adminDashboard);
     }
 
 }
