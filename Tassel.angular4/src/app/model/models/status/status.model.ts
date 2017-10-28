@@ -27,16 +27,6 @@ export class Image {
     private thumb: string;
     public get Thumbnail() { return this.thumb; }
 
-    @serializeAs('normal')
-    @deserializeAs('normal')
-    private normal: string;
-    public get NormalURL() { return this.normal; }
-
-    @serializeAs('large')
-    @deserializeAs('large')
-    private large: string;
-    public get LargeURL() { return this.large; }
-
     @serializeAs('url')
     @deserializeAs('url')
     private url: string;

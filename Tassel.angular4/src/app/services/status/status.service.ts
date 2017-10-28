@@ -45,6 +45,14 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<Status>(error);
     }
 
+    public CreateStatusAsync = async (params: any) => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/create`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON(params));
+        this.apiLog([succeed, error, response], 'Try to create a new status', 'CreateStatusAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as string, response.msg) :
+            StrictResult.Failed<string>(error);
+    }
+
     public LikeStatusAsync = async (sid: string, uid: string, uname: string) => {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/status/${sid}/like`, this.FormOptions, HttpType.PUT, JsonHelper.ToJSON({ uid: uid, user_name: uname }));

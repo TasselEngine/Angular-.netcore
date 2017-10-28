@@ -24,7 +24,5 @@ export interface IImage {
     is_file: boolean;
     base_64: string;
     thumb: string;
-    large: string;
-    normal: string;
     url: string;
 }

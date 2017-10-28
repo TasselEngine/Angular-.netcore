@@ -11,7 +11,7 @@ import { NgModule } from '@angular/core';
     imports: [
         CommonModule,
         ExtensionsModule,
-        NgZorroAntdModule,
+        NgZorroAntdModule
     ],
     providers: [],
     exports: [

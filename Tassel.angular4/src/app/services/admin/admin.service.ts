@@ -1,4 +1,5 @@
-import { IError } from 'ws-format-httprequest';
+import { JsonHelper } from './../../utils/helpers/typed_json.helper';
+import { IError, HttpType } from 'ws-format-httprequest';
 import { Logger } from 'ws-logger';
 import { HttpAsyncClientBase } from './../base/service.base';
 import { Http } from '@angular/http';
@@ -40,6 +41,15 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
         return succeed ?
             StrictResult.Success(response.status, response.content as boolean, response.msg) :
             StrictResult.Failed<boolean>(error);
+    }
+
+    public readonly UploadImageAsync = async (file: string) => {
+        const [succeed, error, response] = await this.InvokeAsync(
+            `${this.Root}/static/image`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON({ file: file }));
+        this.apiLog([succeed, error, response], 'Try to upload a file', 'UploadImageAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as any, response.msg) :
+            StrictResult.Failed<any>(error);
     }
 
     private readonly apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {

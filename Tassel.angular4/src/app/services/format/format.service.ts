@@ -36,7 +36,8 @@ export class FormatService extends AsyncableServiceBase {
             const hours = Math.floor(seconds / 3600);
             return `${hours} hour${hours > 1 ? 's' : ''} ago`;
         } else if (seconds > 60) {
-            const mnts = Math.floor(seconds / 60);
+            let mnts = Math.floor(seconds / 60);
+            mnts = mnts < 5 ? 1 : Math.floor(mnts / 5) * 5;
             return `${mnts} minute${mnts > 1 ? 's' : ''} ago`;
         } else {
             return 'just now';

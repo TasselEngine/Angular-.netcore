@@ -2,4 +2,24 @@
     <h1>
         <b>Status</b>
     </h1>
+    <hr/>
+    <div style="margin-top:32px;">
+
+        <input type="file" multiple="multiple" (change)="OnFileChanged($event.target.files)" />
+
+        <div>
+            <div *ngFor="let image of VM.Images">
+                <img width="50" height="50" [src]="image.Src" />
+                <span>{{image.Uploaded}}</span>
+            </div>
+        </div>
+
+        <div>
+            <nz-input nzType="textarea" [(ngModel)]="VM.Content"></nz-input>
+        </div>
+
+        <button nz-button (click)="Submit()">Submit</button>
+
+    </div>
+
 </div>

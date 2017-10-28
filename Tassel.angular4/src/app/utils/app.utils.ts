@@ -1,3 +1,4 @@
+import { Queue } from './helpers/queue.helper';
 import { JsonHelper } from './helpers/typed_json.helper';
 import { GlobalInjection } from './helpers/global_injector.helper';
 import { StrictResult } from './helpers/strict_result.helper';
@@ -14,5 +15,6 @@ export {
 export {
     StrictResult,
     GlobalInjection,
-    JsonHelper
+    JsonHelper,
+    Queue
 };
