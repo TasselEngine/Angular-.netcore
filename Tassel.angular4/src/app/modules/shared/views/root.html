@@ -109,6 +109,9 @@
                             <p>
                                 <a (click)="ToUserProfile()">Profile</a>
                             </p>
+                            <p *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core'">
+                                <a (click)="ToAdminDashboard()">Manage</a>
+                            </p>
                             <p>
                                 <a (click)='Logout()'>Logout</a>
                             </p>

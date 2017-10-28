@@ -4,12 +4,12 @@
 
 <ng-template let-model="model" #temp>
     <div *ngIf="model">
-        <nz-card class="card-div card-fadin" [nzBordered]="false" (click)="ItemClicked(model)">
+        <nz-card class="card-div card-fadin" [nzBordered]="false">
             <ng-template #body>
-                <div class="custom-card">
+                <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
                     <h3 *ngIf="model.Content">{{model.Content | shortline:36}}</h3>
                 </div>
-                <div *ngIf="model.Images.length>0" class="custom-image">
+                <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
                     <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>
                 </div>
                 <div class="pending">
@@ -18,10 +18,10 @@
                         <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
                     </div>
                     <div class="pending-div">
-                        <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user" (click)="ClickLike(model)"></i>
-                        <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o like-hover" (click)="ClickLike(model)"></i>
+                        <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user card-like-pointer" (click)="ClickLike(model)"></i>
+                        <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o like-hover card-like-pointer" (click)="ClickLike(model)"></i>
                         <span>{{model.LikersCount}}</span>
-                        <i class="anticon anticon-message"></i>
+                        <i class="anticon anticon-message card-like-pointer" (click)="ItemClicked(model)"></i>
                         <span>{{model.CommentCount}}</span>
                     </div>
                 </div>

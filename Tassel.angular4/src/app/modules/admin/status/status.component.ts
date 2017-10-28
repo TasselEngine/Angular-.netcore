@@ -61,8 +61,7 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
     }
 
     ngOnInit(): void {
-        this.uploadQueue = new Queue<IImage>(10);
-        this.readFileTicks();
+        this.uploadQueue = new Queue<IImage>(50);
     }
 
     public readonly OnFileChanged = (files: FileList) => {
@@ -107,20 +106,27 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
                     if (succeed && code === ServerStatus.Succeed) {
                         first.Payload = result;
                         first.Uploaded = true;
+                    } else {
+                        first.Uploaded = true;
+                        first.UploadFailed = true;
                     }
                 });
             }
+        } else {
+            // TO UPLOAD
+            this.status.CreateStatusAsync({
+                content: this.model.Content,
+                user_name: this.identity.CurrentUser.FriendlyName,
+                uid: this.identity.CurrentUUID,
+                images: this.model.Images.filter(i => !i.UploadFailed).map(i => i.Payload)
+            });
+            return;
         }
-        setTimeout(this.readFileTicks, 500);
+        setTimeout(this.readFileTicks, 50);
     }
 
     public Submit = () => {
-        this.status.CreateStatusAsync({
-            content: this.model.Content,
-            user_name: this.identity.CurrentUser.FriendlyName,
-            uid: this.identity.CurrentUUID,
-            images: this.model.Images.map(i => i.Payload)
-        });
+        this.readFileTicks();
     }
 
 }
