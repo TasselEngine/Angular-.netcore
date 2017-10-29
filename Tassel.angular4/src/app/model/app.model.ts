@@ -1,3 +1,4 @@
+import { ITiebaImage } from './models/commons/tieba-images/tieba.contract';
 import { ILikeRelation } from './models/like/like.contract';
 import { LikeRelation } from './models/like/like.model';
 import { IComment } from './models/comment/comment.contract';
@@ -34,7 +35,8 @@ export {
     IStatus,
     IImage,
     IComment,
-    ILikeRelation
+    ILikeRelation,
+    ITiebaImage
 };
 
 export {

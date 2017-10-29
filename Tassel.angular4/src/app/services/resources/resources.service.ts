@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { IdentityService } from './../identity/identity.service';
 import { ServerService } from './../server/server.service';
-import { IResponse } from '../../model/app.model';
+import { IResponse, ITiebaImage, ServerStatus } from '../../model/app.model';
 import { StrictResult } from '../../utils/app.utils';
 
 @Injectable()
@@ -17,6 +17,11 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
 
     public get FormOptions() { return this.identity.FormOptions; }
 
+    private tieba_images: ITiebaImage[];
+    public get TiebaImages() {
+        return this.tieba_images || [];
+    }
+
     private logger: Logger<ResourcesService>;
 
     constructor(
@@ -25,6 +30,13 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
         private server: ServerService) {
         super(http);
         this.logger = this.logsrv.GetLogger('ResourcesService').SetModule('service');
+        this.initResources();
+    }
+
+    private initResources = () => {
+        this.GetTiebaImagesAsync().then(([s, c, e, images]) => {
+            if (s && c === ServerStatus.Succeed) { this.tieba_images = images as ITiebaImage[]; }
+        });
     }
 
     public readonly GetTiebaImagesAsync = async () => {

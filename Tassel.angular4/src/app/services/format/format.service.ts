@@ -1,3 +1,4 @@
+import { Regex, RegexType } from 'ws-regex';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { FormatTime } from 'ws-format-time';
@@ -6,6 +7,7 @@ import { IdentityService } from './../identity/identity.service';
 import { Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { AsyncableServiceBase } from '../base/service.base';
+import { ITiebaImage } from '../../model/app.model';
 
 @Injectable()
 export class FormatService extends AsyncableServiceBase {
@@ -23,6 +25,25 @@ export class FormatService extends AsyncableServiceBase {
 
     public readonly ImageConnect = (path: string): string => {
         return this.ImageSrcRoot + path;
+    }
+
+    public readonly ImageTickParse = (str: string, coll: ITiebaImage[]): string => {
+        const reg = Regex.Create(/\[#\(.+?\)\]/, RegexType.IgnoreCase);
+        str = this.goRegex(reg, str, coll);
+        return str;
+    }
+
+    private goRegex = (reg: Regex, str: string, ticks: ITiebaImage[]): string => {
+        const coll = reg.Matches(str);
+        if (coll[0] && coll[0] !== '') {
+            const target = ticks.find(i => `[${i.key}]` === coll[0]);
+            if (target) {
+                str = str.replace(coll[0], `<img width="24" src="${this.ImageSrcRoot}${target.value}" />`);
+            }
+            return this.goRegex(reg, str, ticks);
+        } else {
+            return str;
+        }
     }
 
     public readonly TimeFormat = (time: FormatTime) => {

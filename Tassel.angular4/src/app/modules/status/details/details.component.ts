@@ -41,10 +41,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public get Formator() { return this.formater; }
 
-    private tieba_images: ITiebaImage[];
-    public get TiebaImages() {
-        return this.tieba_images;
-    }
+    public get TiebaImages() { return this.resources.TiebaImages; }
 
     private logger: Logger<StatusDetailsComponent>;
 
@@ -85,11 +82,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public readonly OpenCommentPanel = () => {
         this.openEdit = !this.openEdit;
-        if (!this.tieba_images) {
-            this.resources.GetTiebaImagesAsync().then(([s, c, e, images]) => {
-                if (s && c === ServerStatus.Succeed) { this.tieba_images = images as ITiebaImage[]; }
-            });
-        }
     }
 
     public readonly TiebaImageClicked = (image: ITiebaImage) => {

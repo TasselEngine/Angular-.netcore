@@ -33,7 +33,7 @@
             </div>
             <p *ngIf="!VM.Comments||VM.Comments.length===0">No comment yet.</p>
             <div *ngFor="let com of VM.Comments">
-                <p>{{com.Content}}</p>
+                <p [innerHtml]="Formator.ImageTickParse(com.Content,TiebaImages)"></p>
             </div>
         </div>
     </div>
