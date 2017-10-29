@@ -1,3 +1,8 @@
-<div>
-    <h3>DETAILS</h3>
+<div *ngIf="VM" TasselPadding [PaddingDetails]="[24,16,0,16]">
+    <h1>
+        <b>Details</b>
+    </h1>
+    <div>
+        <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
+    </div>
 </div>

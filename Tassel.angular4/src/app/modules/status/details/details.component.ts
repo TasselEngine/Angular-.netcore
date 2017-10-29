@@ -1,7 +1,6 @@
 import { Logger } from 'ws-logger';
-import { StatusService } from './../../../services/status/status.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IdentityService } from './../../../services/identity/identity.service';
+import { IdentityService, ServerService, StatusService } from './../../../services/app.service';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
@@ -24,11 +23,14 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     private status_id: string;
     private model: Status;
-    public get Status() { return this.model; }
+    public get VM() { return this.model; }
+
+    public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
     private logger: Logger<StatusDetailsComponent>;
 
     constructor(
+        private server: ServerService,
         private route: ActivatedRoute,
         private status: StatusService,
         protected identity: IdentityService,
@@ -52,6 +54,10 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 this.navigator.GoToNotFound();
             }
         });
+    }
+
+    public readonly OnImageClicked = (img_src: string) => {
+        console.log(img_src);
     }
 
 }

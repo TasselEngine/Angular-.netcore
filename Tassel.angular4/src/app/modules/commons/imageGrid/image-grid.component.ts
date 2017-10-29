@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 // tslint:disable:no-input-rename
 
@@ -11,11 +11,22 @@ import { Component, Input } from '@angular/core';
 })
 export class ImageGridComponent {
 
+    @Input('gridType')
+    private gridType: 'divide' | 'grid' = 'divide';
+    public get DivideType(): boolean { return this.gridType === 'divide' ? true : false; }
+
     @Input('images')
     images: string[];
 
     @Input('src')
     src: string;
+
+    @Input('canPointer')
+    private canPointer = false;
+    public get CanPointer(): boolean { return this.canPointer === true; }
+
+    @Output('ImageClicked')
+    ImageClicked = new EventEmitter<any>();
 
     public get Images() {
         return !this.images ? !this.src ? [] : [[this.src]] :
@@ -29,5 +40,11 @@ export class ImageGridComponent {
     }
 
     public get Count(): number { return !this.images ? !this.src ? 0 : 1 : this.images.length; }
+
+    public readonly OnImageClicked = (img_src: string) => {
+        if (this.canPointer) {
+            this.ImageClicked.emit(img_src);
+        }
+    }
 
 }
