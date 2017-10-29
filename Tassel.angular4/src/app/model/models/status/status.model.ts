@@ -81,6 +81,7 @@ export class Status {
     @deserializeAs(Number, 'comments_count')
     private comments_count: number;
     public get CommentCount(): number { return this.comments_count || 0; }
+    public set CommentCount(value: number) { this.comments_count = value; }
 
     @serializeAs('liker_users')
     @deserializeAs(LikeRelation, 'liker_users')

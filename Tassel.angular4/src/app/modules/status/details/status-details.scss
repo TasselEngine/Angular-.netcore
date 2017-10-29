@@ -1,0 +1,59 @@
+@import './../../shared/styles/design.scss';
+
+.vm-container{
+   font-size: 16px;
+   padding: 4px;
+   color:#686868;
+}
+
+.vm-header {
+    padding-top: 4px;
+    padding-bottom: 8px;
+}
+
+.vm-comments-div{
+    padding:8px;
+    background-color: #fcfcfc;
+    border: 1px solid #f3f3f3;
+}
+
+.vm-comments-header{
+    margin: -8px;
+    background-color: white;
+}
+
+.vm-comments-header p{
+    padding-left: 4px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 2em;
+}
+
+.vm-comments{
+    margin-top:24px;
+    padding: 4px;
+}
+
+.vm-avatar{
+    padding-right: 8px;
+}
+
+.vm-username{
+    font-weight: bold;
+    font-size: 20px
+}
+
+.vm-stamp{
+    color: #bcbcbc;
+    font-size: 12px
+}
+
+.vm-tieba-group{
+    padding: 8px;
+}
+
+.vm-tieba-img{
+    cursor:pointer;
+    margin:4px;
+}
+

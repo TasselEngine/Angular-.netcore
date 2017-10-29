@@ -12,11 +12,17 @@ export class FormatService extends AsyncableServiceBase {
 
     private logger: Logger<FormatService>;
 
+    private get ImageSrcRoot() { return this.server.ServerApiRoot; }
+
     constructor(
         private identity: IdentityService,
         private server: ServerService) {
         super();
         this.logger = this.logsrv.GetLogger('FormatService').SetModule('service');
+    }
+
+    public readonly ImageConnect = (path: string): string => {
+        return this.ImageSrcRoot + path;
     }
 
     public readonly TimeFormat = (time: FormatTime) => {

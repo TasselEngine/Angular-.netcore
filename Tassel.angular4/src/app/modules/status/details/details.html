@@ -1,8 +1,40 @@
 <div *ngIf="VM" TasselPadding [PaddingDetails]="[24,16,0,16]">
-    <h1>
-        <b>Details</b>
-    </h1>
-    <div>
+    <div *ngIf="Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
+        <div nz-col class="vm-avatar">
+            <div *ngIf="Creator.Photo">
+                <img [src]="Creator.Photo" class="avatar-icon" />
+            </div>
+            <div *ngIf="!Creator.Photo" class="avatar-icon avatar-blue">
+                <i class="anticon anticon-user nologin-icon"></i>
+            </div>
+        </div>
+        <div nz-col>
+            <p class="vm-username">{{Creator.FriendlyName}}</p>
+            <p class="vm-stamp">{{VM.CreateTime.FormatDate}}</p>
+        </div>
+    </div>
+    <div class="vm-container">
+        <p>{{VM.Content}}</p>
         <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
+    </div>
+    <div class="vm-comments-div">
+        <div class="vm-comments-header">
+            <p>Comments</p>
+        </div>
+        <div class="vm-comments">
+            <button (click)="OpenCommentPanel()">Add comment</button>
+            <div *ngIf="IsEdit">
+                <nz-input nzType="textarea" [(ngModel)]="CommentToUpload"></nz-input>
+                <button (click)="AddComment()">Submit</button>
+            </div>
+            <div *ngIf="TiebaImages&&IsEdit" class="vm-tieba-group">
+                <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+                    (click)="TiebaImageClicked(img)" />
+            </div>
+            <p *ngIf="!VM.Comments||VM.Comments.length===0">No comment yet.</p>
+            <div *ngFor="let com of VM.Comments">
+                <p>{{com.Content}}</p>
+            </div>
+        </div>
     </div>
 </div>

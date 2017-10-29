@@ -1,12 +1,16 @@
 import { Logger } from 'ws-logger';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IdentityService, ServerService, StatusService } from './../../../services/app.service';
+import { IdentityService, ServerService, StatusService, ResourcesService } from './../../../services/app.service';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
-import { Status, ServerStatus } from '../../../model/app.model';
+import { Status, ServerStatus, UnionUser, UserComment } from '../../../model/app.model';
+import { ValidationErrors } from '@angular/forms';
 
-
+interface ITiebaImage {
+    key: string;
+    value: string;
+}
 
 @Component({
     selector: 'tassel-status-details',
@@ -25,7 +29,22 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     private model: Status;
     public get VM() { return this.model; }
 
+    private openEdit = false;
+    public get IsEdit() { return this.openEdit; }
+
+    public CommentToUpload = '';
+
+    private _creator: UnionUser;
+    public get Creator() { return this._creator; }
+
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
+
+    public get Formator() { return this.formater; }
+
+    private tieba_images: ITiebaImage[];
+    public get TiebaImages() {
+        return this.tieba_images;
+    }
 
     private logger: Logger<StatusDetailsComponent>;
 
@@ -33,6 +52,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         private server: ServerService,
         private route: ActivatedRoute,
         private status: StatusService,
+        private resources: ResourcesService,
         protected identity: IdentityService,
         protected router: Router) {
         super(identity, router);
@@ -49,6 +69,9 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             }
             if (code === ServerStatus.Succeed) {
                 this.model = details;
+                this.identity.GetUserDetailsAsync(this.model.Creator.UUID).then(([s, c, e, user]) => {
+                    if (s && c === ServerStatus.Succeed) { this._creator = user; }
+                });
             } else {
                 this.logger.Warn(['Get status details failed', 'See the details : ', error.msg], 'ngOnInit');
                 this.navigator.GoToNotFound();
@@ -58,6 +81,29 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public readonly OnImageClicked = (img_src: string) => {
         console.log(img_src);
+    }
+
+    public readonly OpenCommentPanel = () => {
+        this.openEdit = !this.openEdit;
+        if (!this.tieba_images) {
+            this.resources.GetTiebaImagesAsync().then(([s, c, e, images]) => {
+                if (s && c === ServerStatus.Succeed) { this.tieba_images = images as ITiebaImage[]; }
+            });
+        }
+    }
+
+    public readonly TiebaImageClicked = (image: ITiebaImage) => {
+        this.CommentToUpload += `[${image.key}]`;
+    }
+
+    public readonly AddComment = async () => {
+        const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName, this.CommentToUpload);
+        if (succeed && code === ServerStatus.Succeed) {
+            this.model.Comments.push(comment);
+            this.model.CommentCount += 1;
+            this.CommentToUpload = '';
+            this.openEdit = false;
+        }
     }
 
 }

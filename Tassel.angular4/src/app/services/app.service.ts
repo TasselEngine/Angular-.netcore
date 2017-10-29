@@ -1,3 +1,5 @@
+import { UtilsService } from './utils/utils.service';
+import { ResourcesService } from './resources/resources.service';
 import { AdminService } from './admin/admin.service';
 import { FormatService } from './format/format.service';
 import { StatusService } from './status/status.service';
@@ -15,6 +17,8 @@ export {
     StatusService,
     FormatService,
     AdminService,
+    ResourcesService,
+    UtilsService,
     HttpAsyncClientBase,
     AsyncableServiceBase
 };
