@@ -19,21 +19,32 @@
     </div>
     <div class="vm-comments-div">
         <div class="vm-comments-header">
+            <button nz-button style="float:right;margin:4px;" (click)="OpenCommentPanel()">Add</button>
             <p>Comments</p>
         </div>
         <div class="vm-comments">
-            <button (click)="OpenCommentPanel()">Add comment</button>
-            <div *ngIf="IsEdit">
+            <div *ngIf="IsEdit" class="vm-comt-edit">
                 <nz-input nzType="textarea" [(ngModel)]="CommentToUpload"></nz-input>
-                <button (click)="AddComment()">Submit</button>
-            </div>
-            <div *ngIf="TiebaImages&&IsEdit" class="vm-tieba-group">
-                <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
-                    (click)="TiebaImageClicked(img)" />
+                <div *ngIf="TiebaImages" class="vm-tieba-group">
+                    <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+                        (click)="TiebaImageClicked(img)" />
+                </div>
+                <button nz-button nzType="primary" (click)="AddComment()">Submit</button>
             </div>
             <p *ngIf="!VM.Comments||VM.Comments.length===0">No comment yet.</p>
-            <div *ngFor="let com of VM.Comments">
-                <p [innerHtml]="Formator.ImageTickParse(com.Content,TiebaImages)"></p>
+            <div class="vm-comt" *ngFor="let com of VM.Comments">
+                <div style="display:flex">
+                    <div>
+                        <b>{{com.Creator.UserName}}</b> :
+                    </div>
+                    <div>
+                        <p [innerHtml]="Formator.ImageTickParse(com.Content,TiebaImages)"></p>
+                    </div>
+                </div>
+                <div class="vm-comt-stamp">
+                    <a class="vm-comt-reply">Reply</a>
+                    <p>{{com.CreateTime.FormatDateTime}}</p>
+                </div>
             </div>
         </div>
     </div>

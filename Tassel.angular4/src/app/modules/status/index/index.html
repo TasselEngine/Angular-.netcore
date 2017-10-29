@@ -7,7 +7,7 @@
         <nz-card class="card-div card-fadin" [nzBordered]="false">
             <ng-template #body>
                 <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
-                    <h3 *ngIf="model.Content">{{model.Content | shortline:36}}</h3>
+                    <p class="vm-index-title" *ngIf="model.Content">{{model.Content | shortline:36}}</p>
                 </div>
                 <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
                     <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>

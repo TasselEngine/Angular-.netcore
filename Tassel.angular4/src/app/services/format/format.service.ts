@@ -38,7 +38,7 @@ export class FormatService extends AsyncableServiceBase {
         if (coll[0] && coll[0] !== '') {
             const target = ticks.find(i => `[${i.key}]` === coll[0]);
             if (target) {
-                str = str.replace(coll[0], `<img width="24" src="${this.ImageSrcRoot}${target.value}" />`);
+                str = str.replace(coll[0], `<img width="16" src="${this.ImageSrcRoot}${target.value}" />`);
             }
             return this.goRegex(reg, str, ticks);
         } else {

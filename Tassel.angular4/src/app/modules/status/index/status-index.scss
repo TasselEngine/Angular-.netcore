@@ -1,1 +1,11 @@
-@import './../../shared/styles/index.scss'
+@import './../../shared/styles/index.scss';
+
+.custom-card p{
+    color: black;
+    color: #484848;
+}
+
+.vm-index-title{
+    font-size: 18px;
+    font-weight: bold;
+}
