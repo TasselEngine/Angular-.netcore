@@ -34,9 +34,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public CommentToUpload = '';
 
-    private _creator: UnionUser;
-    public get Creator() { return this._creator; }
-
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
     public get Formator() { return this.formater; }
@@ -66,9 +63,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             }
             if (code === ServerStatus.Succeed) {
                 this.model = details;
-                this.identity.GetUserDetailsAsync(this.model.Creator.UUID).then(([s, c, e, user]) => {
-                    if (s && c === ServerStatus.Succeed) { this._creator = user; }
-                });
             } else {
                 this.logger.Warn(['Get status details failed', 'See the details : ', error.msg], 'ngOnInit');
                 this.navigator.GoToNotFound();

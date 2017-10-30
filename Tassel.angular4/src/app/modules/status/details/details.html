@@ -1,15 +1,15 @@
 <div *ngIf="VM" TasselPadding [PaddingDetails]="[24,16,0,16]">
-    <div *ngIf="Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
+    <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
         <div nz-col class="vm-avatar">
-            <div *ngIf="Creator.Photo">
-                <img [src]="Creator.Photo" class="avatar-icon" />
+            <div *ngIf="VM.Creator.Avatar">
+                <img [src]="VM.Creator.Avatar" class="avatar-icon" />
             </div>
-            <div *ngIf="!Creator.Photo" class="avatar-icon avatar-blue">
+            <div *ngIf="!VM.Creator.Avatar" class="avatar-icon avatar-blue">
                 <i class="anticon anticon-user nologin-icon"></i>
             </div>
         </div>
         <div nz-col>
-            <p class="vm-username">{{Creator.FriendlyName}}</p>
+            <p class="vm-username">{{VM.Creator.UserName}}</p>
             <p class="vm-stamp">{{VM.CreateTime.FormatDate}}</p>
         </div>
     </div>

@@ -17,6 +17,11 @@ export class Creator {
     private user_name: string;
     public get UserName(): string { return this.user_name; }
 
+    @serializeAs('avatar')
+    @deserializeAs('avatar')
+    private avatar: string;
+    public get Avatar(): string { return this.avatar; }
+
 }
 
 @inheritSerialization(Creator)
@@ -87,11 +92,6 @@ export class User extends Creator {
     @deserializeAs('qq_token')
     private qq_token?: string;
     public get QQID(): string { return this.qq_token; }
-
-    @serializeAs('avatar')
-    @deserializeAs('avatar')
-    private avatar: string;
-    public get Avatar(): string { return this.avatar; }
 
     @serializeAs('is_third_part')
     @deserializeAs('is_third_part')
