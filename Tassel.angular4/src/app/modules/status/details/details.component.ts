@@ -1,7 +1,7 @@
 import { Logger } from 'ws-logger';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IdentityService, ServerService, StatusService, ResourcesService } from './../../../services/app.service';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
 import { Status, ServerStatus, UnionUser, UserComment } from '../../../model/app.model';
@@ -25,6 +25,9 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
+    @ViewChild('replyInput')
+    private replyInput: ElementRef;
+
     private status_id: string;
     private model: Status;
     public get VM() { return this.model; }
@@ -47,6 +50,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         private route: ActivatedRoute,
         private status: StatusService,
         private resources: ResourcesService,
+        private _render: Renderer2,
         protected identity: IdentityService,
         protected router: Router) {
         super(identity, router);

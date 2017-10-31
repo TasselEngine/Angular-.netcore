@@ -1,4 +1,4 @@
-<div *ngIf="VM" TasselPadding [PaddingDetails]="[24,16,0,16]">
+<div *ngIf="VM" class="vm-padding">
     <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
         <div nz-col class="vm-avatar">
             <div *ngIf="VM.Creator.Avatar">
@@ -16,15 +16,22 @@
     <div class="vm-container">
         <p>{{VM.Content}}</p>
         <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
+        <button nz-button (click)="OpenCommentPanel()">Add comment</button>
     </div>
     <div class="vm-comments-div">
-        <div class="vm-comments-header">
-            <button nz-button style="float:right;margin:4px;" (click)="OpenCommentPanel()">Add</button>
-            <p>Comments</p>
+        <div class="vm-comments-header" nz-row nzType="flex">
+            <div nz-col>
+                <p *ngIf="VM.CommentCount<=1">{{VM.CommentCount}} COMMENT</p>
+                <p *ngIf="VM.CommentCount>1">{{VM.CommentCount}} COMMENTS</p>
+            </div>
+            <div nz-col>
+                <p *ngIf="VM.LikersCount<=1">{{VM.LikersCount}} LIKE</p>
+                <p *ngIf="VM.LikersCount>1">{{VM.LikersCount}} LIKES</p>
+            </div>
         </div>
         <div class="vm-comments">
             <div *ngIf="IsEdit" class="vm-comt-edit">
-                <nz-input nzType="textarea" [(ngModel)]="CommentToUpload"></nz-input>
+                <nz-input nzType="textarea" nzRows="8" nzPlaceHolder="Input your reply here." [(ngModel)]="CommentToUpload" #replyInput></nz-input>
                 <div *ngIf="TiebaImages" class="vm-tieba-group">
                     <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
                         (click)="TiebaImageClicked(img)" />

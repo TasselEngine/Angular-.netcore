@@ -28,6 +28,9 @@ export class FormatService extends AsyncableServiceBase {
     }
 
     public readonly ImageTickParse = (str: string, coll: ITiebaImage[]): string => {
+        if (!coll || coll.length === 0) {
+            return str;
+        }
         const reg = Regex.Create(/\[#\(.+?\)\]/, RegexType.IgnoreCase);
         str = this.goRegex(reg, str, coll);
         return str;

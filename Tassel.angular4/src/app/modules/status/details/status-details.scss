@@ -1,4 +1,14 @@
 @import './../../shared/styles/design.scss';
+@import './../../shared/styles/content.scss';
+
+.vm-padding{
+    @extend .cont-padd-tb;
+    @extend .cont-padd-lr;
+}
+
+.vm-inner-mg{
+    @extend .cont-inner-margin;
+}
 
 .vm-container{
    font-size: 16px;
@@ -12,36 +22,55 @@
 }
 
 .vm-comments-div{
+    @extend .vm-inner-mg;
+    margin-top:12px;
     padding-bottom: 0px;
     padding-top: 0px;
     background-color: #efefef;
-    border: 1px solid #e6e6e6;
+    border: 1px solid transparent;
 }
 
 .vm-comments-header{
+    margin-top:12px;
+    margin-bottom:12px;
+    margin-left: -1px;
+    margin-right: -1px;
     background-color: white;
 }
 
 .vm-comments-header p{
-    padding-left: 4px;
+    @extend .cont-padd-lr;
     font-weight: bold;
     font-size: 20px;
     line-height: 2em;
 }
 
+.vm-comments-add{
+    @extend .cont-margin-lr;
+    float:right;
+    margin-top:4px;
+    margin-bottom:4px;
+}
+
 .vm-comments{
-    margin-top:2px;
+    margin-top:0px;
+    margin-bottom: -1px;
 }
 
 .vm-comt{
-    padding: 4px;
+    @extend .cont-padd-lr;
+    margin-left: -1px;
+    margin-right: -1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: #fff;
     font-size: 16px;
     transition: 0.5s;
 }
 
 .vm-comt:hover{
     transition: 0.5s;
-    background-color: #fff;
+    background-color: #f5f5f5;
 }
 
 .vm-comt-edit{

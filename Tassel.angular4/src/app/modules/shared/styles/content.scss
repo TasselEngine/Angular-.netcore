@@ -1,0 +1,49 @@
+@import './base.scss';
+
+.cont-padd-lr{
+    transition: 0.5s;
+    padding-left:36px;
+    padding-right:36px;
+}
+
+.cont-margin-lr{
+    transition: 0.5s;
+    margin-left:36px;
+    margin-right:36px;
+}
+
+.cont-padd-tb{
+    transition: 0.5s;
+    padding-top:36px;
+    padding-bottom: 0px;
+}
+
+.cont-inner-margin{
+    transition: 0.5s;
+    margin:0px;
+    margin-left: -36px;
+    margin-right: -36px;
+}
+
+@media(max-width:1280px){
+    .cont-padd-lr{
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .cont-margin-lr{
+        margin-left:8;
+        margin-right:8;
+    }
+
+    .cont-padd-tb{
+        padding-top:24px;
+        padding-bottom: 0px;
+    }
+
+    .cont-inner-margin{
+        margin:0px;
+        margin-left: -8px;
+        margin-right: -8px;
+    }
+}
