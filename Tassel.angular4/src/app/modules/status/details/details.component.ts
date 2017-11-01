@@ -6,6 +6,7 @@ import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
 import { Status, ServerStatus, UnionUser, UserComment } from '../../../model/app.model';
 import { ValidationErrors } from '@angular/forms';
+import { Regex } from 'ws-regex';
 
 interface ITiebaImage {
     key: string;
@@ -34,6 +35,9 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     private openEdit = false;
     public get IsEdit() { return this.openEdit; }
+
+    private showComments = true;
+    public get ShowComments() { return this.showComments; }
 
     public CommentToUpload = '';
 
@@ -84,6 +88,17 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public readonly TiebaImageClicked = (image: ITiebaImage) => {
         this.CommentToUpload += `[${image.key}]`;
+    }
+
+    public readonly OnInputKeyUp = () => {
+        const coll = Regex.Create(/(\[#\([^\#]+\))$/).Matches(this.CommentToUpload, ['match']);
+        if (coll && coll['match'] && coll['match'] !== '') {
+            this.CommentToUpload = this.CommentToUpload.substring(0, this.CommentToUpload.length - coll['match'].length);
+        }
+    }
+
+    public readonly ShowDetails = (showComs = true) => {
+        this.showComments = showComs;
     }
 
     public readonly AddComment = async () => {

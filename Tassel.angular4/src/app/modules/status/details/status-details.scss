@@ -10,6 +10,26 @@
     @extend .cont-inner-margin;
 }
 
+.vm-text-small{
+    font-size:8px;
+}
+
+.vm-text-md{
+    font-size:12px;
+}
+
+.vm-text-cm{
+    font-size:14px;
+}
+
+.vm-text-large{
+    font-size:16px;
+}
+
+.vm-text-extra{
+    font-size:20px;
+}
+
 .vm-container{
    font-size: 16px;
    padding: 4px;
@@ -26,7 +46,7 @@
     margin-top:12px;
     padding-bottom: 0px;
     padding-top: 0px;
-    background-color: #efefef;
+    background-color: #ccc;
     border: 1px solid transparent;
 }
 
@@ -35,7 +55,20 @@
     margin-bottom:12px;
     margin-left: -1px;
     margin-right: -1px;
-    background-color: white;
+    padding-top:8px;
+    padding-bottom: 8px;
+    color:#fff;
+    background-color: #383838;
+}
+
+.vm-header-actionlink{
+    transition: 0.2s;
+    color: white;
+}
+
+.vm-header-actionlink:hover{
+    transition: 0.2s;
+    color: rgb(235, 196, 23);
 }
 
 .vm-comments-header p{
@@ -61,9 +94,12 @@
     @extend .cont-padd-lr;
     margin-left: -1px;
     margin-right: -1px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     background-color: #fff;
+    border: solid #ececec;
+    border-width: 0px;
+    border-bottom-width: 1px;
     font-size: 16px;
     transition: 0.5s;
 }
@@ -74,7 +110,10 @@
 }
 
 .vm-comt-edit{
-    padding:4px;
+    padding:8px;
+    padding-bottom: 8px;
+    background-color: #f3f3f3;
+    margin-bottom: 8px;
 }
 
 .vm-comt-stamp{
@@ -85,10 +124,18 @@
 .vm-comt-reply{
     float:right;
     margin-right:4px;
+    margin-top: -18px;
 }
 
 .vm-avatar{
     padding-right: 8px;
+}
+
+.vm-avatar-md{
+    width:36px;
+    height:36px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 12px #acacac;
 }
 
 .vm-username{
@@ -96,9 +143,24 @@
     font-size: 20px
 }
 
+.vm-username-md{
+    font-weight: bold;
+    font-size: 16px
+}
+
+.vm-coment-details{
+    margin:4px;
+    margin-left:0px;
+}
+
 .vm-stamp{
     color: #bcbcbc;
     font-size: 12px
+}
+
+.vm-stamp-md{
+    color: #bcbcbc;
+    font-size: 10px
 }
 
 .vm-tieba-group{
@@ -111,3 +173,14 @@
     margin:4px;
 }
 
+.vm-details-show{
+    transition: 0.5s;
+    width:100%;
+    display: block;
+}
+
+.vm-details-disappear{
+    transition: 0.5s;
+    width: 0px;
+    display: none;
+}
