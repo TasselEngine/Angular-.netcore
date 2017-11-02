@@ -23,7 +23,6 @@ export class ServerService {
     public readonly LoadConfig = async () => {
         const config = await this.http.get('/assets/config/app.yaml').map(j => j.text()).toPromise();
         this.config = AppConfig.Parse(YamlHelper.Parse<IENV>(config));
-        console.log(this.config);
         if (checkServerConfig(this.config)) {
             this.serverRoot = this.config.Server.Path || '';
         } else {
