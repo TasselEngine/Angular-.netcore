@@ -1,5 +1,4 @@
 import { Http } from '@angular/http';
-import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { IENV, AppConfig } from '../../model/app.model';
 import { YamlHelper } from '../../utils/app.utils';
