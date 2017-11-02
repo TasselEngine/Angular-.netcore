@@ -1,3 +1,5 @@
+import { AppConfig } from './models/commons/config/config.model';
+import { IENV, IEnvMain, IEnvServer, IEnvWeibo } from './interfaces/config.contract';
 import { ITiebaImage } from './models/commons/tieba-images/tieba.contract';
 import { ILikeRelation } from './models/like/like.contract';
 import { LikeRelation } from './models/like/like.model';
@@ -27,6 +29,7 @@ export {
 };
 
 export {
+    IENV,
     IRouteStruct,
     ICreator,
     IUserBase,
@@ -40,6 +43,7 @@ export {
 };
 
 export {
+    AppConfig,
     RouteStruct,
     Creator,
     User,

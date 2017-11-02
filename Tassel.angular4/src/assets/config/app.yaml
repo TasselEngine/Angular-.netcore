@@ -1,0 +1,13 @@
+main:
+  web_title: Desperado
+  owner: Big Mogician
+  version: 0.0.1.0-beta
+  description: The personal blog created by Big Mogician.
+server:
+  type: http
+  host: 127.0.0.1
+  port: 8081
+  path: http://127.0.0.1:8081
+weibo_config:
+  oauth_path: https://api.weibo.com/oauth2
+  client_id: 185930524

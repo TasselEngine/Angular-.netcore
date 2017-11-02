@@ -34,6 +34,7 @@
     "ws-format-time": "^1.0.5",
     "ws-logger": "^1.1.6",
     "ws-regex": "^1.0.4",
+    "yamljs": "^0.3.0",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

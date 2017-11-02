@@ -1,6 +1,5 @@
 import { CommonBaseModule } from './commons/common.module';
 import { GlobalInjection } from './../utils/helpers/global_injector.helper';
-import { Injector } from '@angular/core';
 import { LoggerService, LOGGER_SERVICE_CONFIG } from 'ws-logger';
 import { environment } from './../../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,10 +10,15 @@ import { SharedModule } from './../modules/shared/shared.module';
 import { ExtensionsModule } from './../modules/extensions/extensions.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { NgModule } from '@angular/core';
-
+import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { RootComponent } from './../modules/shared/components/root.component';
 import { ToastService, ServerService, IdentityService, RootService, StatusService, FormatService, AdminService, ResourcesService, UtilsService } from './../services/app.service';
+
+export function AppInit(config: ServerService) {
+  return async () => {
+    return await config.LoadConfig();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -34,6 +38,12 @@ import { ToastService, ServerService, IdentityService, RootService, StatusServic
     NgZorroAntdModule.forRoot()
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: AppInit,
+      deps: [ServerService],
+      multi: true
+    },
     {
       provide: NZ_NOTIFICATION_CONFIG, useValue: {
         nzTop: '24px',

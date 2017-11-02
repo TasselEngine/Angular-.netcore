@@ -1,6 +1,5 @@
-import { IENV } from './env.contract';
 
-export const environment: IENV = {
+export const environment = {
   production: true,
   logLevel: 1,
   serverConfig: {
