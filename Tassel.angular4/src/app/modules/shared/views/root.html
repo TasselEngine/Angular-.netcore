@@ -18,7 +18,7 @@
         </nz-popover>
         <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
             <img src="assets/img/icon.jpg" style="width:36px;height:36px;border-radius:8px" />
-            <b class="title-inhead noline-action">Desperado</b>
+            <b class="title-inhead noline-action">{{AppMain.Title}}</b>
         </a>
     </div>
     <div style="float:right">
@@ -59,10 +59,10 @@
                 <div class="slider-listgp">
                     <img src="assets/img/icon.jpg" style="width:160;height:160px;border-radius:32px" />
                     <p class="name-title">
-                        <span>Bruce Wayne</span>
+                        <span>{{AppMain.Owner}}</span>
                     </p>
-                    <p class="legend-title">
-                        <b>Desperado</b>
+                    <p class="legend-title" [title]="AppMain.Description">
+                        <b>{{AppMain.Title}}</b>
                     </p>
                     <hr style="margin-top:12px;" />
                     <div>

@@ -50,7 +50,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     private logger: Logger<StatusDetailsComponent>;
 
     constructor(
-        private server: ServerService,
         private route: ActivatedRoute,
         private status: StatusService,
         private resources: ResourcesService,

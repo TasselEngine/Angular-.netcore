@@ -9,8 +9,9 @@ import 'rxjs/add/operator/toPromise';
 export class ServerService {
 
     private config: AppConfig;
-    private serverRoot: string;
+    public get Config() { return this.config; }
 
+    private serverRoot: string;
     public get ServerRoot(): string { return this.serverRoot; }
     public get ServerApiRoot(): string { return `${this.serverRoot}/api`; }
 

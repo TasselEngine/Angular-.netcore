@@ -29,7 +29,6 @@ export class StatusIndexComponent extends TasselNavigationBase {
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
     constructor(
-        private server: ServerService,
         private status: StatusService,
         protected identity: IdentityService,
         protected router: Router) { super(identity, router); }

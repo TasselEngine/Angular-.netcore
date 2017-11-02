@@ -61,7 +61,6 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     constructor(
         private formbuilder: FormBuilder,
         public identity: IdentityService,
-        private server: ServerService,
         private route: ActivatedRoute,
         protected router: Router) {
         super(identity, router);

@@ -32,7 +32,10 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   private route_type: string;
   public get RouteFlag(): string { return this.route_type; }
 
+  public get AppMain() { return this.server.Config.Main; }
+
   public get CurrentUser() { return this.identity.CurrentUser; }
+
   public get PopoverTitle() {
     return !this.CurrentUser ? '未登录' :
       this.CurrentUser.UserType !== UserType.Base ? this.CurrentUser.ScreenName :
@@ -44,7 +47,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   constructor(
     public identity: IdentityService,
     private admin: AdminService,
-    private server: ServerService,
     private render: Renderer2,
     private route: ActivatedRoute,
     private root: RootService,

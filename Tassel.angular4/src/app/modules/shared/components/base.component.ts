@@ -4,25 +4,31 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AsyncableServiceBase } from '../../../services/base/service.base';
 import { NavigationDelegator } from '../../routers/navigation.extensions';
 import { LoggerService } from 'ws-logger';
-import { FormatService, AdminService } from '../../../services/app.service';
+import { FormatService, AdminService, ServerService } from '../../../services/app.service';
 import { RouteErrors, ServerStatus } from '../../../model/app.model';
 
 export class TasselComponentBase extends AsyncableServiceBase {
-    constructor() { super(); }
+
+    protected server: ServerService;
+    protected formater: FormatService;
+    protected logsrv: LoggerService;
+
+    constructor() {
+        super();
+        this.server = GlobalInjection.Injector.get(ServerService);
+        this.logsrv = GlobalInjection.Injector.get(LoggerService);
+        this.formater = GlobalInjection.Injector.get(FormatService);
+    }
 }
 
 export class TasselNavigationBase extends TasselComponentBase {
 
     protected navigator: NavigationDelegator;
-    protected formater: FormatService;
-    protected logsrv: LoggerService;
 
     constructor(
         protected identity: IdentityService,
         protected router: Router) {
         super();
-        this.logsrv = GlobalInjection.Injector.get(LoggerService);
-        this.formater = GlobalInjection.Injector.get(FormatService);
         this.navigator = new NavigationDelegator(identity, router, this.logsrv);
     }
 
@@ -51,7 +57,7 @@ export class TasselAdminCompBase extends TasselNavigationBase {
             await this.Delay(100);
         }
         if (!this.identity.IsLogined) {
-            this.navigator.GoToForbidden(RouteErrors.NotLogin);
+            this.navigator.GoToForbidden(RouteErrors.LoginTimeout);
             return;
         }
         const [succeed, code, error, is_admin] = await this.admin.CheckAdminAsync();
