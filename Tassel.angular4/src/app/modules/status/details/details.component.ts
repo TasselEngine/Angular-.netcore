@@ -100,8 +100,8 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         this.showComments = showComs;
     }
 
-    public readonly AddComment = async () => {
-        const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName, this.CommentToUpload);
+    public readonly AddComment = async (vm: any) => {
+        const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName, vm.Comment);
         if (succeed && code === ServerStatus.Succeed) {
             this.model.Comments.push(comment);
             this.model.CommentCount += 1;

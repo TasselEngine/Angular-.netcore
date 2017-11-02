@@ -34,40 +34,15 @@
                 </a>
             </div>
         </div>
-        <div class="vm-comments" nz-row nzType="flex">
-
-            <div *ngIf="IsEdit" class="vm-comt-edit" nz-col nzSpan="24">
-                <nz-input nzType="textarea" nzRows="8" nzPlaceHolder="Input your reply here." (keyup)="OnInputKeyUp()" [(ngModel)]="CommentToUpload"
-                    #replyInput></nz-input>
-                <div *ngIf="TiebaImages" class="vm-tieba-group">
-                    <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
-                        (click)="TiebaImageClicked(img)" />
-                </div>
-                <button nz-button nzType="primary" (click)="AddComment()">Submit</button>
-            </div>
-
+        <div class="vm-comments" nz-row>
+            <tassel-common-comtedit [show]="IsEdit" (OnCommentAdd)="AddComment($event)"></tassel-common-comtedit>
             <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
                 <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
                     <p>There's no comment yet.
                         <a (click)="OpenCommentPanel()">Add </a>a comment now.</p>
                 </div>
                 <div class="vm-comt" *ngFor="let com of VM.Comments">
-                    <div style="display:flex">
-                        <div style="min-width:48px;">
-                            <img *ngIf="com.Creator.Avatar" class="vm-avatar-md" [alt]="com.Creator.UserName" [src]="com.Creator.Avatar" />
-                            <img *ngIf="!com.Creator.Avatar" class="vm-avatar-md" alt="no avatar." src="/assets/img/unknown.png" />
-                        </div>
-                        <div>
-                            <p>
-                                <b class="vm-username-md">{{com.Creator.UserName}}</b>
-                            </p>
-                            <p class="vm-stamp-md">{{com.CreateTime.FormatDateTime}}</p>
-                            <p class="vm-coment-details" [innerHtml]="Formator.ImageTickParse(com.Content,TiebaImages)"></p>
-                        </div>
-                    </div>
-                    <div class="vm-comt-stamp">
-                        <a class="vm-comt-reply">Reply</a>
-                    </div>
+                    <tassel-common-comtdiv [comment]="com"></tassel-common-comtdiv>
                 </div>
             </div>
 

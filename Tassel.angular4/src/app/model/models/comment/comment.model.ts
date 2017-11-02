@@ -21,6 +21,11 @@ export class UserComment {
     private creator: Creator;
     public get Creator(): Creator { return this.creator; }
 
+    @serializeAs('mentioned')
+    @deserializeAs(Creator, 'mentioned')
+    private mentioned: Creator;
+    public get Mentioned(): Creator { return this.mentioned; }
+
     @serializeAs(Number, 'create_time')
     @deserializeAs(Number, 'create_time')
     private create_time: number;
