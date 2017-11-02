@@ -36,11 +36,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   public get CurrentUser() { return this.identity.CurrentUser; }
 
-  public get PopoverTitle() {
-    return !this.CurrentUser ? '未登录' :
-      this.CurrentUser.UserType !== UserType.Base ? this.CurrentUser.ScreenName :
-        this.CurrentUser.UserName;
-  }
+  public get PopoverTitle() { return !this.CurrentUser ? 'Unknown' : this.CurrentUser.FriendlyName; }
 
   public get RouteLinks() { return this.navigator.RouteLinks; }
 
@@ -55,8 +51,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (!(event instanceof NavigationEnd)) { return; }
-      this.ShowMenu = false;
-      this.HideAll = false;
+      this.ShowMenu = this.HideAll = false;
       this.ShowBack = true;
       this.route_type = undefined;
       const hideAll = () => { this.HideAll = true; this.ShowBack = false; };
@@ -115,12 +110,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     this.ShowPopover = this.ShowMenu = false;
     await this.Delay(100);
     this.navigator.GoToCurrentProfile();
-  }
-
-  public ToAdminDashboard = async () => {
-    this.ShowPopover = this.ShowMenu = false;
-    await this.Delay(100);
-    this.navigator.GoToAdminDashboard();
   }
 
   public OnLoginClicked = () => {

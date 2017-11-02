@@ -14,6 +14,9 @@
                 </p>
                 <p>Posts</p>
                 <p>Notes</p>
+                <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
+                    <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+                </p>
             </ng-template>
         </nz-popover>
         <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
@@ -37,7 +40,7 @@
                     <a (click)="ToUserProfile()">Profile</a>
                 </p>
                 <p *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core'">
-                    <a (click)="ToAdminDashboard()">Manage</a>
+                    <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
                 </p>
                 <p>
                     <a (click)='Logout()'>Logout</a>
@@ -82,6 +85,11 @@
                             </li>
                             <li>
                                 <p>Notes</p>
+                            </li>
+                            <li *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
+                                <p>
+                                    <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+                                </p>
                             </li>
                         </ul>
                     </div>
