@@ -1,4 +1,5 @@
-<div *ngIf="ShowEdit" class="vm-comt-edit">
+<div *ngIf="ShowEdit" class="vm-comt-edit vm-comt-edit-transp" [class.vm-comt-edit-transp]="IsTransparent">
+    <p *ngIf="Mentioned" class="vm-mentioned-name">@{{Mentioned.UserName}}</p>
     <nz-input nzType="textarea" nzRows="8" nzPlaceHolder="Input your reply here." (keyup)="OnInputKeyUp()" [(ngModel)]="VM.Comment"
         #replyInput></nz-input>
     <div *ngIf="TiebaImages" class="vm-tieba-group">

@@ -9,7 +9,7 @@ import { HttpAsyncClientBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
 import { StrictResult } from '../../utils/app.utils';
 import { Status } from '../../model/models/status/status.model';
-import { UserComment } from '../../model/app.model';
+import { UserComment, ICommentCreate } from '../../model/app.model';
 
 @Injectable()
 export class StatusService extends HttpAsyncClientBase<IResponse> {
@@ -64,9 +64,9 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<string>(error);
     }
 
-    public AddCommentAsync = async (sid: string, uid: string, uname: string, content: string) => {
+    public AddCommentAsync = async (sid: string, params: ICommentCreate) => {
         const [succeed, error, response] = await this.InvokeAsync(
-            `${this.Root}/status/${sid}/comment`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON({ uid: uid, user_name: uname, content: content }));
+            `${this.Root}/status/${sid}/comment`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON(params));
         this.apiLog([succeed, error, response], 'Try to add comment fot the status', 'AddCommentAsync');
         return succeed ?
             StrictResult.Success(response.status, UserComment.Parse(response.content), response.msg) :

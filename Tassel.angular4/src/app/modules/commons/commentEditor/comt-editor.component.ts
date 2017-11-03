@@ -1,13 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormatService, ResourcesService } from '../../../services/app.service';
-import { ITiebaImage } from '../../../model/app.model';
+import { ITiebaImage, Creator } from '../../../model/app.model';
 import { Regex } from 'ws-regex';
 
 interface IVM {
-    Menthoned?: {
-        UID: number;
+    Mentioned?: {
+        UID: number | string;
         UserName: string;
     };
+    CommentID?: string;
     Comment: string;
 }
 
@@ -23,6 +24,14 @@ export class CommentEditorComponent {
     @Input('show')
     private show = false;
     public get ShowEdit() { return this.show; }
+
+    @Input('mentioned')
+    private mentioned: Creator;
+    public get Mentioned() { return this.mentioned; }
+
+    @Input('transparent')
+    private transparent: boolean;
+    public get IsTransparent() { return this.transparent; }
 
     @Output()
     OnCommentAdd = new EventEmitter<any>();
@@ -48,6 +57,12 @@ export class CommentEditorComponent {
     }
 
     public readonly AddComment = () => {
+        if (this.mentioned) {
+            this._vm.Mentioned = {
+                UID: this.mentioned.UUID,
+                UserName: this.mentioned.UserName
+            };
+        }
         this.OnCommentAdd.emit(this._vm);
     }
 

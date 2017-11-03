@@ -4,7 +4,7 @@ import { IdentityService, ServerService, StatusService, ResourcesService } from 
 import { Component, HostBinding, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
-import { Status, ServerStatus, UnionUser, UserComment } from '../../../model/app.model';
+import { Status, ServerStatus, UnionUser, UserComment, ICommentCreate } from '../../../model/app.model';
 import { ValidationErrors } from '@angular/forms';
 import { Regex } from 'ws-regex';
 
@@ -38,8 +38,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     private showComments = true;
     public get ShowComments() { return this.showComments; }
-
-    public CommentToUpload = '';
 
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
@@ -85,27 +83,34 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         this.openEdit = !this.openEdit;
     }
 
-    public readonly TiebaImageClicked = (image: ITiebaImage) => {
-        this.CommentToUpload += `[${image.key}]`;
-    }
-
-    public readonly OnInputKeyUp = () => {
-        const coll = Regex.Create(/(\[#\([^\#]+\))$/).Matches(this.CommentToUpload, ['match']);
-        if (coll && coll['match'] && coll['match'] !== '') {
-            this.CommentToUpload = this.CommentToUpload.substring(0, this.CommentToUpload.length - coll['match'].length);
-        }
-    }
-
     public readonly ShowDetails = (showComs = true) => {
         this.showComments = showComs;
     }
 
     public readonly AddComment = async (vm: any) => {
-        const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName, vm.Comment);
+        if (!vm) { return; }
+        const params: ICommentCreate = {
+            uid: this.identity.CurrentUUID,
+            user_name: this.identity.CurrentUser.FriendlyName,
+            content: vm.Comment,
+            is_reply: false,
+        };
+        let is_reply = false;
+        if (vm.Mentioned) {
+            params.m_uid = vm.Mentioned.UID;
+            params.mend_user = vm.Mentioned.UserName;
+            params.com_id = vm.CommentID;
+            params.is_reply = is_reply = true;
+        }
+        const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, params);
         if (succeed && code === ServerStatus.Succeed) {
-            this.model.Comments.push(comment);
-            this.model.CommentCount += 1;
-            this.CommentToUpload = '';
+            if (is_reply) {
+                const com = this.model.Comments.find(i => i.ID === params.com_id);
+                if (com) { com.Comments.push(comment); }
+            } else {
+                this.model.Comments.push(comment);
+                this.model.CommentCount += 1;
+            }
             this.openEdit = false;
         }
     }

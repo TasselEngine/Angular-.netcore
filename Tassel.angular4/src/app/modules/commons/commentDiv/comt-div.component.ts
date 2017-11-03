@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UserComment } from '../../../model/app.model';
 import { FormatService, ResourcesService } from '../../../services/app.service';
 
@@ -22,10 +22,24 @@ export class CommentDivComponent {
     private comment: UserComment;
     public get Comment() { return this.comment; }
 
+    @Output()
+    OnCommentAdd = new EventEmitter<any>();
+
     public get TiebaImages() { return this.resources.TiebaImages; }
 
     constructor(
         public Formator: FormatService,
         private resources: ResourcesService) { }
+
+    public readonly ReplyClicked = () => {
+        this._vm.ShowReply = !this._vm.ShowReply;
+    }
+
+    public readonly AddComment = (vm: any) => {
+        if (vm.Mentioned) {
+            vm.CommentID = this.comment.ID;
+        }
+        this.OnCommentAdd.emit(vm);
+    }
 
 }

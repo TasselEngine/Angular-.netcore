@@ -14,6 +14,14 @@
         </div>
     </div>
     <div class="vm-comt-stamp">
-        <a class="vm-comt-reply">Reply</a>
+        <a class="vm-comt-reply" (click)="ReplyClicked()">Reply</a>
     </div>
+    <div *ngFor="let reply of Comment.Comments" class="vm-secn-comment">
+        <p class="vm-secn-text">
+            <b class="vm-secn-name">{{reply.Creator.UserName}} :</b>
+            <a>@{{reply.Mentioned.UserName}}</a>
+            <span [innerHtml]="Formator.ImageTickParse(reply.Content,TiebaImages)"></span>
+        </p>
+    </div>
+    <tassel-common-comtedit [show]="VM.ShowReply" [mentioned]="Comment.Creator" transparent=true (OnCommentAdd)="AddComment($event)"></tassel-common-comtedit>
 </div>
