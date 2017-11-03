@@ -103,7 +103,11 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             params.is_reply = is_reply = true;
         }
         const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, params);
-        if (succeed && code === ServerStatus.Succeed) {
+        if (!succeed) {
+            this.logger.Error(['Add comment failed', 'Server error'], 'AddComment');
+            return;
+        }
+        if (code === ServerStatus.Succeed) {
             if (is_reply) {
                 const com = this.model.Comments.find(i => i.ID === params.com_id);
                 if (com) { com.Comments.push(comment); }
@@ -112,6 +116,8 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 this.model.CommentCount += 1;
             }
             this.openEdit = false;
+        } else {
+            this.logger.Warn(['Add comment failed', 'See the details : ', error.msg], 'AddComment');
         }
     }
 
