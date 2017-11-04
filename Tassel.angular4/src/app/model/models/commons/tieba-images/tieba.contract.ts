@@ -1,5 +1,5 @@
 
-export interface ITiebaImage {
+export interface ISticker {
     key: string;
     value: string;
 }

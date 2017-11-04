@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormatService, ResourcesService } from '../../../services/app.service';
-import { ITiebaImage, Creator } from '../../../model/app.model';
+import { ISticker, Creator } from '../../../model/app.model';
 import { NzModalSubject } from 'ng-zorro-antd';
 import { Regex } from 'ws-regex';
 
@@ -50,7 +50,7 @@ export class CommentEditorComponent {
         private subject: NzModalSubject,
         private resources: ResourcesService) { }
 
-    public readonly TiebaImageClicked = (image: ITiebaImage) => {
+    public readonly TiebaImageClicked = (image: ISticker) => {
         this._vm.Comment += `[${image.key}]`;
     }
 

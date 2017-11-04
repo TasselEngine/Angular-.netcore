@@ -7,7 +7,7 @@ import { IdentityService } from './../identity/identity.service';
 import { Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
 import { AsyncableServiceBase } from '../base/service.base';
-import { ITiebaImage } from '../../model/app.model';
+import { ISticker } from '../../model/app.model';
 
 @Injectable()
 export class FormatService extends AsyncableServiceBase {
@@ -27,7 +27,7 @@ export class FormatService extends AsyncableServiceBase {
         return this.ImageSrcRoot + path;
     }
 
-    public readonly ImageTickParse = (str: string, coll: ITiebaImage[]): string => {
+    public readonly ImageTickParse = (str: string, coll: ISticker[]): string => {
         if (!coll || coll.length === 0) {
             return str;
         }
@@ -36,7 +36,7 @@ export class FormatService extends AsyncableServiceBase {
         return str;
     }
 
-    private goRegex = (reg: Regex, str: string, ticks: ITiebaImage[]): string => {
+    private goRegex = (reg: Regex, str: string, ticks: ISticker[]): string => {
         const coll = reg.Matches(str);
         if (coll[0] && coll[0] !== '') {
             const target = ticks.find(i => `[${i.key}]` === coll[0]);

@@ -1,0 +1,4 @@
+<div *ngIf="TiebaImages" class="vm-tieba-group">
+    <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+        (click)="TiebaImageClicked(img)" />
+</div>

@@ -1,6 +1,6 @@
 import { AppConfig } from './models/commons/config/config.model';
 import { IENV, IEnvMain, IEnvServer, IEnvWeibo } from './interfaces/config.contract';
-import { ITiebaImage } from './models/commons/tieba-images/tieba.contract';
+import { ISticker } from './models/commons/tieba-images/tieba.contract';
 import { ILikeRelation } from './models/like/like.contract';
 import { LikeRelation } from './models/like/like.model';
 import { IComment, ICommentCreate, ICommentDelete } from './models/comment/comment.contract';
@@ -41,7 +41,7 @@ export {
     ICommentCreate,
     ICommentDelete,
     ILikeRelation,
-    ITiebaImage
+    ISticker
 };
 
 export {
