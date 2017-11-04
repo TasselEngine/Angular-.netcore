@@ -1,3 +1,4 @@
+import { CommentEditorComponent } from './../commentEditor/comt-editor.component';
 import { CommentEditorModule } from './../commentEditor/comt-editor.module';
 import { CommentDivComponent } from './comt-div.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -8,6 +9,9 @@ import { NgModule } from '@angular/core';
 @NgModule({
     declarations: [
         CommentDivComponent
+    ],
+    entryComponents: [
+        CommentEditorComponent
     ],
     imports: [
         CommonModule,

@@ -13,6 +13,7 @@
 .vm-tieba-group{
     padding: 8px;
     max-width: 800px;
+    margin-bottom: 12px;
 }
 
 .vm-tieba-img{
@@ -25,4 +26,14 @@
     font-weight: bold;
     color: rgb(86, 148, 230);
     margin-bottom: 4px;
+}
+
+.vm-submot-btn{
+    float:right;
+    margin-top:-32px;
+    display:flex;
+}
+
+.vm-btn-margin{
+    margin-right: 4px;
 }

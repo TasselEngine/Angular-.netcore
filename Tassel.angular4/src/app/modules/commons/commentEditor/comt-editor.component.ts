@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormatService, ResourcesService } from '../../../services/app.service';
 import { ITiebaImage, Creator } from '../../../model/app.model';
+import { NzModalSubject } from 'ng-zorro-antd';
 import { Regex } from 'ws-regex';
 
 interface IVM {
@@ -36,6 +37,9 @@ export class CommentEditorComponent {
     @Output()
     OnCommentAdd = new EventEmitter<any>();
 
+    @Output()
+    OnCancel = new EventEmitter<any>();
+
     private _vm: IVM = { Comment: '' };
     public get VM() { return this._vm; }
 
@@ -43,6 +47,7 @@ export class CommentEditorComponent {
 
     constructor(
         public Formator: FormatService,
+        private subject: NzModalSubject,
         private resources: ResourcesService) { }
 
     public readonly TiebaImageClicked = (image: ITiebaImage) => {
@@ -64,6 +69,12 @@ export class CommentEditorComponent {
             };
         }
         this.OnCommentAdd.emit(this._vm);
+        this.subject.next(this._vm);
+    }
+
+    public readonly AbortComment = () => {
+        this.OnCancel.emit(new Date());
+        this.subject.destroy('onCancel');
     }
 
 }

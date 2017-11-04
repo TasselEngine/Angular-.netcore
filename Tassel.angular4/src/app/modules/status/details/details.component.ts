@@ -76,6 +76,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     }
 
     public readonly OnImageClicked = (img_src: string) => {
+        // TO DO
         console.log(img_src);
     }
 
@@ -85,6 +86,10 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public readonly ShowDetails = (showComs = true) => {
         this.showComments = showComs;
+    }
+
+    public readonly CloseCommentAdd = () => {
+        this.openEdit = false;
     }
 
     public readonly AddComment = async (vm: any) => {

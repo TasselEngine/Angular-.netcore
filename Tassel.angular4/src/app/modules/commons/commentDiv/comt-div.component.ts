@@ -1,6 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UserComment } from '../../../model/app.model';
-import { FormatService, ResourcesService } from '../../../services/app.service';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { UserComment, Creator } from '../../../model/app.model';
+import { FormatService, ResourcesService, ToastService, IdentityService } from '../../../services/app.service';
+import { CommentEditorComponent } from '../commentEditor/comt-editor.component';
+import { Subscription } from 'rxjs/Subscription';
 
 interface IVM {
     ShowReply: boolean;
@@ -13,7 +15,7 @@ interface IVM {
         'comt-div.scss'
     ]
 })
-export class CommentDivComponent {
+export class CommentDivComponent implements OnDestroy {
 
     private _vm: IVM = { ShowReply: false };
     public get VM() { return this._vm; }
@@ -27,12 +29,42 @@ export class CommentDivComponent {
 
     public get TiebaImages() { return this.resources.TiebaImages; }
 
+    public get CanAct() { return this.identity.IsLogined; }
+
+    private modalSubsc: Subscription;
+
     constructor(
         public Formator: FormatService,
+        private identity: IdentityService,
+        private toast: ToastService,
         private resources: ResourcesService) { }
 
-    public readonly ReplyClicked = () => {
-        this._vm.ShowReply = !this._vm.ShowReply;
+    ngOnDestroy(): void {
+        if (this.modalSubsc && !this.modalSubsc.closed) {
+            this.modalSubsc.unsubscribe();
+        }
+    }
+
+    public readonly IsCreator = (comment: UserComment) => {
+        const cmt = comment || this.comment;
+        return cmt.Creator.UUID === this.identity.CurrentUUID;
+    }
+
+    public readonly ReplyClicked = (mentioned?: Creator) => {
+        const width = window.innerWidth > 800 ? 800 : window.innerWidth - 48;
+        const modal = this.toast.ComponentModal(undefined, CommentEditorComponent, {
+            show: true,
+            mentioned: mentioned || this.comment.Creator,
+            transparent: true
+        }, width, true, false);
+        this.modalSubsc = modal.subscribe((result: any) => {
+            if (typeof (result) !== 'string') {
+                this.AddComment(result);
+                modal.destroy();
+            } else if (result === 'onDestroy') {
+                this.modalSubsc.unsubscribe();
+            }
+        });
     }
 
     public readonly AddComment = (vm: any) => {

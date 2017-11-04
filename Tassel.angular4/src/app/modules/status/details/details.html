@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="vm-comments" nz-row>
-            <tassel-common-comtedit [show]="IsEdit" (OnCommentAdd)="AddComment($event)"></tassel-common-comtedit>
+            <tassel-common-comtedit [show]="IsEdit" (OnCommentAdd)="AddComment($event)" (OnCancel)="CloseCommentAdd()"></tassel-common-comtedit>
             <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
                 <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
                     <p>There's no comment yet.
