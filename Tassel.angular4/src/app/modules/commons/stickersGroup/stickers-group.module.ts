@@ -1,3 +1,4 @@
+import { KeyDisplayPipe } from './key-display.pipe';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../../extensions/extensions.module';
@@ -6,7 +7,8 @@ import { StickersGroupComponent } from './stickers-group.component';
 
 @NgModule({
     declarations: [
-        StickersGroupComponent
+        StickersGroupComponent,
+        KeyDisplayPipe
     ],
     imports: [
         CommonModule,
