@@ -1,0 +1,6 @@
+<div nz-row nzType="flex" class="ll-group-div">
+    <a *ngFor="let user of Users">
+        <img [title]="user.Creator.UserName" *ngIf="user.Creator.Avatar" class="ll-avatar" [src]="user.Creator.Avatar" />
+        <img [title]="user.Creator.UserName" *ngIf="!user.Creator.Avatar" class="ll-avatar" src="/assets/img/unknown.png" />
+    </a>
+</div>

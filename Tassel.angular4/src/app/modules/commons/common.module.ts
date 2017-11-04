@@ -1,3 +1,4 @@
+import { LikersLineModule } from './likesLine/likes-line.module';
 import { CommentEditorModule } from './commentEditor/comt-editor.module';
 import { CommentDivModule } from './commentDiv/comt-div.module';
 import { ImageGridModule } from './imageGrid/image-grid.module';
@@ -11,7 +12,8 @@ import { NgModule } from '@angular/core';
         WaterfallPatchModule,
         ImageGridModule,
         CommentDivModule,
-        CommentEditorModule
+        CommentEditorModule,
+        LikersLineModule
     ],
 })
 export class CommonBaseModule { }

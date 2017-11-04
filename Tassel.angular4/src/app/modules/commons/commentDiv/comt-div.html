@@ -16,7 +16,7 @@
     <div *ngIf="CanAct" class="vm-comt-stamp vm-comt-reply">
         <a (click)="ReplyClicked()">Reply</a>
         <span *ngIf="IsCreator()"> |
-            <a>Delete</a>
+            <a (click)="DeleteClicked()">Delete</a>
         </span>
     </div>
     <div *ngFor="let reply of Comment.Comments" class="vm-secn-comment">
@@ -32,7 +32,7 @@
             <div *ngIf="CanAct" class="vm-reply-md" nz-col>
                 <a (click)="ReplyClicked(reply.Creator)">Reply</a>
                 <span *ngIf="IsCreator(reply)"> |
-                    <a>Delete</a>
+                    <a (click)="DeleteClicked(reply)">Delete</a>
                 </span>
             </div>
         </div>

@@ -6,8 +6,8 @@ import { ILikeRelation } from './like.contract';
 
 export class LikeRelation {
 
-    @serializeAs('creator')
-    @deserializeAs(Creator, 'creator')
+    @serializeAs('user')
+    @deserializeAs(Creator, 'user')
     private creator: Creator;
     public get Creator(): Creator { return this.creator; }
 

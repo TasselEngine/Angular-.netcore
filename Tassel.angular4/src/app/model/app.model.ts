@@ -3,7 +3,7 @@ import { IENV, IEnvMain, IEnvServer, IEnvWeibo } from './interfaces/config.contr
 import { ITiebaImage } from './models/commons/tieba-images/tieba.contract';
 import { ILikeRelation } from './models/like/like.contract';
 import { LikeRelation } from './models/like/like.model';
-import { IComment, ICommentCreate } from './models/comment/comment.contract';
+import { IComment, ICommentCreate, ICommentDelete } from './models/comment/comment.contract';
 import { UserComment } from './models/comment/comment.model';
 import { IStatus, IImage } from './models/status/status.contract';
 import { IUserBase, IWeiboUser, IUnionUser, ICreator, UserType } from './models/user/user.contract';
@@ -39,6 +39,7 @@ export {
     IImage,
     IComment,
     ICommentCreate,
+    ICommentDelete,
     ILikeRelation,
     ITiebaImage
 };

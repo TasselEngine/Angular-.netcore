@@ -1,4 +1,5 @@
 import { ICreator } from '../user/user.contract';
+import { ModelType } from '../../enums/model.enum';
 
 export interface IComment {
     id: string;
@@ -6,6 +7,8 @@ export interface IComment {
     creator: ICreator;
     mentioned: ICreator;
     replies: IComment[];
+    ptpye?: ModelType;
+    parent_id?: string;
     create_time: number;
     update_time: number;
 }
@@ -18,4 +21,11 @@ export interface ICommentCreate {
     mend_user?: string;
     com_id?: string;
     is_reply: boolean;
+}
+
+export interface ICommentDelete {
+    id: string;
+    com_id?: string;
+    is_reply: boolean;
+    reply_id?: string;
 }

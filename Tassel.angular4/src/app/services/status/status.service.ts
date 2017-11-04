@@ -9,7 +9,7 @@ import { HttpAsyncClientBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
 import { StrictResult } from '../../utils/app.utils';
 import { Status } from '../../model/models/status/status.model';
-import { UserComment, ICommentCreate } from '../../model/app.model';
+import { UserComment, ICommentCreate, ICommentDelete } from '../../model/app.model';
 
 @Injectable()
 export class StatusService extends HttpAsyncClientBase<IResponse> {
@@ -71,6 +71,15 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         return succeed ?
             StrictResult.Success(response.status, UserComment.Parse(response.content), response.msg) :
             StrictResult.Failed<UserComment>(error);
+    }
+
+    public DeleteCommentAsync = async (sid: string, p: ICommentDelete) => {
+        const [succeed, error, response] = await this.InvokeAsync(
+            `${this.Root}/status/${sid}/comment?id=${sid || p.id}&comt_id=${p.com_id}&is_reply=${p.is_reply}&reply_id=${p.reply_id || ''}`, this.Options, HttpType.DELETE);
+        this.apiLog([succeed, error, response], 'Try to delete comment fot the status', 'DeleteCommentAsync');
+        return succeed ?
+            StrictResult.Success(response.status, null as any, response.msg) :
+            StrictResult.Failed<any>(error);
     }
 
     private apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {

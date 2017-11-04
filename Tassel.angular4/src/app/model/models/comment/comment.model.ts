@@ -3,6 +3,7 @@ import { FormatTime } from 'ws-format-time';
 import { deserializeAs, serializeAs } from 'cerialize';
 import { Creator } from './../user/user.model';
 import { IComment } from './comment.contract';
+import { ModelType } from '../../enums/model.enum';
 
 export class UserComment {
 
@@ -11,10 +12,22 @@ export class UserComment {
     private id: string;
     public get ID(): string { return this.id; }
 
+    @serializeAs('parent_id')
+    @deserializeAs('parent_id')
+    private pid: string;
+    public get ParentID(): string { return this.pid; }
+    public set ParentID(value: string) { this.pid = value; }
+
     @serializeAs('details')
     @deserializeAs('details')
     private details: string;
     public get Content(): string { return this.details; }
+
+    @serializeAs('ptype')
+    @deserializeAs('ptype')
+    private ptype: ModelType;
+    public get ParentType(): ModelType { return this.ptype; }
+    public set ParentType(value: ModelType) { this.ptype = value; }
 
     @serializeAs('creator')
     @deserializeAs(Creator, 'creator')
@@ -30,6 +43,7 @@ export class UserComment {
     @deserializeAs(UserComment, 'replies')
     private comments: UserComment[];
     public get Comments(): UserComment[] { return this.comments || (this.comments = []); }
+    public set Comments(value: UserComment[]) { this.comments = value; }
 
     @serializeAs(Number, 'create_time')
     @deserializeAs(Number, 'create_time')

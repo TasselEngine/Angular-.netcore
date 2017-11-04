@@ -62,6 +62,78 @@ export class ToastService {
         this.notify.remove(m_id);
     }
 
+    public readonly ConfirmModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+        return this.modal.confirm({
+            title: title,
+            content: content,
+            width: width,
+            closable: closable,
+            maskClosable: maskClosable,
+            footer: false,
+            onOk: funcs[0],
+            onCancel: funcs[1],
+            okText: 'Yes',
+            cancelText: 'No'
+        });
+    }
+
+    public readonly ErrorModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+        return this.modal.error({
+            title: title,
+            content: content,
+            width: width,
+            closable: closable,
+            maskClosable: maskClosable,
+            footer: false,
+            onOk: funcs[0],
+            onCancel: funcs[1],
+            okText: 'Yes',
+            cancelText: 'No'
+        });
+    }
+
+    public readonly WarnModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+        return this.modal.warning({
+            title: title,
+            content: content,
+            width: width,
+            closable: closable,
+            maskClosable: maskClosable,
+            footer: false,
+            onOk: funcs[0],
+            onCancel: funcs[1],
+            okText: 'Yes',
+            cancelText: 'No'
+        });
+    }
+
+    public readonly InfoModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+        return this.modal.info({
+            title: title,
+            content: content,
+            width: width,
+            closable: closable,
+            maskClosable: maskClosable,
+            footer: false,
+            onOk: funcs[0],
+            onCancel: funcs[1],
+            okText: 'Ok',
+        });
+    }
+
+    public readonly SuccessModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+        return this.modal.success({
+            title: title,
+            content: content,
+            width: width,
+            closable: closable,
+            maskClosable: maskClosable,
+            footer: false,
+            onOk: funcs[0],
+            onCancel: funcs[1],
+        });
+    }
+
     public readonly ComponentModal = (title: any, component: any, params?: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
         return this.modal.open({
             title: title,

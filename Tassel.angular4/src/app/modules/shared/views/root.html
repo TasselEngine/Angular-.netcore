@@ -6,21 +6,23 @@
                 <i class="anticon anticon-inbox"></i>
             </a>
             <ng-template #nzTemplate>
-                <p>
+                <p class="root-menu-item">
                     <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
                 </p>
-                <p>
+                <p class="root-menu-item">
                     <a [routerLink]="RouteLinks.Status" routerLinkActive="active">Status</a>
                 </p>
-                <p>Posts</p>
-                <p>Notes</p>
-                <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
+                <p class="root-menu-item">Posts</p>
+                <p class="root-menu-item">Notes</p>
+                <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
                     <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
                 </p>
             </ng-template>
         </nz-popover>
         <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
-            <img src="assets/img/icon.jpg" style="width:36px;height:36px;border-radius:8px" />
+            <img src="assets/img/icon.jpg" style="width:36px;height:36px;border-radius:8px;margin-top:8px;" />
+        </a>
+        <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
             <b class="title-inhead noline-action">{{AppMain.Title}}</b>
         </a>
     </div>

@@ -27,6 +27,9 @@
                     <p *ngIf="VM.CommentCount>1">{{VM.CommentCount}} COMMENTS</p>
                 </a>
             </div>
+            <div nz-col style="margin-top:4px;">
+                <tassel-common-likersline [users]="VM.LikeUsers" [capacity]="8"></tassel-common-likersline>
+            </div>
             <div nz-col>
                 <a (click)="ShowDetails(false)" class="vm-header-actionlink">
                     <p *ngIf="VM.LikersCount<=1"> {{VM.LikersCount}} LIKE </p>
@@ -42,7 +45,7 @@
                         <a (click)="OpenCommentPanel()">Add </a>a comment now.</p>
                 </div>
                 <div class="vm-comt" *ngFor="let com of VM.Comments">
-                    <tassel-common-comtdiv [comment]="com" (OnCommentAdd)="AddComment($event)"></tassel-common-comtdiv>
+                    <tassel-common-comtdiv [comment]="com" (OnCommentAdd)="AddComment($event)" (OnCommentDelete)="DeleteComment($event)"></tassel-common-comtdiv>
                 </div>
             </div>
 

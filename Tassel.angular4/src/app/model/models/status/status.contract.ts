@@ -11,7 +11,7 @@ export interface IStatus {
     cover: string;
     comments: IComment[];
     comments_count: number;
-    liker_users?: ILikeRelation[];
+    like_users?: ILikeRelation[];
     likers_count: number;
     liker_ids?: string[];
     creator: ICreator;

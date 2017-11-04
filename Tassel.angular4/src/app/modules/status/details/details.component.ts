@@ -4,7 +4,7 @@ import { IdentityService, ServerService, StatusService, ResourcesService } from 
 import { Component, HostBinding, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
-import { Status, ServerStatus, UnionUser, UserComment, ICommentCreate } from '../../../model/app.model';
+import { Status, ServerStatus, UnionUser, UserComment, ICommentCreate, ICommentDelete, ModelType } from '../../../model/app.model';
 import { ValidationErrors } from '@angular/forms';
 import { Regex } from 'ws-regex';
 
@@ -109,6 +109,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         }
         const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, params);
         if (!succeed) {
+            this.toast.ErrorToast('Action Failed', 'Server errors.');
             this.logger.Error(['Add comment failed', 'Server error'], 'AddComment');
             return;
         }
@@ -121,8 +122,46 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 this.model.CommentCount += 1;
             }
             this.openEdit = false;
+            this.toast.SucceesMessage('reply successfully.');
         } else {
+            this.toast.WarnToast('Action Failed', error.msg);
             this.logger.Warn(['Add comment failed', 'See the details : ', error.msg], 'AddComment');
+        }
+    }
+
+    public readonly DeleteComment = async (vm: UserComment) => {
+        if (!vm) { return; }
+        console.log(vm);
+        const params: ICommentDelete = {
+            com_id: vm.ID,
+            id: this.status_id,
+            is_reply: false,
+        };
+        let is_reply = false;
+        if (vm.ParentType === ModelType.Comment) {
+            params.is_reply = is_reply = true;
+            params.com_id = vm.ParentID;
+            params.reply_id = vm.ID;
+        }
+        console.log(params);
+        const [succeed, code, error, comment] = await this.status.DeleteCommentAsync(this.model.ID, params);
+        if (!succeed) {
+            this.toast.ErrorToast('Action Failed', 'Server errors.');
+            this.logger.Error(['Delete comment failed', 'Server error'], 'DeleteComment');
+            return;
+        }
+        if (code === ServerStatus.Succeed) {
+            if (is_reply) {
+                const cmt = this.model.Comments.find(i => i.ID === vm.ParentID);
+                if (cmt) { cmt.Comments = cmt.Comments.filter(i => i.ID !== vm.ID); }
+            } else {
+                this.model.Comments = this.model.Comments.filter(i => i.ID !== vm.ID);
+                this.model.CommentCount -= 1;
+            }
+            this.toast.SucceesMessage('comment deleted.');
+        } else {
+            this.toast.WarnToast('Action Failed', error.msg);
+            this.logger.Warn(['Delete comment failed', 'See the details : ', error.msg], 'DeleteComment');
         }
     }
 

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { UserComment, Creator } from '../../../model/app.model';
+import { UserComment, Creator, ModelType } from '../../../model/app.model';
 import { FormatService, ResourcesService, ToastService, IdentityService } from '../../../services/app.service';
 import { CommentEditorComponent } from '../commentEditor/comt-editor.component';
 import { Subscription } from 'rxjs/Subscription';
@@ -27,6 +27,9 @@ export class CommentDivComponent implements OnDestroy {
     @Output()
     OnCommentAdd = new EventEmitter<any>();
 
+    @Output()
+    OnCommentDelete = new EventEmitter<any>();
+
     public get TiebaImages() { return this.resources.TiebaImages; }
 
     public get CanAct() { return this.identity.IsLogined; }
@@ -48,6 +51,18 @@ export class CommentDivComponent implements OnDestroy {
     public readonly IsCreator = (comment: UserComment) => {
         const cmt = comment || this.comment;
         return cmt.Creator.UUID === this.identity.CurrentUUID;
+    }
+
+    public readonly DeleteClicked = (comment?: UserComment) => {
+        const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
+        const modal = this.toast.WarnModal(undefined, 'Do you really want delete this comment? This action can\'t be rollback.', width, true, false, [() => {
+            const comt = comment || this.comment;
+            if (comment) {
+                comt.ParentType = ModelType.Comment;
+                comt.ParentID = this.comment.ID;
+            }
+            this.OnCommentDelete.emit(comt);
+        }, undefined]);
     }
 
     public readonly ReplyClicked = (mentioned?: Creator) => {

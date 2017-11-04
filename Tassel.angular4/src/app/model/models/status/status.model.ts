@@ -75,7 +75,8 @@ export class Status {
     @serializeAs('comments')
     @deserializeAs(UserComment, 'comments')
     private comments: UserComment[];
-    public get Comments(): UserComment[] { return this.comments || []; }
+    public get Comments(): UserComment[] { return this.comments || (this.comments = []); }
+    public set Comments(value: UserComment[]) { this.comments = value; }
 
     @serializeAs(Number, 'comments_count')
     @deserializeAs(Number, 'comments_count')
@@ -83,8 +84,8 @@ export class Status {
     public get CommentCount(): number { return this.comments_count || 0; }
     public set CommentCount(value: number) { this.comments_count = value; }
 
-    @serializeAs('liker_users')
-    @deserializeAs(LikeRelation, 'liker_users')
+    @serializeAs('like_users')
+    @deserializeAs(LikeRelation, 'like_users')
     private liker_users: LikeRelation[];
     public get LikeUsers(): LikeRelation[] { return this.liker_users || []; }
 
