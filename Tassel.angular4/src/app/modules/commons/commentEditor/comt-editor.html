@@ -2,10 +2,7 @@
     <p *ngIf="Mentioned" class="vm-mentioned-name">@{{Mentioned.UserName}}</p>
     <nz-input nzType="textarea" nzRows="8" nzPlaceHolder="Input your reply here." (keyup)="OnInputKeyUp()" [(ngModel)]="VM.Comment"
         #replyInput></nz-input>
-    <div *ngIf="TiebaImages" class="vm-tieba-group">
-        <img class="vm-tieba-img" width="24" *ngFor="let img of TiebaImages" [title]="img.key" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
-            (click)="TiebaImageClicked(img)" />
-    </div>
+    <tassel-common-stickers (OnStickerClicked)="TiebaImageClicked($event)"></tassel-common-stickers>
     <div class="vm-submot-btn">
         <button nz-button nzType="primary" (click)="AddComment()" class="vm-btn-margin">Submit</button>
         <button nz-button nzType="default" (click)="AbortComment()">Cancel</button>

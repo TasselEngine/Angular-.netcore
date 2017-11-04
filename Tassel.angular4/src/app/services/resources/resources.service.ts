@@ -18,9 +18,19 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
     public get FormOptions() { return this.identity.FormOptions; }
 
     private tieba_images: ISticker[];
-    public get TiebaImages() {
-        return this.tieba_images || [];
-    }
+    public get TiebaImages() { return this.tieba_images || []; }
+
+    private king_masters: ISticker[];
+    public get OthersStickers() { return this.king_masters || []; }
+
+    private sina_pop: ISticker[];
+    public get SinaPopStickers() { return this.sina_pop || []; }
+
+    private sina_role: ISticker[];
+    public get SinaRoleStickers() { return this.sina_role || []; }
+
+    private all_stickers: ISticker[];
+    public get AllStickersGroup() { return this.all_stickers || []; }
 
     private logger: Logger<ResourcesService>;
 
@@ -33,18 +43,48 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
         this.initResources();
     }
 
-    private initResources = () => {
-        this.GetTiebaImagesAsync().then(([s, c, e, images]) => {
-            if (s && c === ServerStatus.Succeed) { this.tieba_images = images as ISticker[]; }
-        });
+    private initResources = async () => {
+        let [s, c, e, images] = await this.GetTiebaImagesAsync();
+        if (s && c === ServerStatus.Succeed) { this.tieba_images = images as ISticker[]; }
+        [s, c, e, images] = await this.GetOthersStickersAsync();
+        if (s && c === ServerStatus.Succeed) { this.king_masters = images as ISticker[]; }
+        [s, c, e, images] = await this.GetSinaPopStickersAsync();
+        if (s && c === ServerStatus.Succeed) { this.sina_pop = images as ISticker[]; }
+        [s, c, e, images] = await this.GetSinaRoleStickersAsync();
+        if (s && c === ServerStatus.Succeed) { this.sina_role = images as ISticker[]; }
+        this.all_stickers = [...this.tieba_images, ...this.king_masters, ...this.sina_pop, ...this.sina_role];
     }
 
     public readonly GetTiebaImagesAsync = async () => {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/tieba`, this.Options);
         this.apiLog([succeed, error, response], 'Try to get the middle tieba images group.', 'GetTiebaImagesAsync');
         return succeed ?
-            StrictResult.Success(response.status, response.content as any[], response.msg) :
-            StrictResult.Failed<any[]>(error);
+            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
+            StrictResult.Failed<ISticker[]>(error);
+    }
+
+    public readonly GetOthersStickersAsync = async () => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/others`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to get the others stickers group.', 'GetOthersStickersAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
+            StrictResult.Failed<ISticker[]>(error);
+    }
+
+    public readonly GetSinaPopStickersAsync = async () => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/sina_pop`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to get the sina-pop stickers group.', 'GetSinaPopStickersAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
+            StrictResult.Failed<ISticker[]>(error);
+    }
+
+    public readonly GetSinaRoleStickersAsync = async () => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/sina_role`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to get the sina-role stickers group.', 'GetSinaRoleStickersAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
+            StrictResult.Failed<ISticker[]>(error);
     }
 
     private readonly apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {

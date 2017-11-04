@@ -1,4 +1,10 @@
 
+.vm-flex-base{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
+}
+
 .vm-avatar-md{
     width:36px;
     height:36px;
@@ -19,13 +25,18 @@
 .vm-coment-details{
     margin:4px;
     margin-left:0px;
+    margin-bottom:28px;
+    @extend .vm-flex-base;
+}
+
+.vm-reply-details{
+    @extend .vm-flex-base;
 }
 
 .vm-comt-stamp{
     color:#888;
     font-size: 12px;
 }
-
 
 .vm-comt-reply{
     float:right;
@@ -53,6 +64,7 @@
 
 .vm-secn-text{
     font-size: 10px;
+    @extend .vm-flex-base;
 }
 
 .vm-reply-md{

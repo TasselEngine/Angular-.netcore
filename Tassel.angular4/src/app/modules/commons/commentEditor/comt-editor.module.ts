@@ -1,3 +1,4 @@
+import { StickersGroupModule } from './../stickersGroup/stickers-group.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommentEditorComponent } from './comt-editor.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -14,6 +15,7 @@ import { NgModule } from '@angular/core';
         ExtensionsModule,
         FormsModule,
         ReactiveFormsModule,
+        StickersGroupModule,
         NgZorroAntdModule
     ],
     providers: [],

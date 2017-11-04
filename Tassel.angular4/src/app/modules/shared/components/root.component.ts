@@ -8,6 +8,7 @@ import { ServerService } from '../../../services/server/server.service';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { UserType } from '../../../model/models/user/user.contract';
 import { RootService, AdminService } from '../../../services/app.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'tassel-root',
@@ -42,6 +43,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   constructor(
     public identity: IdentityService,
+    private title: Title,
     private admin: AdminService,
     private render: Renderer2,
     private route: ActivatedRoute,
@@ -49,6 +51,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     protected router: Router) { super(identity, router); }
 
   ngOnInit(): void {
+    this.title.setTitle(`${this.server.Config.Main.Title} - ${this.server.Config.Main.Description}`);
     this.router.events.subscribe(event => {
       if (!(event instanceof NavigationEnd)) { return; }
       this.ShowMenu = this.HideAll = false;

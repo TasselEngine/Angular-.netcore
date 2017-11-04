@@ -30,7 +30,7 @@ export class CommentDivComponent implements OnDestroy {
     @Output()
     OnCommentDelete = new EventEmitter<any>();
 
-    public get TiebaImages() { return this.resources.TiebaImages; }
+    public get AllResources() { return this.resources.AllStickersGroup; }
 
     public get CanAct() { return this.identity.IsLogined; }
 

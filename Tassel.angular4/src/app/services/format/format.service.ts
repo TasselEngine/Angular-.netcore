@@ -27,25 +27,25 @@ export class FormatService extends AsyncableServiceBase {
         return this.ImageSrcRoot + path;
     }
 
-    public readonly ImageTickParse = (str: string, coll: ISticker[]): string => {
+    public readonly ImageTickParse = (str: string, coll: ISticker[], size: number = 28): string => {
         if (!coll || coll.length === 0) {
             return str;
         }
         const reg = Regex.Create(/\[#\(.+?\)\]/, RegexType.IgnoreCase);
-        str = this.goRegex(reg, str, coll);
+        str = this.goRegex(reg, str, coll, size);
         return str;
     }
 
-    private goRegex = (reg: Regex, str: string, ticks: ISticker[]): string => {
+    private goRegex = (reg: Regex, str: string, ticks: ISticker[], size: number): string => {
         const coll = reg.Matches(str);
         if (coll[0] && coll[0] !== '') {
             const target = ticks.find(i => `[${i.key}]` === coll[0]);
             if (target) {
-                str = str.replace(coll[0], `<img width="16" src="${this.ImageSrcRoot}${target.value}" />`);
+                str = str.replace(coll[0], `</span><img width="${size}" src="${this.ImageSrcRoot}${target.value}" /><span>`);
             }
-            return this.goRegex(reg, str, ticks);
+            return this.goRegex(reg, str, ticks, size);
         } else {
-            return str;
+            return `<span>${str}</span>`;
         }
     }
 

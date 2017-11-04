@@ -1,3 +1,4 @@
+import { StickersGroupModule } from './stickersGroup/stickers-group.module';
 import { LikersLineModule } from './likesLine/likes-line.module';
 import { CommentEditorModule } from './commentEditor/comt-editor.module';
 import { CommentDivModule } from './commentDiv/comt-div.module';
@@ -13,6 +14,7 @@ import { NgModule } from '@angular/core';
         ImageGridModule,
         CommentDivModule,
         CommentEditorModule,
+        StickersGroupModule,
         LikersLineModule
     ],
 })

@@ -43,12 +43,7 @@ export class CommentEditorComponent {
     private _vm: IVM = { Comment: '' };
     public get VM() { return this._vm; }
 
-    public get TiebaImages() { return this.resources.TiebaImages; }
-
-    constructor(
-        public Formator: FormatService,
-        private subject: NzModalSubject,
-        private resources: ResourcesService) { }
+    constructor(private subject: NzModalSubject) { }
 
     public readonly TiebaImageClicked = (image: ISticker) => {
         this._vm.Comment += `[${image.key}]`;
@@ -70,11 +65,13 @@ export class CommentEditorComponent {
         }
         this.OnCommentAdd.emit(this._vm);
         this.subject.next(this._vm);
+        this._vm.Comment = '';
     }
 
     public readonly AbortComment = () => {
         this.OnCancel.emit(new Date());
         this.subject.destroy('onCancel');
+        this._vm.Comment = '';
     }
 
 }

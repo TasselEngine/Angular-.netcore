@@ -10,7 +10,7 @@
                 <b class="vm-username-md">{{Comment.Creator.UserName}}</b>
             </p>
             <p class="vm-stamp-md">{{Comment.CreateTime.FormatDateTime}}</p>
-            <p class="vm-coment-details" [innerHtml]="Formator.ImageTickParse(Comment.Content,TiebaImages)"></p>
+            <div class="vm-coment-details" [innerHtml]="Formator.ImageTickParse(Comment.Content,AllResources, 24)"></div>
         </div>
     </div>
     <div *ngIf="CanAct" class="vm-comt-stamp vm-comt-reply">
@@ -20,11 +20,11 @@
         </span>
     </div>
     <div *ngFor="let reply of Comment.Comments" class="vm-secn-comment">
-        <p class="vm-secn-text">
+        <div class="vm-secn-text">
             <b class="vm-secn-name">{{reply.Creator.UserName}} :</b>
             <a>@{{reply.Mentioned.UserName}}</a>
-            <span [innerHtml]="Formator.ImageTickParse(reply.Content,TiebaImages)"></span>
-        </p>
+            <div class="vm-reply-details" [innerHtml]="Formator.ImageTickParse(reply.Content,AllResources, 20)"></div>
+        </div>
         <div nz-row class="vm-reply-sumy">
             <div nz-col nzSpan="12">
                 <p class="vm-stamp-md">{{reply.CreateTime.FormatDateTime}}</p>
