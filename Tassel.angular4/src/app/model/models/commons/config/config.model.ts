@@ -77,7 +77,7 @@ export class AppConfig {
     public get Server() { return this.server; }
 
     @serializeAs('weibo_config')
-    @deserializeAs(AppWeiboConfig, 'Serweibo_configver')
+    @deserializeAs(AppWeiboConfig, 'weibo_config')
     private weibo_config: AppWeiboConfig;
     public get Weibo() { return this.weibo_config; }
 
