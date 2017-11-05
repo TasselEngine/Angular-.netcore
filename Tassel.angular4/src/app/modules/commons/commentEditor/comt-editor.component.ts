@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { trigger, style, transition, animate, state, group } from '@angular/animations';
+import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { FormatService, ResourcesService } from '../../../services/app.service';
 import { ISticker, Creator } from '../../../model/app.model';
 import { NzModalSubject } from 'ng-zorro-antd';
@@ -16,11 +17,33 @@ interface IVM {
 @Component({
     selector: 'tassel-common-comtedit',
     templateUrl: 'comt-editor.html',
+    animations: [
+        trigger('flyInOut', [
+            state('*', style({ opacity: 0, height: 0 })),
+            state('active', style({ opacity: 1, height: '*' })),
+            state('inactive', style({ opacity: 0, height: 0 })),
+            transition('* => active', [
+                group([
+                    animate('0.3s ease-in-out', style({ height: '*' })),
+                    animate('0.5s 0.3s ease-in', style({ opacity: 1 }))
+                ])
+            ]),
+            transition('active => inactive', [
+                animate(300)
+            ])
+        ])
+    ],
     styleUrls: [
         'comt-editor.scss'
     ]
 })
 export class CommentEditorComponent {
+
+    @HostBinding('@flyInOut') animate = true;
+
+    @Input('anima')
+    private anima = true;
+    public get AnimaRun() { return this.anima ? 'active' : 'inactive'; }
 
     @Input('show')
     private show = false;

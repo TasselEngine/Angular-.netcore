@@ -1,23 +1,25 @@
 <div *ngIf="VM" class="vm-padding">
-    <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
-        <div nz-col class="vm-avatar">
-            <div *ngIf="VM.Creator.Avatar">
-                <img [src]="VM.Creator.Avatar" class="avatar-icon" />
+    <div class="vm-content-base">
+        <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
+            <div nz-col class="vm-avatar">
+                <div *ngIf="VM.Creator.Avatar">
+                    <img [src]="VM.Creator.Avatar" class="avatar-icon" />
+                </div>
+                <div *ngIf="!VM.Creator.Avatar" class="avatar-icon avatar-blue">
+                    <i class="anticon anticon-user nologin-icon"></i>
+                </div>
             </div>
-            <div *ngIf="!VM.Creator.Avatar" class="avatar-icon avatar-blue">
-                <i class="anticon anticon-user nologin-icon"></i>
+            <div nz-col>
+                <p class="vm-username">{{VM.Creator.UserName}}</p>
+                <p class="vm-stamp">{{VM.CreateTime.FormatDate}}</p>
             </div>
         </div>
-        <div nz-col>
-            <p class="vm-username">{{VM.Creator.UserName}}</p>
-            <p class="vm-stamp">{{VM.CreateTime.FormatDate}}</p>
+        <div class="vm-container">
+            <p>{{VM.Content}}</p>
+            <br/>
+            <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
+            <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
         </div>
-    </div>
-    <div class="vm-container">
-        <p>{{VM.Content}}</p>
-        <br/>
-        <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
-        <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
     </div>
     <div class="vm-comments-div">
         <div class="vm-comments-header" nz-row nzType="flex">
@@ -27,18 +29,20 @@
                     <p *ngIf="VM.CommentCount>1">{{VM.CommentCount}} COMMENTS</p>
                 </a>
             </div>
-            <div nz-col style="margin-top:4px;">
-                <tassel-common-likersline [users]="VM.LikeUsers" [capacity]="8"></tassel-common-likersline>
-            </div>
             <div nz-col>
                 <a (click)="ShowDetails(false)" class="vm-header-actionlink">
                     <p *ngIf="VM.LikersCount<=1"> {{VM.LikersCount}} LIKE </p>
                     <p *ngIf="VM.LikersCount>1">{{VM.LikersCount}} LIKES</p>
                 </a>
             </div>
+            <div nz-col style="margin-top:6px;">
+                <tassel-common-likersline [users]="VM.LikeUsers" [capacity]="8"></tassel-common-likersline>
+            </div>
         </div>
         <div class="vm-comments" nz-row>
-            <tassel-common-comtedit [show]="IsEdit" (OnCommentAdd)="AddComment($event)" (OnCancel)="CloseCommentAdd()"></tassel-common-comtedit>
+            <div *ngIf="IsEdit" nz-col>
+                <tassel-common-comtedit [show]="true" [anima]="IsEdit" (OnCommentAdd)="AddComment($event)" (OnCancel)="CloseCommentAdd()"></tassel-common-comtedit>
+            </div>
             <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
                 <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
                     <p>There's no comment yet.
