@@ -4,9 +4,17 @@ body{
     margin-bottom:0px;
 }
 
+@font-face {
+    font-family: 'NativeCenturyGothic';
+    src: url('/assets/fonts/century-gothic.eot');
+    src: url('/assets/fonts/century-gothic.eot?#iefix') format('embedded-opentype'),
+         url('/assets/fonts/century-gothic.woff') format('woff'),
+         url('/assets/fonts/century-gothic.ttf') format('truetype');
+}
+
 .full-content{
     position: relative;
     max-height:100%;
     /* font-family: "Century Gothic","SimSun Regular" */
-    font-family: "Century Gothic","YaHei"    
+    font-family: "NativeCenturyGothic","YaHei"    
 }

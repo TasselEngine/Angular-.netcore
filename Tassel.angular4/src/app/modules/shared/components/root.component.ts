@@ -115,8 +115,10 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
     this.navigator.GoToCurrentProfile();
   }
 
-  public OnLoginClicked = () => {
-    // this.toast.ComponentModal()
+  public ToAdminDashboard = async () => {
+    this.ShowPopover = this.ShowMenu = false;
+    await this.Delay(100);
+    this.navigator.GoToAdminDashboard();
   }
 
 }

@@ -7,7 +7,7 @@ server:
   type: http
   host: 127.0.0.1
   port: 8081
-  path: http://127.0.0.1:8081
+  path: http://www.bws-mogician.top:8080
 weibo_config:
   oauth_path: https://api.weibo.com/oauth2
   client_id: 185930524
