@@ -88,6 +88,10 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         this.showComments = showComs;
     }
 
+    public readonly GoToUserRedirect = (uuid: string) => {
+        this.navigator.GoToUserRedirect(uuid, this.router.routerState.snapshot.url);
+    }
+
     public readonly CloseCommentAdd = () => {
         this.openEdit = false;
     }

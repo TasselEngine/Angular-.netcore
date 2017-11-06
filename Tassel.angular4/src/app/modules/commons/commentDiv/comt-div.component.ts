@@ -30,6 +30,9 @@ export class CommentDivComponent implements OnDestroy {
     @Output()
     OnCommentDelete = new EventEmitter<any>();
 
+    @Output()
+    OnUserClicked = new EventEmitter<string>();
+
     public get AllResources() { return this.resources.AllStickersGroup; }
 
     public get CanAct() { return this.identity.IsLogined; }
@@ -51,6 +54,10 @@ export class CommentDivComponent implements OnDestroy {
     public readonly IsCreator = (comment: UserComment) => {
         const cmt = comment || this.comment;
         return cmt.Creator.UUID === this.identity.CurrentUUID;
+    }
+
+    public readonly GoToUserDetails = (mentioned?: Creator) => {
+        this.OnUserClicked.emit(mentioned.UUID);
     }
 
     public readonly DeleteClicked = (comment?: UserComment) => {

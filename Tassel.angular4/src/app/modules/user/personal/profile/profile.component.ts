@@ -6,10 +6,10 @@ import { TasselNavigationBase } from './../../../shared/components/base.componen
 
 @Component({
     selector: 'tassel-user-profile',
-    templateUrl: './../views/profile.html',
+    templateUrl: './profile.html',
     animations: [pageShowAnimation],
     styleUrls: [
-        './../styles/profile.css'
+        './profile.scss'
     ]
 })
 export class ProfileComponent extends TasselNavigationBase implements OnInit {

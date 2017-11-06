@@ -6,6 +6,7 @@ import { RouteErrors } from '../../model/app.model';
 export class NavigationDelegator {
 
     private readonly profile_patch = 'profile';
+    private readonly redirect_patch = 'redirect';
     private readonly details_patch = 'details';
     private readonly dashboard_patch = 'dashboard';
     private readonly status_patch = 'status';
@@ -78,8 +79,12 @@ export class NavigationDelegator {
         this.routeSafely(this.error401, { queryParams: { type: flag } });
     }
 
-    public readonly GoToCurrentProfile = (uname?: string) => {
+    public readonly GoToUserProfile = (uname?: string) => {
         this.routeSafely([...this.userRoot, uname || this.user_name, this.profile_patch]);
+    }
+
+    public readonly GoToUserRedirect = (uid: string, from_path: string) => {
+        this.routeSafely([...this.userRoot, uid, this.redirect_patch], { queryParams: { from: from_path } });
     }
 
     public readonly GoToStatusIndex = () => {

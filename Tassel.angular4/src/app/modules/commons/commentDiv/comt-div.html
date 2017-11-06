@@ -22,7 +22,7 @@
     <div *ngFor="let reply of Comment.Comments" class="vm-secn-comment">
         <div class="vm-secn-text">
             <b class="vm-secn-name">{{reply.Creator.UserName}} :</b>
-            <a>@{{reply.Mentioned.UserName}}</a>
+            <a class="vm-at-link" (click)="GoToUserDetails(reply.Mentioned)">@{{reply.Mentioned.UserName}}</a>
             <div class="vm-reply-details" [innerHtml]="Formator.ImageTickParse(reply.Content,AllResources, 20)"></div>
         </div>
         <div nz-row class="vm-reply-sumy">

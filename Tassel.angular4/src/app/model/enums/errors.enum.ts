@@ -5,5 +5,6 @@ export enum RouteErrors {
     AccessDenied = 'access_denied',
     NotLogin = 'not_login',
     LoginTimeout = 'login_timeout',
-    ServerError = 'server_errors'
+    ServerError = 'server_errors',
+    UserNotFound = 'user_notfound'
 }

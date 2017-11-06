@@ -1,4 +1,5 @@
-import { ProfileComponent } from './components/profile.component';
+import { UserRedirectComponent } from './redirect/redirect.component';
+import { ProfileComponent } from './profile/profile.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../../extensions/extensions.module';
@@ -9,6 +10,7 @@ import { NgModule } from '@angular/core';
 const overRoutes: Routes = [
     {
         path: '', children: [
+            { path: 'redirect', component: UserRedirectComponent },
             { path: 'profile', component: ProfileComponent },
             { path: '', redirectTo: 'profile', pathMatch: 'full' },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
@@ -18,7 +20,8 @@ const overRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        ProfileComponent
+        ProfileComponent,
+        UserRedirectComponent
     ],
     imports: [
         CommonModule,
@@ -30,7 +33,8 @@ const overRoutes: Routes = [
     ],
     providers: [],
     exports: [
-        ProfileComponent
+        ProfileComponent,
+        UserRedirectComponent
     ]
 })
 export class UserPersonalModule { }
