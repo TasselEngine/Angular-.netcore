@@ -1,6 +1,6 @@
 <div *ngIf="ShowEdit" [@flyInOut]="AnimaRun" class="vm-comt-edit vm-comt-edit-transp" [class.vm-comt-edit-transp]="IsTransparent">
     <p *ngIf="Mentioned" class="vm-mentioned-name">@{{Mentioned.UserName}}</p>
-    <nz-input nzType="textarea" nzRows="8" nzPlaceHolder="Input your reply here." (keyup)="OnInputKeyUp()" [(ngModel)]="VM.Comment"
+    <nz-input nzType="textarea" nzRows="7" nzPlaceHolder="Input your reply here." (keyup)="OnInputKeyUp()" [(ngModel)]="VM.Comment"
         #replyInput></nz-input>
     <tassel-common-stickers (OnStickerClicked)="TiebaImageClicked($event)"></tassel-common-stickers>
     <div class="vm-submot-btn">

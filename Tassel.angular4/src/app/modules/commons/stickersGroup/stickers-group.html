@@ -13,7 +13,7 @@
             Weibo 01
         </ng-template>
         <div *ngIf="SinaPopStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img" width="36" *ngFor="let img of SinaPopStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+            <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of SinaPopStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
                 (click)="StickerClicked(img)" />
         </div>
     </nz-tab>
@@ -22,7 +22,7 @@
             Weibo 02
         </ng-template>
         <div *ngIf="SinaRoleStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img" width="36" *ngFor="let img of SinaRoleStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+            <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of SinaRoleStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
                 (click)="StickerClicked(img)" />
         </div>
     </nz-tab>
@@ -31,7 +31,7 @@
             Others
         </ng-template>
         <div *ngIf="OthersStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img" width="36" *ngFor="let img of OthersStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+            <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of OthersStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
                 (click)="StickerClicked(img)" />
         </div>
     </nz-tab>
