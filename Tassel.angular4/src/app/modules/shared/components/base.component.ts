@@ -25,6 +25,8 @@ export class TasselNavigationBase extends TasselComponentBase {
 
     protected navigator: NavigationDelegator;
 
+    public get CurrentUser() { return this.identity.CurrentUser; }
+
     constructor(
         protected identity: IdentityService,
         protected router: Router) {

@@ -96,6 +96,24 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         this.openEdit = false;
     }
 
+    public readonly DeleteStatus = async () => {
+        const [succeed, code, error, _] = await this.status.DeleteStatusAsync(this.status_id);
+        if (!succeed) {
+            this.toast.ErrorToast('Action Failed', 'Server errors.');
+            this.logger.Error(['Delete status failed', 'Server error'], 'DeleteStatus');
+            return;
+        }
+        if (code === ServerStatus.Succeed) {
+            this.navigator.GoToStatusIndex();
+            this.WaitAndDo(() => {
+                this.toast.SucceesMessage('status removed successfully.');
+            }, 100);
+        } else {
+            this.toast.WarnToast('Action Failed', error.msg);
+            this.logger.Warn(['Delete status failed', 'See the details : ', error.msg], 'DeleteStatus');
+        }
+    }
+
     public readonly AddComment = async (vm: any) => {
         if (!vm) { return; }
         const params: ICommentCreate = {

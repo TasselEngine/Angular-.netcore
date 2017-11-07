@@ -60,6 +60,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             const [succeed, code, error, user] = await this.getDetailsAsync();
             if (!succeed) {
                 this.logger.Error(['Fetch user infos failed', 'Server Errors.'], 'BuildUserStateAsync');
+                this.toast.ErrorToast('Fetch user infos failed', 'Server error');
                 this.isInit = true;
                 return;
             }
@@ -70,6 +71,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             } else {
                 this.isInit = true;
                 this.logger.Warn(['Fetch user infos bad', 'See the exceptions below.', error.msg], 'BuildUserStateAsync');
+                this.toast.WarnToast('Fetch user infos failed', error.msg);
             }
         } else {
             this.isInit = true;
@@ -81,6 +83,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, code, error, [user, token]] = await this.loginAsync(userName, psd);
         if (!succeed) {
             this.logger.Error(['Login failed', 'Server Errors.'], 'TryLoginAsync');
+            this.toast.ErrorToast('Login failed', 'Server error');
             return;
         }
         if (code === ServerStatus.Succeed) {
@@ -91,6 +94,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             this.setLocalStorage(this.user, token);
         } else {
             this.logger.Warn(['Login not done', 'See the exceptions below.', error.msg], 'TryLoginAsync');
+            this.toast.WarnToast('Login failed', error.msg);
         }
     }
 
@@ -98,6 +102,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, code, error, [user, token]] = await this.registerAsync(userName, psd);
         if (!succeed) {
             this.logger.Error(['Register failed', 'Server Errors.'], 'TryRegisterAsync');
+            this.toast.ErrorToast('Register failed', 'Server error');
             return;
         }
         if (code === ServerStatus.Succeed) {
@@ -108,6 +113,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             this.setLocalStorage(this.user, token);
         } else {
             this.logger.Warn(['Register not done', 'See the exceptions below.', error.msg], 'TryRegisterAsync');
+            this.toast.WarnToast('Register failed', error.msg);
         }
     }
 
@@ -115,6 +121,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, code, error, wuid] = await this.weiboAccessAsync(weibo_code, redirect_url);
         if (!succeed) {
             this.logger.Error(['Fetch Weibo access failed', 'Server Errors.'], 'TryWeiboAccessAsync');
+            this.toast.ErrorToast('Fetch Weibo access failed', 'Server error');
             return;
         }
         if (code === ServerStatus.Succeed) {
@@ -129,9 +136,11 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
                 this.setLocalStorage(this.user, token);
             } else {
                 this.logger.Warn(['Fetch Weibo user infos bad', 'See the exceptions below.', error.msg], 'TryWeiboAccessAsync');
+                this.toast.WarnToast('Fetch Weibo access failed', error.msg);
             }
         } else {
             this.logger.Warn(['Fetch Weibo access bad', 'See the exceptions below.', error.msg], 'TryWeiboAccessAsync');
+            this.toast.WarnToast('Fetch Weibo access failed', error.msg);
         }
     }
 

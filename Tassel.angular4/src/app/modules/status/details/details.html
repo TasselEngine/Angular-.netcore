@@ -18,7 +18,12 @@
             <p>{{VM.Content}}</p>
             <br/>
             <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
-            <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
+            <p>
+                <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
+                <span *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')"> |
+                    <a class="vm-text-md" (click)="DeleteStatus()">Delete</a>
+                </span>
+            </p>
         </div>
     </div>
     <div class="vm-comments-div">

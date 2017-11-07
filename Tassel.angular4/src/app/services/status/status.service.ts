@@ -82,6 +82,14 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<any>(error);
     }
 
+    public DeleteStatusAsync = async (status_id: string) => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/${status_id}`, this.Options, HttpType.DELETE);
+        this.apiLog([succeed, error, response], 'Try to delete a status', 'DeleteStatusAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as string, response.msg) :
+            StrictResult.Failed<string>(error);
+    }
+
     private apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {
         const [succeed, error, response] = result;
         if (succeed) {
