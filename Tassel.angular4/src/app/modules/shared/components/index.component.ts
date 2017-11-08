@@ -22,17 +22,35 @@ interface IPost {
         './../styles/index.scss'
     ]
 })
-export class IndexComponent extends TasselNavigationBase {
+export class IndexComponent extends TasselNavigationBase implements OnInit, OnDestroy {
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
+    private isWidth = true;
+    public get IsWideScreen() { return this.isWidth; }
+
     private _posts: IPost[] = [];
     public get Posts() { return this._posts; }
 
+    private widthSubp: Subscription;
+
     constructor(
+        private root: RootService,
         protected identity: IdentityService,
         protected router: Router) { super(identity, router); }
+
+    ngOnInit(): void {
+        this.widthSubp = this.root.WidthSubject.subscribe(value => {
+            this.isWidth = value > 768;
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.widthSubp) {
+            this.widthSubp.unsubscribe();
+        }
+    }
 
     public postsProvide = () => {
         return [

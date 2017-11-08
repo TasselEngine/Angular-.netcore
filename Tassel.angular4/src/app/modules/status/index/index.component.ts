@@ -1,6 +1,6 @@
 import { ServerService } from './../../../services/server/server.service';
 import { pageShowAnimation } from './../../../utils/animations/page_show.animation';
-import { HostBinding, Component } from '@angular/core';
+import { HostBinding, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { TasselNavigationBase } from './../../shared/components/base.component';
@@ -16,7 +16,7 @@ import { ServerStatus, Status } from '../../../model/app.model';
         'status-index.scss'
     ]
 })
-export class StatusIndexComponent extends TasselNavigationBase {
+export class StatusIndexComponent extends TasselNavigationBase implements OnInit, OnDestroy {
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
@@ -24,14 +24,32 @@ export class StatusIndexComponent extends TasselNavigationBase {
     private _posts: Status[] = [];
     public get Posts() { return this._posts; }
 
+    private isWidth = true;
+    public get IsWideScreen() { return this.isWidth; }
+
     public get Formator() { return this.formater; }
 
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
+    private widthSubp: Subscription;
+
     constructor(
+        private root: RootService,
         private status: StatusService,
         protected identity: IdentityService,
         protected router: Router) { super(identity, router); }
+
+    ngOnInit(): void {
+        this.widthSubp = this.root.WidthSubject.subscribe(value => {
+            this.isWidth = value > 768;
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.widthSubp) {
+            this.widthSubp.unsubscribe();
+        }
+    }
 
     public readonly postsProvide = async () => {
         const [succeed, status, error, response] = await this.status.GetAllStatusAsync();

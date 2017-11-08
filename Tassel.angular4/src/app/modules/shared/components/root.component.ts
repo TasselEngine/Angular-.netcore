@@ -53,7 +53,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   ngOnInit(): void {
     this.title.setTitle(`${this.server.Config.Main.Title} - ${this.server.Config.Main.Description}`);
     this.router.events.subscribe(event => {
-      if (!(event instanceof NavigationEnd)) { return; }
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+      this.WaitAndDo(() => {
+        this.root.OnWidthChanged(this.rootContent.nativeElement.clientWidth, false);
+      }, 100);
       this.ShowMenu = this.HideAll = false;
       this.ShowBack = true;
       this.route_type = undefined;
@@ -90,6 +95,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   private checkView = () => {
     const root = this.rootContent.nativeElement;
+    this.root.OnWidthChanged(root.clientWidth);
     if (root.clientWidth > 1280) {
       this.ShowSlider = true;
       this.HeadLeft = '0px';

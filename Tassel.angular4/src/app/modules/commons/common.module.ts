@@ -1,3 +1,4 @@
+import { WateriverPatchModule } from './wateriver/wateriver.module';
 import { StickersGroupModule } from './stickersGroup/stickers-group.module';
 import { LikersLineModule } from './likesLine/likes-line.module';
 import { CommentEditorModule } from './commentEditor/comt-editor.module';
@@ -11,6 +12,7 @@ import { NgModule } from '@angular/core';
 @NgModule({
     exports: [
         WaterfallPatchModule,
+        WateriverPatchModule,
         ImageGridModule,
         CommentDivModule,
         CommentEditorModule,

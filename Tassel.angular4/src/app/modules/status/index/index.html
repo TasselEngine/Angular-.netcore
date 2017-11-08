@@ -1,5 +1,6 @@
-<div TasselPadding [PaddingDetails]="[16,8,0,8]">
-    <tassel-common-waterfall [data]="Posts" [loader]="postsProvide" [template]="temp"></tassel-common-waterfall>
+<div TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
+    <tassel-common-waterfall *ngIf="IsWideScreen" [data]="Posts" [loader]="postsProvide" [template]="temp"></tassel-common-waterfall>
+    <tassel-common-wateriver *ngIf="!IsWideScreen" [data]="Posts" [loader]="postsProvide" [template]="tempRiver"></tassel-common-wateriver>
 </div>
 
 <ng-template let-model="model" #temp>
@@ -27,5 +28,31 @@
                 </div>
             </ng-template>
         </nz-card>
+    </div>
+</ng-template>
+
+<ng-template let-model="model" #tempRiver>
+    <div *ngIf="model" class="adp-card-div">
+        <div nz-row>
+            <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
+                <p class="vm-index-title" *ngIf="model.Content">{{model.Content | shortline:36}}</p>
+            </div>
+            <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
+                <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>
+            </div>
+            <div class="pending">
+                <div *ngIf="model.CreateTime" class="pending-right">
+                    <i class="anticon anticon-tag"></i>
+                    <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
+                </div>
+                <div class="pending-div">
+                    <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user card-like-pointer" (click)="ClickLike(model)"></i>
+                    <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o like-hover card-like-pointer" (click)="ClickLike(model)"></i>
+                    <span>{{model.LikersCount}}</span>
+                    <i class="anticon anticon-message card-like-pointer" (click)="ItemClicked(model)"></i>
+                    <span>{{model.CommentCount}}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </ng-template>

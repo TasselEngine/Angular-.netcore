@@ -1,5 +1,6 @@
-<div TasselPadding [PaddingDetails]="[16,8,0,8]">
-    <tassel-common-waterfall [data]="Posts" [loader]="postsProvide" [template]="temp"></tassel-common-waterfall>
+<div TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
+    <tassel-common-waterfall *ngIf="IsWideScreen" [data]="Posts" [loader]="postsProvide" [template]="temp"></tassel-common-waterfall>
+    <tassel-common-wateriver *ngIf="!IsWideScreen" [data]="Posts" [loader]="postsProvide" [template]="tempRiver"></tassel-common-wateriver>
 </div>
 
 <ng-template let-model="model" #temp>
@@ -25,5 +26,29 @@
                 </div>
             </ng-template>
         </nz-card>
+    </div>
+</ng-template>
+
+<ng-template let-model="model" #tempRiver>
+    <div *ngIf="model" class="adp-card-div">
+        <div nz-row>
+            <div *ngIf="model.Cover" class="custom-image card-like-pointer">
+                <tassel-common-imggrid [src]="model.Cover"></tassel-common-imggrid>
+            </div>
+            <div class="custom-card card-like-pointer">
+                <h3 *ngIf="model.Title">{{model.Title}}</h3>
+                <p *ngIf="model.Summary" [style.margin-top]="model.Cover?'0px':'8px'">{{model.Summary}}</p>
+            </div>
+            <div class="pending">
+                <div *ngIf="model.Stamp" class="pending-right">
+                    <i class="anticon anticon-tag"></i>
+                    <span>{{model.Stamp}}</span>
+                </div>
+                <div class="pending-div">
+                    <i class="anticon anticon-heart-o card-like-pointer"></i>
+                    <span>{{model.Like}}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </ng-template>

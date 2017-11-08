@@ -5,7 +5,10 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class RootService extends AsyncableServiceBase {
 
-    public ScrollSubject: Subject<any> = new Subject<any>();
+    private _lastWidth = 0;
+
+    public readonly ScrollSubject: Subject<any> = new Subject<any>();
+    public readonly WidthSubject: Subject<number> = new Subject<number>();
 
     constructor() {
         super();
@@ -13,6 +16,14 @@ export class RootService extends AsyncableServiceBase {
 
     public readonly OnScrollToBottom = (scroll_element: any) => {
         this.ScrollSubject.next(scroll_element);
+    }
+
+    public readonly OnWidthChanged = (newValue: number, ignore = true) => {
+        if (this._lastWidth === newValue && ignore) {
+            return;
+        }
+        this._lastWidth = newValue;
+        this.WidthSubject.next(newValue);
     }
 
 }
