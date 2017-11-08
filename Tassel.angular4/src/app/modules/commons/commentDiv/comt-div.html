@@ -10,7 +10,8 @@
                 <b class="vm-username-md">{{Comment.Creator.UserName}}</b>
             </p>
             <p class="vm-stamp-md">{{Comment.CreateTime.FormatDateTime}}</p>
-            <div class="vm-coment-details" [innerHtml]="Formator.ImageTickParse(Comment.Content,AllResources, 24)"></div>
+            <div class="vm-coment-details" [innerHtml]="Comment.Content"></div>
+            <!-- <div class="vm-coment-details" [innerHtml]="Formator.ImageTickParse(Comment.Content,AllResources, 24)"></div> -->
         </div>
     </div>
     <div *ngIf="CanAct" class="vm-comt-stamp vm-comt-reply">
@@ -23,7 +24,8 @@
         <div class="vm-secn-text">
             <b class="vm-secn-name">{{reply.Creator.UserName}} :</b>
             <a class="vm-at-link" (click)="GoToUserDetails(reply.Mentioned)">@{{reply.Mentioned.UserName}}</a>
-            <div class="vm-reply-details" [innerHtml]="Formator.ImageTickParse(reply.Content,AllResources, 20)"></div>
+            <div class="vm-reply-details" [innerHtml]="reply.Content"></div>
+            <!-- <div class="vm-reply-details" [innerHtml]="Formator.ImageTickParse(reply.Content,AllResources, 20)"></div> -->
         </div>
         <div nz-row class="vm-reply-sumy">
             <div nz-col nzSpan="12">

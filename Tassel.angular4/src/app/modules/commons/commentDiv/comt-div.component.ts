@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 interface IVM {
     ShowReply: boolean;
+    IsFormat: boolean;
 }
 
 @Component({
@@ -17,12 +18,21 @@ interface IVM {
 })
 export class CommentDivComponent implements OnDestroy {
 
-    private _vm: IVM = { ShowReply: false };
+    private _vm: IVM = { ShowReply: false, IsFormat: false };
     public get VM() { return this._vm; }
 
     @Input('comment')
     private comment: UserComment;
-    public get Comment() { return this.comment; }
+    public get Comment() {
+        if (this.comment && this.AllResources.length > 0 && !this._vm.IsFormat) {
+            this.comment.Content = this.Formator.ImageTickParse(this.comment.Content, this.AllResources, 24);
+            this.comment.Comments.forEach(reply => {
+                reply.Content = this.Formator.ImageTickParse(reply.Content, this.AllResources, 20);
+            });
+            this._vm.IsFormat = true;
+        }
+        return this.comment;
+    }
 
     @Output()
     OnCommentAdd = new EventEmitter<any>();

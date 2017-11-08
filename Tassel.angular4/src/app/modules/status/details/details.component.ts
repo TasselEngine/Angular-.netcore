@@ -136,6 +136,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             return;
         }
         if (code === ServerStatus.Succeed) {
+            comment.Content = this.formater.ImageTickParse(comment.Content, this.resources.AllStickersGroup, is_reply ? 20 : 24);
             if (is_reply) {
                 const com = this.model.Comments.find(i => i.ID === params.com_id);
                 if (com) { com.Comments.push(comment); }
