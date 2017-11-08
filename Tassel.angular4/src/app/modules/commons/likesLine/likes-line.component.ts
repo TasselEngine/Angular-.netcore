@@ -39,4 +39,8 @@ export class LikersLineComponent {
 
     }
 
+    public readonly GoToUserDetails = (user?: Creator) => {
+        this.OnUserClicked.emit(user.UUID);
+    }
+
 }

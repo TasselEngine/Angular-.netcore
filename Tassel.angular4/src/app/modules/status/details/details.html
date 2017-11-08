@@ -41,7 +41,7 @@
                 </a>
             </div>
             <div nz-col style="margin-top:6px;">
-                <tassel-common-likersline [users]="VM.LikeUsers" [capacity]="8"></tassel-common-likersline>
+                <tassel-common-likersline [users]="VM.LikeUsers" [capacity]="8" (OnUserClicked)="GoToUserRedirect($event)"></tassel-common-likersline>
             </div>
         </div>
         <div class="vm-comments" nz-row>

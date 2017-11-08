@@ -3,15 +3,16 @@
         <div style="min-width:48px;">
             <img *ngIf="Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" [alt]="Comment.Creator.UserName" [src]="Comment.Creator.Avatar"
                 (click)="GoToUserDetails(Comment.Creator)" [title]="Comment.Creator.UserName" />
-            <img *ngIf="!Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" alt="no avatar." src="/assets/img/unknown.png" (click)="GoToUserDetails(Comment.Creator)" 
-            [title]="Comment.Creator.UserName" />
+            <img *ngIf="!Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" alt="no avatar." src="/assets/img/unknown.png" (click)="GoToUserDetails(Comment.Creator)"
+                [title]="Comment.Creator.UserName" />
         </div>
         <div>
             <p>
                 <b class="vm-username-md">{{Comment.Creator.UserName}}</b>
             </p>
             <p class="vm-stamp-md">{{Comment.CreateTime.FormatDateTime}}</p>
-            <div class="vm-coment-details" [innerHtml]="Comment.Content"></div>
+            <div *ngIf="!VM.IsFormat" class="vm-coment-details">Loading...</div>
+            <div *ngIf="VM.IsFormat" class="vm-coment-details" [innerHtml]="Comment.Content"></div>
         </div>
     </div>
     <div *ngIf="CanAct" class="vm-comt-stamp vm-comt-reply">
@@ -24,7 +25,8 @@
         <div class="vm-secn-text">
             <b class="vm-secn-name vm-pointer" (click)="GoToUserDetails(reply.Creator)">{{reply.Creator.UserName}} :</b>
             <a class="vm-at-link" (click)="GoToUserDetails(reply.Mentioned)">@{{reply.Mentioned.UserName}}</a>
-            <div class="vm-reply-details" [innerHtml]="reply.Content"></div>
+            <div *ngIf="!VM.IsFormat" class="vm-reply-details">Loading...</div>
+            <div *ngIf="VM.IsFormat" class="vm-reply-details" [innerHtml]="reply.Content"></div>
         </div>
         <div nz-row class="vm-reply-sumy">
             <div nz-col nzSpan="12">
