@@ -21,10 +21,8 @@ export class UserComment {
     @serializeAs('details')
     @deserializeAs('details')
     private details: string;
-    // private fDetails: string; // For format service.
     public get Content(): string { return this.details; }
     public set Content(value: string) { this.details = value; }
-    // public get FormatContent(): string { return this.fDetails; }
 
     @serializeAs('ptype')
     @deserializeAs('ptype')
