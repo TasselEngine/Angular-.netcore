@@ -43,8 +43,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public get Formator() { return this.formater; }
 
-    public get TiebaImages() { return this.resources.TiebaImages; }
-
     private logger: Logger<StatusDetailsComponent>;
 
     constructor(

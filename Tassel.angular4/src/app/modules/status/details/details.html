@@ -3,7 +3,7 @@
         <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
             <div nz-col class="vm-avatar">
                 <div *ngIf="VM.Creator.Avatar">
-                    <img [src]="VM.Creator.Avatar" class="avatar-icon" />
+                    <img [src]="VM.Creator.Avatar" class="avatar-icon" (click)="GoToUserRedirect(VM.Creator.UUID)" />
                 </div>
                 <div *ngIf="!VM.Creator.Avatar" class="avatar-icon avatar-blue">
                     <i class="anticon anticon-user nologin-icon"></i>

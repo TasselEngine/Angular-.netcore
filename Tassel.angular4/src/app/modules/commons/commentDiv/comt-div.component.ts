@@ -25,9 +25,9 @@ export class CommentDivComponent implements OnDestroy {
     private comment: UserComment;
     public get Comment() {
         if (this.comment && this.AllResources.length > 0 && !this._vm.IsFormat) {
-            this.comment.Content = this.Formator.ImageTickParse(this.comment.Content, this.AllResources, 24);
+            this.comment.Content = this.formator.ImageTickParse(this.comment.Content, this.AllResources, 24);
             this.comment.Comments.forEach(reply => {
-                reply.Content = this.Formator.ImageTickParse(reply.Content, this.AllResources, 20);
+                reply.Content = this.formator.ImageTickParse(reply.Content, this.AllResources, 20);
             });
             this._vm.IsFormat = true;
         }
@@ -50,7 +50,7 @@ export class CommentDivComponent implements OnDestroy {
     private modalSubsc: Subscription;
 
     constructor(
-        public Formator: FormatService,
+        private formator: FormatService,
         private identity: IdentityService,
         private toast: ToastService,
         private resources: ResourcesService) { }
