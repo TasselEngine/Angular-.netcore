@@ -32,7 +32,6 @@ export function AppInit(config: ServerService) {
     RoutersModule,
     SharedModule,
     ExtensionsModule,
-    CommonBaseModule,
     ChartsModule,
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot()

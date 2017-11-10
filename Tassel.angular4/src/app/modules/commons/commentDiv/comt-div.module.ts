@@ -21,7 +21,7 @@ import { NgModule } from '@angular/core';
     ],
     providers: [],
     exports: [
-        CommentEditorModule,
+        CommentEditorComponent,
         CommentDivComponent
     ],
 })
