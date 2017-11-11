@@ -1,6 +1,7 @@
 
 .wf-loading-div{
-    padding-top:16px;
+    margin-top:-60px;
+    padding-top:86px;
     padding-bottom: 12px;
     width:100%;
     text-align: center;
@@ -12,10 +13,19 @@
     color: #2d9bce;
 }
 
+.wf-display{
+    transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
+    opacity: 1;
+}
+
 .wf-hidden{
     transition: 0.5s;
     -moz-transition: 0.5s;
     -o-transition: 0.5s;
     -webkit-transition: 0.5s;
-    display: none;
+    opacity: 0;
+    margin-top:-160px;
 }

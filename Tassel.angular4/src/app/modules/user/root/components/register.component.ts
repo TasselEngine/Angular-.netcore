@@ -3,7 +3,7 @@ import { TasselNavigationBase } from './../../../shared/components/base.componen
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, HostBinding, OnInit, Input, OnDestroy } from '@angular/core';
 import { pageShowAnimation } from './../../../../utils/app.utils';
-import { IdentityService } from '../../../../services/app.service';
+import { IdentityService, RootService } from '../../../../services/app.service';
 import { Regex } from 'ws-regex';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { EqualValidator } from '../../../extensions/directives/form_valid.directive';
@@ -28,7 +28,7 @@ interface IUser {
     templateUrl: './../views/register.html',
     animations: [pageShowAnimation],
     styleUrls: [
-        './../styles/login.css'
+        './../styles/login.scss'
     ]
 })
 export class RegisterComponent extends TasselNavigationBase implements OnInit, OnDestroy {
@@ -52,13 +52,19 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
-    public get RouteLinks() { return this.navigator.RouteLinks; }
-
     private confirmSubs: Subscription;
     private nameSubs: Subscription;
     private nameExistSubs: Subscription;
 
+    private isWidth = true;
+    public get IsWideScreen() { return this.isWidth; }
+
+    private widthSubp: Subscription;
+
+    public get RouteLinks() { return this.navigator.RouteLinks; }
+
     constructor(
+        private root: RootService,
         private formbuilder: FormBuilder,
         public identity: IdentityService,
         private route: ActivatedRoute,
@@ -67,6 +73,9 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     }
 
     ngOnInit(): void {
+        this.widthSubp = this.root.WidthSubject.subscribe(value => {
+            this.isWidth = value > 768;
+        });
         this.validateForm = this.formbuilder.group({
             userName: [this.user.InputAccount, [Validators.required]],
             password: [this.user.InputPsdt, [Validators.required]],
@@ -92,6 +101,7 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     }
 
     ngOnDestroy(): void {
+        if (this.widthSubp) { this.widthSubp.unsubscribe(); }
         if (this.confirmSubs) { this.confirmSubs.unsubscribe(); }
         if (this.nameSubs) { this.nameSubs.unsubscribe(); }
         if (this.nameExistSubs) { this.nameExistSubs.unsubscribe(); }

@@ -19,7 +19,7 @@ interface IAdaptor {
 export class WaterfallComponent extends AsyncableServiceBase implements OnInit, OnDestroy, AfterViewInit {
 
     @Input('data')
-    private _posts: any[] = [];
+    private _posts: any[];
     public get Posts(): any[] { return this._posts; }
 
     @Input('loader')
@@ -85,12 +85,14 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
 
     private rebuildView = async () => {
         if (this.shouldExistLoop) { return; }
-        const root = this.indexDiv.nativeElement;
-        this._adaptor.Col = root.clientWidth > 1200 ? 4 : root.clientWidth > 882 ? 3 : root.clientWidth > 690 ? 2 : 1;
-        if (this._adaptor.Col !== this._bindings.length) {
-            this.reselectHeights(this._adaptor.Col);
-        } else if (this._adaptor.Col > 1) {
-            this.reselectCheck(this._adaptor.Col);
+        if (this._posts) {
+            const root = this.indexDiv.nativeElement;
+            this._adaptor.Col = root.clientWidth > 1200 ? 4 : root.clientWidth > 882 ? 3 : root.clientWidth > 690 ? 2 : 1;
+            if (this._adaptor.Col !== this._bindings.length) {
+                this.reselectHeights(this._adaptor.Col);
+            } else if (this._adaptor.Col > 1) {
+                this.reselectCheck(this._adaptor.Col);
+            }
         }
         setTimeout(this.rebuildView, 250);
     }

@@ -38,13 +38,12 @@
                     <div nz-form-explain *ngIf="validateForm.controls.recomf.dirty&&validateForm.controls.recomf.hasError('equalFailed')">Password confirm not matched!</div>
                 </div>
             </div>
-            <div nz-form-item style="margin-top:128px;">
+            <div nz-form-item class="btn-div">
                 <div nz-form-control>
                     <label nz-checkbox formControlName="remember">
-                      <span>Remember me and auto-login</span>
+                        <span>Remember me and auto-login</span>
                     </label>
-                    <button nz-button class="login-form-button" [nzType]="'primary'" [nzSize]="'large'">Register</button>Have
-                    an account already? You can
+                    <button nz-button class="login-form-button" [nzType]="'primary'" [nzSize]="'large'">Register</button>Have an account already? You can
                     <a [routerLink]="RouteLinks.Login" routerLinkActive="acrive">Login now</a> .
                 </div>
             </div>

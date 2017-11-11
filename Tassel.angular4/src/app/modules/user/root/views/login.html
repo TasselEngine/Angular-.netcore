@@ -25,11 +25,11 @@
                     <div nz-form-explain *ngIf="validateForm.controls.password.dirty&&validateForm.controls.password.hasError('required')">Please input your Password!</div>
                 </div>
             </div>
-            <div nz-form-item style="margin-top:128px;">
+            <div nz-form-item class="btn-div">
                 <div nz-form-control>
                     <label nz-checkbox formControlName="remember">
-                  <span>Remember me</span>
-                </label>
+                        <span>Remember me</span>
+                    </label>
                     <a class="login-form-forgot" class="login-form-forgot">Forgot password</a>
                     <button nz-button class="login-form-button" [nzType]="'primary'" [nzSize]="'large'">Log in</button> Or
                     <a [routerLink]="RouteLinks.Register" routerLinkActive="acrive">Register now</a> .
@@ -40,7 +40,9 @@
             <p>Social Account Login</p>
             <hr/>
             <div class="trd-part-div">
-                <a [href]="WeiboAuth"> <img src="http://www.sinaimg.cn/blog/developer/wiki/32.png" width="128" /></a>
+                <a [href]="WeiboAuth">
+                    <img src="http://www.sinaimg.cn/blog/developer/wiki/32.png" width="128" />
+                </a>
             </div>
         </div>
     </div>

@@ -16,6 +16,20 @@ hr {
 }
 
 ::-webkit-scrollbar {
+    transition: 0.6s;
+    -o-transition:0.6s;
+    -moz-transition: 0.6s;
+    -webkit-transition: 0.6s;
+    opacity: 0px;
+    width: 16px;
+ }
+
+ ::-webkit-scrollbar:hover{
+    transition: 0.6s;
+    -o-transition:0.6s;
+    -moz-transition: 0.6s;
+    -webkit-transition: 0.6s;
+    opacity: 1px;
     width: 16px;
  }
 
@@ -25,14 +39,12 @@ hr {
  }
   
  ::-webkit-scrollbar-thumb {
-  transition: 1s;
-  background-color:#acacac;
-  border-radius: 4px;
+    background-color:rgba(1, 1, 1, 0.037);
+    border-radius: 4px;
  }
 
  ::-webkit-scrollbar-thumb:hover {
-     transition: 1s;
-     background-color:#989898;
+     background-color:rgba(1, 1, 1, 0.147);
      border-radius: 4px;
 }
 

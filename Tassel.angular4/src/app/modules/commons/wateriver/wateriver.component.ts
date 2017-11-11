@@ -14,7 +14,7 @@ import { RootService, AsyncableServiceBase } from '../../../services/app.service
 export class WateriverComponent extends AsyncableServiceBase implements OnInit, OnDestroy, AfterViewInit {
 
     @Input('data')
-    private _posts: any[] = [];
+    private _posts: any[];
     public get Posts(): any[] { return this._posts; }
 
     @Input('loader')

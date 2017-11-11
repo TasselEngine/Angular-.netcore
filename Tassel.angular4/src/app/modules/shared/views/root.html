@@ -1,5 +1,5 @@
 <!--Header-->
-<div *ngIf="!ShowSlider&&!HideAll" class="head-div">
+<div class="head-div head-display" [class.head-display]="!ShowSlider&&!HideAll">
     <div class="head-inner-left">
         <nz-popover nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" [nzPlacement]="'bottomLeft'">
             <a class="head-icon" nz-popover>

@@ -21,7 +21,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
-    private _posts: Status[] = [];
+    private _posts: Status[];
     public get Posts() { return this._posts; }
 
     private isWidth = true;

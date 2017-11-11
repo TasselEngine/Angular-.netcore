@@ -1,0 +1,114 @@
+
+.login-page{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+
+.login-title{
+  font-size: 32px;
+  font-weight: bold;
+  color:#686868;
+  font-family: "Stencil Regular", "SimSun Regular";
+}
+
+.login-div{
+  transition: 0.6s;
+  -o-transition:0.6s;
+  -moz-transition: 0.6s;
+  -webkit-transition: 0.6s;
+    width:500px;
+    height:600px;
+    margin-top:120px;
+    background-color:#fff;
+    padding :36px 24px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center
+}
+
+.login-footer{
+  padding-bottom: 12px;
+}
+
+.login-footer p{
+  font-size: 16px;
+}
+
+.login-footer hr{
+  margin-bottom: 8px;
+}
+
+.btn-div{
+  transition: 0.6s;
+  -o-transition:0.6s;
+  -moz-transition: 0.6s;
+  -webkit-transition: 0.6s;
+  margin-top:128px;
+}
+
+.trd-part-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center
+}
+
+.login-form {
+    max-width: 300px;
+  }
+
+  .login-form-forgot {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+  }
+
+@media(max-width:1280px)and(min-width:769px){
+    .login-div{
+      transition: 0.6s;
+      -o-transition:0.6s;
+      -moz-transition: 0.6s;
+      -webkit-transition: 0.6s;
+      width:500px;
+      height:600px;
+      margin-top:60px;
+      background-color:#fff;
+      padding :36px 24px; 
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center
+  }
+}
+
+@media(max-width:768px){
+
+    .login-div{
+      transition: 0.6s;
+      -o-transition:0.6s;
+      -moz-transition: 0.6s;
+      -webkit-transition: 0.6s;
+      width:100%;
+      height:auto;
+      margin-top:-64px;
+      background-color:#fff;
+      padding :16px 12px; 
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center
+  }
+
+  .btn-div{
+    transition: 0.6s;
+    -o-transition:0.6s;
+    -moz-transition: 0.6s;
+    -webkit-transition: 0.6s;
+    margin-top:32px;
+  }
+}

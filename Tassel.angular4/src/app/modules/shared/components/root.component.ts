@@ -3,12 +3,14 @@ import { TasselNavigationBase } from './base.component';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Regex } from 'ws-regex';
 import { IdentityService } from './../../../services/identity/identity.service';
-import { Component, OnInit, HostBinding, Renderer2, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostBinding, Renderer2, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { ServerService } from '../../../services/server/server.service';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { UserType } from '../../../model/models/user/user.contract';
 import { RootService, AdminService } from '../../../services/app.service';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tassel-root',
@@ -17,7 +19,7 @@ import { Title } from '@angular/platform-browser';
     './../styles/root.scss',
   ]
 })
-export class RootComponent extends TasselNavigationBase implements OnInit, AfterViewInit {
+export class RootComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('rootContent') rootContent: ElementRef;
   @ViewChild('scrollDiv') scrollDiv: ElementRef;
@@ -41,6 +43,9 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
 
   public get RouteLinks() { return this.navigator.RouteLinks; }
 
+  private routeStruct: RouteStruct;
+  private widthSubp: Subscription;
+
   constructor(
     public identity: IdentityService,
     private title: Title,
@@ -53,10 +58,8 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
   ngOnInit(): void {
     this.title.setTitle(`${this.server.Config.Main.Title} - ${this.server.Config.Main.Description}`);
     this.router.events.subscribe(event => {
-      if (!(event instanceof NavigationEnd)) {
-        return;
-      }
-      this.WaitAndDo(() => {
+      if (!(event instanceof NavigationEnd)) { return; }
+      this.WaitAndDo(() => { // refresh width event when navigation event completed.
         this.root.OnWidthChanged(this.rootContent.nativeElement.clientWidth, false);
       }, 100);
       this.ShowMenu = this.HideAll = false;
@@ -64,11 +67,24 @@ export class RootComponent extends TasselNavigationBase implements OnInit, After
       this.route_type = undefined;
       const hideAll = () => { this.HideAll = true; this.ShowBack = false; };
       const grayBack = () => { this.ShowBack = false; };
-      RouteStruct.Create(this.router.routerState.snapshot.url)
+      this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
         .DoIf(hideAll, this.navigator.RouteLinks.Login)
         .DoIf(hideAll, this.navigator.RouteLinks.Register)
         .DoEach(grayBack, this.navigator.RouteLinks.Home, this.navigator.RouteLinks.Status);
     });
+    this.root.WidthSubject.subscribe(value => {
+      const isWide = value > 768;
+      if (!this.routeStruct) { return; }
+      if (this.routeStruct.CheckIf(...this.navigator.RouteLinks.Register) || this.routeStruct.CheckIf(...this.navigator.RouteLinks.Login)) {
+        this.ShowBack = !isWide;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.widthSubp) {
+      this.widthSubp.unsubscribe();
+    }
   }
 
   ngAfterViewInit(): void {

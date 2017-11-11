@@ -96,6 +96,17 @@
     justify-content:
     space-between;
     box-shadow: 0px 0px 4px #282828;
+    opacity: 0;
+    margin-top: -80px;
+    transition: 0.4s;
+    -o-transition:0.4s;
+    -moz-transition: 0.4s;
+    -webkit-transition: 0.4s;
+}
+
+.head-display{
+    opacity: 1;
+    margin-top: 0px;
 }
 
 .head-inner-left{

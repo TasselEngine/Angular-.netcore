@@ -1,27 +1,27 @@
 import { ServerService } from './../../../../services/server/server.service';
 import { TasselNavigationBase } from './../../../shared/components/base.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, OnDestroy } from '@angular/core';
 import { pageShowAnimation } from './../../../../utils/app.utils';
-import { IdentityService } from '../../../../services/app.service';
+import { IdentityService, RootService } from '../../../../services/app.service';
 import { Regex } from 'ws-regex';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'tassel-login',
     templateUrl: './../views/login.html',
     animations: [pageShowAnimation],
     styleUrls: [
-        './../styles/login.css'
+        './../styles/login.scss'
     ]
 })
-export class LoginComponent extends TasselNavigationBase implements OnInit {
+export class LoginComponent extends TasselNavigationBase implements OnInit, OnDestroy {
 
     public showView = false;
     private weibo_code: string;
 
     validateForm: FormGroup;
-
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
@@ -31,9 +31,15 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
         return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href}`;
     }
 
+    private isWidth = true;
+    public get IsWideScreen() { return this.isWidth; }
+
+    private widthSubp: Subscription;
+
     public get RouteLinks() { return this.navigator.RouteLinks; }
 
     constructor(
+        private root: RootService,
         private formbuilder: FormBuilder,
         public identity: IdentityService,
         private route: ActivatedRoute,
@@ -42,6 +48,9 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
     }
 
     ngOnInit(): void {
+        this.widthSubp = this.root.WidthSubject.subscribe(value => {
+            this.isWidth = value > 768;
+        });
         this.validateForm = this.formbuilder.group({
             userName: [null, [Validators.required]],
             password: [null, [Validators.required]],
@@ -54,6 +63,12 @@ export class LoginComponent extends TasselNavigationBase implements OnInit {
                 this.navigator.GoHome();
             } else { this.showView = true; }
         });
+    }
+
+    ngOnDestroy(): void {
+        if (this.widthSubp) {
+            this.widthSubp.unsubscribe();
+        }
     }
 
     prepareSaveModel = (): any => {
