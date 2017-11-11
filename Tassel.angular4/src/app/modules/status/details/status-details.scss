@@ -76,11 +76,17 @@
 
 .vm-header-actionlink{
     transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    -webkit-transition: 0.2s;
     color: white;
 }
 
 .vm-header-actionlink:hover{
     transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    -webkit-transition: 0.2s;
     color: rgb(248, 198, 0);
 }
 
@@ -115,11 +121,17 @@
     border-width: 0px;
     border-bottom-width: 1px;
     font-size: 16px;
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
 }
 
 .vm-comt:hover{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     background-color: #fafafa;
 }
 
@@ -138,13 +150,19 @@
 }
 
 .vm-details-show{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     width:100%;
     display: block;
 }
 
 .vm-details-disappear{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     width: 0px;
     display: none;
 }

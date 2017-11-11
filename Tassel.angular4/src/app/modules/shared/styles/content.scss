@@ -1,25 +1,37 @@
 @import './base.scss';
 
 .cont-padd-lr{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     padding-left:36px;
     padding-right:36px;
 }
 
 .cont-margin-lr{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     margin-left:36px;
     margin-right:36px;
 }
 
 .cont-padd-tb{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     padding-top:36px;
     padding-bottom: 0px;
 }
 
 .cont-inner-margin{
-    transition: 0.5s;
+    transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -webkit-transition: 1s;
     margin:0px;
     margin-left: -36px;
     margin-right: -36px;

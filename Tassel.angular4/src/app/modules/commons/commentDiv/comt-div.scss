@@ -50,6 +50,9 @@
 
 .vm-secn-comment{
     transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
     margin-left:48px;
     background-color: #f3f3f3;
     padding:8px;
@@ -59,6 +62,9 @@
 
 .vm-secn-comment:hover{
     transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
     background-color: #fff;
 }
 

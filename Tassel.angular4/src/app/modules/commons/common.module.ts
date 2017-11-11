@@ -8,12 +8,14 @@ import { WaterfallPatchModule } from './waterfall/waterfall.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ImageUpListModule } from './imageUploadList/img_upload.module';
 
 @NgModule({
     exports: [
         WaterfallPatchModule,
         WateriverPatchModule,
         ImageGridModule,
+        ImageUpListModule,
         CommentDivModule,
         CommentEditorModule,
         StickersGroupModule,

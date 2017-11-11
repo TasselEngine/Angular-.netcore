@@ -1,4 +1,10 @@
 <div #indexDiv>
+    <div class="wf-loading-div wf-hidden" [class.wf-hidden]="Posts">
+        <div>
+            <nz-spin [nzSize]="'large'"></nz-spin>
+            <span class="wf-loading-title">Loading</span>
+        </div>
+    </div>
     <div nz-row>
         <div nz-col nzSpan="24">
             <ng-template ngFor let-item [ngForOf]="Posts" [ngTemplateOutlet]="template">
