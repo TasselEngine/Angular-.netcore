@@ -55,7 +55,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     public readonly postsProvide = async () => {
         const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
         if (succeed && status === ServerStatus.Succeed) {
-            for (let tick = 0; tick < 100; tick++) { // workaround for stickers
+            for (let tick = 0; tick < 200; tick++) { // workaround for stickers
                 if (!this.resources.AllStickersGroup || this.resources.AllStickersGroup.length === 0) {
                     await this.Delay(50);
                     continue;
