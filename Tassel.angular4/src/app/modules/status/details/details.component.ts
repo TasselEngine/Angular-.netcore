@@ -33,6 +33,8 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     private model: Status;
     public get VM() { return this.model; }
 
+    // public get VMContent() { return this.model.Content; }
+
     private openEdit = false;
     public get IsEdit() { return this.openEdit; }
 
@@ -66,6 +68,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             }
             if (code === ServerStatus.Succeed) {
                 this.model = details;
+                this.model.Content = this.formater.ImageTickParse(this.model.Content, this.resources.AllStickersGroup, 24);
             } else {
                 this.logger.Warn(['Get status details failed', 'See the details : ', error.msg], 'ngOnInit');
                 this.navigator.GoToNotFound();

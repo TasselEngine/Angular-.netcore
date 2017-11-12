@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="vm-container">
-            <p>{{VM.Content}}</p>
+            <div class="vm-details-formatdiv" [innerHtml]="VM.Content"></div>
             <br/>
             <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
             <p>

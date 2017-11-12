@@ -55,17 +55,10 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     public readonly postsProvide = async () => {
         const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
         if (succeed && status === ServerStatus.Succeed) {
-            for (let tick = 0; tick < 200; tick++) { // workaround for stickers
-                if (!this.resources.AllStickersGroup || this.resources.AllStickersGroup.length === 0) {
-                    await this.Delay(50);
-                    continue;
-                }
-                response.forEach(sta => {
-                    const val = sta.Content.substr(0, 48);
-                    sta.Content = this.formater.ImageTickParse(val, this.resources.AllStickersGroup, 22);
-                });
-                break;
-            }
+            response.forEach(sta => {
+                sta.Content = removeBasSticker(sta.Content);
+                sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
+            });
             return response;
         } else {
             return [];
@@ -98,5 +91,14 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         this.navigator.GoToStatusDetails(model.ID);
     }
 
+}
+
+function removeBasSticker(value: string): string {
+    let val = value.substr(0, 48);
+    const last = val.lastIndexOf(']');
+    if (last >= 0 && val[last + 1] && val[last + 1] !== '[') {
+        val = val.substr(0, last + 1);
+    }
+    return val;
 }
 

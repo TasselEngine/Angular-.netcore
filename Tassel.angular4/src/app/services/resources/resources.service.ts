@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { IdentityService } from './../identity/identity.service';
 import { ServerService } from './../server/server.service';
-import { IResponse, ISticker, ServerStatus } from '../../model/app.model';
+import { IResponse, ISticker, ServerStatus, StickersMap } from '../../model/app.model';
 import { StrictResult } from '../../utils/app.utils';
 
 @Injectable()
@@ -18,19 +18,21 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
     public get FormOptions() { return this.identity.FormOptions; }
 
     private tieba_images: ISticker[];
-    public get TiebaImages() { return this.tieba_images || []; }
+    public get TiebaImages() { return StickersMap.Tieba || []; }
 
     private king_masters: ISticker[];
-    public get OthersStickers() { return this.king_masters || []; }
+    public get OthersStickers() { return StickersMap.Others || []; }
 
     private sina_pop: ISticker[];
-    public get SinaPopStickers() { return this.sina_pop || []; }
+    public get SinaPopStickers() { return StickersMap.SinaPop || []; }
 
     private sina_role: ISticker[];
-    public get SinaRoleStickers() { return this.sina_role || []; }
+    public get SinaRoleStickers() { return StickersMap.SinaRole || []; }
 
     private all_stickers: ISticker[];
-    public get AllStickersGroup() { return this.all_stickers || []; }
+    public get AllStickersGroup() {
+        return this.all_stickers || (this.all_stickers = [...this.TiebaImages, ...this.OthersStickers, ...this.SinaPopStickers, ...this.SinaRoleStickers]);
+    }
 
     private logger: Logger<ResourcesService>;
 
@@ -40,19 +42,6 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
         private server: ServerService) {
         super(http);
         this.logger = this.logsrv.GetLogger('ResourcesService').SetModule('service');
-        this.initResources();
-    }
-
-    private initResources = async () => {
-        let [s, c, e, images] = await this.GetTiebaImagesAsync();
-        if (s && c === ServerStatus.Succeed) { this.tieba_images = images as ISticker[]; }
-        [s, c, e, images] = await this.GetOthersStickersAsync();
-        if (s && c === ServerStatus.Succeed) { this.king_masters = images as ISticker[]; }
-        [s, c, e, images] = await this.GetSinaPopStickersAsync();
-        if (s && c === ServerStatus.Succeed) { this.sina_pop = images as ISticker[]; }
-        [s, c, e, images] = await this.GetSinaRoleStickersAsync();
-        if (s && c === ServerStatus.Succeed) { this.sina_role = images as ISticker[]; }
-        this.all_stickers = [...this.tieba_images, ...this.king_masters, ...this.sina_pop, ...this.sina_role];
     }
 
     public readonly GetTiebaImagesAsync = async () => {

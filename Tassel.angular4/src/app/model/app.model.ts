@@ -16,6 +16,7 @@ import { ModelType, EntryState } from './enums/model.enum';
 import { Image, Status } from './models/status/status.model';
 import { RouteErrors } from './enums/errors.enum';
 import { ServerStatus } from './enums/response.enum';
+import { StickersMap } from './models/commons/sticker/sticker.model';
 
 export {
     SrvTimeFormat,
@@ -54,5 +55,6 @@ export {
     Image,
     Status,
     UserComment,
-    LikeRelation
+    LikeRelation,
+    StickersMap,
 };
