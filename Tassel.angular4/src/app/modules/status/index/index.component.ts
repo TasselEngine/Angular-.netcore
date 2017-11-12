@@ -94,11 +94,19 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
 }
 
 function removeBasSticker(value: string): string {
-    let val = value.substr(0, 48);
-    const last = val.lastIndexOf(']');
-    if (last >= 0 && val[last + 1] && val[last + 1] !== '[') {
-        val = val.substr(0, last + 1);
+    if (value.length < 60) {
+        return value;
     }
-    return val;
+    let val = value.substr(0, 60);
+    const last = val.lastIndexOf(']');
+    if (last < 0 || last === val.length - 1) {
+        return val + '...';
+    }
+    const end = val.lastIndexOf('[');
+    if (end < last) {
+        return val + '...';
+    }
+    val = val.substr(0, end);
+    return val + '...';
 }
 
