@@ -1,32 +1,11 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TasselAdminCompBase } from './../../shared/components/base.component';
 import { Component, HostBinding, OnInit, state } from '@angular/core';
 import { AdminService, IdentityService, StatusService } from '../../../services/app.service';
 import { Router } from '@angular/router';
 import { pageShowAnimation, Queue } from '../../../utils/app.utils';
-import { ServerStatus } from '../../../model/app.model';
-
-interface IStatusCreate {
-    Content: string;
-    Images: IImage[];
-}
-
-interface IImage {
-    Name: string;
-    Src: string;
-    File: string;
-    Uploaded: boolean;
-    Uploading: boolean;
-    UploadFailed: boolean;
-    Payload?: IImagePayload;
-}
-
-interface IImagePayload {
-    origin?: string;
-    thumb?: string;
-    width?: number;
-    height?: number;
-}
+import { ServerStatus, ISticker } from '../../../model/app.model';
+import { Regex } from 'ws-regex';
+import { Logger } from 'ws-logger';
 
 @Component({
     selector: 'tassel-admin-status',
@@ -42,91 +21,58 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
     @HostBinding('style.display') display = 'block';
 
     private model: IStatusCreate = {
-        Content: 'text status create',
+        Content: '',
         Images: []
     };
     public get VM() { return this.model; }
 
-    public uploadQueue: Queue<IImage>;
-
-    public ImageBinding: any;
+    private logger: Logger<AdminStatusComponent>;
 
     constructor(
-        private formbuilder: FormBuilder,
         private status: StatusService,
         protected admin: AdminService,
         protected identity: IdentityService,
         protected router: Router) {
         super(admin, identity, router);
+        this.logger = this.logsrv.GetLogger<AdminStatusComponent>('AdminStatusComponent').SetModule('admin');
     }
 
     ngOnInit(): void {
-        this.uploadQueue = new Queue<IImage>(50);
+
     }
 
-    public readonly OnFileChanged = (files: FileList) => {
-        for (let index = 0; index < files.length; index++) {
-            const file = files.item(index);
-            if (!file.type.includes('image')) { continue; }
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const src = reader.result as string;
-                const ifile: IImage = {
-                    Name: file.name,
-                    Src: src,
-                    File: src.split(',')[1],
-                    Uploaded: false,
-                    Uploading: false,
-                    UploadFailed: false
-                };
-                this.model.Images.push(ifile);
-                this.uploadQueue.Push(ifile);
-            };
+    public TiebaImageClicked = (image: ISticker) => {
+        this.model.Content += `[${image.key}]`;
+    }
+
+    public readonly OnInputKeyUp = () => {
+        const coll = Regex.Create(/(\[#\([^\#]+\))$/).Matches(this.model.Content, ['match']);
+        if (coll && coll['match'] && coll['match'] !== '') {
+            this.model.Content = this.model.Content.substring(0, this.model.Content.length - coll['match'].length);
         }
     }
 
-    public readFileTicks = async () => {
-        if (this.uploadQueue.Items.length > 0) {
-            let first = this.uploadQueue.Head();
-            if (first && first.UploadFailed) {
-                // TO REMOVE FROM QUEUE ...
-                first.Uploading = false;
-                this.uploadQueue.Out();
-            } else if (first && first.Uploaded) {
-                // TO REMOVE FROM QUEUE ...
-                first.Uploading = false;
-                this.uploadQueue.Out();
-            }
-            first = this.uploadQueue.Head();
-            if (first && !first.Uploading) {
-                // TO UPLOAD WORK ...
-                first.Uploading = true;
-                this.admin.UploadImageAsync(first.File).then(([succeed, code, error, result]) => {
-                    if (succeed && code === ServerStatus.Succeed) {
-                        first.Payload = result;
-                        first.Uploaded = true;
-                    } else {
-                        first.Uploaded = true;
-                        first.UploadFailed = true;
-                    }
-                });
-            }
-        } else {
-            // TO UPLOAD
-            this.status.CreateStatusAsync({
-                content: this.model.Content,
-                user_name: this.identity.CurrentUser.FriendlyName,
-                uid: this.identity.CurrentUUID,
-                images: this.model.Images.filter(i => !i.UploadFailed).map(i => i.Payload)
-            });
+    public Submit = async () => {
+        const [succeed, code, error, status_id] = await this.status.CreateStatusAsync({
+            content: this.model.Content,
+            user_name: this.identity.CurrentUser.FriendlyName,
+            uid: this.identity.CurrentUUID,
+            images: this.model.Images.map(i => i.Payload),
+        });
+        if (!succeed) {
+            this.toast.ErrorToast('Upload status failed', 'Server errors.');
             return;
         }
-        setTimeout(this.readFileTicks, 50);
+        if (code === ServerStatus.Succeed) {
+            this.navigator.GoToStatusIndex();
+        } else {
+            this.logger.Warn(['Upload status failed', 'see the details', error.msg], 'Submit');
+            this.toast.WarnToast('Upload status failed', error.msg);
+        }
     }
 
-    public Submit = () => {
-        this.readFileTicks();
+    public OnUploaded = (images: IImagePayload[]) => {
+
     }
 
 }

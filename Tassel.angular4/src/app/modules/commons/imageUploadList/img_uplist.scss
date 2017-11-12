@@ -1,0 +1,80 @@
+
+ .img-more{
+    position: relative;
+}
+
+
+.img-more img{
+   margin-right: 4px;
+   margin-bottom: 4px;
+}
+
+.img-more div {
+  position: absolute;
+  width:100%;
+  float: right;
+  bottom: 5%;
+  left: 5%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.canpoint{
+    cursor: pointer;
+}
+
+.flag-div{
+    padding-bottom: 4px;
+    background: transparent;
+}
+
+.green{
+    color: rgb(55, 179, 94);
+}
+
+.red{
+    color: rgb(223, 49, 101);
+}
+
+.yellow{
+    color: rgb(243, 165, 49);
+}
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+
+.upload-div{
+    padding: 8px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px; 
+}
+
+.no-p{
+    margin-bottom: 12px;
+}

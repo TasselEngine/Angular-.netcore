@@ -3,23 +3,15 @@
         <b>Status</b>
     </h1>
     <hr/>
-    <div style="margin-top:32px;">
 
-        <input type="file" multiple="multiple" (change)="OnFileChanged($event.target.files)" />
-
-        <div>
-            <div *ngFor="let image of VM.Images">
-                <img width="50" height="50" [src]="image.Src" />
-                <span>{{image.Uploaded}}</span>
-            </div>
-        </div>
-
-        <div>
-            <nz-input nzType="textarea" [(ngModel)]="VM.Content"></nz-input>
-        </div>
-
-        <button nz-button (click)="Submit()">Submit</button>
-
+    <div style="margin-top:32px">
+        <nz-input nzType="textarea" nzRows="7" nzPlaceHolder="Input status here." [(ngModel)]="VM.Content" (keyup)="OnInputKeyUp()"></nz-input>
     </div>
+
+    <tassel-common-stickers (OnStickerClicked)="TiebaImageClicked($event)"></tassel-common-stickers>
+
+    <tassel-common-imguplist [saveList]="VM.Images" [showSubmit]="false" [auto]="true" (OnUploaded)="OnUploaded($event)"></tassel-common-imguplist>
+
+    <button nz-button (click)="Submit()">Submit</button>
 
 </div>

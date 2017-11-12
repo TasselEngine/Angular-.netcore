@@ -1,0 +1,28 @@
+<div style="margin-top:16px;margin-bottom:8px;">
+
+    <div class="upload-div">
+        <div nz-row nzType="flex">
+            <p *ngIf="!VM.Images||VM.Images.length===0" class="no-p">No photos selected.</p>
+            <div class="img-more" *ngFor="let image of VM.Images;let i=index">
+                <img alt="picture" width="80" height="80" [src]="image.Src" />
+                <div class="flag-div">
+                    <i *ngIf="!image.Uploaded" class="anticon anticon-clock-circle yellow"></i>
+                    <i *ngIf="image.Uploaded&&!image.UploadFailed" class="anticon anticon-check-circle green"></i>
+                    <i *ngIf="image.Uploaded&&image.UploadFailed" class="anticon anticon-close-circle red canpoint" (click)="RemoveImage(i)"></i>
+                </div>
+            </div>
+        </div>
+
+        <a *ngIf="ShowUpload" class="file canpoint">
+            <p>
+                <i class="anticon anticon-cloud-upload" style="font-size:16px"></i>
+                <span>Select photos</span>
+            </p>
+            <input type="file" multiple="multiple" (change)="OnFileChanged($event.target.files)" />
+        </a>
+
+        <button *ngIf="NeedUpload" nz-button (click)="Submit()">Submit</button>
+
+    </div>
+
+</div>
