@@ -32,6 +32,15 @@
 <ng-template let-model="model" #tempRiver>
     <div *ngIf="model" class="adp-card-div">
         <div nz-row>
+            <div nz-row class="card-top-line">
+                <div nz-col nzSpan="12" class="card-top-udiv">
+                    <img width="16" src="/assets/img/unknown.png" />
+                    <span class="card-top-user">{{'unknown user' | shortline:12}}</span>
+                </div>
+                <div nz-col nzSpan="12">
+                    <span class="card-top-tip">TYPE</span>
+                </div>
+            </div>
             <div *ngIf="model.Cover" class="custom-image card-like-pointer">
                 <tassel-common-imggrid [src]="model.Cover"></tassel-common-imggrid>
             </div>

@@ -39,6 +39,31 @@ $red-accent:rgb(206, 68, 89);
     margin-left:4px;
 }
 
+.card-top-udiv{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
+}
+
+.card-top-user{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.card-top-tip{
+    float:right;
+}
+
+.card-top-line{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.card-top-line img{
+    border-radius: 50%;
+    margin-right:4px;
+}
+
 @keyframes fadeIn {
     0% { opacity: 0; }
     50% { opacity: 0.5; }

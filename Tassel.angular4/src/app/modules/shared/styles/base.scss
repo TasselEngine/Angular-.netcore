@@ -22,6 +22,7 @@ hr {
     -webkit-transition: 0.6s;
     opacity: 0px;
     width: 16px;
+    -webkit-overflow-scrolling: touch;
  }
 
  ::-webkit-scrollbar:hover{
@@ -49,6 +50,7 @@ hr {
 }
 
 @media(max-width:768px){
+    
     ::-webkit-scrollbar {
         width: 4px;
      }
