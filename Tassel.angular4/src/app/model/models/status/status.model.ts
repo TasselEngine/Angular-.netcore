@@ -60,6 +60,7 @@ export class Status {
     @deserializeAs('details')
     private details: string;
     public get Content(): string { return this.details; }
+    public set Content(value: string) { this.details = value; }
 
     @serializeAs('cover')
     @deserializeAs('cover')

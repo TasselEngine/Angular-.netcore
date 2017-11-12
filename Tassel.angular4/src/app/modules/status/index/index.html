@@ -18,7 +18,7 @@
                             <span class="card-top-tip">STATUS</span>
                         </div>
                     </div>
-                    <p class="vm-index-title" *ngIf="model.Content">{{model.Content | shortline:36}}</p>
+                    <div class="vm-index-title" *ngIf="model.Content" [innerHtml]="model.Content"></div>
                 </div>
                 <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
                     <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>
@@ -55,7 +55,7 @@
                         <span class="card-top-tip">STATUS</span>
                     </div>
                 </div>
-                <p class="vm-index-title" *ngIf="model.Content">{{model.Content | shortline:36}}</p>
+                <div class="vm-index-title" *ngIf="model.Content" [innerHtml]="model.Content"></div>
             </div>
             <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
                 <tassel-common-imggrid gridType="grid" [limit]="true" [width]="112" [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>

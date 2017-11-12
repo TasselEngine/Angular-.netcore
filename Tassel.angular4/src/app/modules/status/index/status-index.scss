@@ -6,13 +6,17 @@
 }
 
 .vm-index-title{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
     font-size: 16px;
+    margin-left: -10px;
 }
 
 .card-top-line{
     margin-top: 0px;
     margin-bottom: 8px;
-    margin-left: -12px;
+    margin-left: -10px;
     margin-right:-12px;
 }
 

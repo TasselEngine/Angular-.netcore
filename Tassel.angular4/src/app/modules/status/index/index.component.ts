@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { TasselNavigationBase } from './../../shared/components/base.component';
 import { IdentityService } from './../../../services/identity/identity.service';
-import { RootService, StatusService } from '../../../services/app.service';
+import { RootService, StatusService, ResourcesService } from '../../../services/app.service';
 import { ServerStatus, Status } from '../../../model/app.model';
 
 @Component({
@@ -36,6 +36,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     constructor(
         private root: RootService,
         private status: StatusService,
+        private resources: ResourcesService,
         protected identity: IdentityService,
         protected router: Router) { super(identity, router); }
 
@@ -54,6 +55,17 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     public readonly postsProvide = async () => {
         const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
         if (succeed && status === ServerStatus.Succeed) {
+            for (let tick = 0; tick < 100; tick++) { // workaround for stickers
+                if (!this.resources.AllStickersGroup || this.resources.AllStickersGroup.length === 0) {
+                    await this.Delay(50);
+                    continue;
+                }
+                response.forEach(sta => {
+                    const val = sta.Content.substr(0, 48);
+                    sta.Content = this.formater.ImageTickParse(val, this.resources.AllStickersGroup, 22);
+                });
+                break;
+            }
             return response;
         } else {
             return [];
