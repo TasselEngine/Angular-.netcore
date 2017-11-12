@@ -21,12 +21,25 @@ export class ImageGridComponent {
     @Input('src')
     src: string;
 
+    @Input('width')
+    private width: number;
+    public get ImgWidth() { return this.width || 160; }
+
+    @Input('limit')
+    limit = false;
+
     @Input('canPointer')
     private canPointer = false;
     public get CanPointer(): boolean { return this.canPointer === true; }
 
     @Output('ImageClicked')
     ImageClicked = new EventEmitter<any>();
+
+    public get GridImages() {
+        return this.limit ?
+            (this.images || []).slice(0, 9) :
+            this.images || [];
+    }
 
     public get Images() {
         return !this.images ? !this.src ? [] : [[this.src]] :

@@ -41,11 +41,17 @@
         </div>
     </div>
 </div>
-<div *ngIf="!DivideType" class="img-margin img-pointer" [class.img-pointer]="CanPointer">
+<div *ngIf="!DivideType" class="img-pointer" [class.img-pointer]="CanPointer">
     <div nz-row nzType="flex" *ngIf="src">
-        <img alt="picture" width="160px" [src]="src" (click)="OnImageClicked(src)" />
+        <img alt="picture" class="img-margin" [width]="ImgWidth" [src]="src" (click)="OnImageClicked(src)" />
     </div>
     <div nz-row nzType="flex" *ngIf="!src">
-        <img *ngFor="let img of images" alt="picture" width="160px" [src]="img" (click)="OnImageClicked(img)" />
+        <div *ngFor="let img of GridImages;let i=index">
+            <div class="img-more" *ngIf="i===8&&limit">
+                <img alt="picture" [width]="ImgWidth" style="opacity:0.3" [src]="img" (click)="OnImageClicked(img)" />
+                <span>{{Count-9}} + </span>
+            </div>
+            <img *ngIf="!limit || i!==8&&limit" class="img-margin" alt="picture" [width]="ImgWidth" [src]="img" (click)="OnImageClicked(img)" />
+        </div>
     </div>
 </div>
