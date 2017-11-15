@@ -27,10 +27,14 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   public ShowPopover = false;
   public ShowMenu = false;
   public ShowSlider = false;
+  public ShowTop = true;
   public ShowBack = true;
   public HideAll = true;
   public HeadLeft = '0px';
   public HeaRight = '0px';
+
+  private oldScroll = 0;
+  private isScrollUp = true;
 
   private route_type: string;
   public get RouteFlag(): string { return this.route_type; }
@@ -72,7 +76,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         .DoIf(hideAll, this.navigator.RouteLinks.Register)
         .DoEach(grayBack, this.navigator.RouteLinks.Home, this.navigator.RouteLinks.Status);
     });
-    this.root.WidthSubject.subscribe(value => {
+    this.widthSubp = this.root.WidthSubject.subscribe(value => {
       const isWide = value > 768;
       if (!this.routeStruct) { return; }
       if (this.routeStruct.CheckIf(...this.navigator.RouteLinks.Register) || this.routeStruct.CheckIf(...this.navigator.RouteLinks.Login)) {
@@ -82,9 +86,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   ngOnDestroy(): void {
-    if (this.widthSubp) {
-      this.widthSubp.unsubscribe();
-    }
+    if (this.widthSubp) { this.widthSubp.unsubscribe(); }
   }
 
   ngAfterViewInit(): void {
@@ -105,6 +107,14 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
           scroll_div.onscroll = onScroll;
         }, 0);
       }
+      if (that.ShowSlider) { return; }
+      if (this.scrollTop - that.oldScroll > 0) {
+        that.ShowTop = false;
+      }
+      if (that.oldScroll - this.scrollTop > 0) {
+        that.ShowTop = true;
+      }
+      that.oldScroll = this.scrollTop;
     };
     scroll_div.onscroll = onScroll;
   }
@@ -114,9 +124,11 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.root.OnWidthChanged(root.clientWidth);
     if (root.clientWidth > 1280) {
       this.ShowSlider = true;
+      // this.ShowTop = false;
       this.HeadLeft = '0px';
     } else {
       this.ShowSlider = false;
+      // this.ShowTop = true;
       this.HeadLeft = '-50px';
     }
     setTimeout(this.checkView, 300);

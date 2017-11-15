@@ -42,7 +42,7 @@ export class WateriverComponent extends AsyncableServiceBase implements OnInit, 
     ngAfterViewInit(): void {
         this.scrollSubp = this.root.ScrollSubject.subscribe(scroll => {
             this.DoAndWait(async () => {
-                this._posts.push(...(await this._loader()));
+                this._posts.push(...((await this._loader()) || []));
             }, 500);
         });
     }
