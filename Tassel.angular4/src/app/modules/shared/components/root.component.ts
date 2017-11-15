@@ -108,11 +108,21 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         }, 0);
       }
       if (that.ShowSlider) { return; }
-      if (this.scrollTop - that.oldScroll > 0) {
-        that.ShowTop = false;
+      if (this.scrollTop - that.oldScroll > 50) {
+        scroll_div.onscroll = null;
+        setTimeout(async () => {
+          that.ShowTop = false;
+          await that.Delay(200);
+          scroll_div.onscroll = onScroll;
+        }, 0);
       }
-      if (that.oldScroll - this.scrollTop > 0) {
-        that.ShowTop = true;
+      if (that.oldScroll - this.scrollTop > 10) {
+        scroll_div.onscroll = null;
+        setTimeout(async () => {
+          that.ShowTop = true;
+          await that.Delay(500);
+          scroll_div.onscroll = onScroll;
+        }, 0);
       }
       that.oldScroll = this.scrollTop;
     };
