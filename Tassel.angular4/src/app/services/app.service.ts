@@ -8,6 +8,7 @@ import { HttpAsyncClientBase, AsyncableServiceBase } from './base/service.base';
 import { ToastService } from './toast/toast.service';
 import { ServerService } from './server/server.service';
 import { IdentityService } from './identity/identity.service';
+import { CacheService } from './cache/cache.service';
 
 export {
     ServerService,
@@ -15,6 +16,7 @@ export {
     RootService,
     ToastService,
     StatusService,
+    CacheService,
     FormatService,
     AdminService,
     ResourcesService,

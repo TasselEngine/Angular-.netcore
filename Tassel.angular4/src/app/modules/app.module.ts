@@ -12,7 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { RootComponent } from './../modules/shared/components/root.component';
-import { ToastService, ServerService, IdentityService, RootService, StatusService, FormatService, AdminService, ResourcesService, UtilsService } from './../services/app.service';
+import { ToastService, ServerService, IdentityService, RootService, StatusService, FormatService, AdminService, ResourcesService, UtilsService, CacheService } from './../services/app.service';
 
 export function AppInit(config: ServerService) {
   return async () => {
@@ -62,6 +62,7 @@ export function AppInit(config: ServerService) {
     LoggerService,
     ToastService,
     ServerService,
+    CacheService,
     RootService,
     StatusService,
     FormatService,

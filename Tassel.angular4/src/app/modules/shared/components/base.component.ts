@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AsyncableServiceBase } from '../../../services/base/service.base';
 import { NavigationDelegator } from '../../routers/navigation.extensions';
 import { LoggerService } from 'ws-logger';
-import { FormatService, AdminService, ServerService } from '../../../services/app.service';
+import { FormatService, AdminService, ServerService, CacheService } from '../../../services/app.service';
 import { RouteErrors, ServerStatus } from '../../../model/app.model';
 
 export class TasselComponentBase extends AsyncableServiceBase {
@@ -24,6 +24,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
 export class TasselNavigationBase extends TasselComponentBase {
 
     protected navigator: NavigationDelegator;
+    protected cache: CacheService;
 
     public get CurrentUser() { return this.identity.CurrentUser; }
 
@@ -31,6 +32,7 @@ export class TasselNavigationBase extends TasselComponentBase {
         protected identity: IdentityService,
         protected router: Router) {
         super();
+        this.cache = GlobalInjection.Injector.get(CacheService);
         this.navigator = new NavigationDelegator(identity, router, this.logsrv);
     }
 

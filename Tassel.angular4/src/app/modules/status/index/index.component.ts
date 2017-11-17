@@ -47,22 +47,25 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     }
 
     ngOnDestroy(): void {
+        // this.root.OnScrollNeedCheck(new Date());
         if (this.widthSubp) {
             this.widthSubp.unsubscribe();
         }
     }
 
     public readonly postsProvide = async () => {
-        const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
-        if (succeed && status === ServerStatus.Succeed) {
-            response.forEach(sta => {
-                sta.Content = removeBasSticker(sta.Content);
-                sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
-            });
-            return response;
-        } else {
-            return [];
-        }
+        // const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
+        // if (succeed && status === ServerStatus.Succeed) {
+        //     response.forEach(sta => {
+        //         sta.Content = removeBasSticker(sta.Content);
+        //         sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
+        //     });
+        //     return response;
+        // } else {
+        //     return [];
+        // }
+        await this.Delay(300);
+        return await this.status.GetAndRefreshStatus();
     }
 
     public readonly IsLiked = (model: Status): boolean => {

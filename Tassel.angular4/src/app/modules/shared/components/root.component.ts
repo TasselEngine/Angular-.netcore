@@ -35,6 +35,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
 
   private oldScroll = 0;
   private isScrollUp = true;
+  private startTime = new Date().getTime();
 
   private route_type: string;
   public get RouteFlag(): string { return this.route_type; }
@@ -49,6 +50,8 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
 
   private routeStruct: RouteStruct;
   private widthSubp: Subscription;
+  private scrollCheck: Subscription;
+  private scrollRebuild: Subscription;
 
   constructor(
     public identity: IdentityService,
@@ -63,12 +66,21 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.title.setTitle(`${this.server.Config.Main.Title} - ${this.server.Config.Main.Description}`);
     this.router.events.subscribe(event => {
       if (!(event instanceof NavigationEnd)) { return; }
+      // Rebuild scroll state
+      const root = this.scrollDiv.nativeElement;
+      const scroll_div = root && root.parentElement;
+      if (scroll_div) {
+        scroll_div.scrollTo(0, 0);
+      }
+      // Recheck the view state
       this.WaitAndDo(() => { // refresh width event when navigation event completed.
         this.root.OnWidthChanged(this.rootContent.nativeElement.clientWidth, false);
-      }, 100);
+      }, 50);
+      // Reset view state properties
       this.ShowMenu = this.HideAll = false;
       this.ShowBack = true;
       this.route_type = undefined;
+      // Adaptive ui changes
       const hideAll = () => { this.HideAll = true; this.ShowBack = false; };
       const grayBack = () => { this.ShowBack = false; };
       this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
@@ -83,10 +95,23 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         this.ShowBack = !isWide;
       }
     });
+    // // NEED TEST FOR SCROLL CACHE LATER...
+    // this.scrollCheck = this.root.ScrollCheckSubject.subscribe(tmst => {
+    //   const root = this.scrollDiv.nativeElement;
+    //   const scroll_div = root && root.parentElement;
+    //   this.root.SetScrollCache(this.router, scroll_div && scroll_div.scrollTop);
+    // });
+    // this.scrollRebuild = this.root.ScrollRebuildSubject.subscribe(tmst => {
+    //   const root = this.scrollDiv.nativeElement;
+    //   const scroll_div = root && root.parentElement;
+    //   scroll_div.scrollTo(0, this.root.GetScrollState(this.router));
+    // });
   }
 
   ngOnDestroy(): void {
     if (this.widthSubp) { this.widthSubp.unsubscribe(); }
+    if (this.scrollCheck) { this.scrollCheck.unsubscribe(); }
+    if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
   }
 
   ngAfterViewInit(): void {
@@ -108,22 +133,14 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         }, 0);
       }
       if (that.ShowSlider) { return; }
-      if (this.scrollTop - that.oldScroll > 50) {
-        scroll_div.onscroll = null;
-        setTimeout(async () => {
+      that.lazyLoad(() => {
+        if (this.scrollTop - that.oldScroll > 35) {
           that.ShowTop = false;
-          await that.Delay(200);
-          scroll_div.onscroll = onScroll;
-        }, 0);
-      }
-      if (that.oldScroll - this.scrollTop > 10) {
-        scroll_div.onscroll = null;
-        setTimeout(async () => {
+        }
+        if (that.oldScroll - this.scrollTop > 10 || this.scrollTop < 100) {
           that.ShowTop = true;
-          await that.Delay(500);
-          scroll_div.onscroll = onScroll;
-        }, 0);
-      }
+        }
+      }, 300, 200)();
       that.oldScroll = this.scrollTop;
     };
     scroll_div.onscroll = onScroll;
@@ -134,11 +151,9 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.root.OnWidthChanged(root.clientWidth);
     if (root.clientWidth > 1280) {
       this.ShowSlider = true;
-      // this.ShowTop = false;
       this.HeadLeft = '0px';
     } else {
       this.ShowSlider = false;
-      // this.ShowTop = true;
       this.HeadLeft = '-50px';
     }
     setTimeout(this.checkView, 300);
@@ -165,4 +180,22 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.navigator.GoToAdminDashboard();
   }
 
+  private lazyLoad(method: Function, time: number, delay: number) {
+    let timeout: number;
+    const that = this;
+    return function () {
+      const context = this;
+      const args = arguments;
+      const curTime = new Date().getTime();
+      clearTimeout(timeout);
+      if (curTime - that.startTime >= time) {
+        method.apply(context, args);
+        that.startTime = curTime;
+      } else {
+        timeout = setTimeout(method, delay);
+      }
+    };
+  }
+
 }
+

@@ -8,8 +8,9 @@ import { IResponse } from './../../model/interfaces/response.interface';
 import { HttpAsyncClientBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
 import { StrictResult } from '../../utils/app.utils';
-import { Status } from '../../model/models/status/status.model';
-import { UserComment, ICommentCreate, ICommentDelete } from '../../model/app.model';
+import { UserComment, ICommentCreate, ICommentDelete, ServerStatus, Status } from '../../model/app.model';
+import { ResourcesService } from './../resources/resources.service';
+import { FormatService } from './../format/format.service';
 
 @Injectable()
 export class StatusService extends HttpAsyncClientBase<IResponse> {
@@ -20,17 +21,54 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
 
     public get FormOptions() { return this.identity.FormOptions; }
 
+    private cacheStamp: Date;
+    private cacheStatus: Status[] = [];
+
     private logger: Logger<StatusService>;
 
     constructor(
         protected http: Http,
         private identity: IdentityService,
+        private resources: ResourcesService,
+        private formater: FormatService,
         private server: ServerService) {
         super(http);
         this.logger = this.logsrv.GetLogger('StatusService').SetModule('service');
     }
 
-    public GetAllStatusAsync = async () => {
+    public async GetAndRefreshStatus(from: number = 0) {
+        const stamp = new Date();
+        if (from !== 0) {
+            // DO IMCRE LOAD
+            return await this.getStatusColl();
+        }
+        if (!this.cacheStamp || stamp.getTime() - this.cacheStamp.getTime() > 5 * 1000 * 1000) {
+            // NEED RELOAD RESOURCES
+            // console.log('reload');
+            return await this.getStatusColl();
+        } else {
+            // DON'T NEED RELOAD
+            // console.log('rebuild');
+            return this.cacheStatus;
+        }
+    }
+
+    private async getStatusColl() {
+        const [succeed, status, error, response] = await this.GetAllStatusAsync();
+        if (succeed && status === ServerStatus.Succeed) {
+            response.forEach(sta => {
+                sta.Content = removeBasSticker(sta.Content);
+                sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
+            });
+            this.cacheStatus.push(...response);
+            this.cacheStamp = new Date();
+            return response;
+        } else {
+            return [];
+        }
+    }
+
+    public async GetAllStatusAsync() {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/all`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch status-list', 'GetAllStatusAsync');
         return succeed ?
@@ -38,7 +76,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<Status[]>(error);
     }
 
-    public GetStatusAsync = async (status_id: string) => {
+    public async GetStatusAsync(status_id: string) {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/${status_id}`, this.Options);
         this.apiLog([succeed, error, response], 'Try to get details of the status', 'GetStatusAsync');
         return succeed ?
@@ -46,7 +84,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<Status>(error);
     }
 
-    public CreateStatusAsync = async (params: any) => {
+    public async CreateStatusAsync(params: any) {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/status/create`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON(params));
         this.apiLog([succeed, error, response], 'Try to create a new status', 'CreateStatusAsync');
@@ -55,7 +93,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<string>(error);
     }
 
-    public LikeStatusAsync = async (sid: string, uid: string, uname: string) => {
+    public async LikeStatusAsync(sid: string, uid: string, uname: string) {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/status/${sid}/like`, this.FormOptions, HttpType.PUT, JsonHelper.ToJSON({ uid: uid, user_name: uname }));
         this.apiLog([succeed, error, response], 'Try to like or dislike the status', 'LikeStatusAsync');
@@ -64,7 +102,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<string>(error);
     }
 
-    public AddCommentAsync = async (sid: string, params: ICommentCreate) => {
+    public async AddCommentAsync(sid: string, params: ICommentCreate) {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/status/${sid}/comment`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON(params));
         this.apiLog([succeed, error, response], 'Try to add comment fot the status', 'AddCommentAsync');
@@ -73,7 +111,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<UserComment>(error);
     }
 
-    public DeleteCommentAsync = async (sid: string, p: ICommentDelete) => {
+    public async DeleteCommentAsync(sid: string, p: ICommentDelete) {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/status/${sid}/comment?id=${sid || p.id}&comt_id=${p.com_id}&is_reply=${p.is_reply}&reply_id=${p.reply_id || ''}`, this.Options, HttpType.DELETE);
         this.apiLog([succeed, error, response], 'Try to delete comment fot the status', 'DeleteCommentAsync');
@@ -82,7 +120,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<any>(error);
     }
 
-    public DeleteStatusAsync = async (status_id: string) => {
+    public async DeleteStatusAsync(status_id: string) {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/${status_id}`, this.Options, HttpType.DELETE);
         this.apiLog([succeed, error, response], 'Try to delete a status', 'DeleteStatusAsync');
         return succeed ?
@@ -90,7 +128,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<string>(error);
     }
 
-    private apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {
+    private apiLog(result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) {
         const [succeed, error, response] = result;
         if (succeed) {
             this.logger.Debug([`[ API ]${title}`, ...(descrip ? [descrip, response] : [response])], method);
@@ -100,3 +138,21 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
     }
 
 }
+
+function removeBasSticker(value: string): string {
+    if (value.length < 60) {
+        return value;
+    }
+    let val = value.substr(0, 60);
+    const last = val.lastIndexOf(']');
+    if (last < 0 || last === val.length - 1) {
+        return val + '...';
+    }
+    const end = val.lastIndexOf('[');
+    if (end < last) {
+        return val + '...';
+    }
+    val = val.substr(0, end);
+    return val + '...';
+}
+
