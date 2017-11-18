@@ -75,4 +75,8 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
 
     }
 
+    public OnTinyMCEChanges = (content: string) => {
+        console.log(content);
+    }
+
 }

@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { TinyMCEModule } from '../commons/tinyEditor/tinymce.module';
 
 const overRoutes: Routes = [
     {
@@ -33,6 +34,7 @@ const overRoutes: Routes = [
         ReactiveFormsModule,
         ImageUpListModule,
         NgZorroAntdModule,
+        TinyMCEModule,
         RouterModule.forChild(overRoutes)
     ],
     providers: [],

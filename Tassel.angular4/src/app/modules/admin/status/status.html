@@ -8,6 +8,8 @@
         <nz-input nzType="textarea" nzRows="7" nzPlaceHolder="Input status here." [(ngModel)]="VM.Content" (keyup)="OnInputKeyUp()"></nz-input>
     </div>
 
+    <!-- <tassel-tiny-editor elementId="tinymce-editor" (onEditorKeyup)="OnTinyMCEChanges($event)"></tassel-tiny-editor> -->
+
     <tassel-common-stickers (OnStickerClicked)="TiebaImageClicked($event)"></tassel-common-stickers>
 
     <tassel-common-imguplist [saveList]="VM.Images" [showSubmit]="false" [auto]="true" (OnUploaded)="OnUploaded($event)"></tassel-common-imguplist>
