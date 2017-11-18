@@ -1,12 +1,13 @@
 import { Creator } from './../user/user.model';
 import { UserComment } from './../comment/comment.model';
 import { FormatTime } from 'ws-format-time';
-import { serializeAs, deserializeAs } from 'cerialize';
+import { serializeAs, deserializeAs, inheritSerialization } from 'cerialize';
 import { ICreator } from './../user/user.contract';
 import { IStatus, IImage } from './status.contract';
 import { EntryState, ModelType } from '../../enums/model.enum';
 import { LikeRelation } from '../like/like.model';
 import { JsonHelper } from '../../../utils/helpers/typed_json.helper';
+import { BsonBase } from '../bsonBase/bsonBase.model';
 
 const ImageHead = 'data:image/png;base64,';
 
@@ -33,12 +34,8 @@ export class Image {
     public get URL() { return this.url; }
 }
 
-export class Status {
-
-    @serializeAs('id')
-    @deserializeAs('id')
-    private id: string;
-    public get ID(): string { return this.id; }
+@inheritSerialization(BsonBase)
+export class Status extends BsonBase {
 
     @serializeAs('images')
     @deserializeAs(Image, 'images')
@@ -50,11 +47,6 @@ export class Status {
     @deserializeAs(Number, 'state')
     private state: EntryState;
     public get State(): EntryState { return this.state || EntryState.Published; }
-
-    @serializeAs(Number, 'type')
-    @deserializeAs(Number, 'type')
-    private type: ModelType;
-    public get Type(): ModelType { return this.type || ModelType.Default; }
 
     @serializeAs('details')
     @deserializeAs('details')
@@ -106,24 +98,6 @@ export class Status {
     @deserializeAs(Creator, 'creator')
     private creator: Creator;
     public get Creator(): Creator { return this.creator; }
-
-    @serializeAs(Number, 'create_time')
-    @deserializeAs(Number, 'create_time')
-    private create_time: number;
-    private cttm: FormatTime;
-    public get CreateTime(): FormatTime {
-        return !this.create_time ? undefined :
-            this.cttm || (this.cttm = FormatTime.Create(!this.create_time ? undefined : this.create_time * 1000, 0));
-    }
-
-    @serializeAs(Number, 'update_time')
-    @deserializeAs(Number, 'update_time')
-    private update_time: number;
-    private uttm: FormatTime;
-    public get UpdateTime(): FormatTime {
-        return !this.update_time ? undefined :
-            this.uttm || (this.uttm = FormatTime.Create(!this.update_time ? undefined : this.update_time * 1000, 0));
-    }
 
     public static Parse = (i: IStatus) => JsonHelper.FromJson<Status>(i, Status);
 

@@ -36,25 +36,23 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         this.logger = this.logsrv.GetLogger('StatusService').SetModule('service');
     }
 
-    public async GetAndRefreshStatus(from: number = 0) {
+    public async GetAndRefreshStatus(from: number = 0, take = 5) {
         const stamp = new Date();
         if (from !== 0) {
             // DO IMCRE LOAD
-            return await this.getStatusColl();
+            return await this.getStatusColl(from, take);
         }
-        if (!this.cacheStamp || stamp.getTime() - this.cacheStamp.getTime() > 5 * 1000 * 1000) {
+        if (!this.cacheStamp || stamp.getTime() - this.cacheStamp.getTime() > 600000) {
             // NEED RELOAD RESOURCES
-            // console.log('reload');
-            return await this.getStatusColl();
+            return await this.getStatusColl(0, take);
         } else {
             // DON'T NEED RELOAD
-            // console.log('rebuild');
             return this.cacheStatus;
         }
     }
 
-    private async getStatusColl() {
-        const [succeed, status, error, response] = await this.GetAllStatusAsync();
+    private async getStatusColl(before: number, take = 10) {
+        const [succeed, status, error, response] = await this.GetStatusSelectAsync(before, take);
         if (succeed && status === ServerStatus.Succeed) {
             response.forEach(sta => {
                 sta.Content = removeBasSticker(sta.Content);
@@ -71,6 +69,14 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
     public async GetAllStatusAsync() {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/all`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch status-list', 'GetAllStatusAsync');
+        return succeed ?
+            StrictResult.Success(response.status, Status.ParseList(response.content), response.msg) :
+            StrictResult.Failed<Status[]>(error);
+    }
+
+    public async GetStatusSelectAsync(before: number, take = 10) {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/gets?before=${before}&take=${take}`, this.Options);
+        this.apiLog([succeed, error, response], `Try to fetch ${take} status before stamp = ${before}`, 'GetStatusSelectAsync');
         return succeed ?
             StrictResult.Success(response.status, Status.ParseList(response.content), response.msg) :
             StrictResult.Failed<Status[]>(error);

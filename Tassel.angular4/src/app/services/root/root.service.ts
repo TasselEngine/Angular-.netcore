@@ -4,14 +4,19 @@ import { Subject } from 'rxjs/Subject';
 import { CacheService } from './../cache/cache.service';
 import { Router } from '@angular/router';
 
+interface IScrollState {
+    TimeStamp: Date;
+    Key?: string;
+}
+
 @Injectable()
 export class RootService extends AsyncableServiceBase {
 
     private _lastWidth = 0;
 
     public readonly ScrollSubject: Subject<any> = new Subject<any>();
-    public readonly ScrollCheckSubject: Subject<Date> = new Subject<Date>();
-    public readonly ScrollRebuildSubject: Subject<Date> = new Subject<Date>();
+    public readonly ScrollCheckSubject: Subject<IScrollState> = new Subject<IScrollState>();
+    public readonly ScrollRebuildSubject: Subject<IScrollState> = new Subject<IScrollState>();
     public readonly WidthSubject: Subject<number> = new Subject<number>();
 
     constructor(private cache: CacheService) {
@@ -22,11 +27,11 @@ export class RootService extends AsyncableServiceBase {
         this.ScrollSubject.next(scroll_element);
     }
 
-    public OnScrollNeedCheck(date: Date) {
+    public OnScrollNeedCheck(date: IScrollState) {
         this.ScrollCheckSubject.next(date);
     }
 
-    public OnScrollNeedRebuild(date: Date) {
+    public OnScrollNeedRebuild(date: IScrollState) {
         this.ScrollRebuildSubject.next(date);
     }
 
@@ -38,13 +43,15 @@ export class RootService extends AsyncableServiceBase {
         this.WidthSubject.next(newValue);
     }
 
-    public SetScrollCache(router: Router, position: number): void {
-        const url = router.routerState.snapshot.url;
+    public SetScrollCache(position: number, key?: string, router?: Router): void {
+        const url = key || router && router.routerState.snapshot.url;
+        console.log('position : ' + position);
         this.cache.SetScrollCache(url, position);
     }
 
-    public GetScrollState(router: Router): number {
-        const url = router.routerState.snapshot.url;
+    public GetScrollState(key?: string, router?: Router): number {
+        const url = key || router && router.routerState.snapshot.url;
+        console.log('position : ' + this.cache.GetScrollCache(url));
         return this.cache.GetScrollCache(url);
     }
 

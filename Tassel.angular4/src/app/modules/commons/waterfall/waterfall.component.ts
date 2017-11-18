@@ -9,6 +9,11 @@ interface IAdaptor {
     Col: 1 | 2 | 3 | 4;
 }
 
+interface IEntry {
+    CreateTimeUnix: number;
+    [propName: string]: any;
+}
+
 @Component({
     selector: 'tassel-common-waterfall',
     templateUrl: './waterfall.html',
@@ -23,7 +28,7 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
     public get Posts(): any[] { return this._posts; }
 
     @Input('loader')
-    private _loader: () => any[];
+    private _loader: Function;
 
     @Input('template')
     public template: TemplateRef<any>;
@@ -55,15 +60,18 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
     private shouldRecheck = false;
     private shouldExistLoop = false;
 
+    private isend = false;
+
     private scrollSubp: Subscription;
 
     constructor(private root: RootService) { super(); }
 
     ngOnInit(): void {
-        this.DoAndWait(async () => {
-            this._posts = await this._loader();
+        this.WaitAndDo(async () => {
+            const coll = await this._loader(0, 50);
+            this._posts = [...coll];
             this.reselectHeights(4, undefined, true);
-        }, 0);
+        }, 100);
     }
 
     ngOnDestroy(): void {
@@ -76,8 +84,25 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
     ngAfterViewInit(): void {
         this.WaitAndDo(this.rebuildView, 50);
         this.scrollSubp = this.root.ScrollSubject.subscribe(scroll => {
+            if (this.isend) {
+                return;
+            }
             this.DoAndWait(async () => {
-                this.reselectHeights(this._adaptor.Col, await this._loader());
+                if (!this._posts) {
+                    this._posts = [];
+                }
+                let stamp = 0;
+                const oldLast = this._posts[this._posts.length - 1];
+                if (this._posts || this._posts.length > 0) {
+                    stamp = (oldLast && oldLast.CreateTimeUnix) || 0;
+                }
+                const newColl = await this._loader(stamp, 50);
+                if (newColl && newColl.length === 0) {
+                    this.isend = true;
+                    this.toast.InfoMessage('No more status.');
+                    return;
+                }
+                this.reselectHeights(this._adaptor.Col, newColl);
                 this.reselectCheck(this._adaptor.Col);
             }, 500);
         });

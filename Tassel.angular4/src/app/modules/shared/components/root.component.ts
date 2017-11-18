@@ -78,7 +78,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
       }, 50);
       // Reset view state properties
       this.ShowMenu = this.HideAll = false;
-      this.ShowBack = true;
+      this.ShowBack = this.ShowTop = true;
       this.route_type = undefined;
       // Adaptive ui changes
       const hideAll = () => { this.HideAll = true; this.ShowBack = false; };
@@ -95,17 +95,19 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         this.ShowBack = !isWide;
       }
     });
-    // // NEED TEST FOR SCROLL CACHE LATER...
-    // this.scrollCheck = this.root.ScrollCheckSubject.subscribe(tmst => {
-    //   const root = this.scrollDiv.nativeElement;
-    //   const scroll_div = root && root.parentElement;
-    //   this.root.SetScrollCache(this.router, scroll_div && scroll_div.scrollTop);
-    // });
-    // this.scrollRebuild = this.root.ScrollRebuildSubject.subscribe(tmst => {
-    //   const root = this.scrollDiv.nativeElement;
-    //   const scroll_div = root && root.parentElement;
-    //   scroll_div.scrollTo(0, this.root.GetScrollState(this.router));
-    // });
+    // NEED TEST FOR SCROLL CACHE LATER...
+    this.scrollCheck = this.root.ScrollCheckSubject.subscribe(tmst => {
+      const root = this.scrollDiv.nativeElement;
+      const scroll_div = root && root.parentElement;
+      console.log('will check : ' + tmst.Key);
+      this.root.SetScrollCache(scroll_div && scroll_div.scrollTop, tmst.Key, this.router);
+    });
+    this.scrollRebuild = this.root.ScrollRebuildSubject.subscribe(tmst => {
+      const root = this.scrollDiv.nativeElement;
+      const scroll_div = root && root.parentElement;
+      console.log('will rebuild : ' + tmst.Key);
+      scroll_div.scrollTo(0, this.root.GetScrollState(tmst.Key, this.router));
+    });
   }
 
   ngOnDestroy(): void {

@@ -31,6 +31,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
 
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
+    private scroll_state_key: string;
     private widthSubp: Subscription;
 
     constructor(
@@ -41,31 +42,25 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         protected router: Router) { super(identity, router); }
 
     ngOnInit(): void {
+        this.scroll_state_key = this.router.routerState.snapshot.url;
+        this.WaitAndDo(() => {
+            this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.scroll_state_key });
+        }, 1000);
         this.widthSubp = this.root.WidthSubject.subscribe(value => {
             this.isWidth = value > 768;
         });
     }
 
     ngOnDestroy(): void {
-        // this.root.OnScrollNeedCheck(new Date());
+        this.root.OnScrollNeedCheck({ TimeStamp: new Date(), Key: this.scroll_state_key });
         if (this.widthSubp) {
             this.widthSubp.unsubscribe();
         }
     }
 
-    public readonly postsProvide = async () => {
-        // const [succeed, status, error, response] = await this.status.GetAllStatusAsync();
-        // if (succeed && status === ServerStatus.Succeed) {
-        //     response.forEach(sta => {
-        //         sta.Content = removeBasSticker(sta.Content);
-        //         sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
-        //     });
-        //     return response;
-        // } else {
-        //     return [];
-        // }
-        await this.Delay(300);
-        return await this.status.GetAndRefreshStatus();
+    public readonly postsProvide = async (stamp = 0, take = 5) => {
+        await this.Delay(200);
+        return await this.status.GetAndRefreshStatus(stamp, take);
     }
 
     public readonly IsLiked = (model: Status): boolean => {

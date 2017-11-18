@@ -2,10 +2,10 @@ import { ILikeRelation } from './../like/like.contract';
 import { IComment } from './../comment/comment.contract';
 import { ICreator } from './../user/user.contract';
 import { EntryState, ModelType } from '../../enums/model.enum';
+import { IBsonBase } from '../bsonBase/bsonBase.contract';
 
-export interface IStatus {
+export interface IStatus extends IBsonBase {
     images: IImage;
-    type: ModelType;
     state: EntryState;
     details: string;
     cover: string;
@@ -15,9 +15,6 @@ export interface IStatus {
     likers_count: number;
     liker_ids?: string[];
     creator: ICreator;
-    id: string;
-    create_time: number;
-    update_time: number;
 }
 
 export interface IImage {
