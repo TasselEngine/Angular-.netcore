@@ -29,6 +29,7 @@
     "ng-zorro-antd": "^0.5.4",
     "ng2-charts": "^1.6.0",
     "rxjs": "^5.1.0",
+    "tinymce": "^4.7.2",
     "ws-async-base": "^1.0.2",
     "ws-format-httprequest": "^1.0.3",
     "ws-format-time": "^1.0.5",

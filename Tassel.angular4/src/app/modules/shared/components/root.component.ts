@@ -63,19 +63,69 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     protected router: Router) { super(identity, router); }
 
   ngOnInit(): void {
+    this.initAppBroswerTitle();
+    this.appRouteChangesDelegate();
+    this.screenWidthCheckEnabled();
+    this.scrollPositionCacheEnabled();
+  }
+
+  ngOnDestroy(): void {
+    if (this.widthSubp) { this.widthSubp.unsubscribe(); }
+    if (this.scrollCheck) { this.scrollCheck.unsubscribe(); }
+    if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
+  }
+
+  ngAfterViewInit(): void {
+    this.WaitAndDo(this.checkView, 50);
+    this.prepareScroll();
+  }
+
+  //#region public methods
+
+  public Logout = () => {
+    this.identity.LogoutAsync(async () => {
+      this.admin.CheckAccess(false);
+      this.ShowPopover = this.ShowMenu = false;
+      await this.Delay(100);
+      this.navigator.GoHome();
+    });
+  }
+
+  public ToUserProfile = async () => {
+    this.ShowPopover = this.ShowMenu = false;
+    await this.Delay(100);
+    this.navigator.GoToUserProfile();
+  }
+
+  public ToAdminDashboard = async () => {
+    this.ShowPopover = this.ShowMenu = false;
+    await this.Delay(100);
+    this.navigator.GoToAdminDashboard();
+  }
+
+  //#endregion
+
+  //#region inner methods
+
+  private initAppBroswerTitle() {
     this.title.setTitle(`${this.server.Config.Main.Title} - ${this.server.Config.Main.Description}`);
+  }
+
+  private appRouteChangesDelegate() {
     this.router.events.subscribe(event => {
-      if (!(event instanceof NavigationEnd)) { return; }
+      if (!(event instanceof NavigationEnd)) {
+        return;
+      }
+      // Recheck the view state
+      this.WaitAndDo(() => {
+        this.root.OnWidthChanged(this.rootContent.nativeElement.clientWidth, false);
+      }, 0);
       // Rebuild scroll state
       const root = this.scrollDiv.nativeElement;
       const scroll_div = root && root.parentElement;
       if (scroll_div) {
         scroll_div.scrollTo(0, 0);
       }
-      // Recheck the view state
-      this.WaitAndDo(() => { // refresh width event when navigation event completed.
-        this.root.OnWidthChanged(this.rootContent.nativeElement.clientWidth, false);
-      }, 50);
       // Reset view state properties
       this.ShowMenu = this.HideAll = false;
       this.ShowBack = this.ShowTop = true;
@@ -88,37 +138,31 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         .DoIf(hideAll, this.navigator.RouteLinks.Register)
         .DoEach(grayBack, this.navigator.RouteLinks.Home, this.navigator.RouteLinks.Status);
     });
+  }
+
+  private screenWidthCheckEnabled() {
     this.widthSubp = this.root.WidthSubject.subscribe(value => {
       const isWide = value > 768;
-      if (!this.routeStruct) { return; }
+      if (!this.routeStruct) {
+        return;
+      }
       if (this.routeStruct.CheckIf(...this.navigator.RouteLinks.Register) || this.routeStruct.CheckIf(...this.navigator.RouteLinks.Login)) {
         this.ShowBack = !isWide;
       }
     });
-    // NEED TEST FOR SCROLL CACHE LATER...
+  }
+
+  private scrollPositionCacheEnabled() {
     this.scrollCheck = this.root.ScrollCheckSubject.subscribe(tmst => {
       const root = this.scrollDiv.nativeElement;
       const scroll_div = root && root.parentElement;
-      console.log('will check : ' + tmst.Key);
       this.root.SetScrollCache(scroll_div && scroll_div.scrollTop, tmst.Key, this.router);
     });
     this.scrollRebuild = this.root.ScrollRebuildSubject.subscribe(tmst => {
       const root = this.scrollDiv.nativeElement;
       const scroll_div = root && root.parentElement;
-      console.log('will rebuild : ' + tmst.Key);
       scroll_div.scrollTo(0, this.root.GetScrollState(tmst.Key, this.router));
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.widthSubp) { this.widthSubp.unsubscribe(); }
-    if (this.scrollCheck) { this.scrollCheck.unsubscribe(); }
-    if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
-  }
-
-  ngAfterViewInit(): void {
-    this.WaitAndDo(this.checkView, 50);
-    this.prepareScroll();
   }
 
   private prepareScroll = () => {
@@ -161,27 +205,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     setTimeout(this.checkView, 300);
   }
 
-  public Logout = () => {
-    this.identity.LogoutAsync(async () => {
-      this.admin.CheckAccess(false);
-      this.ShowPopover = this.ShowMenu = false;
-      await this.Delay(100);
-      this.navigator.GoHome();
-    });
-  }
-
-  public ToUserProfile = async () => {
-    this.ShowPopover = this.ShowMenu = false;
-    await this.Delay(100);
-    this.navigator.GoToUserProfile();
-  }
-
-  public ToAdminDashboard = async () => {
-    this.ShowPopover = this.ShowMenu = false;
-    await this.Delay(100);
-    this.navigator.GoToAdminDashboard();
-  }
-
   private lazyLoad(method: Function, time: number, delay: number) {
     let timeout: number;
     const that = this;
@@ -198,6 +221,8 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
       }
     };
   }
+
+  //#endregion
 
 }
 

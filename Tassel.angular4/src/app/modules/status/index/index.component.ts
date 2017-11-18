@@ -24,14 +24,14 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     private _posts: Status[];
     public get Posts() { return this._posts; }
 
-    private isWidth = true;
-    public get IsWideScreen() { return this.isWidth; }
+    private is_width = true;
+    public get IsWideScreen() { return this.is_width; }
 
     public get Formator() { return this.formater; }
 
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
-    private scroll_state_key: string;
+    private current_route: string;
     private widthSubp: Subscription;
 
     constructor(
@@ -42,35 +42,35 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         protected router: Router) { super(identity, router); }
 
     ngOnInit(): void {
-        this.scroll_state_key = this.router.routerState.snapshot.url;
+        this.current_route = this.router.routerState.snapshot.url;
         this.WaitAndDo(() => {
-            this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.scroll_state_key });
+            this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.current_route });
         }, 1000);
         this.widthSubp = this.root.WidthSubject.subscribe(value => {
-            this.isWidth = value > 768;
+            this.is_width = value > 768;
         });
     }
 
     ngOnDestroy(): void {
-        this.root.OnScrollNeedCheck({ TimeStamp: new Date(), Key: this.scroll_state_key });
+        this.root.OnScrollNeedCheck({ TimeStamp: new Date(), Key: this.current_route });
         if (this.widthSubp) {
             this.widthSubp.unsubscribe();
         }
     }
 
-    public readonly postsProvide = async (stamp = 0, take = 5) => {
+    public readonly PostsProvider = async (stamp = 0, take = 5) => {
         await this.Delay(200);
         return await this.status.GetAndRefreshStatus(stamp, take);
     }
 
-    public readonly IsLiked = (model: Status): boolean => {
+    public IsLiked(model: Status): boolean {
         let index = model.LikeUserIDs.findIndex(i => i === this.identity.CurrentUUID);
         if (index >= 0) { return true; }
         index = model.LikeUsers.findIndex(i => i.Creator.UUID === this.identity.CurrentUUID);
         return index >= 0;
     }
 
-    public readonly ClickLike = async (model: Status) => {
+    public async ClickLike(model: Status) {
         if (!this.identity.IsLogined) {
             return;
         }
@@ -85,26 +85,8 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         }
     }
 
-    public readonly ItemClicked = (model: Status) => {
+    public ItemClicked(model: Status) {
         this.navigator.GoToStatusDetails(model.ID);
     }
 
 }
-
-function removeBasSticker(value: string): string {
-    if (value.length < 60) {
-        return value;
-    }
-    let val = value.substr(0, 60);
-    const last = val.lastIndexOf(']');
-    if (last < 0 || last === val.length - 1) {
-        return val + '...';
-    }
-    const end = val.lastIndexOf('[');
-    if (end < last) {
-        return val + '...';
-    }
-    val = val.substr(0, end);
-    return val + '...';
-}
-

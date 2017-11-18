@@ -9,6 +9,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ImageUpListModule } from './imageUploadList/img_upload.module';
+import { TinyMCEModule } from './tinyEditor/tinymce.module';
 
 @NgModule({
     exports: [
@@ -19,7 +20,8 @@ import { ImageUpListModule } from './imageUploadList/img_upload.module';
         CommentDivModule,
         CommentEditorModule,
         StickersGroupModule,
-        LikersLineModule
+        LikersLineModule,
+        TinyMCEModule
     ],
 })
 export class CommonBaseModule { }

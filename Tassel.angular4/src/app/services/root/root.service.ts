@@ -45,13 +45,11 @@ export class RootService extends AsyncableServiceBase {
 
     public SetScrollCache(position: number, key?: string, router?: Router): void {
         const url = key || router && router.routerState.snapshot.url;
-        console.log('position : ' + position);
         this.cache.SetScrollCache(url, position);
     }
 
     public GetScrollState(key?: string, router?: Router): number {
         const url = key || router && router.routerState.snapshot.url;
-        console.log('position : ' + this.cache.GetScrollCache(url));
         return this.cache.GetScrollCache(url);
     }
 

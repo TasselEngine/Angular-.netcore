@@ -30,7 +30,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
     private isWidth = true;
     public get IsWideScreen() { return this.isWidth; }
 
-    private _posts: IPost[] = [];
+    private _posts: IPost[];
     public get Posts() { return this._posts; }
 
     private widthSubp: Subscription;

@@ -51,21 +51,6 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
-    private async getStatusColl(before: number, take = 10) {
-        const [succeed, status, error, response] = await this.GetStatusSelectAsync(before, take);
-        if (succeed && status === ServerStatus.Succeed) {
-            response.forEach(sta => {
-                sta.Content = removeBasSticker(sta.Content);
-                sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
-            });
-            this.cacheStatus.push(...response);
-            this.cacheStamp = new Date();
-            return response;
-        } else {
-            return [];
-        }
-    }
-
     public async GetAllStatusAsync() {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/all`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch status-list', 'GetAllStatusAsync');
@@ -140,6 +125,21 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             this.logger.Debug([`[ API ]${title}`, ...(descrip ? [descrip, response] : [response])], method);
         } else {
             this.logger.Error([`[ API ]${title}`, 'Connect To Server Failed.', error], method);
+        }
+    }
+
+    private async getStatusColl(before: number, take = 10): Promise<Status[]> {
+        const [succeed, status, error, response] = await this.GetStatusSelectAsync(before, take);
+        if (succeed && status === ServerStatus.Succeed) {
+            response.forEach(sta => {
+                sta.Content = removeBasSticker(sta.Content);
+                sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
+            });
+            this.cacheStatus.push(...response);
+            this.cacheStamp = new Date();
+            return response;
+        } else {
+            return [];
         }
     }
 

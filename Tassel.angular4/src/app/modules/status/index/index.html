@@ -1,6 +1,6 @@
 <div TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
-    <tassel-common-waterfall *ngIf="IsWideScreen" [data]="Posts" [loader]="postsProvide" [template]="temp"></tassel-common-waterfall>
-    <tassel-common-wateriver *ngIf="!IsWideScreen" [data]="Posts" [loader]="postsProvide" [template]="tempRiver"></tassel-common-wateriver>
+    <tassel-common-waterfall *ngIf="IsWideScreen" [data]="Posts" [loader]="PostsProvider" [template]="temp"></tassel-common-waterfall>
+    <tassel-common-wateriver *ngIf="!IsWideScreen" [data]="Posts" [loader]="PostsProvider" [template]="tempRiver"></tassel-common-wateriver>
 </div>
 
 <ng-template let-model="model" #temp>
