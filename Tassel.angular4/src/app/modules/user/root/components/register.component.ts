@@ -56,10 +56,7 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     private nameSubs: Subscription;
     private nameExistSubs: Subscription;
 
-    private isWidth = true;
-    public get IsWideScreen() { return this.isWidth; }
-
-    private widthSubp: Subscription;
+    public get IsWideScreen() { return window.innerWidth > 768; }
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
 
@@ -73,9 +70,6 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     }
 
     ngOnInit(): void {
-        this.widthSubp = this.root.WidthSubject.subscribe(value => {
-            this.isWidth = value > 768;
-        });
         this.validateForm = this.formbuilder.group({
             userName: [this.user.InputAccount, [Validators.required]],
             password: [this.user.InputPsdt, [Validators.required]],
@@ -101,7 +95,6 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
     }
 
     ngOnDestroy(): void {
-        if (this.widthSubp) { this.widthSubp.unsubscribe(); }
         if (this.confirmSubs) { this.confirmSubs.unsubscribe(); }
         if (this.nameSubs) { this.nameSubs.unsubscribe(); }
         if (this.nameExistSubs) { this.nameExistSubs.unsubscribe(); }

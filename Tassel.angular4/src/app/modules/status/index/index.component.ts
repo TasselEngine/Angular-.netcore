@@ -24,15 +24,13 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     private _posts: Status[];
     public get Posts() { return this._posts; }
 
-    private is_width = true;
-    public get IsWideScreen() { return this.is_width; }
+    public get IsWideScreen() { return window.innerWidth > 768; }
 
     public get Formator() { return this.formater; }
 
     public get ImageSrcRoot() { return this.server.ServerApiRoot; }
 
     private current_route: string;
-    private widthSubp: Subscription;
 
     constructor(
         private root: RootService,
@@ -46,16 +44,10 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         this.WaitAndDo(() => {
             this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.current_route });
         }, 1000);
-        this.widthSubp = this.root.WidthSubject.subscribe(value => {
-            this.is_width = value > 768;
-        });
     }
 
     ngOnDestroy(): void {
         this.root.OnScrollNeedCheck({ TimeStamp: new Date(), Key: this.current_route });
-        if (this.widthSubp) {
-            this.widthSubp.unsubscribe();
-        }
     }
 
     public readonly PostsProvider = async (stamp = 0, take = 5) => {

@@ -21,17 +21,10 @@ import { Location } from '@angular/common';
 })
 export class RootComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('rootContent') rootContent: ElementRef;
-  @ViewChild('scrollDiv') scrollDiv: ElementRef;
-
   public ShowPopover = false;
   public ShowMenu = false;
-  public ShowSlider = false;
-  public ShowTop = true;
   public ShowBack = true;
   public HideAll = true;
-  public HeadLeft = '0px';
-  public HeaRight = '0px';
 
   private oldScroll = 0;
   private isScrollUp = true;
@@ -47,6 +40,10 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   public get PopoverTitle() { return !this.CurrentUser ? 'Unknown' : this.CurrentUser.FriendlyName; }
 
   public get RouteLinks() { return this.navigator.RouteLinks; }
+
+  public get WindowWidth() { return window.innerWidth; }
+  public get IsWideScreen() { return window.innerWidth > 768; }
+  public get ShowSlider() { return window.innerWidth > 1280; }
 
   private routeStruct: RouteStruct;
   private widthSubp: Subscription;
@@ -65,7 +62,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   ngOnInit(): void {
     this.initAppBroswerTitle();
     this.appRouteChangesDelegate();
-    this.screenWidthCheckEnabled();
     this.scrollPositionCacheEnabled();
   }
 
@@ -76,7 +72,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   ngAfterViewInit(): void {
-    this.WaitAndDo(this.checkView, 50);
     this.prepareScroll();
   }
 
@@ -116,22 +111,20 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
       if (!(event instanceof NavigationEnd)) {
         return;
       }
-      // Recheck the view state
-      this.WaitAndDo(() => {
-        this.root.OnWidthChanged(this.rootContent.nativeElement.clientWidth, false);
-      }, 0);
       // Rebuild scroll state
-      const root = this.scrollDiv.nativeElement;
-      const scroll_div = root && root.parentElement;
+      const scroll_div = window;
       if (scroll_div) {
         scroll_div.scrollTo(0, 0);
       }
       // Reset view state properties
-      this.ShowMenu = this.HideAll = false;
-      this.ShowBack = this.ShowTop = true;
+      this.ShowMenu = this.HideAll = this.ShowPopover = false;
+      this.ShowBack = true;
       this.route_type = undefined;
       // Adaptive ui changes
-      const hideAll = () => { this.HideAll = true; this.ShowBack = false; };
+      const hideAll = () => {
+        this.HideAll = true;
+        this.ShowBack = false;
+      };
       const grayBack = () => { this.ShowBack = false; };
       this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
         .DoIf(hideAll, this.navigator.RouteLinks.Login)
@@ -140,87 +133,64 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     });
   }
 
-  private screenWidthCheckEnabled() {
-    this.widthSubp = this.root.WidthSubject.subscribe(value => {
-      const isWide = value > 768;
-      if (!this.routeStruct) {
-        return;
-      }
-      if (this.routeStruct.CheckIf(...this.navigator.RouteLinks.Register) || this.routeStruct.CheckIf(...this.navigator.RouteLinks.Login)) {
-        this.ShowBack = !isWide;
-      }
-    });
-  }
-
   private scrollPositionCacheEnabled() {
     this.scrollCheck = this.root.ScrollCheckSubject.subscribe(tmst => {
-      const root = this.scrollDiv.nativeElement;
-      const scroll_div = root && root.parentElement;
-      this.root.SetScrollCache(scroll_div && scroll_div.scrollTop, tmst.Key, this.router);
+      const scroll_div = window;
+      this.root.SetScrollCache(scroll_div && scroll_div.scrollY, tmst.Key, this.router);
     });
     this.scrollRebuild = this.root.ScrollRebuildSubject.subscribe(tmst => {
-      const root = this.scrollDiv.nativeElement;
-      const scroll_div = root && root.parentElement;
+      const scroll_div = window;
       scroll_div.scrollTo(0, this.root.GetScrollState(tmst.Key, this.router));
     });
   }
 
   private prepareScroll = () => {
-    const root = this.scrollDiv.nativeElement;
-    const scroll_div = this.scrollDiv.nativeElement.parentElement;
+    const scroll_div = window;
     const that = this;
-    const onScroll = function () {
-      if (this.scrollHeight - this.scrollTop - this.clientHeight < 100) {
+    const onScroll = function (this: Window) {
+      const bodyHeight = document.body.clientHeight;
+      const nowScrollY = window.scrollY;
+      const screenHeight = window.innerHeight;
+      if (bodyHeight - nowScrollY - screenHeight < 100) {
         scroll_div.onscroll = null;
         setTimeout(async () => {
+          console.log('go!!!');
           that.root.OnScrollToBottom(scroll_div);
           await that.Delay(1500);
           scroll_div.onscroll = onScroll;
         }, 0);
       }
-      if (that.ShowSlider) { return; }
-      that.lazyLoad(() => {
-        if (this.scrollTop - that.oldScroll > 35) {
-          that.ShowTop = false;
-        }
-        if (that.oldScroll - this.scrollTop > 10 || this.scrollTop < 100) {
-          that.ShowTop = true;
-        }
-      }, 300, 200)();
-      that.oldScroll = this.scrollTop;
+      // if (that.ShowSlider) { return; }
+      // that.lazyLoad(() => {
+      //   if (this.scrollTop - that.oldScroll > 35) {
+      //     that.ShowTop = false;
+      //   }
+      //   if (that.oldScroll - this.scrollTop > 10 || this.scrollTop < 100) {
+      //     that.ShowTop = true;
+      //   }
+      // }, 300, 200)();
+
+      // that.oldScroll = this.scrollTop;
     };
     scroll_div.onscroll = onScroll;
   }
 
-  private checkView = () => {
-    const root = this.rootContent.nativeElement;
-    this.root.OnWidthChanged(root.clientWidth);
-    if (root.clientWidth > 1280) {
-      this.ShowSlider = true;
-      this.HeadLeft = '0px';
-    } else {
-      this.ShowSlider = false;
-      this.HeadLeft = '-50px';
-    }
-    setTimeout(this.checkView, 300);
-  }
-
-  private lazyLoad(method: Function, time: number, delay: number) {
-    let timeout: number;
-    const that = this;
-    return function () {
-      const context = this;
-      const args = arguments;
-      const curTime = new Date().getTime();
-      clearTimeout(timeout);
-      if (curTime - that.startTime >= time) {
-        method.apply(context, args);
-        that.startTime = curTime;
-      } else {
-        timeout = setTimeout(method, delay);
-      }
-    };
-  }
+  // private lazyLoad(method: Function, time: number, delay: number) {
+  //   let timeout: number;
+  //   const that = this;
+  //   return function () {
+  //     const context = this;
+  //     const args = arguments;
+  //     const curTime = new Date().getTime();
+  //     clearTimeout(timeout);
+  //     if (curTime - that.startTime >= time) {
+  //       method.apply(context, args);
+  //       that.startTime = curTime;
+  //     } else {
+  //       timeout = setTimeout(method, delay);
+  //     }
+  //   };
+  // }
 
   //#endregion
 

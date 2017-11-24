@@ -31,10 +31,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
         return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href}`;
     }
 
-    private isWidth = true;
-    public get IsWideScreen() { return this.isWidth; }
-
-    private widthSubp: Subscription;
+    public get IsWideScreen() { return window.innerWidth > 768; }
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
 
@@ -48,9 +45,6 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
     }
 
     ngOnInit(): void {
-        this.widthSubp = this.root.WidthSubject.subscribe(value => {
-            this.isWidth = value > 768;
-        });
         this.validateForm = this.formbuilder.group({
             userName: [null, [Validators.required]],
             password: [null, [Validators.required]],
@@ -66,9 +60,6 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
     }
 
     ngOnDestroy(): void {
-        if (this.widthSubp) {
-            this.widthSubp.unsubscribe();
-        }
     }
 
     prepareSaveModel = (): any => {

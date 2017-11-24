@@ -27,13 +27,10 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
-    private isWidth = true;
-    public get IsWideScreen() { return this.isWidth; }
+    public get IsWideScreen() { return window.innerWidth > 768; }
 
     private _posts: IPost[];
     public get Posts() { return this._posts; }
-
-    private widthSubp: Subscription;
 
     constructor(
         private root: RootService,
@@ -41,15 +38,9 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
         protected router: Router) { super(identity, router); }
 
     ngOnInit(): void {
-        this.widthSubp = this.root.WidthSubject.subscribe(value => {
-            this.isWidth = value > 768;
-        });
     }
 
     ngOnDestroy(): void {
-        if (this.widthSubp) {
-            this.widthSubp.unsubscribe();
-        }
     }
 
     public postsProvide = () => {
