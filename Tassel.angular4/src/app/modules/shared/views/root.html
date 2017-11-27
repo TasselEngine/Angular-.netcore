@@ -42,7 +42,7 @@
         </nz-sider>
     </nz-affix>
 
-    <nz-affix *ngIf="!HideAll">
+    <!-- <nz-affix *ngIf="!HideAll">
         <div class="head-div head-display root-header">
             <div class="head-inner-left">
                 <nz-popover nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="bottomLeft">
@@ -100,17 +100,42 @@
                 </div>
             </div>
         </div>
-    </nz-affix>
+    </nz-affix> -->
 
-    <nz-affix *ngIf="ShowSlider">
+    <!-- <nz-affix *ngIf="!HideAll">
         <div class="root-user-div">
+            <nz-popover nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="left">
+                <div class="root-menu-icon">
+                    <a class="root-menu-list-icon" nz-popover>
+                        <i class="anticon anticon-inbox"></i>
+                    </a>
+                </div>
+                <ng-template #nzTemplate>
+                    <p class="root-menu-item">
+                        <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                    </p>
+                    <p class="root-menu-item">
+                        <a [routerLink]="RouteLinks.Status" routerLinkActive="active">Status</a>
+                    </p>
+                    <p class="root-menu-item">Posts</p>
+                    <p class="root-menu-item">Notes</p>
+                    <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
+                        <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+                    </p>
+                </ng-template>
+            </nz-popover>
+        </div>
+    </nz-affix> -->
+
+    <nz-affix *ngIf="!HideAll">
+        <div class="root-user-div root-user-div-top" [class.root-user-div-top]="ShowSlider">
             <nz-popover *ngIf="identity.IsLogined" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
-                [nzPlacement]="'bottomRight'">
+                [nzPlacement]="'leftBottom'">
                 <div class="avatar-div" nz-popover>
                     <div *ngIf="CurrentUser.Photo">
-                        <img [src]="CurrentUser.Photo" class="avatar-icon" />
+                        <img [src]="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow" />
                     </div>
-                    <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue">
+                    <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
                         <i class="anticon anticon-user nologin-icon"></i>
                     </div>
                 </div>
@@ -131,6 +156,26 @@
                     <i class="anticon anticon-user nologin-icon"></i>
                 </a>
             </div>
+            <nz-popover *ngIf="!ShowSlider" nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="leftBottom">
+                <div class="root-menu-icon root-menu-icon-shadow">
+                    <a nz-popover>
+                        <i class="anticon anticon-inbox"></i>
+                    </a>
+                </div>
+                <ng-template #nzTemplate>
+                    <p class="root-menu-item">
+                        <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                    </p>
+                    <p class="root-menu-item">
+                        <a [routerLink]="RouteLinks.Status" routerLinkActive="active">Status</a>
+                    </p>
+                    <p class="root-menu-item">Posts</p>
+                    <p class="root-menu-item">Notes</p>
+                    <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
+                        <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+                    </p>
+                </ng-template>
+            </nz-popover>
         </div>
     </nz-affix>
 
