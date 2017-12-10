@@ -148,8 +148,8 @@
 
 .root-user-div{
     position:absolute;
-    height:100vh;
-    padding-top: calc(100vh - 132px);
+    top:calc(100vh - 152px) ;
+    padding-top: 0px;
     left: calc(100vw - 80px);
     transition: 0.4s;
     -o-transition:0.4s;
@@ -162,7 +162,7 @@
     -o-transition:0.4s;
     -moz-transition: 0.4s;
     -webkit-transition: 0.4s;
-    padding-top: calc(100vh - 80px);
+    padding-top: 80px;
 }
 
 .root-user-div div{
