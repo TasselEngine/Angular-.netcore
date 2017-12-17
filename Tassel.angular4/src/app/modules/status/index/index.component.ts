@@ -28,7 +28,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
 
     public get Formator() { return this.formater; }
 
-    public get ImageSrcRoot() { return this.server.ServerApiRoot; }
+    public get ImageSrcRoot() { return this.formater.ImageSrcRoot; }
 
     private current_route: string;
 

@@ -13,10 +13,13 @@ export interface IEnvMain {
 }
 
 export interface IEnvServer {
+    version: number;
     type: string;
-    host: string | number;
-    port: number;
-    path: string;
+    api_prefix: string;
+    static_prefix: string;
+    host?: string | number;
+    port?: number;
+    path?: string;
 }
 
 export interface IEnvWeibo {
