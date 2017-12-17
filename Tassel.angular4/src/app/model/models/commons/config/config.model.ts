@@ -28,10 +28,25 @@ export class AppMainConfig {
 
 export class AppServerConfig {
 
+    @serializeAs('version')
+    @deserializeAs(Number, 'version')
+    private version: number;
+    public get Version() { return this.version || 0; }
+
     @serializeAs('type')
     @deserializeAs('type')
     private type: string;
     public get ConnectType() { return this.type; }
+
+    @serializeAs('api_prefix')
+    @deserializeAs('api_prefix')
+    private api_prefix: string;
+    public get ApiPrefix() { return this.api_prefix || 'api'; }
+
+    @serializeAs('static_prefix')
+    @deserializeAs('static_prefix')
+    private static_prefix: string;
+    public get StaticPrefix() { return this.static_prefix || 'api'; }
 
     @serializeAs('host')
     @deserializeAs('host')

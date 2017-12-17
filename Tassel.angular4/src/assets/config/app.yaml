@@ -4,6 +4,9 @@ main:
   version: 0.0.1.0-beta
   description: The personal blog created by Big Mogician.
 server:
+  version: 1
+  api_prifix: api
+  static_prifix: api
   type: http
   host: 127.0.0.1
   port: 8081

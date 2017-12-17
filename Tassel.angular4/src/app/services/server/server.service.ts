@@ -12,8 +12,12 @@ export class ServerService {
     public get Config() { return this.config; }
 
     private serverRoot: string;
+    private api_root: string;
+    private static_root: string;
+
     public get ServerRoot(): string { return this.serverRoot; }
-    public get ServerApiRoot(): string { return `${this.serverRoot}/api`; }
+    public get ServerApiRoot(): string { return this.api_root; }
+    public get ServerStaticRoot(): string { return this.static_root; }
 
     public get WeiboOAuthHost(): string { return this.config.Weibo.OAuthPath; }
     public get WeiboClientID(): string | number { return this.config.Weibo.ClientID; }
@@ -28,6 +32,8 @@ export class ServerService {
         } else {
             this.serverRoot = `${this.config.Server.ConnectType}://${this.config.Server.Host}:${this.config.Server.Port}`;
         }
+        this.api_root = `${this.serverRoot}/${this.config.Server.ApiPrefix}/v${this.config.Server.Version}`;
+        this.static_root = `${this.serverRoot}/${this.config.Server.StaticPrefix}`;
     }
 
 }

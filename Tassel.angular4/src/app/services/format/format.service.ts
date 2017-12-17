@@ -14,7 +14,7 @@ export class FormatService extends AsyncableServiceBase {
 
     private logger: Logger<FormatService>;
 
-    private get ImageSrcRoot() { return this.server.ServerApiRoot; }
+    public get ImageSrcRoot() { return this.server.ServerStaticRoot; }
 
     constructor(
         private identity: IdentityService,

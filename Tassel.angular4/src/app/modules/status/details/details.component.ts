@@ -41,7 +41,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     private showComments = true;
     public get ShowComments() { return this.showComments; }
 
-    public get ImageSrcRoot() { return this.server.ServerApiRoot; }
+    public get ImageSrcRoot() { return this.formater.ImageSrcRoot; }
 
     public get Formator() { return this.formater; }
 
