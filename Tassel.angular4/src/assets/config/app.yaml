@@ -6,7 +6,7 @@ main:
 server:
   version: 1
   api_prifix: api
-  static_prifix: api
+  static_prifix: static
   type: http
   host: 127.0.0.1
   port: 8081

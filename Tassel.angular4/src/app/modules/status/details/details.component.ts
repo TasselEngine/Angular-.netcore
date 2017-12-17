@@ -33,8 +33,6 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     private model: Status;
     public get VM() { return this.model; }
 
-    // public get VMContent() { return this.model.Content; }
-
     private openEdit = false;
     public get IsEdit() { return this.openEdit; }
 

@@ -1,6 +1,5 @@
 import { StatusDetailsComponent } from './details/details.component';
 import { Routes, RouterModule } from '@angular/router';
-import { CommonBaseModule } from './../commons/common.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { StatusIndexComponent } from './index/index.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

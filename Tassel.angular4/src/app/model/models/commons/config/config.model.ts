@@ -46,7 +46,7 @@ export class AppServerConfig {
     @serializeAs('static_prefix')
     @deserializeAs('static_prefix')
     private static_prefix: string;
-    public get StaticPrefix() { return this.static_prefix || 'api'; }
+    public get StaticPrefix() { return this.static_prefix || 'static'; }
 
     @serializeAs('host')
     @deserializeAs('host')

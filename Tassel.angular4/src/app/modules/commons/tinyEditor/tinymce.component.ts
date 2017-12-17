@@ -17,7 +17,7 @@ export class TinyMCEEditorComponent implements AfterViewInit, OnDestroy {
     @Input() elementId: String;
     @Output() onEditorKeyup = new EventEmitter<any>();
 
-    editor;
+    private editor: any;
 
     ngAfterViewInit() {
         tinymce.baseURL = '/assets/tinymce';
@@ -50,4 +50,5 @@ export class TinyMCEEditorComponent implements AfterViewInit, OnDestroy {
     ngOnDestroy() {
         tinymce.remove(this.editor);
     }
+
 }

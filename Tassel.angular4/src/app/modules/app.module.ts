@@ -1,9 +1,7 @@
-import { CommonBaseModule } from './commons/common.module';
 import { GlobalInjection } from './../utils/helpers/global_injector.helper';
 import { LoggerService, LOGGER_SERVICE_CONFIG } from 'ws-logger';
 import { environment } from './../../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChartsModule } from 'ng2-charts';
 import { NgZorroAntdModule, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { RoutersModule } from './../modules/routers/routers.module';
 import { SharedModule } from './../modules/shared/shared.module';
@@ -32,7 +30,6 @@ export function AppInit(config: ServerService) {
     RoutersModule,
     SharedModule,
     ExtensionsModule,
-    ChartsModule,
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot()
   ],

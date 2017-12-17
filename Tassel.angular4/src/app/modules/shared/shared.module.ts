@@ -1,4 +1,3 @@
-import { CommonBaseModule } from './../commons/common.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { IndexComponent } from './components/index.component';
 import { CommonModule } from '@angular/common';
