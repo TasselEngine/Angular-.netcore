@@ -1,0 +1,36 @@
+@import './../../shared/styles/index.scss';
+
+.custom-card p{
+    color: #484848;
+    margin-left:-10px;
+}
+
+.vm-index-title{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
+    font-size: 16px;
+    margin-left: -10px;
+}
+
+.card-top-line{
+    margin-top: 0px;
+    margin-bottom: 8px;
+    margin-left: -10px;
+    margin-right:-12px;
+}
+
+.card-top-tip{
+    float:right;
+    margin-right: 4px;
+}
+
+.pending-div{
+    margin-left:4px;
+    margin-right:4px;
+}
+
+.pending-right{
+    float:right;
+    margin-right:4px;
+}

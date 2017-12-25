@@ -1,0 +1,35 @@
+<div #indexDiv>
+    <div class="wf-loading-div wf-display wf-hidden" [class.wf-hidden]="Posts">
+        <div>
+            <nz-spin [nzSize]="'large'"></nz-spin>
+            <!-- <span class="wf-loading-title">Loading</span> -->
+        </div>
+    </div>
+    <div nz-row>
+
+        <div nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:1" #col01>
+            <ng-template ngFor let-item [ngForOf]="Bindings[0]" [ngTemplateOutlet]="template">
+                <ng-template [ngOutletContext]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
+            </ng-template>
+        </div>
+
+        <div *ngIf="Adaptor.Col>=2" nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:2" #col02>
+            <ng-template ngFor let-item [ngForOf]="Bindings[1]" [ngTemplateOutlet]="template">
+                <ng-template [ngOutletContext]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
+            </ng-template>
+        </div>
+
+        <div *ngIf="Adaptor.Col>=3" nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:3" #col03>
+            <ng-template ngFor let-item [ngForOf]="Bindings[2]">
+                <ng-template [ngOutletContext]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
+            </ng-template>
+        </div>
+
+        <div *ngIf="Adaptor.Col>=4" nz-col [nzSpan]="Adaptor.Col | tasselAdaptor:4" #col04>
+            <ng-template ngFor let-item [ngForOf]="Bindings[3]" [ngTemplateOutlet]="template">
+                <ng-template [ngOutletContext]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
+            </ng-template>
+        </div>
+
+    </div>
+</div>

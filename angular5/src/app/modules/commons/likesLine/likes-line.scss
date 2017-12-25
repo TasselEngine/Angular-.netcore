@@ -1,0 +1,29 @@
+
+.ll-group-div{
+    margin-right:8px;
+}
+
+.ll-avatar {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin-right:-8px;
+    box-shadow: 0px 0px 6px #181818;
+    transition: 0.5s
+}
+
+.ll-avatar:hover{
+    box-shadow: 0px 0px 12px #080808;
+    transition: 0.5s
+}
+
+.ll-for768{
+    display: inherit;
+}
+
+@media
+(max-width:768px){
+    .ll-for768{
+        display: none;
+    }
+}

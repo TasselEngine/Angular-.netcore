@@ -1,0 +1,112 @@
+@import './base.scss';
+@import './card.scss';
+
+$red-accent:rgb(206, 68, 89);
+
+.card-div{
+    width:93%;
+    margin-left:3.5%;
+    margin-right:3.5%;
+    margin-bottom:7%;
+  }
+
+  .pending{
+      margin-top:12px;
+      margin-bottom:8px;
+  }
+
+  .pending-div{
+      margin-left:12px;
+      margin-right:12px;
+  }
+
+  .pending-div span{
+    margin-left:4px;
+    margin-right:4px;
+    font-weight: bold;
+}
+
+.pending-right{
+    float:right;
+    margin-right:12px;
+}
+
+.pending-right span{
+    font-weight: bold
+}
+
+.pending-right span{
+    margin-left:4px;
+}
+
+.card-top-udiv{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
+}
+
+.card-top-user{
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.card-top-tip{
+    float:right;
+}
+
+.card-top-line{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.card-top-line img{
+    border-radius: 50%;
+    margin-right:4px;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.card-fadin {
+    animation-name: fadeIn; 
+    animation-duration: 1s; 
+    animation-iteration-count: 1;
+    animation-delay: 0s; 
+}
+
+.card-like-pointer{
+    cursor: pointer;
+}
+
+.like-hover:hover{
+    transition: 0.5s;
+    color:$red-accent;
+}
+
+.liked-user{
+    color:$red-accent;
+}
+
+.adp-card-div{
+    transition: 0.5s;
+    background-color: #fff;
+    padding:8px;
+    min-height: 68px;
+    margin-bottom: 8px;
+    box-shadow: 0px 4px 8px #a8a8a8;
+}
+
+@media(min-width:768px){
+    .adp-card-div{
+        display: none;
+    }
+}
+
+.adp-card-div:hover{
+    transition: 0.5s;
+    background-color: #ececec;
+    box-shadow: 0px 4px 8px #787878;
+}

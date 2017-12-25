@@ -1,0 +1,92 @@
+
+.vm-flex-base{
+    display: flex;
+    align-items:center;
+    flex-wrap: wrap;
+}
+
+.vm-avatar-md{
+    width:36px;
+    height:36px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 12px #acacac;
+}
+
+.vm-username-md{
+    font-weight: bold;
+    font-size: 16px
+}
+
+.vm-at-link{
+    margin-right:4px;
+}
+
+.vm-stamp-md{
+    color: #bcbcbc;
+    font-size: 10px
+}
+
+.vm-coment-details{
+    margin:4px;
+    margin-left:0px;
+    margin-bottom:28px;
+    @extend .vm-flex-base;
+}
+
+.vm-reply-details{
+    @extend .vm-flex-base;
+}
+
+.vm-comt-stamp{
+    color:#888;
+    font-size: 12px;
+}
+
+.vm-comt-reply{
+    float:right;
+    margin-right:4px;
+    margin-top: -24px;
+}
+
+.vm-secn-comment{
+    transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
+    margin-left:48px;
+    background-color: #f3f3f3;
+    padding:8px;
+    border: 1px solid #eaeaea;
+    margin-bottom: -1px;
+}
+
+.vm-secn-comment:hover{
+    transition: 0.5s;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
+    background-color: #fff;
+}
+
+.vm-secn-name{
+    font-size: 12px;
+}
+
+.vm-secn-text{
+    font-size: 10px;
+    @extend .vm-flex-base;
+}
+
+.vm-reply-md{
+    font-size: 12px;
+    margin-top:-4px;
+    float:right;
+}
+
+.vm-reply-sumy{
+    margin-top:8px;
+}
+
+.vm-pointer{
+    cursor: pointer;
+}

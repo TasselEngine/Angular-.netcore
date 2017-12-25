@@ -1,0 +1,57 @@
+<div *ngIf="DivideType">
+    <div *ngIf="images||src" class="img-pointer" [class.img-pointer]="CanPointer">
+        <img *ngIf="Count===1" alt="picture" width="100%" [src]="src || images[0]" (click)="OnImageClicked(src || images[0])" />
+        <div *ngIf="Count<=3 && Count>1 " nz-row>
+            <div nz-col [nzSpan]="24/Count" *ngFor="let img of images" style="padding:1px">
+                <img alt="picture" width="100%" [src]="img" (click)="OnImageClicked(img)" />
+            </div>
+        </div>
+        <div *ngIf="Count>3&&Count!==4">
+            <div nz-row>
+                <div nz-col [nzSpan]="8" *ngFor="let img of Images[0]" style="padding:1px">
+                    <img alt="picture" width="100%" [src]="img" (click)="OnImageClicked(img)" />
+                </div>
+            </div>
+            <div nz-row>
+                <div nz-col [nzSpan]="8" *ngFor="let img of Images[1]" style="padding:1px">
+                    <img alt="picture" width="100%" [src]="img" (click)="OnImageClicked(img)" />
+                </div>
+            </div>
+            <div *ngIf="Count>=6" nz-row>
+                <div nz-col [nzSpan]="8" *ngFor="let img of Images[2];let i=index" style="padding:1px">
+                    <div class="img-more" *ngIf="i===2&&Count>9">
+                        <img alt="picture" width="100%" [src]="img" style="opacity:0.3" (click)="OnImageClicked(img)" />
+                        <span>{{Count-9}} + </span>
+                    </div>
+                    <img *ngIf="i!==2||Count<=9" alt="picture" width="100%" [src]="img" (click)="OnImageClicked(img)" />
+                </div>
+            </div>
+        </div>
+        <div *ngIf="Count===4">
+            <div nz-row>
+                <div nz-col [nzSpan]="12" *ngFor="let img of Images[0]" style="padding:1px">
+                    <img alt="picture" width="100%" [src]="img" (click)="OnImageClicked(img)" />
+                </div>
+            </div>
+            <div nz-row>
+                <div nz-col [nzSpan]="12" *ngFor="let img of Images[1]" style="padding:1px">
+                    <img alt="picture" width="100%" [src]="img" (click)="OnImageClicked(img)" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!DivideType" class="img-pointer" [class.img-pointer]="CanPointer">
+    <div nz-row nzType="flex" *ngIf="src">
+        <img alt="picture" class="img-margin" [width]="ImgWidth" [src]="src" (click)="OnImageClicked(src)" />
+    </div>
+    <div nz-row nzType="flex" *ngIf="!src">
+        <div *ngFor="let img of GridImages;let i=index">
+            <div class="img-more" *ngIf="i===8&&limit">
+                <img alt="picture" [width]="ImgWidth" style="opacity:0.3" [src]="img" (click)="OnImageClicked(img)" />
+                <span>{{Count-9}} + </span>
+            </div>
+            <img *ngIf="!limit || i!==8&&limit" class="img-margin" alt="picture" [width]="ImgWidth" [src]="img" (click)="OnImageClicked(img)" />
+        </div>
+    </div>
+</div>

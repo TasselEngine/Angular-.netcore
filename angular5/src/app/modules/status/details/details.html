@@ -1,0 +1,67 @@
+<div *ngIf="VM" class="vm-padding">
+    <div class="vm-content-base">
+        <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
+            <div nz-col class="vm-avatar">
+                <div *ngIf="VM.Creator.Avatar">
+                    <img [src]="VM.Creator.Avatar" class="avatar-icon" (click)="GoToUserRedirect(VM.Creator.UUID)" />
+                </div>
+                <div *ngIf="!VM.Creator.Avatar" class="avatar-icon avatar-blue">
+                    <i class="anticon anticon-user nologin-icon"></i>
+                </div>
+            </div>
+            <div nz-col>
+                <p class="vm-username">{{VM.Creator.UserName}}</p>
+                <p class="vm-stamp">{{VM.CreateTime.FormatDate}}</p>
+            </div>
+        </div>
+        <div class="vm-container">
+            <div class="vm-details-formatdiv" [innerHtml]="VM.Content"></div>
+            <br/>
+            <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
+            <p>
+                <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
+                <span *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')"> |
+                    <a class="vm-text-md" (click)="DeleteStatus()">Delete</a>
+                </span>
+            </p>
+        </div>
+    </div>
+    <div class="vm-comments-div">
+        <div class="vm-comments-header" nz-row nzType="flex">
+            <div nz-col>
+                <a (click)="ShowDetails(true)" class="vm-header-actionlink">
+                    <p *ngIf="VM.CommentCount<=1">{{VM.CommentCount}} COMMENT</p>
+                    <p *ngIf="VM.CommentCount>1">{{VM.CommentCount}} COMMENTS</p>
+                </a>
+            </div>
+            <div nz-col>
+                <a (click)="ShowDetails(false)" class="vm-header-actionlink">
+                    <p *ngIf="VM.LikersCount<=1"> {{VM.LikersCount}} LIKE </p>
+                    <p *ngIf="VM.LikersCount>1">{{VM.LikersCount}} LIKES</p>
+                </a>
+            </div>
+            <div nz-col style="margin-top:6px;">
+                <tassel-common-likersline [users]="VM.LikeUsers" [capacity]="8" (OnUserClicked)="GoToUserRedirect($event)"></tassel-common-likersline>
+            </div>
+        </div>
+        <div class="vm-comments" nz-row>
+            <div *ngIf="IsEdit" nz-col>
+                <tassel-common-comtedit [show]="true" [anima]="IsEdit" (OnCommentAdd)="AddComment($event)" (OnCancel)="CloseCommentAdd()"></tassel-common-comtedit>
+            </div>
+            <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
+                <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
+                    <p>There's no comment yet.
+                        <a (click)="OpenCommentPanel()">Add </a>a comment now.</p>
+                </div>
+                <div class="vm-comt" *ngFor="let com of VM.Comments">
+                    <tassel-common-comtdiv [comment]="com" (OnUserClicked)="GoToUserRedirect($event)" (OnCommentAdd)="AddComment($event)" (OnCommentDelete)="DeleteComment($event)"></tassel-common-comtdiv>
+                </div>
+            </div>
+
+            <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="ShowComments" nz-col>
+                <p>hhhhhh</p>
+            </div>
+
+        </div>
+    </div>
+</div>

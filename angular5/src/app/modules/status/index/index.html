@@ -1,0 +1,78 @@
+<div TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
+    <tassel-common-waterfall *ngIf="IsWideScreen" [data]="Posts" [loader]="PostsProvider" [template]="temp"></tassel-common-waterfall>
+    <tassel-common-wateriver *ngIf="!IsWideScreen" [data]="Posts" [loader]="PostsProvider" [template]="tempRiver"></tassel-common-wateriver>
+</div>
+
+<ng-template let-model="model" #temp>
+    <div *ngIf="model">
+        <nz-card class="card-div card-fadin" [nzBordered]="false">
+            <ng-template #body>
+                <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
+                    <div nz-row *ngIf="model.Creator" class="card-top-line">
+                        <div nz-col nzSpan="12" class="card-top-udiv">
+                            <img *ngIf="model.Creator.Avatar" width="16" [src]="model.Creator.Avatar" />
+                            <img *ngIf="!model.Creator.Avatar" width="16" src="/assets/img/unknown.png" />
+                            <span class="card-top-user">{{model.Creator.UserName | shortline:12}}</span>
+                        </div>
+                        <div nz-col nzSpan="12">
+                            <span class="card-top-tip">STATUS</span>
+                        </div>
+                    </div>
+                    <div class="vm-index-title" *ngIf="model.Content" [innerHtml]="model.Content"></div>
+                </div>
+                <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
+                    <tassel-common-imggrid [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>
+                </div>
+                <div class="pending">
+                    <div *ngIf="model.CreateTime" class="pending-right">
+                        <i class="anticon anticon-tag"></i>
+                        <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
+                    </div>
+                    <div class="pending-div">
+                        <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user card-like-pointer" (click)="ClickLike(model)"></i>
+                        <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o like-hover card-like-pointer" (click)="ClickLike(model)"></i>
+                        <span>{{model.LikersCount}}</span>
+                        <i class="anticon anticon-message card-like-pointer" (click)="ItemClicked(model)"></i>
+                        <span>{{model.CommentCount}}</span>
+                    </div>
+                </div>
+            </ng-template>
+        </nz-card>
+    </div>
+</ng-template>
+
+<ng-template let-model="model" #tempRiver>
+    <div *ngIf="model" class="adp-card-div">
+        <div nz-row>
+            <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
+                <div nz-row *ngIf="model.Creator" class="card-top-line">
+                    <div nz-col nzSpan="12" class="card-top-udiv">
+                        <img *ngIf="model.Creator.Avatar" width="16" [src]="model.Creator.Avatar" />
+                        <img *ngIf="!model.Creator.Avatar" width="16" src="/assets/img/unknown.png" />
+                        <span class="card-top-user">{{model.Creator.UserName | shortline:12}}</span>
+                    </div>
+                    <div nz-col nzSpan="12">
+                        <span class="card-top-tip">STATUS</span>
+                    </div>
+                </div>
+                <div class="vm-index-title" *ngIf="model.Content" [innerHtml]="model.Content"></div>
+            </div>
+            <div *ngIf="model.Images.length>0" class="custom-image card-like-pointer" (click)="ItemClicked(model)">
+                <tassel-common-imggrid gridType="grid" [limit]="true" [width]="112" [images]="model.ParseUrls(ImageSrcRoot)"></tassel-common-imggrid>
+            </div>
+            <div class="pending">
+                <div *ngIf="model.CreateTime" class="pending-right">
+                    <i class="anticon anticon-tag"></i>
+                    <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
+                </div>
+                <div class="pending-div">
+                    <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user card-like-pointer" (click)="ClickLike(model)"></i>
+                    <i *ngIf="!IsLiked(model)" class="anticon anticon-heart-o like-hover card-like-pointer" (click)="ClickLike(model)"></i>
+                    <span>{{model.LikersCount}}</span>
+                    <i class="anticon anticon-message card-like-pointer" (click)="ItemClicked(model)"></i>
+                    <span>{{model.CommentCount}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
