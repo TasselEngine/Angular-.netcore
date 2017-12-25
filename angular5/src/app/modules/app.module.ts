@@ -7,7 +7,7 @@ import { RoutersModule } from './../modules/routers/routers.module';
 import { SharedModule } from './../modules/shared/shared.module';
 import { ExtensionsModule } from './../modules/extensions/extensions.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { RootComponent } from './../modules/shared/components/root.component';
 import { ToastService, ServerService, IdentityService, RootService, StatusService, FormatService, AdminService, ResourcesService, UtilsService, CacheService } from './../services/app.service';
@@ -25,8 +25,7 @@ export function AppInit(config: ServerService) {
   entryComponents: [],
   imports: [
     BrowserModule,
-    HttpModule,
-    JsonpModule,
+    HttpClientModule,
     RoutersModule,
     SharedModule,
     ExtensionsModule,

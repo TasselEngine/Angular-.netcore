@@ -62,7 +62,7 @@ export class ToastService {
         this.notify.remove(m_id);
     }
 
-    public readonly ConfirmModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+    public readonly ConfirmModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [() => void, () => void] = [undefined, undefined]): NzModalSubject => {
         return this.modal.confirm({
             title: title,
             content: content,
@@ -77,7 +77,7 @@ export class ToastService {
         });
     }
 
-    public readonly ErrorModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+    public readonly ErrorModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [() => void, () => void] = [undefined, undefined]): NzModalSubject => {
         return this.modal.error({
             title: title,
             content: content,
@@ -92,7 +92,7 @@ export class ToastService {
         });
     }
 
-    public readonly WarnModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+    public readonly WarnModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [() => void, () => void] = [undefined, undefined]): NzModalSubject => {
         return this.modal.warning({
             title: title,
             content: content,
@@ -107,7 +107,7 @@ export class ToastService {
         });
     }
 
-    public readonly InfoModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+    public readonly InfoModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [() => void, () => void] = [undefined, undefined]): NzModalSubject => {
         return this.modal.info({
             title: title,
             content: content,
@@ -121,7 +121,7 @@ export class ToastService {
         });
     }
 
-    public readonly SuccessModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+    public readonly SuccessModal = (title: any, content: any, width?: number, closable = true, maskClosable = true, funcs: [() => void, () => void] = [undefined, undefined]): NzModalSubject => {
         return this.modal.success({
             title: title,
             content: content,
@@ -134,7 +134,7 @@ export class ToastService {
         });
     }
 
-    public readonly ComponentModal = (title: any, component: any, params?: any, width?: number, closable = true, maskClosable = true, funcs: [Function, Function] = [undefined, undefined]): NzModalSubject => {
+    public readonly ComponentModal = (title: any, component: any, params?: any, width?: number, closable = true, maskClosable = true, funcs: [() => void, () => void] = [undefined, undefined]): NzModalSubject => {
         return this.modal.open({
             title: title,
             content: component,
