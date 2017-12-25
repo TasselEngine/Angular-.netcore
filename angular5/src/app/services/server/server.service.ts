@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IENV, AppConfig } from '../../model/app.model';
 import { YamlHelper } from '../../utils/app.utils';
@@ -22,11 +22,11 @@ export class ServerService {
     public get WeiboOAuthHost(): string { return this.config.Weibo.OAuthPath; }
     public get WeiboClientID(): string | number { return this.config.Weibo.ClientID; }
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     public readonly LoadConfig = async () => {
-        const config = await this.http.get('/assets/config/app.yaml').map(j => j.text()).toPromise();
-        this.config = AppConfig.Parse(YamlHelper.Parse<IENV>(config));
+        const config = await this.http.get('/assets/config/app.yaml', { observe: 'response', responseType: 'text' }).toPromise();
+        this.config = AppConfig.Parse(YamlHelper.Parse<IENV>(config.body));
         if (checkServerConfig(this.config)) {
             this.serverRoot = this.config.Server.Path || '';
         } else {

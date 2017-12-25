@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { LoggerService } from 'ws-logger';
 import { AsyncableClassBase } from 'ws-async-base';
 import { FormatHttpAsyncClient } from 'ws-format-httprequest';
@@ -23,7 +23,7 @@ export class HttpAsyncClientBase<T> extends FormatHttpAsyncClient<T> {
     protected toast: ToastService;
     protected logsrv: LoggerService;
 
-    constructor(protected http: Http) {
+    constructor(protected http: HttpClient) {
         super(http);
         this.toast = GlobalInjection.Injector.get(ToastService);
         this.logsrv = GlobalInjection.Injector.get(LoggerService);

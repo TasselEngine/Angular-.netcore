@@ -8,7 +8,7 @@
     <div nz-row>
         <div nz-col nzSpan="24">
             <ng-template ngFor let-item [ngForOf]="Posts" [ngTemplateOutlet]="template">
-                <ng-template [ngOutletContext]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
+                <ng-template [ngTemplateOutletContext ]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
             </ng-template>
         </div>
     </div>

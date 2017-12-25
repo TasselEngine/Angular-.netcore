@@ -2,7 +2,7 @@ import { JsonHelper } from './../../utils/helpers/typed_json.helper';
 import { IError, HttpType } from 'ws-format-httprequest';
 import { Logger } from 'ws-logger';
 import { HttpAsyncClientBase } from './../base/service.base';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { IdentityService } from './../identity/identity.service';
 import { ServerService } from './../server/server.service';
 import { Injectable } from '@angular/core';
@@ -24,7 +24,7 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
     private logger: Logger<AdminService>;
 
     constructor(
-        protected http: Http,
+        protected http: HttpClient,
         private identity: IdentityService,
         private server: ServerService) {
         super(http);

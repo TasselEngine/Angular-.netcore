@@ -2,7 +2,7 @@ import { IError } from 'ws-format-httprequest';
 import { Logger } from 'ws-logger';
 import { HttpAsyncClientBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { IdentityService } from './../identity/identity.service';
 import { ServerService } from './../server/server.service';
 import { IResponse, ISticker, ServerStatus, StickersMap } from '../../model/app.model';
@@ -37,7 +37,7 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
     private logger: Logger<ResourcesService>;
 
     constructor(
-        protected http: Http,
+        protected http: HttpClient,
         private identity: IdentityService,
         private server: ServerService) {
         super(http);

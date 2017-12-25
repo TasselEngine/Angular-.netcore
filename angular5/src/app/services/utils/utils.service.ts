@@ -3,7 +3,7 @@ import { IError, HttpType } from 'ws-format-httprequest';
 import { IdentityService } from './../identity/identity.service';
 import { Logger } from 'ws-logger';
 import { ServerService } from './../server/server.service';
-import { RequestOptions, Http, Response, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { IResponse } from './../../model/interfaces/response.interface';
 import { HttpAsyncClientBase } from './../base/service.base';
 import { Injectable } from '@angular/core';
@@ -21,7 +21,7 @@ export class UtilsService extends HttpAsyncClientBase<IResponse> {
     private logger: Logger<UtilsService>;
 
     constructor(
-        protected http: Http,
+        protected http: HttpClient,
         private identity: IdentityService,
         private server: ServerService) {
         super(http);

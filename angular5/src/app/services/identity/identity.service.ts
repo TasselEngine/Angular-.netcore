@@ -2,10 +2,10 @@ import { ServerService } from '../server/server.service';
 import { HttpAsyncClientBase } from '../base/service.base';
 import { JsonHelper, StrictResult } from './../../utils/app.utils';
 
-import { HttpType, IError } from 'ws-format-httprequest';
+import { HttpType, IError, IRequestOptions } from 'ws-format-httprequest';
 import { LogType, LoggerService, Logger } from 'ws-logger';
 import { Injectable } from '@angular/core';
-import { RequestOptions, Http, Response, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { IResponse, UnionUser, ServerStatus, UserType, User, WeiboUser } from '../../model/app.model';
 
@@ -26,11 +26,11 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     public get CurrentUUID(): string { return (this.user || { UUID: undefined }).UUID; }
 
-    private formOptions: RequestOptions;
-    public get FormOptions() { return this.formOptions; }
+    private formOptions: IRequestOptions;
+    public get FormOptions() { return createNewObject(this.formOptions); }
 
-    private options: RequestOptions;
-    public get Options() { return this.options; }
+    private options: IRequestOptions;
+    public get Options() { return createNewObject(this.options); }
 
     private token: string;
     public get Token() { return this.token; }
@@ -38,12 +38,12 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     private logger: Logger<IdentityService>;
 
     constructor(
-        protected http: Http,
+        protected http: HttpClient,
         private server: ServerService) {
         super(http);
         this.logger = this.logsrv.GetLogger(IdentityService).SetModule('service');
-        this.options = new RequestOptions();
-        this.formOptions = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
+        this.options = {};
+        this.formOptions = { headers: { 'Content-Type': 'application/json' } };
         this.BuildUserStateAsync();
     }
 
@@ -165,13 +165,13 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         this.token = token;
         this.logger.Debug(['Set options for server', 'Authorization Bearer is need if your are logined.'], 'setOptions');
         const headers = new Headers({ 'Authorization': 'Bearer ' + token });
-        this.options = new RequestOptions({ headers: headers });
-        this.formOptions = new RequestOptions({
-            headers: new Headers({
+        this.options = { headers: { 'Authorization': 'Bearer ' + token } };
+        this.formOptions = {
+            headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
-            })
-        });
+            }
+        };
     }
 
     private setLocalStorage = (user: User, token: string): void => {
@@ -180,7 +180,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     private registerAsync = async (userName: string, psd: string) => {
         const [succeed, error, response] = await this.InvokeAsync(
-            `${this.Root}/user/register`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
+            `${this.Root}/user/register`, this.FormOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
         this.apiLog([succeed, error, response], 'Try to register', 'registerAsync');
         return succeed ?
             StrictResult.Success<[UnionUser, string]>(
@@ -190,7 +190,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     private loginAsync = async (userName: string, psd: string) => {
         const [succeed, error, response] = await this.InvokeAsync(
-            `${this.Root}/user/login`, this.formOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
+            `${this.Root}/user/login`, this.FormOptions, HttpType.POST, JSON.stringify({ user: userName, psd: psd }));
         this.apiLog([succeed, error, response], 'Try to checkin at server', 'loginAsync');
         return succeed ?
             StrictResult.Success<[UnionUser, string]>(
@@ -207,7 +207,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     }
 
     private weiboCheckInAsync = async (wuid: string) => {
-        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_checkin`, this.formOptions, HttpType.POST, JSON.stringify({ wuid: wuid }));
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_checkin`, this.FormOptions, HttpType.POST, JSON.stringify({ wuid: wuid }));
         this.apiLog([succeed, error, response], 'Try to checkin at server by Weibo', 'weiboCheckInAsync');
         return succeed ?
             StrictResult.Success<[UnionUser, string]>(response.status, [
@@ -232,7 +232,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
     }
 
     public CheckUserName = (uname: string) => {
-        return this.http.get(`${this.Root}/user/check/${uname}`, this.Options).map(response => response.json() as IResponse);
+        return this.http.get<IResponse>(`${this.Root}/user/check/${uname}`, this.Options);
     }
 
     public CheckUserNameAsync = async (uname: string) => {
@@ -276,4 +276,12 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
+}
+
+function createNewObject<T>(param: T) {
+    const newOne: T = {} as T;
+    for (const propName in param) {
+        if (propName) { newOne[propName as string] = param[propName]; }
+    }
+    return newOne;
 }
