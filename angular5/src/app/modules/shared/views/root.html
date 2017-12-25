@@ -1,7 +1,7 @@
 <nz-layout class="main-div">
 
     <nz-affix>
-        <nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [nzCollapsed]="false" [nzTrigger]="null" class="slider-div root-slider">
+        <nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [nzCollapsed]="HideAll" [nzTrigger]="null" class="slider-div root-slider">
             <div class="slider-inner">
                 <div class="slider-listgp">
                     <img src="assets/img/icon.jpg" style="width:160;height:160px;border-radius:32px" />
@@ -41,91 +41,6 @@
             </div>
         </nz-sider>
     </nz-affix>
-
-    <!-- <nz-affix *ngIf="!HideAll">
-        <div class="head-div head-display root-header">
-            <div class="head-inner-left">
-                <nz-popover nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="bottomLeft">
-                    <a class="head-icon" nz-popover>
-                        <i class="anticon anticon-inbox"></i>
-                    </a>
-                    <ng-template #nzTemplate>
-                        <p class="root-menu-item">
-                            <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
-                        </p>
-                        <p class="root-menu-item">
-                            <a [routerLink]="RouteLinks.Status" routerLinkActive="active">Status</a>
-                        </p>
-                        <p class="root-menu-item">Posts</p>
-                        <p class="root-menu-item">Notes</p>
-                        <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
-                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
-                        </p>
-                    </ng-template>
-                </nz-popover>
-                <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
-                    <img src="assets/img/icon.jpg" style="width:36px;height:36px;border-radius:8px;margin-top:8px;" />
-                </a>
-                <a class="legend-title noline-action" [routerLink]="RouteLinks.Home" routerLinkActive="active">
-                    <b class="title-inhead noline-action">{{AppMain.Title}}</b>
-                </a>
-            </div>
-            <div class="root-header-avatar">
-                <nz-popover *ngIf="identity.IsLogined&&!ShowSlider" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
-                    nzPlacement="bottomRight">
-                    <div class="avatar-div" nz-popover>
-                        <div *ngIf="CurrentUser.Photo">
-                            <img [src]="CurrentUser.Photo" class="avatar-icon avatar-small" />
-                        </div>
-                        <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue avatar-small">
-                            <i class="anticon anticon-user nologin-icon nologin-small"></i>
-                        </div>
-                    </div>
-                    <ng-template #nzTemplate>
-                        <p>
-                            <a (click)="ToUserProfile()">Profile</a>
-                        </p>
-                        <p *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core'">
-                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
-                        </p>
-                        <p>
-                            <a (click)='Logout()'>Logout</a>
-                        </p>
-                    </ng-template>
-                </nz-popover>
-                <div *ngIf="!identity.IsLogined && !HideAll" class="avatar-icon avatar-dark avatar-small">
-                    <a [routerLink]="RouteLinks.Login" routerLinkActive="active">
-                        <i class="anticon anticon-user nologin-icon nologin-small"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nz-affix> -->
-
-    <!-- <nz-affix *ngIf="!HideAll">
-        <div class="root-user-div">
-            <nz-popover nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="left">
-                <div class="root-menu-icon">
-                    <a class="root-menu-list-icon" nz-popover>
-                        <i class="anticon anticon-inbox"></i>
-                    </a>
-                </div>
-                <ng-template #nzTemplate>
-                    <p class="root-menu-item">
-                        <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
-                    </p>
-                    <p class="root-menu-item">
-                        <a [routerLink]="RouteLinks.Status" routerLinkActive="active">Status</a>
-                    </p>
-                    <p class="root-menu-item">Posts</p>
-                    <p class="root-menu-item">Notes</p>
-                    <p *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
-                        <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
-                    </p>
-                </ng-template>
-            </nz-popover>
-        </div>
-    </nz-affix> -->
 
     <nz-affix *ngIf="!HideAll">
         <div class="root-user-div root-user-div-top" [class.root-user-div-top]="ShowSlider">
@@ -179,7 +94,7 @@
         </div>
     </nz-affix>
 
-    <nz-content class="content-div root-content ">
+    <nz-content class="content-div root-content " [class.root-content-grant]="HideAll">
         <link rel="stylesheet" href="/assets/css/styles.css">
         <div class="root-content-container root-content-inner root-content-back root-content-noback" [class.root-content-noback]="!ShowBack&&IsWideScreen">
             <router-outlet></router-outlet>
