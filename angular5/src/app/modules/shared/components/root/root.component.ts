@@ -1,22 +1,22 @@
-import { RouteStruct } from './../../../model/models/render/route.model';
-import { TasselNavigationBase } from './base.component';
+import { RouteStruct } from './../../../../model/models/render/route.model';
+import { TasselNavigationBase } from './../base.component';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Regex } from 'ws-regex';
-import { IdentityService } from './../../../services/identity/identity.service';
+import { IdentityService } from './../../../../services/identity/identity.service';
 import { Component, OnInit, HostBinding, Renderer2, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { ServerService } from '../../../services/server/server.service';
-import { pageShowAnimation } from '../../../utils/app.utils';
-import { UserType } from '../../../model/models/user/user.contract';
-import { RootService, AdminService } from '../../../services/app.service';
+import { ServerService } from '../../../../services/server/server.service';
+import { pageShowAnimation } from '../../../../utils/app.utils';
+import { UserType } from '../../../../model/models/user/user.contract';
+import { RootService, AdminService } from '../../../../services/app.service';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { Location } from '@angular/common';
 
 @Component({
   selector: 'tassel-root',
-  templateUrl: './../views/root.html',
+  templateUrl: './root.html',
   styleUrls: [
-    './../styles/root.scss',
+    './root.scss',
   ]
 })
 export class RootComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {

@@ -9,7 +9,7 @@ import { ExtensionsModule } from './../modules/extensions/extensions.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
-import { RootComponent } from './../modules/shared/components/root.component';
+import { RootComponent } from './../modules/shared/components/root/root.component';
 import {
   ToastService, ServerService, IdentityService,
   RootService, StatusService, FormatService,

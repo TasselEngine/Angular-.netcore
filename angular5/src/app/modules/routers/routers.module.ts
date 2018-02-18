@@ -1,4 +1,4 @@
-import { IndexComponent } from './../shared/components/index.component';
+import { IndexComponent } from './../shared/components/index/index.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

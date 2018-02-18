@@ -1,10 +1,10 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
-import { TasselNavigationBase } from './base.component';
-import { IdentityService } from './../../../services/identity/identity.service';
-import { pageShowAnimation } from './../../../utils/app.utils';
+import { TasselNavigationBase } from './../base.component';
+import { IdentityService } from './../../../../services/identity/identity.service';
+import { pageShowAnimation } from './../../../../utils/app.utils';
 import { Component, HostBinding, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
-import { RootService } from '../../../services/app.service';
+import { RootService } from '../../../../services/app.service';
 
 interface IPost {
     Cover?: string;
@@ -16,10 +16,10 @@ interface IPost {
 
 @Component({
     selector: 'tassel-root-index',
-    templateUrl: './../views/index.html',
+    templateUrl: './index.html',
     animations: [pageShowAnimation],
     styleUrls: [
-        './../styles/index.scss'
+        './index.scss'
     ]
 })
 export class IndexComponent extends TasselNavigationBase implements OnInit, OnDestroy {
