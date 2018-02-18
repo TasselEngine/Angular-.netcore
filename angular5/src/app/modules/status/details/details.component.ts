@@ -29,8 +29,8 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     @ViewChild('replyInput')
     private replyInput: ElementRef;
 
-    private status_id: string;
     private model: Status;
+    private get status_id(): string { return this.model && this.model.ID; }
     public get VM() { return this.model; }
 
     private openEdit = false;
@@ -58,8 +58,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     ngOnInit(): void {
         this.route.params.subscribe(async params => {
-            this.status_id = params.statusid;
-            const [succeed, code, error, details] = await this.status.GetStatusAsync(this.status_id);
+            const [succeed, code, error, details] = await this.status.GetStatusAsync(params.statusid);
             if (!succeed) {
                 this.logger.Error(['Get status details failed', 'Server error'], 'ngOnInit');
                 return;
@@ -103,6 +102,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             return;
         }
         if (code === ServerStatus.Succeed) {
+            this.status.CacheUpdate('delete', this.model);
             this.navigator.GoToStatusIndex();
             this.WaitAndDo(() => {
                 this.toast.SucceesMessage('status removed successfully.');

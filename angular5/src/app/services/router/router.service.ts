@@ -1,9 +1,11 @@
-import { IdentityService } from './../../services/identity/identity.service';
-import { LoggerService, Logger } from 'ws-logger';
-import { Router, NavigationExtras } from '@angular/router';
+import { Injectable } from '@angular/core';
 import { RouteErrors } from '../../model/app.model';
+import { Logger, LoggerService } from 'ws-logger';
+import { IdentityService } from '.././identity/identity.service';
+import { Router, NavigationExtras } from '@angular/router';
 
-export class NavigationDelegator {
+@Injectable()
+export class RouterService {
 
     private readonly profile_patch = 'profile';
     private readonly redirect_patch = 'redirect';
@@ -42,13 +44,13 @@ export class NavigationDelegator {
 
     private get user_name() { return (this.identity.CurrentUser || { UserName: 'unknown' }).UserName; }
 
-    private logger: Logger<NavigationDelegator>;
+    private router: Router;
+    private logger: Logger<RouterService>;
 
     constructor(
         private identity: IdentityService,
-        private router: Router,
         private logsrv: LoggerService) {
-        this.logger = this.logsrv.GetLogger(NavigationDelegator);
+        this.logger = this.logsrv.GetLogger('RouterService').SetModule('service');
     }
 
     private routeSafely = (commands: any[], navigate_extra?: NavigationExtras) => {
@@ -57,6 +59,11 @@ export class NavigationDelegator {
         } catch (error) {
             this.logger.Error(['Navigation failed', 'see more infomations below here.', error], 'routeSafely');
         }
+    }
+
+    public SetRouter(router: Router) {
+        this.router = router;
+        return this;
     }
 
     public readonly GoHome = () => {

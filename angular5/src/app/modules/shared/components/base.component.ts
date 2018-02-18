@@ -2,9 +2,8 @@ import { IdentityService } from './../../../services/identity/identity.service';
 import { GlobalInjection } from './../../../utils/helpers/global_injector.helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AsyncableServiceBase } from '../../../services/base/service.base';
-import { NavigationDelegator } from '../../routers/navigation.extensions';
 import { LoggerService } from 'ws-logger';
-import { FormatService, AdminService, ServerService, CacheService } from '../../../services/app.service';
+import { FormatService, AdminService, ServerService, CacheService, RouterService } from '../../../services/app.service';
 import { RouteErrors, ServerStatus } from '../../../model/app.model';
 
 export class TasselComponentBase extends AsyncableServiceBase {
@@ -23,7 +22,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
 
 export class TasselNavigationBase extends TasselComponentBase {
 
-    protected navigator: NavigationDelegator;
+    protected navigator: RouterService;
     protected cache: CacheService;
 
     public get CurrentUser() { return this.identity.CurrentUser; }
@@ -33,7 +32,7 @@ export class TasselNavigationBase extends TasselComponentBase {
         protected router: Router) {
         super();
         this.cache = GlobalInjection.Injector.get(CacheService);
-        this.navigator = new NavigationDelegator(identity, router, this.logsrv);
+        this.navigator = GlobalInjection.Injector.get(RouterService).SetRouter(router);
     }
 
 }

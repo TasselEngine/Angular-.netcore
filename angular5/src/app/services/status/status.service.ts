@@ -36,6 +36,10 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         this.logger = this.logsrv.GetLogger('StatusService').SetModule('service');
     }
 
+    public ClearStatusCollection() {
+        this.cacheStatus = [];
+    }
+
     public async GetAndRefreshStatus(from: number = 0, take = 5) {
         const stamp = new Date();
         if (from !== 0) {
@@ -48,6 +52,23 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         } else {
             // DON'T NEED RELOAD
             return this.cacheStatus;
+        }
+    }
+
+    public CacheUpdate(type: 'add' | 'delete' | 'update', target: Status) {
+        switch (type) {
+            case 'add': this.cacheStatus.unshift(target); break;
+            case 'update':
+                const uindex = this.cacheStatus.findIndex(i => i.ID === target.ID);
+                if (uindex >= 0) {
+                    this.cacheStatus[uindex] = target;
+                }
+                break;
+            case 'delete': const didx = this.cacheStatus.findIndex(i => i.ID === target.ID);
+                if (didx >= 0) {
+                    this.cacheStatus.splice(didx, 1);
+                }
+                break;
         }
     }
 

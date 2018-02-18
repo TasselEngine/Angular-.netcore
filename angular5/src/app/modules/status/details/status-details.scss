@@ -10,6 +10,17 @@
     @extend .cont-inner-margin;
 }
 
+.rd-loading-div{
+    padding-top:200px;
+    width:100%;
+    text-align: center;
+}
+
+.rd-notayion-span{
+    font-size: 28px;
+    line-height: 3em;
+}
+
 .vm-details-formatdiv{
     display: flex;
     align-items:center;

@@ -5,9 +5,5 @@
 
 export const environment = {
   production: false,
-  logLevel: 0,
-  serverConfig: {
-    serverHost: 'http://localhost',
-    serverPort: 8081,
-  }
+  logLevel: 0
 };

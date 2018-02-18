@@ -9,9 +9,11 @@ import { ToastService } from './toast/toast.service';
 import { ServerService } from './server/server.service';
 import { IdentityService } from './identity/identity.service';
 import { CacheService } from './cache/cache.service';
+import { RouterService } from './router/router.service';
 
 export {
     ServerService,
+    RouterService,
     IdentityService,
     RootService,
     ToastService,

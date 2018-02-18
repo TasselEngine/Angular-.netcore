@@ -1,3 +1,7 @@
+<div *ngIf="!VM" class="rd-loading-div">
+    <span class="rd-notayion-span">Loading</span>
+    <nz-spin [nzSize]="'large'"></nz-spin>
+</div>
 <div *ngIf="VM" class="vm-padding">
     <div class="vm-content-base">
         <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
