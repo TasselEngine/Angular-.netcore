@@ -8,6 +8,7 @@ import { WateriverPatchModule } from '../commons/wateriver/wateriver.module';
 import { ImageGridModule } from '../commons/imageGrid/image-grid.module';
 import { CommentDivModule } from '../commons/commentDiv/comt-div.module';
 import { CommonEntryModule } from '../commons/entries.module';
+import { CommonLoadingModule } from '../commons/loading/common-loading.module';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { CommonEntryModule } from '../commons/entries.module';
         WaterfallPatchModule,
         WateriverPatchModule,
         ImageGridModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        CommonLoadingModule
     ],
     providers: [],
     exports: [

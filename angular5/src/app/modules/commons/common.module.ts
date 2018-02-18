@@ -10,9 +10,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ImageUpListModule } from './imageUploadList/img_upload.module';
 import { TinyMCEModule } from './tinyEditor/tinymce.module';
+import { CommonLoadingModule } from './loading/common-loading.module';
+import { LikeUserDivModule } from './likeUserDiv/like-user.module';
 
 @NgModule({
     exports: [
+        CommonLoadingModule,
         WaterfallPatchModule,
         WateriverPatchModule,
         ImageGridModule,
@@ -21,6 +24,7 @@ import { TinyMCEModule } from './tinyEditor/tinymce.module';
         CommentEditorModule,
         StickersGroupModule,
         LikersLineModule,
+        LikeUserDivModule,
         TinyMCEModule
     ],
 })

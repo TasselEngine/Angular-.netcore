@@ -12,6 +12,8 @@ import { WateriverPatchModule } from '../commons/wateriver/wateriver.module';
 import { ImageGridModule } from '../commons/imageGrid/image-grid.module';
 import { LikersLineModule } from '../commons/likesLine/likes-line.module';
 import { CommentEditorModule } from '../commons/commentEditor/comt-editor.module';
+import { CommonLoadingModule } from '../commons/loading/common-loading.module';
+import { LikeUserDivModule } from '../commons/likeUserDiv/like-user.module';
 
 const overRoutes: Routes = [
     {
@@ -37,8 +39,10 @@ const overRoutes: Routes = [
         WateriverPatchModule,
         ImageGridModule,
         LikersLineModule,
+        LikeUserDivModule,
         CommentDivModule,
         NgZorroAntdModule,
+        CommonLoadingModule,
         RouterModule.forChild(overRoutes)
     ],
     providers: [],

@@ -1,7 +1,5 @@
-<div *ngIf="!VM" class="rd-loading-div">
-    <span class="rd-notayion-span">Loading</span>
-    <nz-spin [nzSize]="'large'"></nz-spin>
-</div>
+<tassel-common-loading *ngIf="!VM" [animaWidth]=" '120px' " [marginTop]=" '240px' " [content]=" 'Loading...' " [contentSize]=" '22px' ">
+</tassel-common-loading>
 <div *ngIf="VM" class="vm-padding">
     <div class="vm-content-base">
         <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
@@ -63,7 +61,9 @@
             </div>
 
             <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="ShowComments" nz-col>
-                <p>hhhhhh</p>
+                <div class="vm-comt" *ngFor="let relation of VM.LikeUsers">
+                    <tassel-common-likeuser [user]="relation" (OnUserClicked)="GoToUserRedirect($event)"></tassel-common-likeuser>
+                </div>
             </div>
 
         </div>

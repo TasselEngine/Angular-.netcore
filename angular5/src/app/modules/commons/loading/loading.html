@@ -1,0 +1,8 @@
+<div [style.maxWidth]="maxWidth||'unset'" [style.padding]="padding||'12px'">
+    <div class="loader" [style.width]="animaWidth||'100px'" [style.marginTop]="marginTop|| 'unset' ">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>
+<div style="text-align:center" [style.fontSize]="contentSize || '14px' " [style.marginTop]="contentTop|| '-12px' ">{{content}}</div>
