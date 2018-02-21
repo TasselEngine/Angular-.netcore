@@ -5,8 +5,8 @@ main:
   description: The personal blog created by Big Mogician.
 server:
   version: 1
-  api_prifix: api
-  static_prifix: static
+  api_prefix: api
+  static_prefix: static
   type: http
   host: 127.0.0.1
   port: 8081

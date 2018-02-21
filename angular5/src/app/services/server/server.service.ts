@@ -38,6 +38,6 @@ export class ServerService {
 
 }
 
-const checkServerConfig = (config: AppConfig): boolean => {
+function checkServerConfig(config: AppConfig): boolean {
     return !config.Server.Host || !config.Server.Port || config.Server.Host === '';
-};
+}
