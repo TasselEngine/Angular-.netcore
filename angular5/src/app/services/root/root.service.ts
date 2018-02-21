@@ -3,6 +3,7 @@ import { AsyncableServiceBase } from '../base/service.base';
 import { Subject } from 'rxjs/Subject';
 import { CacheService } from './../cache/cache.service';
 import { Router } from '@angular/router';
+import { IBottomPopConfig } from '../../model/app.model';
 
 interface IScrollState {
     TimeStamp: Date;
@@ -18,9 +19,14 @@ export class RootService extends AsyncableServiceBase {
     public readonly ScrollCheckSubject: Subject<IScrollState> = new Subject<IScrollState>();
     public readonly ScrollRebuildSubject: Subject<IScrollState> = new Subject<IScrollState>();
     public readonly WidthSubject: Subject<number> = new Subject<number>();
+    public readonly BottomPopSubject: Subject<IBottomPopConfig> = new Subject<IBottomPopConfig>();
 
     constructor(private cache: CacheService) {
         super();
+    }
+
+    public ShowBottomPop(config: IBottomPopConfig) {
+        this.BottomPopSubject.next(config);
     }
 
     public OnScrollToBottom(scroll_element: any) {

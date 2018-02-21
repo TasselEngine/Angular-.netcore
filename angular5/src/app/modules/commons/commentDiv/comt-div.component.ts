@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { UserComment, Creator, ModelType } from '../../../model/app.model';
-import { FormatService, ResourcesService, ToastService, IdentityService } from '../../../services/app.service';
+import { FormatService, ResourcesService, ToastService, IdentityService, RootService } from '../../../services/app.service';
 import { CommentEditorComponent } from '../commentEditor/comt-editor.component';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -47,12 +47,15 @@ export class CommentDivComponent implements OnDestroy {
 
     public get CanAct() { return this.identity.IsLogined; }
 
+    public get IsWideScreen() { return window.innerWidth > 768; }
+
     private modalSubsc: Subscription;
 
     constructor(
         private formator: FormatService,
         private identity: IdentityService,
         private toast: ToastService,
+        private root: RootService,
         private resources: ResourcesService) { }
 
     ngOnDestroy(): void {
@@ -61,16 +64,31 @@ export class CommentDivComponent implements OnDestroy {
         }
     }
 
-    public readonly IsCreator = (comment: UserComment) => {
+    public ContentClicked(type: 'reply' | 'comment', reply?: any) {
+        console.log(reply);
+        if (type === 'comment') {
+
+        } else {
+
+        }
+        const config = { items: [{ label: 'Reply', onClick: () => this.ReplyClicked(reply && reply.Creator) }] };
+        if (this.IsCreator(reply || this.comment)) {
+            config.items.push({ label: 'Delete', onClick: () => this.DeleteClicked(reply || null) });
+        }
+        this.root.ShowBottomPop(config);
+    }
+
+    public IsCreator(comment: UserComment) {
         const cmt = comment || this.comment;
         return cmt.Creator.UUID === this.identity.CurrentUUID;
     }
 
-    public readonly GoToUserDetails = (mentioned?: Creator) => {
+    public GoToUserDetails(event, mentioned?: Creator) {
+        event.stopPropagation();
         this.OnUserClicked.emit(mentioned.UUID);
     }
 
-    public readonly DeleteClicked = (comment?: UserComment) => {
+    public DeleteClicked(comment?: UserComment) {
         const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
         const modal = this.toast.WarnModal(undefined, 'Do you really want delete this comment? This action can\'t be rollback.', width, true, false, [() => {
             const comt = comment || this.comment;
@@ -82,7 +100,7 @@ export class CommentDivComponent implements OnDestroy {
         }, undefined]);
     }
 
-    public readonly ReplyClicked = (mentioned?: Creator) => {
+    public ReplyClicked(mentioned?: Creator) {
         const width = window.innerWidth > 800 ? 800 : window.innerWidth - 48;
         const modal = this.toast.ComponentModal(undefined, CommentEditorComponent, {
             show: true,
@@ -99,7 +117,7 @@ export class CommentDivComponent implements OnDestroy {
         });
     }
 
-    public readonly AddComment = (vm: any) => {
+    public AddComment(vm: any) {
         if (vm.Mentioned) {
             vm.CommentID = this.comment.ID;
         }

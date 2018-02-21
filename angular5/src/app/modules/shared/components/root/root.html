@@ -8,6 +8,10 @@
         <tassel-usericon-div [user]="CurrentUser" [showPopover]="ShowPopover" (onNavigated)="OnPopoverNavigated($event)"></tassel-usericon-div>
     </nz-affix>
 
+    <nz-affix>
+        <tassel-bottom-menu [config]="BottomMenuConfig" (OnMenuClosed)="OnBottomMenuClosed($event)"></tassel-bottom-menu>
+    </nz-affix>
+
     <nz-content class="content-div root-content " [class.root-content-grant]="HideAll">
         <link rel="stylesheet" href="/assets/css/styles.css">
         <div class="root-content-container root-content-inner root-content-back root-content-noback" [class.root-content-noback]="!ShowBack&&IsWideScreen">

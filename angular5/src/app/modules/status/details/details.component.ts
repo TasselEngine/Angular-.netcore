@@ -95,22 +95,25 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     }
 
     public readonly DeleteStatus = async () => {
-        const [succeed, code, error, _] = await this.status.DeleteStatusAsync(this.status_id);
-        if (!succeed) {
-            this.toast.ErrorToast('Action Failed', 'Server errors.');
-            this.logger.Error(['Delete status failed', 'Server error'], 'DeleteStatus');
-            return;
-        }
-        if (code === ServerStatus.Succeed) {
-            this.status.CacheUpdate('delete', this.model);
-            this.navigator.GoToStatusIndex();
-            this.WaitAndDo(() => {
-                this.toast.SucceesMessage('status removed successfully.');
-            }, 100);
-        } else {
-            this.toast.WarnToast('Action Failed', error.msg);
-            this.logger.Warn(['Delete status failed', 'See the details : ', error.msg], 'DeleteStatus');
-        }
+        const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
+        const modal = this.toast.WarnModal(undefined, 'Do you really want delete this status? This action can\'t be rollback.', width, true, false, [async () => {
+            const [succeed, code, error, _] = await this.status.DeleteStatusAsync(this.status_id);
+            if (!succeed) {
+                this.toast.ErrorToast('Action Failed', 'Server errors.');
+                this.logger.Error(['Delete status failed', 'Server error'], 'DeleteStatus');
+                return;
+            }
+            if (code === ServerStatus.Succeed) {
+                this.status.CacheUpdate('delete', this.model);
+                this.navigator.GoToStatusIndex();
+                this.WaitAndDo(() => {
+                    this.toast.SucceesMessage('status removed successfully.');
+                }, 100);
+            } else {
+                this.toast.WarnToast('Action Failed', error.msg);
+                this.logger.Warn(['Delete status failed', 'See the details : ', error.msg], 'DeleteStatus');
+            }
+        }, undefined]);
     }
 
     public readonly AddComment = async (vm: any) => {

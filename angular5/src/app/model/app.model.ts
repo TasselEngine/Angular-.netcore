@@ -17,6 +17,7 @@ import { Image, Status } from './models/status/status.model';
 import { RouteErrors } from './enums/errors.enum';
 import { ServerStatus } from './enums/response.enum';
 import { StickersMap } from './models/commons/sticker/sticker.model';
+import { IBottomPopConfig, IBottomPopItem } from './models/commons/bottomPop/pop.contract';
 
 export {
     SrvTimeFormat,
@@ -42,7 +43,9 @@ export {
     ICommentCreate,
     ICommentDelete,
     ILikeRelation,
-    ISticker
+    ISticker,
+    IBottomPopConfig,
+    IBottomPopItem,
 };
 
 export {

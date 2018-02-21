@@ -13,12 +13,14 @@ import { LeftCommonContainerComponent } from './components/left-container/common
 import { RootComponent } from './components/root/root.component';
 import { RoutersModule } from '../routers/routers.module';
 import { UserDivComponent } from './components/user-div/user-div.component';
+import { BottomMenuComponent } from './components/bottom-menu/bottomMenu.component';
 
 @NgModule({
     declarations: [
         RootComponent,
         IndexComponent,
         UserDivComponent,
+        BottomMenuComponent,
         LeftCommonContainerComponent,
     ],
     imports: [

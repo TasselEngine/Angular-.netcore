@@ -1,0 +1,13 @@
+<div *ngIf="!Disposed" class="pop-background" (click)="CloseThis()" [class.show-background]="ShowPop"></div>
+<div *ngIf="!Disposed" class="pop-main" [class.show-pop]="ShowPop">
+    <div *ngIf="Model.title" class="pop-title">
+        <span>{{Model.title}}</span>
+    </div>
+    <div class="pop-items">
+        <ul>
+            <li class="pop-item" *ngFor="let item of Model.items;let i=index" (click)="OnItemClicked(item)" [class.header-item]="i===0 && !Model.title">
+                <span>{{item.label}}</span>
+            </li>
+        </ul>
+    </div>
+</div>

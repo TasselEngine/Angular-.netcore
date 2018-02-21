@@ -21,10 +21,11 @@ import { Location } from '@angular/common';
 })
 export class RootComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {
 
-  public ShowPopover = false;
-  public ShowMenu = false;
   public ShowBack = true;
+  public ShowBottomMenu = false;
   public HideAll = true;
+
+  public BottomMenuConfig: any;
 
   private oldScroll = 0;
   private isScrollUp = true;
@@ -47,6 +48,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   private widthSubp: Subscription;
   private scrollCheck: Subscription;
   private scrollRebuild: Subscription;
+  private bottomPop: Subscription;
 
   constructor(
     public identity: IdentityService,
@@ -61,19 +63,36 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.initAppBroswerTitle();
     this.appRouteChangesDelegate();
     this.scrollPositionCacheEnabled();
+    this.bottomMenuInit();
   }
 
   ngOnDestroy(): void {
     if (this.widthSubp) { this.widthSubp.unsubscribe(); }
     if (this.scrollCheck) { this.scrollCheck.unsubscribe(); }
     if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
+    if (this.bottomPop) { this.bottomPop.unsubscribe(); }
   }
 
   ngAfterViewInit(): void {
     this.prepareScroll();
   }
 
+  public OnBottomMenuClosed() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, this.oldScroll);
+  }
+
   //#region inner methods
+
+  private bottomMenuInit() {
+    this.bottomPop = this.root.BottomPopSubject.subscribe(config => {
+      document.body.style.position = 'fixed';
+      document.body.style.top = -this.oldScroll + 'px';
+      this.ShowBottomMenu = true;
+      this.BottomMenuConfig = config;
+    });
+  }
 
   private initAppBroswerTitle() {
     this.title.setTitle(`${this.server.Config.Main.Title} - ${this.server.Config.Main.Description}`);
@@ -90,7 +109,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         scroll_div.scrollTo(0, 0);
       }
       // Reset view state properties
-      this.ShowMenu = this.HideAll = this.ShowPopover = false;
+      this.ShowBottomMenu = this.HideAll = false;
       this.ShowBack = true;
       this.route_type = undefined;
       // Adaptive ui changes

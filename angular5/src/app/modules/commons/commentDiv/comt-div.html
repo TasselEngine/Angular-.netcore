@@ -1,30 +1,30 @@
 <div>
-    <div style="display:flex">
+    <div style="display:flex" [class.vm-pointer]="!IsWideScreen" (click)="ContentClicked('comment')">
         <div style="min-width:48px;">
             <img *ngIf="Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" [alt]="Comment.Creator.UserName" [src]="Comment.Creator.Avatar"
-                (click)="GoToUserDetails(Comment.Creator)" [title]="Comment.Creator.UserName" />
-            <img *ngIf="!Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" alt="no avatar." src="/assets/img/unknown.png" (click)="GoToUserDetails(Comment.Creator)"
+                (click)="GoToUserDetails($event, Comment.Creator)" [title]="Comment.Creator.UserName" />
+            <img *ngIf="!Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" alt="no avatar." src="/assets/img/unknown.png" (click)="GoToUserDetails($event, Comment.Creator)"
                 [title]="Comment.Creator.UserName" />
         </div>
-        <div>
+        <div style="width:100%">
             <p>
-                <b class="vm-username-md">{{Comment.Creator.UserName}}</b>
+                <b class="vm-username-md" (click)="GoToUserDetails($event, Comment.Creator)">{{Comment.Creator.UserName}}</b>
             </p>
             <p class="vm-stamp-md">{{Comment.CreateTime.FormatDateTime}}</p>
             <div *ngIf="!VM.IsFormat" class="vm-coment-details">Loading...</div>
             <div *ngIf="VM.IsFormat" class="vm-coment-details" [innerHtml]="Comment.Content"></div>
         </div>
     </div>
-    <div *ngIf="CanAct" class="vm-comt-stamp vm-comt-reply">
+    <div *ngIf="CanAct && IsWideScreen" class="vm-comt-stamp vm-comt-reply">
         <a (click)="ReplyClicked()">Reply</a>
         <span *ngIf="IsCreator()"> |
             <a (click)="DeleteClicked()">Delete</a>
         </span>
     </div>
-    <div *ngFor="let reply of Comment.Comments" class="vm-secn-comment">
+    <div *ngFor="let reply of Comment.Comments" class="vm-secn-comment" [class.vm-pointer]="!IsWideScreen" (click)="ContentClicked('reply', reply)">
         <div class="vm-secn-text">
-            <b class="vm-secn-name vm-pointer" (click)="GoToUserDetails(reply.Creator)">{{reply.Creator.UserName}} :</b>
-            <a class="vm-at-link" (click)="GoToUserDetails(reply.Mentioned)">@{{reply.Mentioned.UserName}}</a>
+            <b class="vm-secn-name vm-pointer" (click)="GoToUserDetails($event, reply.Creator)">{{reply.Creator.UserName}} :</b>
+            <a class="vm-at-link" (click)="GoToUserDetails($event, reply.Mentioned)">@{{reply.Mentioned.UserName}}</a>
             <div *ngIf="!VM.IsFormat" class="vm-reply-details">Loading...</div>
             <div *ngIf="VM.IsFormat" class="vm-reply-details" [innerHtml]="reply.Content"></div>
         </div>
@@ -32,7 +32,7 @@
             <div nz-col nzSpan="12">
                 <p class="vm-stamp-md">{{reply.CreateTime.FormatDateTime}}</p>
             </div>
-            <div *ngIf="CanAct" class="vm-reply-md" nz-col>
+            <div *ngIf="CanAct && IsWideScreen" class="vm-reply-md" nz-col>
                 <a (click)="ReplyClicked(reply.Creator)">Reply</a>
                 <span *ngIf="IsCreator(reply)"> |
                     <a (click)="DeleteClicked(reply)">Delete</a>
