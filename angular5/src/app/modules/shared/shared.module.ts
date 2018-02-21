@@ -9,13 +9,21 @@ import { ImageGridModule } from '../commons/imageGrid/image-grid.module';
 import { CommentDivModule } from '../commons/commentDiv/comt-div.module';
 import { CommonEntryModule } from '../commons/entries.module';
 import { CommonLoadingModule } from '../commons/loading/common-loading.module';
+import { LeftCommonContainerComponent } from './components/left-container/common/common.component';
+import { RootComponent } from './components/root/root.component';
+import { RoutersModule } from '../routers/routers.module';
+import { UserDivComponent } from './components/user-div/user-div.component';
 
 @NgModule({
     declarations: [
+        RootComponent,
         IndexComponent,
+        UserDivComponent,
+        LeftCommonContainerComponent,
     ],
     imports: [
         CommonModule,
+        RoutersModule,
         ExtensionsModule,
         CommonEntryModule,
         WaterfallPatchModule,
@@ -26,6 +34,8 @@ import { CommonLoadingModule } from '../commons/loading/common-loading.module';
     ],
     providers: [],
     exports: [
+        RoutersModule,
+        RootComponent,
         IndexComponent
     ]
 })

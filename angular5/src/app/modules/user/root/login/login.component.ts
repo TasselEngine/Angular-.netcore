@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'tassel-login',
-    templateUrl: './../views/login.html',
+    templateUrl: './login.html',
     animations: [pageShowAnimation],
     styleUrls: [
         './../styles/login.scss'

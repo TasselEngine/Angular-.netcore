@@ -1,0 +1,39 @@
+<nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [nzCollapsed]="!show" [nzTrigger]="null" class="slider-div root-slider">
+    <div class="slider-inner">
+        <div class="slider-listgp">
+            <img src="assets/img/icon.jpg" class="main-icon" />
+            <p class="name-title">
+                <span>{{AppMain.Owner}}</span>
+            </p>
+            <p class="legend-title" [title]="AppMain.Description">
+                <b>{{AppMain.Title}}</b>
+            </p>
+            <hr style="margin-top:12px;" />
+            <div>
+                <ul class="slider-ul">
+                    <li>
+                        <p>
+                            <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a [routerLink]="RouteLinks.Status" routerLinkActive="active">Status</a>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Posts</p>
+                    </li>
+                    <li>
+                        <p>Notes</p>
+                    </li>
+                    <li *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
+                        <p>
+                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nz-sider>

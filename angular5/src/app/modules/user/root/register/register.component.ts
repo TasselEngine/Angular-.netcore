@@ -25,7 +25,7 @@ interface IUser {
 
 @Component({
     selector: 'tassel-register',
-    templateUrl: './../views/register.html',
+    templateUrl: './register.html',
     animations: [pageShowAnimation],
     styleUrls: [
         './../styles/login.scss'

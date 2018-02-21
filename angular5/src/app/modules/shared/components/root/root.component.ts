@@ -41,9 +41,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
 
   public get RouteLinks() { return this.navigator.RouteLinks; }
 
-  public get WindowWidth() { return window.innerWidth; }
   public get IsWideScreen() { return window.innerWidth > 768; }
-  public get ShowSlider() { return window.innerWidth > 1280; }
 
   private routeStruct: RouteStruct;
   private widthSubp: Subscription;
@@ -74,31 +72,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   ngAfterViewInit(): void {
     this.prepareScroll();
   }
-
-  //#region public methods
-
-  public Logout = () => {
-    this.identity.LogoutAsync(async () => {
-      this.admin.CheckAccess(false);
-      this.ShowPopover = this.ShowMenu = false;
-      await this.Delay(100);
-      this.navigator.GoHome();
-    });
-  }
-
-  public ToUserProfile = async () => {
-    this.ShowPopover = this.ShowMenu = false;
-    await this.Delay(100);
-    this.navigator.GoToUserProfile();
-  }
-
-  public ToAdminDashboard = async () => {
-    this.ShowPopover = this.ShowMenu = false;
-    await this.Delay(100);
-    this.navigator.GoToAdminDashboard();
-  }
-
-  //#endregion
 
   //#region inner methods
 
@@ -159,37 +132,9 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
           scroll_div.onscroll = onScroll;
         }, 0);
       }
-      // if (that.ShowSlider) { return; }
-      // that.lazyLoad(() => {
-      //   if (this.scrollTop - that.oldScroll > 35) {
-      //     that.ShowTop = false;
-      //   }
-      //   if (that.oldScroll - this.scrollTop > 10 || this.scrollTop < 100) {
-      //     that.ShowTop = true;
-      //   }
-      // }, 300, 200)();
-
-      // that.oldScroll = this.scrollTop;
     };
     scroll_div.onscroll = onScroll;
   }
-
-  // private lazyLoad(method: Function, time: number, delay: number) {
-  //   let timeout: number;
-  //   const that = this;
-  //   return function () {
-  //     const context = this;
-  //     const args = arguments;
-  //     const curTime = new Date().getTime();
-  //     clearTimeout(timeout);
-  //     if (curTime - that.startTime >= time) {
-  //       method.apply(context, args);
-  //       that.startTime = curTime;
-  //     } else {
-  //       timeout = setTimeout(method, delay);
-  //     }
-  //   };
-  // }
 
   //#endregion
 

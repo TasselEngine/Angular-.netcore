@@ -24,14 +24,10 @@ export function AppInit(config: ServerService) {
 }
 
 @NgModule({
-  declarations: [
-    RootComponent
-  ],
   entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RoutersModule,
     SharedModule,
     ExtensionsModule,
     BrowserAnimationsModule,

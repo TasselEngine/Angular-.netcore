@@ -1,11 +1,11 @@
-import { RegisterComponent } from './root/components/register.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { LoginComponent } from './root/components/login.component';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../extensions/extensions.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { LoginComponent } from './root/login/login.component';
+import { RegisterComponent } from './root/register/register.component';
 
 const overRoutes: Routes = [
     {
