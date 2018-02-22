@@ -27,7 +27,7 @@
                     <li>
                         <p>Notes</p>
                     </li>
-                    <li *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
+                    <li *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
                         <p>
                             <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
                         </p>

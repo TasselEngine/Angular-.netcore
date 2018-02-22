@@ -18,6 +18,7 @@ export class LeftCommonContainerComponent extends TasselNavigationBase implement
     public show: boolean;
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
+    public get Logined() { return this.identity.IsLogined || false; }
 
     constructor(protected identity: IdentityService, protected router: Router) {
         super(identity, router);

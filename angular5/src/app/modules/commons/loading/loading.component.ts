@@ -8,24 +8,24 @@ import { Component, Input } from '@angular/core';
 export class CommonLoadingComponent {
 
     @Input()
-    private animaWidth: string;
+    public animaWidth: string;
 
     @Input()
-    private maxWidth: string;
+    public maxWidth: string;
 
     @Input()
-    private marginTop: string;
+    public marginTop: string;
 
     @Input()
-    private padding: string;
+    public padding: string;
 
     @Input()
-    private content: string;
+    public content: string;
 
     @Input()
-    private contentSize: string;
+    public contentSize: string;
 
     @Input()
-    private contentTop: string;
+    public contentTop: string;
 
 }

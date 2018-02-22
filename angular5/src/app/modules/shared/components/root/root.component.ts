@@ -78,7 +78,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.prepareScroll();
   }
 
-  public OnBottomMenuClosed() {
+  public OnBottomMenuClosed(e) {
     document.body.style.position = '';
     document.body.style.top = '';
     window.scrollTo(0, this.oldScroll);
