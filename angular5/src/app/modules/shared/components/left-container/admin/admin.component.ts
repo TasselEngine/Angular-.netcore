@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'tassel-left-admin',
     templateUrl: './admin.html',
-    styleUrls: ['./../../root/root.scss']
+    styleUrls: ['./admin-menu.scss']
 })
 export class LeftAdminContainerComponent extends TasselNavigationBase implements OnChanges {
 

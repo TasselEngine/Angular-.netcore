@@ -15,6 +15,7 @@ import { RoutersModule } from '../routers/routers.module';
 import { UserDivComponent } from './components/user-div/user-div.component';
 import { BottomMenuComponent } from './components/bottom-menu/bottomMenu.component';
 import { LeftAdminContainerComponent } from './components/left-container/admin/admin.component';
+import { PhotoGallaryModule } from '../commons/photoGallary/photo-gallary.module';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { LeftAdminContainerComponent } from './components/left-container/admin/a
         WaterfallPatchModule,
         WateriverPatchModule,
         ImageGridModule,
+        PhotoGallaryModule,
         NgZorroAntdModule,
         CommonLoadingModule
     ],

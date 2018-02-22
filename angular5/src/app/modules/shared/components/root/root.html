@@ -10,6 +10,10 @@
     </nz-affix>
 
     <nz-affix>
+        <tassel-photo-gallary [images]="PhotoGallaryImages" (OnGallaryClosed)="OnPhotoGallaryClosed($event)"></tassel-photo-gallary>
+    </nz-affix>
+
+    <nz-affix>
         <tassel-bottom-menu [config]="BottomMenuConfig" (OnMenuClosed)="OnBottomMenuClosed($event)"></tassel-bottom-menu>
     </nz-affix>
 

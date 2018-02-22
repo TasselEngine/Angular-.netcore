@@ -1,0 +1,4 @@
+<div *ngIf="!Disposed" class="gallary-background" (click)="CloseThis()" [class.show-background]="ShowPop"></div>
+<div *ngIf="!Disposed" class="current-photo" [class.show-photo]="ShowPop" (click)="CloseThis()">
+    <img [src]="Current.URL" />
+</div>

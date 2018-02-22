@@ -1,0 +1,41 @@
+.gallary-background{
+    position:absolute;
+    top:0;
+    width:100vw;
+    height:100vh;
+    background: #282828;;
+    opacity: 0;
+    z-index: 97;
+    transition: 0.35s;
+}
+
+.show-background{
+    transition: 0.65s;
+    opacity: 0.55;
+}
+
+.current-photo{
+    position:absolute;
+    top:2vh;
+    left:2vw;
+    width:96vw;
+    height:88vh;
+    z-index: 98;
+    opacity: 0;
+    text-align: center;
+    transition: 0.35s;
+}
+
+.show-photo{
+    transition: 0.65s;
+    opacity: 1;
+    // transform:translateY(-48vh);
+}
+
+.current-photo img{
+    cursor: pointer;
+    min-width:60%;
+    max-width:100%;
+    min-height:45%;
+    max-height:100%;
+}

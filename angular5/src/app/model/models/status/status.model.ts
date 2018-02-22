@@ -32,6 +32,14 @@ export class Image {
     @deserializeAs('url')
     private url: string;
     public get URL() { return this.url; }
+
+    constructor(base64?: string, url?: string, thumb?: string) {
+        this.base_64 = base64;
+        this.thumb = thumb;
+        this.url = url;
+        this.is_file = !!base64;
+    }
+
 }
 
 @inheritSerialization(BsonBase)

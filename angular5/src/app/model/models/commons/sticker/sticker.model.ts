@@ -837,4 +837,4 @@ export const StickersMap = {
     Others: others,
     SinaPop: sina_pop,
     SinaRole: sina_role,
-}
+};

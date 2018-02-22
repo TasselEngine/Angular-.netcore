@@ -22,11 +22,11 @@ import { Location } from '@angular/common';
 export class RootComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {
 
   public ShowBack = true;
-  public ShowBottomMenu = false;
   public HideAll = true;
   public IsAdminView = false;
 
   public BottomMenuConfig: any;
+  public PhotoGallaryImages: any;
 
   private oldScroll = 0;
   private isScrollUp = true;
@@ -50,6 +50,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   private scrollCheck: Subscription;
   private scrollRebuild: Subscription;
   private bottomPop: Subscription;
+  private photosSubp: Subscription;
 
   constructor(
     public identity: IdentityService,
@@ -65,6 +66,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.appRouteChangesDelegate();
     this.scrollPositionCacheEnabled();
     this.bottomMenuInit();
+    this.photoGallatyInit();
   }
 
   ngOnDestroy(): void {
@@ -72,6 +74,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     if (this.scrollCheck) { this.scrollCheck.unsubscribe(); }
     if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
     if (this.bottomPop) { this.bottomPop.unsubscribe(); }
+    if (this.photosSubp) { this.photosSubp.unsubscribe(); }
   }
 
   ngAfterViewInit(): void {
@@ -79,20 +82,37 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   public OnBottomMenuClosed(e) {
-    document.body.style.position = '';
-    document.body.style.top = '';
-    window.scrollTo(0, this.oldScroll);
+    this.recoverScrollState();
+  }
+
+  public OnPhotoGallaryClosed(e) {
+    this.recoverScrollState();
   }
 
   //#region inner methods
 
+  private photoGallatyInit() {
+    this.photosSubp = this.root.PhotoGallarySubject.subscribe(images => {
+      this.PhotoGallaryImages = images;
+    });
+  }
+
   private bottomMenuInit() {
     this.bottomPop = this.root.BottomPopSubject.subscribe(config => {
-      document.body.style.position = 'fixed';
-      document.body.style.top = -this.oldScroll + 'px';
-      this.ShowBottomMenu = true;
+      this.checkScrollState();
       this.BottomMenuConfig = config;
     });
+  }
+
+  private checkScrollState() {
+    document.body.style.position = 'fixed';
+    document.body.style.top = -this.oldScroll + 'px';
+  }
+
+  private recoverScrollState() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, this.oldScroll);
   }
 
   private initAppBroswerTitle() {
@@ -110,7 +130,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         scroll_div.scrollTo(0, 0);
       }
       // Reset view state properties
-      this.ShowBottomMenu = this.HideAll = false;
+      this.HideAll = false;
       this.IsAdminView = false;
       this.ShowBack = true;
       this.route_type = undefined;

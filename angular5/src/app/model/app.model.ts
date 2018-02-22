@@ -18,6 +18,7 @@ import { RouteErrors } from './enums/errors.enum';
 import { ServerStatus } from './enums/response.enum';
 import { StickersMap } from './models/commons/sticker/sticker.model';
 import { IBottomPopConfig, IBottomPopItem } from './models/commons/bottomPop/pop.contract';
+import { IPhotoGallaryConfig } from './models/commons/photoGallary/photo-gallary.contract';
 
 export {
     SrvTimeFormat,
@@ -46,6 +47,7 @@ export {
     ISticker,
     IBottomPopConfig,
     IBottomPopItem,
+    IPhotoGallaryConfig
 };
 
 export {

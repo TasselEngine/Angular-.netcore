@@ -1,0 +1,34 @@
+@import "./../../root/root";
+
+hr {
+    border-color: #686868;
+}
+
+b {
+    color:#fff;
+}
+
+span {
+    color:#fff;
+}
+
+.slider-div{
+    border-radius: 0px;
+    background: -webkit-gradient(linear, 0 0, 100% 0, from(#181818), to(#383838));
+    box-shadow: 0px 0px 32px #acacac;
+}
+
+.slider-ul a{
+   color: #b0b0b0;
+   text-decoration: none
+}
+
+.slider-ul a:hover{
+    color: #fff;
+ }
+
+ .slider-ul p{
+    color: #b0b0b0;
+    text-decoration: none
+ }
+ 

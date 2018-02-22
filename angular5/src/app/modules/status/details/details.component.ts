@@ -1,10 +1,10 @@
 import { Logger } from 'ws-logger';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IdentityService, ServerService, StatusService, ResourcesService } from './../../../services/app.service';
+import { IdentityService, ServerService, StatusService, ResourcesService, RootService } from './../../../services/app.service';
 import { Component, HostBinding, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { pageShowAnimation } from '../../../utils/app.utils';
 import { TasselNavigationBase } from '../../shared/components/base.component';
-import { Status, ServerStatus, UnionUser, UserComment, ICommentCreate, ICommentDelete, ModelType } from '../../../model/app.model';
+import { Status, ServerStatus, UnionUser, UserComment, ICommentCreate, ICommentDelete, ModelType, Image } from '../../../model/app.model';
 import { ValidationErrors } from '@angular/forms';
 import { Regex } from 'ws-regex';
 
@@ -49,6 +49,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         private route: ActivatedRoute,
         private status: StatusService,
         private resources: ResourcesService,
+        private root: RootService,
         private _render: Renderer2,
         protected identity: IdentityService,
         protected router: Router) {
@@ -74,8 +75,12 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     }
 
     public readonly OnImageClicked = (img_src: string) => {
-        // TO DO
-        console.log(img_src);
+        const target_idx = this.model.Images.findIndex(i => this.ImageSrcRoot + i.Thumbnail === img_src);
+        const config = { selected: 0, images: this.model.Images.map(i => new Image(null, this.ImageSrcRoot + i.URL, this.ImageSrcRoot + i.Thumbnail)) };
+        if (target_idx >= 0) {
+            config.selected = target_idx;
+        }
+        this.root.OpenPhotoGallary(config);
     }
 
     public readonly OpenCommentPanel = () => {
