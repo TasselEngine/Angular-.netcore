@@ -148,9 +148,11 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         if (this.user.UserType === UserType.Weibo) {
             const [succeed, code, error, result] = await this.weiboRevokeAsync(this.user.AccessToken);
             if (!succeed || code !== ServerStatus.Succeed) {
-                this.logger.Warn(['Revoke token failed in Weibo', 'see more error below here : ', succeed ? result : error], 'LogoutAsync');
-                this.toast.WarnToast('Logout failed', 'Can not revoke from Weibo OAuth2.0');
-                return;
+                if (result.error_code !== 21317) { // token js rejected. logout safely.
+                    this.logger.Warn(['Revoke token failed in Weibo', 'see more error below here : ', succeed ? result : error], 'LogoutAsync');
+                    this.toast.WarnToast('Logout failed', 'Can not revoke from Weibo OAuth2.0');
+                    return;
+                }
             }
         }
         this.user = undefined;
@@ -219,8 +221,8 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/user/weibo_revoke/${access_token}`, this.Options);
         this.apiLog([succeed, error, response], 'Try to revoke current user fron weibo oauth 2.0', 'weiboRevokeAsync');
         return succeed ?
-            StrictResult.Success(response.status, response.content as boolean, response.msg) :
-            StrictResult.Failed<boolean>(error);
+            StrictResult.Success(response.status, response.content as any, response.msg) :
+            StrictResult.Failed<any>(error);
     }
 
     private getDetailsAsync = async () => {
