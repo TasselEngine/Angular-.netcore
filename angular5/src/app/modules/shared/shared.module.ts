@@ -14,6 +14,7 @@ import { RootComponent } from './components/root/root.component';
 import { RoutersModule } from '../routers/routers.module';
 import { UserDivComponent } from './components/user-div/user-div.component';
 import { BottomMenuComponent } from './components/bottom-menu/bottomMenu.component';
+import { LeftAdminContainerComponent } from './components/left-container/admin/admin.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { BottomMenuComponent } from './components/bottom-menu/bottomMenu.compone
         IndexComponent,
         UserDivComponent,
         BottomMenuComponent,
+        LeftAdminContainerComponent,
         LeftCommonContainerComponent,
     ],
     imports: [

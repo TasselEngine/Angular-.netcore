@@ -28,6 +28,8 @@ export class RouterService {
     private readonly adminDashboard = [...this.adminRoot, this.dashboard_patch];
     private readonly adminStatus = [...this.adminRoot, this.status_patch];
 
+    public get AdminPrefix() { return this.adminRoot; }
+
     private readonly route_maps = {
         'Home': this.index,
         'NotFound': this.error404,
@@ -53,7 +55,7 @@ export class RouterService {
         this.logger = this.logsrv.GetLogger('RouterService').SetModule('service');
     }
 
-    private routeSafely = (commands: any[], navigate_extra?: NavigationExtras) => {
+    private routeSafely(commands: any[], navigate_extra?: NavigationExtras) {
         try {
             this.router.navigate(commands, navigate_extra);
         } catch (error) {
@@ -66,47 +68,47 @@ export class RouterService {
         return this;
     }
 
-    public readonly GoHome = () => {
+    public GoHome() {
         this.routeSafely(this.index);
     }
 
-    public readonly GoToRegister = () => {
+    public GoToRegister() {
         this.routeSafely(this.register);
     }
 
-    public readonly GoToLogin = () => {
+    public GoToLogin() {
         this.routeSafely(this.login);
     }
 
-    public readonly GoToNotFound = (flag: RouteErrors = RouteErrors.NotFound) => {
+    public GoToNotFound(flag: RouteErrors = RouteErrors.NotFound) {
         this.routeSafely(this.error404, { queryParams: { type: flag } });
     }
 
-    public readonly GoToForbidden = (flag: RouteErrors = RouteErrors.Forbidden) => {
+    public GoToForbidden(flag: RouteErrors = RouteErrors.Forbidden) {
         this.routeSafely(this.error401, { queryParams: { type: flag } });
     }
 
-    public readonly GoToUserProfile = (uname?: string) => {
+    public GoToUserProfile(uname?: string) {
         this.routeSafely([...this.userRoot, uname || this.user_name, this.profile_patch]);
     }
 
-    public readonly GoToUserRedirect = (uid: string, from_path: string) => {
+    public GoToUserRedirect(uid: string, from_path: string) {
         this.routeSafely([...this.userRoot, uid, this.redirect_patch], { queryParams: { from: from_path } });
     }
 
-    public readonly GoToStatusIndex = () => {
+    public GoToStatusIndex() {
         this.routeSafely(this.statusRoot);
     }
 
-    public readonly GoToStatusDetails = (statusid: string) => {
+    public GoToStatusDetails(statusid: string) {
         this.routeSafely([...this.statusRoot, statusid, this.details_patch]);
     }
 
-    public readonly GoToAdminStatus = () => {
+    public GoToAdminStatus() {
         this.routeSafely(this.adminStatus);
     }
 
-    public readonly GoToAdminDashboard = () => {
+    public GoToAdminDashboard() {
         this.routeSafely(this.adminDashboard);
     }
 

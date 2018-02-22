@@ -24,6 +24,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   public ShowBack = true;
   public ShowBottomMenu = false;
   public HideAll = true;
+  public IsAdminView = false;
 
   public BottomMenuConfig: any;
 
@@ -110,6 +111,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
       }
       // Reset view state properties
       this.ShowBottomMenu = this.HideAll = false;
+      this.IsAdminView = false;
       this.ShowBack = true;
       this.route_type = undefined;
       // Adaptive ui changes
@@ -118,10 +120,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
         this.ShowBack = false;
       };
       const grayBack = () => { this.ShowBack = false; };
+      const isAdminView = () => { this.IsAdminView = true; };
       this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
         .DoIf(hideAll, this.navigator.RouteLinks.Login)
         .DoIf(hideAll, this.navigator.RouteLinks.Register)
-        .DoEach(grayBack, this.navigator.RouteLinks.Home, this.navigator.RouteLinks.Status);
+        .DoEach(grayBack, this.navigator.RouteLinks.Home, this.navigator.RouteLinks.Status)
+        .DoIncludes(isAdminView, this.navigator.AdminPrefix);
     });
   }
 

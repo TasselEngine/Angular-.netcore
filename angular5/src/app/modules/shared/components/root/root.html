@@ -1,7 +1,8 @@
 <nz-layout class="main-div">
 
     <nz-affix>
-        <tassel-left-common [config]="AppMain" [show]="!HideAll"></tassel-left-common>
+        <tassel-left-common *ngIf=" !IsAdminView" [config]="AppMain" [show]="!HideAll"></tassel-left-common>
+        <tassel-left-admin *ngIf=" IsAdminView" [config]="AppMain" [show]="!HideAll"></tassel-left-admin>
     </nz-affix>
 
     <nz-affix *ngIf="!HideAll">

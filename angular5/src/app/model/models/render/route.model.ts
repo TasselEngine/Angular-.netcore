@@ -23,12 +23,24 @@ export class RouteStruct implements IRouteStruct {
     public CheckIf = (...routesFlag: string[]): boolean => {
         const succs = [] as boolean[];
         if (routesFlag.length !== this.coll.length) { return false; }
-        routesFlag.forEach((a, b) => succs.push(a === this.coll[b]));
+        routesFlag.forEach((a, bindex) => succs.push(a === this.coll[bindex]));
+        return !succs.includes(false);
+    }
+
+    public CheckInclude = (routesFlag: string[]): boolean => {
+        const succs = [] as boolean[];
+        routesFlag.forEach((a, bindex) => succs.push(a === this.coll[bindex]));
         return !succs.includes(false);
     }
 
     public DoIf = (action: Function, routesFlag: string[]): RouteStruct => {
         if (!this.CheckIf(...routesFlag)) { return this; }
+        action();
+        return this;
+    }
+
+    public DoIncludes = (action: Function, routesFlag: string[]): RouteStruct => {
+        if (!this.CheckInclude(routesFlag)) { return this; }
         action();
         return this;
     }

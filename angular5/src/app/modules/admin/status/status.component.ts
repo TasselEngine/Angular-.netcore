@@ -3,7 +3,7 @@ import { Component, HostBinding, OnInit, state } from '@angular/core';
 import { AdminService, IdentityService, StatusService } from '../../../services/app.service';
 import { Router } from '@angular/router';
 import { pageShowAnimation, Queue } from '../../../utils/app.utils';
-import { ServerStatus, ISticker } from '../../../model/app.model';
+import { ServerStatus, ISticker, Status } from '../../../model/app.model';
 import { Regex } from 'ws-regex';
 import { Logger } from 'ws-logger';
 
@@ -64,6 +64,7 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
             return;
         }
         if (code === ServerStatus.Succeed) {
+            this.status.CacheUpdate('add', new Status());
             this.navigator.GoToStatusIndex();
         } else {
             this.logger.Warn(['Upload status failed', 'see the details', error.msg], 'Submit');

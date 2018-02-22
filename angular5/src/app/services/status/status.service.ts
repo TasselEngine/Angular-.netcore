@@ -55,16 +55,22 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
-    public CacheUpdate(type: 'add' | 'delete' | 'update', target: Status) {
+    public CacheUpdate(type: 'add' | 'delete' | 'update', target: Status | string) {
         switch (type) {
-            case 'add': this.cacheStatus.unshift(target); break;
+            case 'add':
+                this.GetStatusAsync(<string>target).then(([succeed, code, error, newStatus]) => {
+                    if (succeed && code === 0) {
+                        this.cacheStatus.unshift(newStatus);
+                    }
+                });
+                break;
             case 'update':
-                const uindex = this.cacheStatus.findIndex(i => i.ID === target.ID);
+                const uindex = this.cacheStatus.findIndex(i => i.ID === (<Status>target).ID);
                 if (uindex >= 0) {
-                    this.cacheStatus[uindex] = target;
+                    this.cacheStatus[uindex] = <Status>target;
                 }
                 break;
-            case 'delete': const didx = this.cacheStatus.findIndex(i => i.ID === target.ID);
+            case 'delete': const didx = this.cacheStatus.findIndex(i => i.ID === (<Status>target).ID);
                 if (didx >= 0) {
                     this.cacheStatus.splice(didx, 1);
                 }
