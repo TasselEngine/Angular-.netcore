@@ -1,8 +1,9 @@
 import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { TasselNavigationBase } from '../base.component';
-import { IdentityService, AdminService } from '../../../../services/app.service';
+import { IdentityService, AdminService, RootService } from '../../../../services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { UnionUser } from '../../../../model/app.model';
 
 @Component({
     selector: 'tassel-usericon-div',
@@ -16,8 +17,8 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public get AppMain() { return this.config || {}; }
 
     @Input()
-    private user: any;
-    public get CurrentUser() { return this.user || {}; }
+    private user: UnionUser;
+    public get CurrentUser(): UnionUser { return <any>(this.user || {}); }
 
     @Input()
     private showPopover: boolean;
@@ -38,7 +39,11 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
 
     private routerSubp: Subscription;
 
-    constructor(protected identity: IdentityService, private admin: AdminService, protected router: Router) {
+    constructor(
+        protected identity: IdentityService,
+        private admin: AdminService,
+        private root: RootService,
+        protected router: Router) {
         super(identity, router);
     }
 
@@ -54,7 +59,36 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
+
+    }
+
+    public ShowMainMenu() {
+        const config = {
+            title: 'MENU', items: [
+                { label: 'Home', onClick: () => this.navigator.GoHome() },
+                { label: 'Status', onClick: () => this.navigator.GoToStatusIndex() },
+                { label: 'Posts', onClick: () => { } },
+                { label: 'Notes', onClick: () => { } },
+            ]
+        };
+        if (this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
+            config.items.push({ label: 'Manage', onClick: () => this.navigator.GoToAdminDashboard() });
+        }
+        this.root.ShowBottomPop(config);
+    }
+
+    public ShowUserMenu() {
+        const username = this.CurrentUser.FriendlyName;
+        const config = {
+            title: username, items: [
+                { label: 'Profile', onClick: () => this.ToUserProfile() },
+                { label: 'Logout', onClick: () => this.Logout() },
+            ]
+        };
+        if (this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
+            config.items.push({ label: 'Manage', onClick: () => this.ToAdminDashboard() });
+        }
+        this.root.ShowBottomPop(config);
     }
 
     public Logout() {

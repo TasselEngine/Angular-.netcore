@@ -65,7 +65,9 @@ export class CommentDivComponent implements OnDestroy {
     }
 
     public ContentClicked(type: 'reply' | 'comment', reply?: any) {
-        console.log(reply);
+        if (this.IsWideScreen) {
+            return;
+        }
         if (type === 'comment') {
 
         } else {
