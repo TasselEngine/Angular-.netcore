@@ -105,6 +105,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   private checkScrollState() {
+    this.oldScroll = window.scrollY;
     document.body.style.position = 'fixed';
     document.body.style.top = -this.oldScroll + 'px';
   }
