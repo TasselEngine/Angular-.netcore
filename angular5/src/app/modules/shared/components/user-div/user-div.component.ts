@@ -85,12 +85,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         const config = {
             title: 'MENU', items: [
                 { label: 'Home', onClick: () => this.navigator.GoHome() },
-                {
-                    label: 'Status', onClick: () => {
-                        this.status.ClearStatusCollection();
-                        this.navigator.GoToStatusIndex();
-                    }
-                },
+                { label: 'Status', onClick: () => this.RefreshAndGoToStatus() },
                 { label: 'Posts', onClick: () => { } },
                 { label: 'Notes', onClick: () => { } },
             ]
@@ -99,6 +94,11 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
             config.items.push({ label: 'Manage', onClick: () => this.navigator.GoToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);
+    }
+
+    public RefreshAndGoToStatus() {
+        this.status.ClearStatusCollection();
+        this.navigator.GoToStatusIndex();
     }
 
     public ShowUserMenu() {

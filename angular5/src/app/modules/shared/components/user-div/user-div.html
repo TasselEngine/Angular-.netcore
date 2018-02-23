@@ -42,10 +42,32 @@
             <i class="anticon anticon-sync refresh-icon"></i>
         </a>
     </div>
-    <!-- Mobile Main Menu  -->
-    <div *ngIf="!ShowSlider" class="root-menu-icon root-menu-icon-shadow">
+    <!-- Mobile Main Menu : <768 -->
+    <div *ngIf="!ShowSlider&&!IsWideScreen" class="root-menu-icon root-menu-icon-shadow">
         <a (click)="ShowMainMenu()">
             <i class="anticon anticon-inbox root-menu-size"></i>
         </a>
     </div>
+    <!-- Laptop-PC Main Menu : <1280 >768 -->
+    <nz-popover *ngIf="!ShowSlider&&IsWideScreen" nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="leftBottom">
+        <div class="root-menu-icon root-menu-icon-shadow">
+            <a nz-popover>
+                <i class="anticon anticon-inbox root-menu-size"></i>
+            </a>
+        </div>
+        <ng-template #nzTemplate>
+            <p class="root-menu-item">
+                <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+            </p>
+            <p class="root-menu-item">
+                <a (click)="RefreshAndGoToStatus()">Status</a>
+            </p>
+            <p class="root-menu-item">Posts</p>
+            <p class="root-menu-item">Notes</p>
+            <p *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
+                <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+            </p>
+        </ng-template>
+    </nz-popover>
+
 </div>
