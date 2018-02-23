@@ -92,6 +92,7 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
         this.WaitAndDo(this.rebuildView, 50);
         this.scrollSubp = this.root.ScrollSubject.subscribe(scroll => {
             if (this.isend) {
+                scroll.invoker();
                 return;
             }
             this.DoAndWait(async () => {
@@ -107,10 +108,12 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
                 if (newColl && newColl.length === 0) {
                     this.isend = true;
                     this.toast.InfoMessage('No more status.');
+                    scroll.invoker();
                     return;
                 }
                 this.reselectHeights(this._adaptor.Col, newColl);
                 this.reselectCheck(this._adaptor.Col);
+                scroll.invoker();
             }, 500);
         });
     }

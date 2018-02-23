@@ -62,7 +62,7 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
             return;
         }
         if (code === ServerStatus.Succeed) {
-            this.status.CacheUpdate('add', new Status());
+            await this.status.CacheUpdate('add', status_id);
             this.navigator.GoToStatusIndex();
         } else {
             this.logger.Warn(['Upload status failed', 'see the details', error.msg], 'Submit');

@@ -46,14 +46,14 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         return await this.getStatusColl(from, take);
     }
 
-    public CacheUpdate(type: 'add' | 'delete' | 'update', target: Status | string) {
+    public async CacheUpdate(type: 'add' | 'delete' | 'update', target: Status | string) {
         switch (type) {
             case 'add':
-                this.GetStatusAsync(<string>target).then(([succeed, code, error, newStatus]) => {
-                    if (succeed && code === 0) {
-                        this.cacheStatus.unshift(newStatus);
-                    }
-                });
+                const [succeed, code, error, newStatus] = await this.GetStatusAsync(<string>target);
+                if (succeed && code === 0) {
+                    this.parseAbstract(newStatus);
+                    this.cacheStatus.unshift(newStatus);
+                }
                 break;
             case 'update':
                 const uindex = this.cacheStatus.findIndex(i => i.ID === (<Status>target).ID);
@@ -149,10 +149,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
     private async getStatusColl(before: number, take = 10): Promise<Status[]> {
         const [succeed, status, error, response] = await this.GetStatusSelectAsync(before, take);
         if (succeed && status === ServerStatus.Succeed) {
-            response.forEach(sta => {
-                sta.Content = removeBasSticker(sta.Content);
-                sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
-            });
+            response.forEach(sta => this.parseAbstract(sta));
             this.cacheStatus.push(...response);
             // this.cacheStamp = new Date();
             return response;
@@ -161,6 +158,11 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
+
+    private parseAbstract(sta: Status) {
+        sta.Content = removeBasSticker(sta.Content);
+        sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
+    }
 }
 
 function removeBasSticker(value: string): string {

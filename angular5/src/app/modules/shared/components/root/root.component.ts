@@ -162,9 +162,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
       if (bodyHeight - nowScrollY - screenHeight < 100) {
         scroll_div.onscroll = null;
         setTimeout(async () => {
-          that.root.OnScrollToBottom(scroll_div);
-          await that.Delay(1500);
-          scroll_div.onscroll = onScroll;
+          that.root.OnScrollToBottom({
+            element: scroll_div, invoker: async () => {
+              await that.Delay(1000);
+              scroll_div.onscroll = onScroll;
+            }
+          });
         }, 0);
       }
     };

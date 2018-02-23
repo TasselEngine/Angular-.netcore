@@ -3,7 +3,7 @@ import { TasselNavigationBase } from '../base.component';
 import { IdentityService, AdminService, RootService, StatusService } from '../../../../services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { UnionUser } from '../../../../model/app.model';
+import { UnionUser, RouteStruct } from '../../../../model/app.model';
 
 @Component({
     selector: 'tassel-usericon-div',
@@ -28,11 +28,14 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public ShowRefresh = false;
     public ShowMenu = false;
 
+    private isAdminView = false;
+
     public get ShowType() {
         return this.ShowRefresh && !this.ShowSlider ? 'three' : (this.ShowRefresh && this.ShowSlider) || (!this.ShowRefresh && !this.ShowSlider) ? 'two' : 'one';
     }
 
     private refreshInvoker: Function;
+    private routeStruct: RouteStruct;
 
     public get WindowWidth() { return window.innerWidth; }
     public get IsWideScreen() { return window.innerWidth > 768; }
@@ -68,7 +71,10 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
             if (!(event instanceof NavigationEnd)) { return; }
             this.ShowMenu = false;
             this.ShowRefresh = false;
+            this.isAdminView = false;
             this.refreshInvoker = null;
+            this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
+                .DoIncludes(() => this.isAdminView = true, this.navigator.AdminPrefix);
         });
     }
 
@@ -82,15 +88,22 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     }
 
     public ShowMainMenu() {
-        const config = {
-            title: 'MENU', items: [
+        const config = this.isAdminView ? {
+            title: 'ADMIN MENU', items: [
                 { label: 'Home', onClick: () => this.navigator.GoHome() },
-                { label: 'Status', onClick: () => this.RefreshAndGoToStatus() },
+                { label: 'Status', onClick: () => this.navigator.GoToAdminStatus() },
                 { label: 'Posts', onClick: () => { } },
                 { label: 'Notes', onClick: () => { } },
             ]
-        };
-        if (this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
+        } : {
+                title: 'MENU', items: [
+                    { label: 'Home', onClick: () => this.navigator.GoHome() },
+                    { label: 'Status', onClick: () => this.RefreshAndGoToStatus() },
+                    { label: 'Posts', onClick: () => { } },
+                    { label: 'Notes', onClick: () => { } },
+                ]
+            };
+        if (!this.isAdminView && this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
             config.items.push({ label: 'Manage', onClick: () => this.navigator.GoToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);

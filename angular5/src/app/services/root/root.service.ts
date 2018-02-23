@@ -10,12 +10,17 @@ interface IScrollState {
     Key?: string;
 }
 
+export interface IScrollEvent {
+    element: any;
+    invoker?(): void;
+}
+
 @Injectable()
 export class RootService extends AsyncableServiceBase {
 
     private _lastWidth = 0;
 
-    public readonly ScrollSubject: Subject<any> = new Subject<any>();
+    public readonly ScrollSubject: Subject<IScrollEvent> = new Subject<IScrollEvent>();
     public readonly ScrollCheckSubject: Subject<IScrollState> = new Subject<IScrollState>();
     public readonly ScrollRebuildSubject: Subject<IScrollState> = new Subject<IScrollState>();
     public readonly WidthSubject: Subject<number> = new Subject<number>();
@@ -39,8 +44,8 @@ export class RootService extends AsyncableServiceBase {
         this.RefreshButtonSubject.next([isShow, invoker]);
     }
 
-    public OnScrollToBottom(scroll_element: any) {
-        this.ScrollSubject.next(scroll_element);
+    public OnScrollToBottom(config: IScrollEvent) {
+        this.ScrollSubject.next(config);
     }
 
     public OnScrollNeedCheck(date: IScrollState) {
