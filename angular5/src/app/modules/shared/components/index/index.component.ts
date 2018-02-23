@@ -34,8 +34,7 @@ export class IndexComponent extends TasselNavigationBase implements OnInit, OnDe
 
     constructor(
         private root: RootService,
-        protected identity: IdentityService,
-        protected router: Router) { super(identity, router); }
+        protected router: Router) { super(router); }
 
     ngOnInit(): void {
     }

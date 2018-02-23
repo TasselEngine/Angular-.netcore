@@ -17,9 +17,7 @@ export class ProfileComponent extends TasselNavigationBase implements OnInit {
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
-    constructor(
-        protected identity: IdentityService,
-        protected router: Router) { super(identity, router); }
+    constructor(protected router: Router) { super(router); }
 
     ngOnInit(): void {
 

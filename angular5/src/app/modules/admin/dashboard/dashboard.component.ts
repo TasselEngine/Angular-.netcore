@@ -19,11 +19,8 @@ export class AdminDashboardComponent extends TasselAdminCompBase {
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
 
-    constructor(
-        protected admin: AdminService,
-        protected identity: IdentityService,
-        protected router: Router) {
-        super(admin, identity, router);
+    constructor(protected router: Router) {
+        super(router);
     }
 
 }

@@ -22,9 +22,8 @@ export class LeftCommonContainerComponent extends TasselNavigationBase implement
 
     constructor(
         private status: StatusService,
-        protected identity: IdentityService,
         protected router: Router) {
-        super(identity, router);
+        super(router);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

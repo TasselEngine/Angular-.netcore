@@ -20,8 +20,8 @@ export class LeftAdminContainerComponent extends TasselNavigationBase implements
     public get RouteLinks() { return this.navigator.RouteLinks; }
     public get Logined() { return this.identity.IsLogined || false; }
 
-    constructor(protected identity: IdentityService, protected router: Router) {
-        super(identity, router);
+    constructor(protected router: Router) {
+        super(router);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

@@ -24,6 +24,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   public ShowBack = true;
   public HideAll = true;
   public IsAdminView = false;
+  public ShowRefresh = false;
 
   public BottomMenuConfig: any;
   public PhotoGallaryImages: any;
@@ -51,6 +52,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   private scrollRebuild: Subscription;
   private bottomPop: Subscription;
   private photosSubp: Subscription;
+  private refreshSubp: Subscription;
 
   constructor(
     public identity: IdentityService,
@@ -59,7 +61,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     private render: Renderer2,
     private route: ActivatedRoute,
     private root: RootService,
-    protected router: Router) { super(identity, router); }
+    protected router: Router) { super(router); }
 
   ngOnInit(): void {
     this.initAppBroswerTitle();
@@ -67,6 +69,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.scrollPositionCacheEnabled();
     this.bottomMenuInit();
     this.photoGallatyInit();
+    this.refreshButtonInit();
   }
 
   ngOnDestroy(): void {
@@ -75,6 +78,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
     if (this.bottomPop) { this.bottomPop.unsubscribe(); }
     if (this.photosSubp) { this.photosSubp.unsubscribe(); }
+    if (this.refreshSubp) { this.refreshSubp.unsubscribe(); }
   }
 
   ngAfterViewInit(): void {
@@ -94,6 +98,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   private photoGallatyInit() {
     this.photosSubp = this.root.PhotoGallarySubject.subscribe(images => {
       this.PhotoGallaryImages = images;
+    });
+  }
+
+  private refreshButtonInit() {
+    this.refreshSubp = this.root.RefreshButtonSubject.subscribe(toShow => {
+      this.ShowRefresh = toShow;
     });
   }
 

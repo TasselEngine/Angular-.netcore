@@ -30,10 +30,8 @@ export class AdminStatusComponent extends TasselAdminCompBase implements OnInit 
 
     constructor(
         private status: StatusService,
-        protected admin: AdminService,
-        protected identity: IdentityService,
         protected router: Router) {
-        super(admin, identity, router);
+        super(router);
         this.logger = this.logsrv.GetLogger<AdminStatusComponent>('AdminStatusComponent').SetModule('admin');
     }
 

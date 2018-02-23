@@ -66,7 +66,7 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
         public identity: IdentityService,
         private route: ActivatedRoute,
         protected router: Router) {
-        super(identity, router);
+        super(router);
     }
 
     ngOnInit(): void {

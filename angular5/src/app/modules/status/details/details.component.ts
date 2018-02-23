@@ -51,9 +51,8 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         private resources: ResourcesService,
         private root: RootService,
         private _render: Renderer2,
-        protected identity: IdentityService,
         protected router: Router) {
-        super(identity, router);
+        super(router);
         this.logger = this.logsrv.GetLogger('StatusDetailsComponent').SetModule('status');
     }
 

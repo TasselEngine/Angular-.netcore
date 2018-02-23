@@ -41,7 +41,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
         public identity: IdentityService,
         private route: ActivatedRoute,
         protected router: Router) {
-        super(identity, router);
+        super(router);
     }
 
     ngOnInit(): void {

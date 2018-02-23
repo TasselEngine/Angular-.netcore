@@ -19,9 +19,8 @@ export class UserRedirectComponent extends TasselNavigationBase implements OnIni
     constructor(
         private location: Location,
         private route: ActivatedRoute,
-        protected identity: IdentityService,
         protected router: Router) {
-        super(identity, router);
+        super(router);
     }
 
     ngOnInit(): void {

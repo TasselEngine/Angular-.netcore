@@ -23,8 +23,8 @@ export class BottomMenuComponent extends TasselNavigationBase implements OnInit,
 
     public Disposed = true;
 
-    constructor(protected identity: IdentityService, protected router: Router) {
-        super(identity, router);
+    constructor(protected router: Router) {
+        super(router);
     }
 
     ngOnInit(): void {

@@ -40,12 +40,11 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     private routerSubp: Subscription;
 
     constructor(
-        protected identity: IdentityService,
         private status: StatusService,
         private admin: AdminService,
         private root: RootService,
         protected router: Router) {
-        super(identity, router);
+        super(router);
     }
 
     ngOnInit(): void {

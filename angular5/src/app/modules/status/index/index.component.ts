@@ -36,8 +36,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         private root: RootService,
         private status: StatusService,
         private resources: ResourcesService,
-        protected identity: IdentityService,
-        protected router: Router) { super(identity, router); }
+        protected router: Router) { super(router); }
 
     ngOnInit(): void {
         this._posts = this.status.Cache;
