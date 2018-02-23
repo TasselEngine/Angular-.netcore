@@ -54,6 +54,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     }
 
     private refreshThisPage() {
+        this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.router.routerState.snapshot.url, ScrollY: 0 });
         this._posts = [];
         this.status.ClearStatusCollection();
         this.ShowPage = false;

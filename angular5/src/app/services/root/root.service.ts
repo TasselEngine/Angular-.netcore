@@ -8,6 +8,7 @@ import { IBottomPopConfig, Image, IPhotoGallaryConfig } from '../../model/app.mo
 interface IScrollState {
     TimeStamp: Date;
     Key?: string;
+    ScrollY?: number;
 }
 
 export interface IScrollEvent {

@@ -148,7 +148,11 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     });
     this.subscribe(this.root.ScrollRebuildSubject, (tmst) => {
       const scroll_div = window;
-      scroll_div.scrollTo(0, this.root.GetScrollState(tmst.Key, this.router));
+      if (typeof (tmst.ScrollY) === 'number') {
+        scroll_div.scrollTo(0, tmst.ScrollY);
+      } else {
+        scroll_div.scrollTo(0, this.root.GetScrollState(tmst.Key, this.router));
+      }
     });
   }
 

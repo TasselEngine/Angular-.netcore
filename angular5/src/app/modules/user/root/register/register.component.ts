@@ -130,7 +130,7 @@ export class RegisterComponent extends TasselNavigationBase implements OnInit, O
         if (this.validateForm.invalid) { return; }
         const result = this.prepareSaveModel();
         if (result.psd_recf !== result.psd) { return; }
-        this.identity.TryRegisterAsync(result.user, result.psd, result.rem, this.navigator.GoHome);
+        this.identity.TryRegisterAsync(result.user, result.psd, result.rem, () => this.navigator.GoHome());
     }
 
 }

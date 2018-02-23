@@ -1,8 +1,8 @@
 <div class="root-user-div" [class.two-icons]="ShowType=== 'two' " [class.three-icons]="ShowType=== 'three' ">
     <!-- logined  Mobile view : Open user profile-->
     <div *ngIf="Logined&&!IsWideScreen" class="avatar-div" (click)="ShowUserMenu()">
-        <div *ngIf="CurrentUser.Photo">
-            <img [src]="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow" />
+        <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
+            <img [src]="CurrentUser.Photo" class="avatar-icon" />
         </div>
         <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
             <i class="anticon anticon-user nologin-icon"></i>
@@ -37,14 +37,14 @@
         </a>
     </div>
     <!-- refresh button-->
-    <div *ngIf="ShowRefresh" class="avatar-icon refresh-color">
-        <a (click)="RefreshInvoke()">
+    <div *ngIf="ShowRefresh" class="avatar-icon refresh-color" (click)="RefreshInvoke()">
+        <a>
             <i class="anticon anticon-sync refresh-icon"></i>
         </a>
     </div>
     <!-- Mobile Main Menu : <768 -->
-    <div *ngIf="!ShowSlider&&!IsWideScreen" class="root-menu-icon root-menu-icon-shadow">
-        <a (click)="ShowMainMenu()">
+    <div *ngIf="!ShowSlider&&!IsWideScreen" class="root-menu-icon root-menu-icon-shadow" (click)="ShowMainMenu()">
+        <a>
             <i class="anticon anticon-inbox root-menu-size"></i>
         </a>
     </div>

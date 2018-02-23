@@ -1,4 +1,6 @@
 <div TasselFullContent class="login-page">
+    <tassel-common-loading *ngIf="showLoading" [animaWidth]=" '120px' " [marginTop]=" '240px' " [content]=" 'Please wait...' "
+        [contentSize]=" '22px' "></tassel-common-loading>
     <div class="login-div" *ngIf="showView">
         <div style="text-align:center">
             <img src="assets/img/icon.jpg" class="login-icon" />

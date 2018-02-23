@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class LoginComponent extends TasselNavigationBase implements OnInit, OnDestroy {
 
     public showView = false;
+    public showLoading = false;
     private weibo_code: string;
 
     validateForm: FormGroup;
@@ -53,6 +54,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
         this.route.queryParams.subscribe(async queryParams => {
             this.weibo_code = queryParams.code;
             if (this.weibo_code) {
+                this.showLoading = true;
                 await this.identity.TryWeiboAccessAsync(this.weibo_code, window.location.href.split('?')[0]);
                 this.navigator.GoHome();
             } else { this.showView = true; }
@@ -78,7 +80,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
         }
         if (this.validateForm.invalid) { return; }
         const result = this.prepareSaveModel();
-        this.identity.TryLoginAsync(result.user, result.psd, result.rem, this.navigator.GoHome);
+        this.identity.TryLoginAsync(result.user, result.psd, result.rem, () => this.navigator.GoHome());
     }
 
 }

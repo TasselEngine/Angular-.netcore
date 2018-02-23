@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './root/login/login.component';
 import { RegisterComponent } from './root/register/register.component';
+import { CommonLoadingModule } from '../commons/loading/common-loading.module';
 
 const overRoutes: Routes = [
     {
@@ -29,6 +30,7 @@ const overRoutes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         NgZorroAntdModule,
+        CommonLoadingModule,
         RouterModule.forChild(overRoutes)
     ],
     providers: [],

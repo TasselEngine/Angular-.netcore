@@ -9,7 +9,7 @@ server:
   static_prefix: static
   type: http
   host: 127.0.0.1
-  port: 8081
+  port: null
   path: http://www.bws-mogician.top
 weibo_config:
   oauth_path: https://api.weibo.com/oauth2
