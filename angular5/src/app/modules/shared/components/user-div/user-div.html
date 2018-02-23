@@ -12,8 +12,8 @@
     <nz-popover *ngIf="Logined&&IsWideScreen" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
         [nzPlacement]="'leftBottom'">
         <div class="avatar-div" nz-popover>
-            <div *ngIf="CurrentUser.Photo">
-                <img [src]="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow" /> - </div>
+            <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
+                <img [src]="CurrentUser.Photo" class="avatar-icon" /> - </div>
             <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
                 <i class="anticon anticon-user nologin-icon"></i>
             </div>
