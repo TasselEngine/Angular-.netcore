@@ -1,6 +1,6 @@
 import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { TasselNavigationBase } from '../base.component';
-import { IdentityService, AdminService, RootService } from '../../../../services/app.service';
+import { IdentityService, AdminService, RootService, StatusService } from '../../../../services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { UnionUser } from '../../../../model/app.model';
@@ -41,6 +41,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
 
     constructor(
         protected identity: IdentityService,
+        private status: StatusService,
         private admin: AdminService,
         private root: RootService,
         protected router: Router) {
@@ -66,7 +67,12 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         const config = {
             title: 'MENU', items: [
                 { label: 'Home', onClick: () => this.navigator.GoHome() },
-                { label: 'Status', onClick: () => this.navigator.GoToStatusIndex() },
+                {
+                    label: 'Status', onClick: () => {
+                        this.status.ClearStatusCollection();
+                        this.navigator.GoToStatusIndex();
+                    }
+                },
                 { label: 'Posts', onClick: () => { } },
                 { label: 'Notes', onClick: () => { } },
             ]

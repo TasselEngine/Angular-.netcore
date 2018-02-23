@@ -29,18 +29,22 @@ export class WateriverComponent extends AsyncableServiceBase implements OnInit, 
     public template: TemplateRef<any>;
 
     private isend = false;
+    public Loaded = false;
 
     private scrollSubp: Subscription;
 
     constructor(private root: RootService) { super(); }
 
     ngOnInit(): void {
-        this.WaitAndDo(async () => {
-            if (!this._posts || this._posts.length === 0) {
+        if (!this._posts || this._posts.length === 0) {
+            this.WaitAndDo(async () => {
                 const coll = await this._loader(0, 15);
                 this._posts = [...coll];
-            }
-        }, 100);
+                this.Loaded = true;
+            }, 100);
+        } else {
+            this.Loaded = true;
+        }
     }
 
     ngOnDestroy(): void {

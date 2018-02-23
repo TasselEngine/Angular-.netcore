@@ -61,19 +61,24 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
     private shouldExistLoop = false;
 
     private isend = false;
+    public Loaded = false;
 
     private scrollSubp: Subscription;
 
     constructor(private root: RootService) { super(); }
 
     ngOnInit(): void {
-        this.WaitAndDo(async () => {
-            if (!this._posts || this._posts.length === 0) {
+        if (!this._posts || this._posts.length === 0) {
+            this.WaitAndDo(async () => {
                 const coll = await this._loader(0, 50);
                 this._posts = [...coll];
-            }
+                this.Loaded = true;
+                this.reselectHeights(4, undefined, true);
+            }, 100);
+        } else {
+            this.Loaded = true;
             this.reselectHeights(4, undefined, true);
-        }, 100);
+        }
     }
 
     ngOnDestroy(): void {

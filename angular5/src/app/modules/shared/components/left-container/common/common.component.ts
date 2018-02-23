@@ -1,6 +1,6 @@
 import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { TasselNavigationBase } from '../../base.component';
-import { IdentityService } from '../../../../../services/app.service';
+import { IdentityService, StatusService } from '../../../../../services/app.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,16 +20,20 @@ export class LeftCommonContainerComponent extends TasselNavigationBase implement
     public get RouteLinks() { return this.navigator.RouteLinks; }
     public get Logined() { return this.identity.IsLogined || false; }
 
-    constructor(protected identity: IdentityService, protected router: Router) {
+    constructor(
+        private status: StatusService,
+        protected identity: IdentityService,
+        protected router: Router) {
         super(identity, router);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        // for (const propName in changes) {
-        //     if (propName === 'show') {
 
-        //     }
-        // }
+    }
+
+    public RefreshStatusAndGo() {
+        this.status.ClearStatusCollection();
+        this.navigator.GoToStatusIndex();
     }
 
 }
