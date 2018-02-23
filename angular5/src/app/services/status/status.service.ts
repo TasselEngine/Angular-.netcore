@@ -164,10 +164,10 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
 }
 
 function removeBasSticker(value: string): string {
-    if (value.length < 60) {
+    if (value.length < 240) {
         return value;
     }
-    let val = value.substr(0, 60);
+    let val = value.substr(0, 240);
     const last = val.lastIndexOf(']');
     if (last < 0 || last === val.length - 1) {
         return val + '...';

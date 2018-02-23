@@ -26,7 +26,7 @@
                 <div class="pending">
                     <div *ngIf="model.CreateTime" class="pending-right">
                         <i class="anticon anticon-tag"></i>
-                        <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
+                        <span>{{model.CreateTime | timeFormat}}</span>
                     </div>
                     <div class="pending-div">
                         <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user card-like-pointer" (click)="ClickLike(model)"></i>
@@ -63,7 +63,7 @@
             <div class="pending">
                 <div *ngIf="model.CreateTime" class="pending-right">
                     <i class="anticon anticon-tag"></i>
-                    <span>{{Formator.TimeFormat(model.CreateTime)}}</span>
+                    <span>{{model.CreateTime | timeFormat}}</span>
                 </div>
                 <div class="pending-div">
                     <i *ngIf="IsLiked(model)" class="anticon anticon-heart liked-user card-like-pointer" (click)="ClickLike(model)"></i>

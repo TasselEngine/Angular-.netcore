@@ -14,6 +14,7 @@ import { LikersLineModule } from '../commons/likesLine/likes-line.module';
 import { CommentEditorModule } from '../commons/commentEditor/comt-editor.module';
 import { CommonLoadingModule } from '../commons/loading/common-loading.module';
 import { LikeUserDivModule } from '../commons/likeUserDiv/like-user.module';
+import { TimeFormatModule } from '../commons/timeFormat/timeFormat.module';
 
 const overRoutes: Routes = [
     {
@@ -43,6 +44,7 @@ const overRoutes: Routes = [
         CommentDivModule,
         NgZorroAntdModule,
         CommonLoadingModule,
+        TimeFormatModule,
         RouterModule.forChild(overRoutes)
     ],
     providers: [],

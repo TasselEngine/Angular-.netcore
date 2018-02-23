@@ -12,6 +12,7 @@ import { ImageUpListModule } from './imageUploadList/img_upload.module';
 import { TinyMCEModule } from './tinyEditor/tinymce.module';
 import { CommonLoadingModule } from './loading/common-loading.module';
 import { LikeUserDivModule } from './likeUserDiv/like-user.module';
+import { TimeFormatModule } from './timeFormat/timeFormat.module';
 
 @NgModule({
     exports: [
@@ -25,6 +26,7 @@ import { LikeUserDivModule } from './likeUserDiv/like-user.module';
         StickersGroupModule,
         LikersLineModule,
         LikeUserDivModule,
+        TimeFormatModule,
         TinyMCEModule
     ],
 })
