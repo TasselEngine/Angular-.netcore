@@ -47,12 +47,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   public get IsWideScreen() { return window.innerWidth > 768; }
 
   private routeStruct: RouteStruct;
-  private widthSubp: Subscription;
-  private scrollCheck: Subscription;
-  private scrollRebuild: Subscription;
-  private bottomPop: Subscription;
-  private photosSubp: Subscription;
-  private refreshSubp: Subscription;
 
   constructor(
     public identity: IdentityService,
@@ -73,12 +67,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   ngOnDestroy(): void {
-    if (this.widthSubp) { this.widthSubp.unsubscribe(); }
-    if (this.scrollCheck) { this.scrollCheck.unsubscribe(); }
-    if (this.scrollRebuild) { this.scrollRebuild.unsubscribe(); }
-    if (this.bottomPop) { this.bottomPop.unsubscribe(); }
-    if (this.photosSubp) { this.photosSubp.unsubscribe(); }
-    if (this.refreshSubp) { this.refreshSubp.unsubscribe(); }
+    this.dispose();
   }
 
   ngAfterViewInit(): void {
@@ -96,19 +85,19 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   //#region inner methods
 
   private photoGallatyInit() {
-    this.photosSubp = this.root.PhotoGallarySubject.subscribe(images => {
+    this.subscribe(this.root.PhotoGallarySubject, (images) => {
       this.PhotoGallaryImages = images;
     });
   }
 
   private refreshButtonInit() {
-    this.refreshSubp = this.root.RefreshButtonSubject.subscribe(toShow => {
+    this.subscribe(this.root.RefreshButtonSubject, (toShow) => {
       this.ShowRefresh = toShow;
     });
   }
 
   private bottomMenuInit() {
-    this.bottomPop = this.root.BottomPopSubject.subscribe(config => {
+    this.subscribe(this.root.BottomPopSubject, (config) => {
       this.checkScrollState();
       this.BottomMenuConfig = config;
     });
@@ -161,11 +150,11 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   private scrollPositionCacheEnabled() {
-    this.scrollCheck = this.root.ScrollCheckSubject.subscribe(tmst => {
+    this.subscribe(this.root.ScrollCheckSubject, (tmst) => {
       const scroll_div = window;
       this.root.SetScrollCache(scroll_div && scroll_div.scrollY, tmst.Key, this.router);
     });
-    this.scrollRebuild = this.root.ScrollRebuildSubject.subscribe(tmst => {
+    this.subscribe(this.root.ScrollRebuildSubject, (tmst) => {
       const scroll_div = window;
       scroll_div.scrollTo(0, this.root.GetScrollState(tmst.Key, this.router));
     });

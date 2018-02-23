@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
-type IObservableHost = Subject<any> | Observable<any>;
+type IObservableHost<T> = Subject<T> | Observable<T>;
 
 export class TasselComponentBase extends AsyncableServiceBase {
 
@@ -17,7 +17,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
     protected formater: FormatService;
     protected logsrv: LoggerService;
 
-    private subscriptions: Array<[(string | IObservableHost), Subscription]> = [];
+    private subscriptions: Array<[(string | IObservableHost<any>), Subscription]> = [];
 
     constructor() {
         super();
@@ -26,9 +26,9 @@ export class TasselComponentBase extends AsyncableServiceBase {
         this.formater = GlobalInjection.Injector.get(FormatService);
     }
 
-    protected subscribe(observaber: IObservableHost | [IObservableHost, string], subscriber: (...args: any[]) => void) {
-        let key: (string | IObservableHost);
-        let obser: IObservableHost;
+    protected subscribe<T>(observaber: IObservableHost<T> | [IObservableHost<T>, string], subscriber: (arg: T) => void) {
+        let key: (string | IObservableHost<T>);
+        let obser: IObservableHost<T>;
         if (observaber instanceof Array) {
             [obser, key] = observaber;
         } else {
@@ -46,7 +46,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
         }
     }
 
-    protected unsubscribe(observaber: IObservableHost | string) {
+    protected unsubscribe<T>(observaber: IObservableHost<T> | string) {
         const target = this.subscriptions.find(([key, subp]) => key === observaber);
         if (target && target[1] && !target[1].closed) {
             target[1].unsubscribe();
