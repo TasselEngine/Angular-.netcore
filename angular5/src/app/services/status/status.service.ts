@@ -21,7 +21,9 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
 
     public get FormOptions() { return this.identity.FormOptions; }
 
-    private cacheStamp: Date;
+    public get Cache() { return this.cacheStatus; }
+
+    // private cacheStamp: Date;
     private cacheStatus: Status[] = [];
 
     private logger: Logger<StatusService>;
@@ -41,18 +43,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
     }
 
     public async GetAndRefreshStatus(from: number = 0, take = 5) {
-        const stamp = new Date();
-        if (from !== 0) {
-            // DO IMCRE LOAD
-            return await this.getStatusColl(from, take);
-        }
-        if (!this.cacheStamp || stamp.getTime() - this.cacheStamp.getTime() > 600000) {
-            // NEED RELOAD RESOURCES
-            return await this.getStatusColl(0, take);
-        } else {
-            // DON'T NEED RELOAD
-            return this.cacheStatus;
-        }
+        return await this.getStatusColl(from, take);
     }
 
     public CacheUpdate(type: 'add' | 'delete' | 'update', target: Status | string) {
@@ -163,7 +154,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
                 sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
             });
             this.cacheStatus.push(...response);
-            this.cacheStamp = new Date();
+            // this.cacheStamp = new Date();
             return response;
         } else {
             return [];

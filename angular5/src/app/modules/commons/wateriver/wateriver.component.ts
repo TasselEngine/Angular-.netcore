@@ -36,7 +36,7 @@ export class WateriverComponent extends AsyncableServiceBase implements OnInit, 
 
     ngOnInit(): void {
         this.WaitAndDo(async () => {
-            if (!this._posts) {
+            if (!this._posts || this._posts.length === 0) {
                 const coll = await this._loader(0, 15);
                 this._posts = [...coll];
             }

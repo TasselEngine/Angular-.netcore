@@ -40,10 +40,11 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
         protected router: Router) { super(identity, router); }
 
     ngOnInit(): void {
+        this._posts = this.status.Cache;
         this.current_route = this.router.routerState.snapshot.url;
         this.WaitAndDo(() => {
             this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.current_route });
-        }, 1000);
+        }, 0);
     }
 
     ngOnDestroy(): void {

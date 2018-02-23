@@ -68,8 +68,10 @@ export class WaterfallComponent extends AsyncableServiceBase implements OnInit, 
 
     ngOnInit(): void {
         this.WaitAndDo(async () => {
-            const coll = await this._loader(0, 50);
-            this._posts = [...coll];
+            if (!this._posts || this._posts.length === 0) {
+                const coll = await this._loader(0, 50);
+                this._posts = [...coll];
+            }
             this.reselectHeights(4, undefined, true);
         }, 100);
     }
