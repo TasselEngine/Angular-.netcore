@@ -1,4 +1,4 @@
-<div TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
+<div *ngIf="ShowPage" TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
     <tassel-common-waterfall *ngIf="IsWideScreen" [data]="Posts" [loader]="PostsProvider" [template]="temp"></tassel-common-waterfall>
     <tassel-common-wateriver *ngIf="!IsWideScreen" [data]="Posts" [loader]="PostsProvider" [template]="tempRiver"></tassel-common-wateriver>
 </div>

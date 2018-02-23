@@ -24,7 +24,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   public ShowBack = true;
   public HideAll = true;
   public IsAdminView = false;
-  public ShowRefresh = false;
 
   public BottomMenuConfig: any;
   public PhotoGallaryImages: any;
@@ -63,7 +62,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.scrollPositionCacheEnabled();
     this.bottomMenuInit();
     this.photoGallatyInit();
-    this.refreshButtonInit();
   }
 
   ngOnDestroy(): void {
@@ -87,12 +85,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   private photoGallatyInit() {
     this.subscribe(this.root.PhotoGallarySubject, (images) => {
       this.PhotoGallaryImages = images;
-    });
-  }
-
-  private refreshButtonInit() {
-    this.subscribe(this.root.RefreshButtonSubject, (toShow) => {
-      this.ShowRefresh = toShow;
     });
   }
 

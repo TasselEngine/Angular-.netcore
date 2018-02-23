@@ -32,7 +32,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
         if (observaber instanceof Array) {
             [obser, key] = observaber;
         } else {
-            key = observaber;
+            obser = key = observaber;
         }
         const newSubp = obser.subscribe(subscriber);
         const subpArray = this.subscriptions.find(([ky, subp]) => ky === key);

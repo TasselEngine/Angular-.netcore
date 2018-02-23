@@ -8,7 +8,7 @@ import { UnionUser } from '../../../../model/app.model';
 @Component({
     selector: 'tassel-usericon-div',
     templateUrl: './user-div.html',
-    styleUrls: ['./../root/root.scss']
+    styleUrls: ['./div.scss']
 })
 export class UserDivComponent extends TasselNavigationBase implements OnInit, OnDestroy, OnChanges {
 
@@ -25,9 +25,14 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public get ShowPopover() { return this.showPopover || false; }
     public set ShowPopover(value: boolean) { this.showPopover = value; }
 
-    private showMenu: boolean;
-    public get ShowMenu() { return this.showMenu || false; }
-    public set ShowMenu(value: boolean) { this.showMenu = value; }
+    public ShowRefresh = false;
+    public ShowMenu = false;
+
+    public get ShowType() {
+        return this.ShowRefresh && !this.ShowSlider ? 'three' : (this.ShowRefresh && this.ShowSlider) || (!this.ShowRefresh && !this.ShowSlider) ? 'two' : 'one';
+    }
+
+    private refreshInvoker: Function;
 
     public get WindowWidth() { return window.innerWidth; }
     public get IsWideScreen() { return window.innerWidth > 768; }
@@ -36,8 +41,6 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public get RouteLinks() { return this.navigator.RouteLinks; }
 
     public get Logined() { return (this.identity && this.identity.IsLogined) || false; }
-
-    private routerSubp: Subscription;
 
     constructor(
         private status: StatusService,
@@ -48,18 +51,34 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     }
 
     ngOnInit(): void {
-        this.routerSubp = this.router.events.subscribe(event => {
-            if (!(event instanceof NavigationEnd)) { return; }
-            this.showMenu = false;
-        });
+        this.menuInit();
+        this.refreshButtonInit();
     }
 
     ngOnDestroy(): void {
-        this.routerSubp.unsubscribe();
+        this.dispose();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
 
+    }
+
+    private menuInit() {
+        this.subscribe(this.router.events, (event) => {
+            if (!(event instanceof NavigationEnd)) { return; }
+            this.ShowMenu = false;
+            this.ShowRefresh = false;
+            this.refreshInvoker = null;
+        });
+    }
+
+    private refreshButtonInit() {
+        this.subscribe(this.root.RefreshButtonSubject, ([toShow, invoker]) => {
+            setTimeout(() => {
+                this.ShowRefresh = toShow;
+                this.refreshInvoker = invoker;
+            });
+        });
     }
 
     public ShowMainMenu() {
@@ -96,6 +115,12 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         this.root.ShowBottomPop(config);
     }
 
+    public RefreshInvoke() {
+        if (this.refreshInvoker) {
+            this.refreshInvoker();
+        }
+    }
+
     public Logout() {
         this.identity.LogoutAsync(async () => {
             this.admin.CheckAccess(false);
@@ -118,7 +143,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     }
 
     private hideMenuAndPopover() {
-        this.showMenu = this.showPopover = false;
+        this.ShowMenu = this.showPopover = false;
     }
 
 }

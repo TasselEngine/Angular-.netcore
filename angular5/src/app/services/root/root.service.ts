@@ -21,7 +21,7 @@ export class RootService extends AsyncableServiceBase {
     public readonly WidthSubject: Subject<number> = new Subject<number>();
     public readonly BottomPopSubject: Subject<IBottomPopConfig> = new Subject<IBottomPopConfig>();
     public readonly PhotoGallarySubject: Subject<IPhotoGallaryConfig> = new Subject<IPhotoGallaryConfig>();
-    public readonly RefreshButtonSubject: Subject<boolean> = new Subject<boolean>();
+    public readonly RefreshButtonSubject: Subject<[boolean, Function]> = new Subject<[boolean, Function]>();
 
     constructor(private cache: CacheService) {
         super();
@@ -35,8 +35,8 @@ export class RootService extends AsyncableServiceBase {
         this.PhotoGallarySubject.next(config);
     }
 
-    public ShowRefreshButton(isShow = true) {
-        this.RefreshButtonSubject.next(isShow);
+    public ShowRefreshButton(isShow = true, invoker = () => null) {
+        this.RefreshButtonSubject.next([isShow, invoker]);
     }
 
     public OnScrollToBottom(scroll_element: any) {

@@ -71,14 +71,18 @@
     }
 
     .root-menu-icon{
+        @extend .avatar-icon;
         background: -webkit-gradient(linear, 0 0, 100% 0, from(#181818), to(#484848));
-        max-width: 48px;
-        max-height: 48px;
-        border-radius: 50%;
+        // max-width: 48px;
+        // max-height: 48px;
+        // border-radius: 50%;
         padding-left:8px;
         padding-right:8px;
         padding-top:6px;
-        font-size: 36px;
+    }
+
+    .root-menu-size{
+        @extend .avatar-content-size
     }
 
     .root-menu-icon i{
@@ -186,27 +190,4 @@
     -moz-transition: 0.4s;
     -webkit-transition: 0.4s;
     background:transparent;
-}
-
-.root-user-div{
-    position:absolute;
-    top:calc(100vh - 152px) ;
-    padding-top: 0px;
-    left: calc(100vw - 80px);
-    transition: 0.4s;
-    -o-transition:0.4s;
-    -moz-transition: 0.4s;
-    -webkit-transition: 0.4s;
-}
-
-.root-user-div-top{
-    transition: 0.4s;
-    -o-transition:0.4s;
-    -moz-transition: 0.4s;
-    -webkit-transition: 0.4s;
-    padding-top: 80px;
-}
-
-.root-user-div div{
-    margin-bottom: 12px;
 }

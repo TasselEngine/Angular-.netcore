@@ -30,6 +30,8 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
 
     public get ImageSrcRoot() { return this.formater.ImageSrcRoot; }
 
+    public ShowPage = true;
+
     private current_route: string;
 
     constructor(
@@ -41,6 +43,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     ngOnInit(): void {
         this._posts = this.status.Cache;
         this.current_route = this.router.routerState.snapshot.url;
+        this.root.ShowRefreshButton(true, () => this.refreshThisPage());
         this.WaitAndDo(() => {
             this.root.OnScrollNeedRebuild({ TimeStamp: new Date(), Key: this.current_route });
         }, 0);
@@ -48,6 +51,16 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
 
     ngOnDestroy(): void {
         this.root.OnScrollNeedCheck({ TimeStamp: new Date(), Key: this.current_route });
+    }
+
+    private refreshThisPage() {
+        this._posts = [];
+        this.status.ClearStatusCollection();
+        this.ShowPage = false;
+        setTimeout(() => {
+            this._posts = this.status.Cache;
+            this.ShowPage = true;
+        });
     }
 
     public readonly PostsProvider = async (stamp = 0, take = 5) => {
