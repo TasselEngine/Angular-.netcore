@@ -23,6 +23,9 @@ export class CommonLoadingComponent {
     public content: string;
 
     @Input()
+    public contentColor: string;
+
+    @Input()
     public contentSize: string;
 
     @Input()

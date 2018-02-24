@@ -20,9 +20,9 @@
             <div class="vm-details-formatdiv" [innerHtml]="VM.Content"></div>
             <br/>
             <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
-            <p>
+            <p *ngIf="Logined">
                 <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
-                <span *ngIf="identity.IsLogined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')"> |
+                <span *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core' "> |
                     <a class="vm-text-md" (click)="DeleteStatus()">Delete</a>
                 </span>
             </p>
@@ -53,7 +53,13 @@
             <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
                 <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
                     <p>There's no comment yet.
-                        <a (click)="OpenCommentPanel()">Add </a>a comment now.</p>
+                        <span *ngIf="Logined">
+                            <a (click)="OpenCommentPanel()">Add </a>a comment now.
+                        </span>
+                        <span *ngIf="!Logined"> If you want to add a comment, please
+                            <a (click)="GoToLoginPage()">sign in </a>first.
+                        </span>
+                    </p>
                 </div>
                 <div class="vm-comt" *ngFor="let com of VM.Comments">
                     <tassel-common-comtdiv [comment]="com" (OnUserClicked)="GoToUserRedirect($event)" (OnCommentAdd)="AddComment($event)" (OnCommentDelete)="DeleteComment($event)"></tassel-common-comtdiv>

@@ -133,7 +133,8 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
       };
       const grayBack = () => { this.ShowBack = false; };
       const isAdminView = () => { this.IsAdminView = true; };
-      this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
+      console.log(this.router.routerState.snapshot);
+      this.routeStruct = RouteStruct.Create(this.router)
         .DoIf(hideAll, this.navigator.RouteLinks.Login)
         .DoIf(hideAll, this.navigator.RouteLinks.Register)
         .DoEach(grayBack, this.navigator.RouteLinks.Home, this.navigator.RouteLinks.Status)

@@ -9,14 +9,17 @@ import { Image, IPhotoGallaryConfig } from '../../../model/app.model';
 export class PhotoGallaryComponent implements OnInit, OnChanges {
 
     @Input('images')
-    public images: IPhotoGallaryConfig;
-    public get Images() { return this.images.images; }
+    private images: IPhotoGallaryConfig;
+    private copy: Image[];
+    public get Images() { return this.copy; }
 
     @Output()
     OnGallaryClosed = new EventEmitter<any>();
 
     private showPop: boolean;
     public get ShowPop() { return this.showPop || false; }
+
+    public hideImage = true;
 
     private current: Image;
     public get Current() { return this.current; }
@@ -34,9 +37,9 @@ export class PhotoGallaryComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         for (const propName in changes) {
             if (propName === 'images' && changes[propName].currentValue) {
-                console.log(this.images);
                 const config: IPhotoGallaryConfig = changes[propName].currentValue;
-                this.current = config.images[config.selected];
+                this.copy = config.images.map(i => new Image(null, config.srcRoot + i.URL, config.srcRoot + i.Thumbnail));
+                this.current = this.copy[config.selected];
                 this.Disposed = false;
                 setTimeout(() => this.showPop = true, 20);
             }
@@ -50,7 +53,12 @@ export class PhotoGallaryComponent implements OnInit, OnChanges {
     }
 
     public OnItemClicked(item: Image) {
+        this.hideImage = true;
+        this.current = item;
+    }
 
+    public OnCurrentLoaded() {
+        this.hideImage = false;
     }
 
 }

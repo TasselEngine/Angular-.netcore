@@ -1,4 +1,5 @@
 import { IRouteStruct } from './route.contract';
+import { Router, RouterStateSnapshot, UrlSegment, ActivatedRouteSnapshot } from '@angular/router';
 
 export class RouteStruct implements IRouteStruct {
 
@@ -10,14 +11,32 @@ export class RouteStruct implements IRouteStruct {
     public get Fifth(): string { return this.coll[4]; }
     public get Length(): number { return this.coll.length; }
 
-    public static Create = (url: string) => {
-        return new RouteStruct(url);
+    public static Create = (url_router: string | Router) => {
+        return new RouteStruct(url_router);
     }
 
-    constructor(url: string) {
-        if (!url || url.length < 1) { return; }
-        this.coll = url.substring(1).split('/');
+    constructor(url_router: string | Router) {
+        if (url_router instanceof Router) {
+            this.coll = this.getRouteLevel(url_router.routerState.snapshot);
+        } else {
+            let url = url_router;
+            if (!url || url.length < 1) { return; }
+            url = url.split('?')[0];
+            this.coll = url.substring(1).split('/');
+        }
         this.coll[0] = '/' + this.coll[0] || '';
+    }
+
+    private getRouteLevel(snapshot: RouterStateSnapshot) {
+        const arr = this.findFinalRoutePath(snapshot.root);
+        return arr.filter(i => i.url.length > 0).map(i => i.url[0].path);
+    }
+
+    private findFinalRoutePath(root: ActivatedRouteSnapshot): ActivatedRouteSnapshot[] {
+        if (root.children.length > 0) {
+            return this.findFinalRoutePath(root.children[0]);
+        }
+        return root.pathFromRoot;
     }
 
     public CheckIf = (...routesFlag: string[]): boolean => {

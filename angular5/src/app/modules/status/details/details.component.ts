@@ -42,6 +42,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     public get ImageSrcRoot() { return this.formater.ImageSrcRoot; }
 
     public get Formator() { return this.formater; }
+    public get Logined() { return this.identity.IsLogined || false; }
 
     private logger: Logger<StatusDetailsComponent>;
 
@@ -73,32 +74,36 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         });
     }
 
-    public readonly OnImageClicked = (img_src: string) => {
+    public OnImageClicked(img_src: string) {
         const target_idx = this.model.Images.findIndex(i => this.ImageSrcRoot + i.Thumbnail === img_src);
-        const config = { selected: 0, images: this.model.Images.map(i => new Image(null, this.ImageSrcRoot + i.URL, this.ImageSrcRoot + i.Thumbnail)) };
+        const config = { selected: 0, images: this.model.Images, srcRoot: this.ImageSrcRoot };
         if (target_idx >= 0) {
             config.selected = target_idx;
         }
         this.root.OpenPhotoGallary(config);
     }
 
-    public readonly OpenCommentPanel = () => {
+    public OpenCommentPanel() {
         this.openEdit = !this.openEdit;
     }
 
-    public readonly ShowDetails = (showComs = true) => {
+    public ShowDetails(showComs = true) {
         this.showComments = showComs;
     }
 
-    public readonly GoToUserRedirect = (uuid: string) => {
+    public GoToUserRedirect(uuid: string) {
         this.navigator.GoToUserRedirect(uuid, this.router.routerState.snapshot.url);
     }
 
-    public readonly CloseCommentAdd = () => {
+    public GoToLoginPage() {
+        this.navigator.GoToLogin(this.router.routerState.snapshot.url);
+    }
+
+    public CloseCommentAdd() {
         this.openEdit = false;
     }
 
-    public readonly DeleteStatus = async () => {
+    public async DeleteStatus() {
         const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
         const modal = this.toast.WarnModal(undefined, 'Do you really want delete this status? This action can\'t be rollback.', width, true, false, [async () => {
             const [succeed, code, error, _] = await this.status.DeleteStatusAsync(this.status_id);
@@ -120,7 +125,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         }, undefined]);
     }
 
-    public readonly AddComment = async (vm: any) => {
+    public async AddComment(vm: any) {
         if (!vm) { return; }
         const params: ICommentCreate = {
             uid: this.identity.CurrentUUID,
@@ -158,7 +163,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         }
     }
 
-    public readonly DeleteComment = async (vm: UserComment) => {
+    public async DeleteComment(vm: UserComment) {
         if (!vm) { return; }
         console.log(vm);
         const params: ICommentDelete = {

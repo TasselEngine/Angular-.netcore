@@ -68,16 +68,28 @@ export class RouterService {
         return this;
     }
 
+    public GoToPath(path: string) {
+        this.routeSafely([path]);;
+    }
+
     public GoHome() {
         this.routeSafely(this.index);
     }
 
-    public GoToRegister() {
-        this.routeSafely(this.register);
+    public GoToRegister(redirect?: string) {
+        if (redirect) {
+            this.routeSafely(this.register, { queryParams: { redirect: redirect } });
+        } else {
+            this.routeSafely(this.register);
+        }
     }
 
-    public GoToLogin() {
-        this.routeSafely(this.login);
+    public GoToLogin(redirect?: string) {
+        if (redirect) {
+            this.routeSafely(this.login, { queryParams: { redirect: redirect } });
+        } else {
+            this.routeSafely(this.login);
+        }
     }
 
     public GoToNotFound(flag: RouteErrors = RouteErrors.NotFound) {
