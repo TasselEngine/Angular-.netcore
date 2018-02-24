@@ -29,8 +29,7 @@ export class LoginComponent extends TasselNavigationBase implements OnInit, OnDe
     @HostBinding('style.display') display = 'block';
 
     public get WeiboAuth() {
-        // const href = Regex.Create(/htt.+\/\/.+?\//).Matches(window.location.href)[0];
-        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href}`;
+        return `${this.server.WeiboOAuthHost}/authorize?client_id=${this.server.WeiboClientID}&response_type=code&redirect_uri=${window.location.href.split('?')[0]}`;
     }
 
     public get IsWideScreen() { return window.innerWidth > 768; }
