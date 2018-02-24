@@ -1,6 +1,6 @@
 import { IError } from 'ws-format-httprequest';
 
-export const SrvTimeFormat = /(.+?)-(.+?)-(.+?)T(.+?):(.+?):(.+?).([0-9]{3}).+/;
+export const SrvTimeFormat = /(.+?)-(.+?)-(.+?)T(.+?):(.+?):(.+?).([0-9]{2,3}).+/;
 
 export type APIResult = [boolean, IError, IResponse];
 

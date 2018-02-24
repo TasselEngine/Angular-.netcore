@@ -1,0 +1,89 @@
+<div *ngIf="ShouldShow" TasselPadding [PaddingDetails]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
+    <div class="title-div">
+        <h2>Dashboard</h2>
+    </div>
+
+    <div class="section-title">
+        <span>Admins</span>
+    </div>
+
+    <div class="users-table">
+        <nz-table #adminsTable [nzDataSource]="AdminUsers" [nzPageSize]="IsWideScreen?10:5" *ngIf="AdminUsers.length>0" nzSize="small">
+            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: adminsTable }">
+            </ng-template>
+        </nz-table>
+    </div>
+
+    <div class="section-title">
+        <span>Users</span>
+    </div>
+
+    <div class="users-table">
+        <nz-table #usersTable [nzDataSource]="CommonUsers" [nzPageSize]="IsWideScreen?10:5" *ngIf="CommonUsers.length>0" nzSize="small">
+            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: usersTable }">
+            </ng-template>
+        </nz-table>
+    </div>
+
+</div>
+
+<ng-template #tableTemplate let-model="model">
+    <thead nz-thead>
+        <tr>
+            <th nz-th [width]="IsWideScreen?'30%':'70%' ">
+                <b>UserName</b>
+            </th>
+            <th nz-th [width]="IsWideScreen?'18%':'30%' ">
+                <b>Gender</b>
+            </th>
+            <th *ngIf="IsWideScreen" nz-th width="32%">
+                <b>Action</b>
+            </th>
+            <th *ngIf="IsWideScreen" nz-th width="20%">
+                <b>CreateTime</b>
+            </th>
+        </tr>
+    </thead>
+    <tbody nz-tbody>
+        <tr nz-tbody-tr *ngFor="let data of model.data">
+            <td nz-td width="30%">
+                <div class="userline">
+                    <div *ngIf="data.Photo" class="avatar-circle">
+                        <img [src]="data.Photo" class="avatar-icon" />
+                    </div>
+                    <div *ngIf="!data.Photo" class="avatar-circle">
+                        <i class="anticon anticon-user default-icon"></i>
+                    </div>
+                    <a>{{data | adminUserDisplay}}</a>
+                </div>
+            </td>
+            <td nz-td>{{data.Gender?'Male':'Female'}}</td>
+            <td nz-td *ngIf="IsWideScreen">
+                <span>
+                    <a href="#">Action 一 {{data.name}}</a>
+                    <span nz-table-divider></span>
+                    <a href="#">Delete</a>
+                    <span nz-table-divider></span>
+                    <nz-dropdown>
+                        <a class="ant-dropdown-link" nz-dropdown>
+                            More actions
+                            <i class="anticon anticon-down"></i>
+                        </a>
+                        <ul nz-menu>
+                            <li nz-menu-item>
+                                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">1st menu item</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">2nd menu item</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">3rd menu item</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown>
+                </span>
+            </td>
+            <td *ngIf="IsWideScreen" nz-td>{{data.CreateTime.FormatDateTime}}</td>
+        </tr>
+    </tbody>
+</ng-template>

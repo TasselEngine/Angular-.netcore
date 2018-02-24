@@ -100,6 +100,8 @@ export class User extends Creator {
 
     public static Parse = (iuser: IUserBase) => JsonHelper.FromJson<User>(JsonHelper.ToJSON(iuser), User);
 
+    public static ParseList = (iusers: IUserBase[]) => (iusers || []).map(iuser => JsonHelper.FromJson<User>(JsonHelper.ToJSON(iuser), User));
+
 }
 
 @inheritSerialization(User)

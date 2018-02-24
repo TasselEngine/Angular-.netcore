@@ -1,5 +1,5 @@
 import { AdminStatusComponent } from './status/status.component';
-import { AdminDashboardComponent } from './dashboard/dashboard.component';
+import { AdminDashboardComponent } from './dashboard/index/dashboard.component';
 import { ImageUpListModule } from '../commons/imageUploadList/img_upload.module';
 import { StickersGroupModule } from '../commons/stickersGroup/stickers-group.module';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { TinyMCEModule } from '../commons/tinyEditor/tinymce.module';
+import { AdminDashboargModule } from './dashboard/dashboard.module';
 
 const overRoutes: Routes = [
     {
@@ -23,7 +24,6 @@ const overRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AdminDashboardComponent,
         AdminStatusComponent
     ],
     imports: [
@@ -35,7 +35,8 @@ const overRoutes: Routes = [
         ImageUpListModule,
         NgZorroAntdModule,
         TinyMCEModule,
-        RouterModule.forChild(overRoutes)
+        RouterModule.forChild(overRoutes),
+        AdminDashboargModule
     ],
     providers: [],
     exports: [

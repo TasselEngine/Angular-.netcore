@@ -65,7 +65,7 @@ export class CommentDivComponent implements OnDestroy {
     }
 
     public ContentClicked(type: 'reply' | 'comment', reply?: any) {
-        if (this.IsWideScreen) {
+        if (this.IsWideScreen || !this.identity.IsLogined) {
             return;
         }
         if (type === 'comment') {

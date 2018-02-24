@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IdentityService } from './../identity/identity.service';
 import { ServerService } from './../server/server.service';
 import { Injectable } from '@angular/core';
-import { IResponse } from '../../model/app.model';
+import { IResponse, User } from '../../model/app.model';
 import { StrictResult } from '../../utils/app.utils';
 
 @Injectable()
@@ -31,11 +31,35 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
         this.logger = this.logsrv.GetLogger('AdminService').SetModule('service');
     }
 
-    public readonly CheckAccess = (checked: boolean = true) => {
+    public CheckAccess(checked: boolean = true) {
         this.checked = checked;
     }
 
-    public readonly CheckAdminAsync = async () => {
+    public async GetAllAdminAsync() {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/admin/users?type=admin`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to get all admin-access users list', 'GetAllAdminAsync');
+        return succeed ?
+            StrictResult.Success(response.status, User.ParseList(response.content), response.msg) :
+            StrictResult.Failed<User[]>(error);
+    }
+
+    public async GetAllCommonUserAsync() {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/admin/users?type=user`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to get all common-access users list', 'GetAllCommonUserAsync');
+        return succeed ?
+            StrictResult.Success(response.status, User.ParseList(response.content), response.msg) :
+            StrictResult.Failed<User[]>(error);
+    }
+
+    public async GetAllCoreUserAsync() {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/admin/users?type=core`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to get all core-access users list', 'GetAllCoreUserAsync');
+        return succeed ?
+            StrictResult.Success(response.status, User.ParseList(response.content), response.msg) :
+            StrictResult.Failed<User[]>(error);
+    }
+
+    public async CheckAdminAsync() {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/admin/is_admin`, this.Options);
         this.apiLog([succeed, error, response], 'Try to check if the user has the admin-access', 'CheckAdminAsync');
         return succeed ?
@@ -43,7 +67,7 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<boolean>(error);
     }
 
-    public readonly UploadImageAsync = async (file: string) => {
+    public async UploadImageAsync(file: string) {
         const [succeed, error, response] = await this.InvokeAsync(
             `${this.Root}/static/image`, this.FormOptions, HttpType.POST, JsonHelper.ToJSON({ file: file }));
         this.apiLog([succeed, error, response], 'Try to upload a file', 'UploadImageAsync');
@@ -52,7 +76,7 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<any>(error);
     }
 
-    private readonly apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {
+    private apiLog(result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) {
         const [succeed, error, response] = result;
         if (succeed) {
             this.logger.Debug([`[ API ]${title}`, ...(descrip ? [descrip, response] : [response])], method);
