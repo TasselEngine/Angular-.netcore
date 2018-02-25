@@ -60,22 +60,25 @@ export class User extends Creator {
     @serializeAs('birth_date')
     @deserializeAs('birth_date')
     private birth_date: string;
+    private _birthDate: FormatTime;
     public get BirthDate(): FormatTime {
-        return FormatTime.Parse(SrvTimeFormat, this.birth_date, 8);
+        return this._birthDate || (this._birthDate = FormatTime.Parse(SrvTimeFormat, this.birth_date, 8));
     }
 
     @serializeAs('create_time')
     @deserializeAs('create_time')
     private create_time: string;
+    private _createTime: FormatTime;
     public get CreateTime(): FormatTime {
-        return FormatTime.Parse(SrvTimeFormat, this.create_time, 8);
+        return this._createTime || (this._createTime = FormatTime.Parse(SrvTimeFormat, this.create_time, 8));
     }
 
     @serializeAs('update_time')
     @deserializeAs('update_time')
     private update_time: string;
+    private _updateTime: FormatTime;
     public get UpdateTime(): FormatTime {
-        return FormatTime.Parse(SrvTimeFormat, this.update_time, 8);
+        return this._updateTime || (this._updateTime = FormatTime.Parse(SrvTimeFormat, this.update_time, 8));
     }
 
     @serializeAs('weibo_id')
@@ -101,6 +104,11 @@ export class User extends Creator {
     public static Parse = (iuser: IUserBase) => JsonHelper.FromJson<User>(JsonHelper.ToJSON(iuser), User);
 
     public static ParseList = (iusers: IUserBase[]) => (iusers || []).map(iuser => JsonHelper.FromJson<User>(JsonHelper.ToJSON(iuser), User));
+
+    public ChangeRole(newRole: string) {
+        this.role_str = newRole;
+        return this;
+    }
 
 }
 

@@ -3,7 +3,7 @@ import { GlobalInjection } from './../../../utils/helpers/global_injector.helper
 import { Router, ActivatedRoute } from '@angular/router';
 import { AsyncableServiceBase } from '../../../services/base/service.base';
 import { LoggerService } from 'ws-logger';
-import { FormatService, AdminService, ServerService, CacheService, RouterService } from '../../../services/app.service';
+import { FormatService, AdminService, ServerService, CacheService, RouterService, ToastService } from '../../../services/app.service';
 import { RouteErrors, ServerStatus } from '../../../model/app.model';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
@@ -13,9 +13,10 @@ type IObservableHost<T> = Subject<T> | Observable<T>;
 
 export class TasselComponentBase extends AsyncableServiceBase {
 
-    protected server: ServerService;
-    protected formater: FormatService;
-    protected logsrv: LoggerService;
+    protected readonly server: ServerService;
+    protected readonly formater: FormatService;
+    protected readonly logsrv: LoggerService;
+    protected readonly notify: ToastService;
 
     private subscriptions: Array<[(string | IObservableHost<any>), Subscription]> = [];
 
@@ -24,6 +25,7 @@ export class TasselComponentBase extends AsyncableServiceBase {
         this.server = GlobalInjection.Injector.get(ServerService);
         this.logsrv = GlobalInjection.Injector.get(LoggerService);
         this.formater = GlobalInjection.Injector.get(FormatService);
+        this.notify = GlobalInjection.Injector.get(ToastService);
     }
 
     protected subscribe<T>(observaber: IObservableHost<T> | [IObservableHost<T>, string], subscriber: (arg: T) => void) {
@@ -64,9 +66,9 @@ export class TasselComponentBase extends AsyncableServiceBase {
 
 export class TasselNavigationBase extends TasselComponentBase {
 
-    protected navigator: RouterService;
-    protected cache: CacheService;
-    protected identity: IdentityService;
+    protected readonly navigator: RouterService;
+    protected readonly cache: CacheService;
+    protected readonly identity: IdentityService;
 
     public get CurrentUser() { return this.identity.CurrentUser; }
 
@@ -81,7 +83,7 @@ export class TasselNavigationBase extends TasselComponentBase {
 
 export class TasselAdminCompBase extends TasselNavigationBase {
 
-    protected admin: AdminService;
+    protected readonly admin: AdminService;
 
     protected shouldShow = false;
     public get ShouldShow() { return this.shouldShow; }

@@ -13,6 +13,10 @@
     margin-left: -10px;
 }
 
+:host ::ng-deep .vm-index-title img{
+    width:22px;
+}
+
 .card-top-line{
     margin-top: 0px;
     margin-bottom: 8px;
@@ -33,4 +37,14 @@
 .pending-right{
     float:right;
     margin-right:4px;
+}
+
+@media(max-width:768px){
+    .vm-index-title{
+        font-size: 14px;
+    }
+
+    :host ::ng-deep .vm-index-title img{
+        width:18px;
+    }
 }

@@ -1,0 +1,53 @@
+<nz-timeline class="timeline">
+    <nz-timeline-item *ngFor="let log of Logs" [nzColor]=" log.Level===0?'green':log.Level<=2?'blue':'red' ">
+        <div class="timeline-card">
+            <p class="weak-fonts">
+                <nz-tag *ngIf="log.Level===0" [nzColor]="'#87d068'">DEBUG</nz-tag>
+                <nz-tag *ngIf="log.Level===1" [nzColor]="'#2db7f5'">INFO</nz-tag>
+                <nz-tag *ngIf="log.Level===2" [nzColor]="'#ffa500'">WARN</nz-tag>
+                <nz-tag *ngIf="log.Level===3" [nzColor]="'#f50'">ERROR</nz-tag>
+                <nz-tag *ngIf="log.Level===4" [nzColor]="'#f50'">FATAL</nz-tag>
+                <b>{{log.Creator.UserName}}</b>
+                <span>&nbsp;|&ngsp;</span>
+                <span>{{log.CreateTime | timeFormat}}</span>
+            </p>
+            <div class="card-container">
+                <p *ngIf="log.Action===0" [ngSwitch]="log.TargetType">
+                    <b>Create new </b>
+                    <b *ngSwitchCase="13">Status</b>
+                    <b *ngSwitchCase="14">Post</b>
+                    <b *ngSwitchDefault>Entry</b>
+                </p>
+                <p *ngIf="log.Action===1" [ngSwitch]="log.TargetType">
+                    <b>Update </b>
+                    <b *ngSwitchCase="13">Status</b>
+                    <b *ngSwitchCase="14">Post</b>
+                    <b *ngSwitchDefault>Entry</b>
+                </p>
+                <p *ngIf="log.Action===2" [ngSwitch]="log.TargetType">
+                    <b>Delete </b>
+                    <b *ngSwitchCase="13">Status</b>
+                    <b *ngSwitchCase="14">Post</b>
+                    <b *ngSwitchDefault>Entry</b>
+                </p>
+                <hr/>
+                <p>
+                    <b>Target ID : </b>
+                    <span>{{log.TargetID}}</span>
+                </p>
+                <p>
+                    <b>Metadata : </b>
+                    <span>{{log.Description}}</span>
+                </p>
+                <hr/>
+                <div *ngIf="log.TargetKey" class="content-desc" [innerHtml]="log.TargetKey"></div>
+                <div *ngIf="!log.TargetKey">no content.</div>
+            </div>
+        </div>
+    </nz-timeline-item>
+    <ng-template #pending>
+        <a [hidden]="IsEnd || IsLoading" (click)="LoadMore()">Load more</a>
+        <b *ngIf="IsEnd">no more logs.</b>
+        <span *ngIf="IsLoading">loading...</span>
+    </ng-template>
+</nz-timeline>

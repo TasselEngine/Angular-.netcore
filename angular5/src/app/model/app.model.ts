@@ -12,13 +12,15 @@ import { RouteStruct } from './models/render/route.model';
 import { User, UnionUser, Creator } from './models/user/user.model';
 import { WeiboUser } from './models/user/weibo.model';
 import { IResponse, APIResult, SrvTimeFormat } from './interfaces/response.interface';
-import { ModelType, EntryState } from './enums/model.enum';
+import { ModelType, EntryState, LogRole, LogLevel, LogAction } from './enums/model.enum';
 import { Image, Status } from './models/status/status.model';
 import { RouteErrors } from './enums/errors.enum';
 import { ServerStatus } from './enums/response.enum';
 import { StickersMap } from './models/commons/sticker/sticker.model';
 import { IBottomPopConfig, IBottomPopItem } from './models/commons/bottomPop/pop.contract';
 import { IPhotoGallaryConfig } from './models/commons/photoGallary/photo-gallary.contract';
+import { IServerLog } from './models/log/log.contract';
+import { ApplicationLog } from './models/log/log.model';
 
 export {
     SrvTimeFormat,
@@ -28,6 +30,9 @@ export {
     ModelType,
     EntryState,
     UserType,
+    LogRole,
+    LogLevel,
+    LogAction,
     RouteErrors
 };
 
@@ -38,6 +43,7 @@ export {
     IUserBase,
     IUnionUser,
     IWeiboUser,
+    IServerLog,
     IStatus,
     IImage,
     IComment,
@@ -57,6 +63,7 @@ export {
     User,
     UnionUser,
     WeiboUser,
+    ApplicationLog,
     Image,
     Status,
     UserComment,

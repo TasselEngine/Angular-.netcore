@@ -5,10 +5,10 @@
         <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
             <div nz-col class="vm-avatar">
                 <div *ngIf="VM.Creator.Avatar">
-                    <img [src]="VM.Creator.Avatar" class="avatar-icon" (click)="GoToUserRedirect(VM.Creator.UUID)" />
+                    <img [src]="VM.Creator.Avatar" class="vm-avatar-icon" (click)="GoToUserRedirect(VM.Creator.UUID)" />
                 </div>
-                <div *ngIf="!VM.Creator.Avatar" class="avatar-icon avatar-blue">
-                    <i class="anticon anticon-user nologin-icon"></i>
+                <div *ngIf="!VM.Creator.Avatar" class="vm-avatar-icon avatar-blue">
+                    <i class="anticon anticon-user vm-nologin"></i>
                 </div>
             </div>
             <div nz-col>
@@ -32,14 +32,12 @@
         <div class="vm-comments-header" nz-row nzType="flex">
             <div nz-col>
                 <a (click)="ShowDetails(true)" class="vm-header-actionlink">
-                    <p *ngIf="VM.CommentCount<=1">{{VM.CommentCount}} COMMENT</p>
-                    <p *ngIf="VM.CommentCount>1">{{VM.CommentCount}} COMMENTS</p>
+                    <p>COMMENT {{VM.CommentCount}}</p>
                 </a>
             </div>
             <div nz-col>
                 <a (click)="ShowDetails(false)" class="vm-header-actionlink">
-                    <p *ngIf="VM.LikersCount<=1"> {{VM.LikersCount}} LIKE </p>
-                    <p *ngIf="VM.LikersCount>1">{{VM.LikersCount}} LIKES</p>
+                    <p>LIKE {{VM.LikersCount}}</p>
                 </a>
             </div>
             <div nz-col style="margin-top:6px;">
@@ -52,7 +50,7 @@
             </div>
             <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
                 <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
-                    <p>There's no comment yet.
+                    <p class="no-commit-p">There's no comment yet.
                         <span *ngIf="Logined">
                             <a (click)="OpenCommentPanel()">Add </a>a comment now.
                         </span>

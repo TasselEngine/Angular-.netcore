@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IdentityService } from './../identity/identity.service';
 import { ServerService } from './../server/server.service';
 import { Injectable } from '@angular/core';
-import { IResponse, User } from '../../model/app.model';
+import { IResponse, User, ApplicationLog } from '../../model/app.model';
 import { StrictResult } from '../../utils/app.utils';
 
 @Injectable()
@@ -59,6 +59,15 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<User[]>(error);
     }
 
+    public async AppointOrDismissAsync(userId: string, isAppoint = true) {
+        const [succeed, error, response] = await this.InvokeAsync(
+            `${this.Root}/admin/${isAppoint ? 'appoint' : 'dismiss'}?uuid=${userId}`, this.FormOptions, HttpType.PUT);
+        this.apiLog([succeed, error, response], `Try to ${isAppoint ? 'appoint' : 'dismiss'} user [id = ${userId}]`, 'AppointOrDismissAsync');
+        return succeed ?
+            StrictResult.Success(response.status, response.content as null, response.msg) :
+            StrictResult.Failed<null>(error);
+    }
+
     public async CheckAdminAsync() {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/admin/is_admin`, this.Options);
         this.apiLog([succeed, error, response], 'Try to check if the user has the admin-access', 'CheckAdminAsync');
@@ -74,6 +83,14 @@ export class AdminService extends HttpAsyncClientBase<IResponse> {
         return succeed ?
             StrictResult.Success(response.status, response.content as any, response.msg) :
             StrictResult.Failed<any>(error);
+    }
+
+    public async LoadApplicationLogsAsync(count = 20, skip = 0) {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/admin/logs?count=${count}&skip=${skip}`, this.Options);
+        this.apiLog([succeed, error, response], 'Try to load application running logs', 'LoadApplicationLogsAsync');
+        return succeed ?
+            StrictResult.Success(response.status, ApplicationLog.ParseList(response.content), response.msg) :
+            StrictResult.Failed<ApplicationLog[]>(error);
     }
 
     private apiLog(result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) {

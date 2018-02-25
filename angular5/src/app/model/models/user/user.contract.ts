@@ -4,6 +4,7 @@ export enum UserType { Base, Weibo, Wechat, QQ }
 export interface ICreator {
     uuid: string;
     user_name: string;
+    avatar: string;
 }
 
 export interface IUserBase {
@@ -20,7 +21,6 @@ export interface IUserBase {
     weibo_id: string;
     wechat_token: string;
     qq_token: string;
-    avatar: string;
     is_third_part: boolean;
 }
 

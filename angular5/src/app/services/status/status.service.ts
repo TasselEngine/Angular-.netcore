@@ -49,6 +49,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
     public async CacheUpdate(type: 'add' | 'delete' | 'update', target: Status | string) {
         switch (type) {
             case 'add':
+                if (!this.cacheStatus || this.cacheStatus.length === 0) { break; }
                 const [succeed, code, error, newStatus] = await this.GetStatusAsync(<string>target);
                 if (succeed && code === 0) {
                     this.parseAbstract(newStatus);
@@ -161,7 +162,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
 
     private parseAbstract(sta: Status) {
         sta.Content = removeBasSticker(sta.Content);
-        sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup, 22);
+        sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup);
     }
 }
 

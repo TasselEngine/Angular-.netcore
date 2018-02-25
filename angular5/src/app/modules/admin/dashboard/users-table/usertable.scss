@@ -1,0 +1,54 @@
+.users-table{
+    font-size:14px;
+    margin-top:8px;
+}
+
+.section-title{
+    padding-top:8px;
+    padding-left:12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.userline{
+    width:100%;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-top:4px;
+    margin-bottom: 4px;
+}
+
+.userline a{
+    font-weight: bold;
+}
+
+.avatar-circle{
+    width:18px;
+    height:18px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #5f81c6;
+    margin-right: 2px;
+}
+
+.default-icon{
+    margin-left:3px;
+    color:#fff;
+}
+
+:host ::ng-deep .ant-collapse-content{
+    padding:0px;
+}
+
+:host ::ng-deep .ant-collapse-content > .ant-collapse-content-box{
+    padding-top:0px;
+    padding-bottom: 0px;
+}
+
+@media(max-width:768px){
+    :host ::ng-deep .ant-table-small {
+        border: 1px solid transparent;
+        border-radius: 0px;
+    }
+}

@@ -10,6 +10,14 @@
     @extend .cont-inner-margin;
 }
 
+.vm-avatar-icon{
+    @extend .avatar-icon;
+}
+
+.vm-nologin{
+    @extend .nologin-icon;
+}
+
 .rd-loading-div{
     padding-top:200px;
     width:100%;
@@ -92,6 +100,13 @@
     @extend .vm-shadow;
 }
 
+.vm-comments-header p{
+    @extend .cont-padd-lr;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 2em;
+}
+
 .vm-header-actionlink{
     transition: 0.2s;
     -moz-transition: 0.2s;
@@ -108,11 +123,8 @@
     color: rgb(248, 198, 0);
 }
 
-.vm-comments-header p{
-    @extend .cont-padd-lr;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 2em;
+.no-commit-p{
+    font-size:16px;
 }
 
 .vm-comments-add{
@@ -183,4 +195,49 @@
     -webkit-transition: 1s;
     width: 0px;
     display: none;
+}
+
+@media(max-width:768px){
+    .vm-comments-header{
+        margin-bottom:0px;
+        color:#686868;
+        background-color: #fff;
+        border:0px solid #ececec;
+        border-bottom-width: 1px;
+    }
+
+    .vm-comments-header p{
+        font-size: 16px;
+        line-height: 2.5em;
+    }
+    
+
+    .vm-header-actionlink{
+        color: #686868;
+    }
+
+    .vm-header-actionlink:hover{
+        color: #337DD0;
+    }
+
+    .no-commit-p{
+        font-size:14px;
+    }
+
+    .vm-avatar-icon{
+        width:34px;
+        height: 34px;
+    }
+
+    .vm-username{
+        font-size: 16px
+    }
+    
+    .vm-stamp{
+        font-size: 8px
+    }
+
+    .vm-nologin{
+        font-size: 27px
+    }
 }

@@ -8,12 +8,12 @@
     width: 32px;
     height: 32px;
     margin-right:-8px;
-    box-shadow: 0px 0px 6px #181818;
+    box-shadow: 0px 0px 3px #383838;
     transition: 0.5s
 }
 
 .ll-avatar:hover{
-    box-shadow: 0px 0px 12px #080808;
+    box-shadow: 0px 0px 6px #181818;
     transition: 0.5s
 }
 
@@ -21,8 +21,13 @@
     display: inherit;
 }
 
-@media
-(max-width:768px){
+@media(max-width:768px){
+    .ll-avatar {
+        width: 28px;
+        height: 28px;
+        margin-right:-8px;
+    }
+
     .ll-for768{
         display: none;
     }

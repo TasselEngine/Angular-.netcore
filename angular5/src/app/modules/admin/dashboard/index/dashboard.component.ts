@@ -18,14 +18,6 @@ export class AdminDashboardComponent extends TasselAdminCompBase implements OnIn
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
 
-    private users: User[];
-    private admins: User[];
-    private cores: User[];
-
-    public get AdminUsers() { return this.admins || []; }
-    public get CoreUsers() { return this.cores || []; }
-    public get CommonUsers() { return this.users || []; }
-
     public get IsWideScreen() { return window.innerWidth > 768; }
 
     public get RouteLinks() { return this.navigator.RouteLinks; }
@@ -35,18 +27,7 @@ export class AdminDashboardComponent extends TasselAdminCompBase implements OnIn
     }
 
     ngOnInit(): void {
-        this.loadUserList();
+
     }
 
-    private loadUserList() {
-        this.admin.GetAllAdminAsync().then(([succeed, code, error, users]) => {
-            if (succeed && code === 0) { this.admins = users; }
-        });
-        this.admin.GetAllCoreUserAsync().then(([succeed, code, error, users]) => {
-            if (succeed && code === 0) { this.cores = users; }
-        });
-        this.admin.GetAllCommonUserAsync().then(([succeed, code, error, users]) => {
-            if (succeed && code === 0) { this.users = users; }
-        });
-    }
 }
