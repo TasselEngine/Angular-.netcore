@@ -22,6 +22,12 @@ export class Creator {
     private avatar: string;
     public get Avatar(): string { return this.avatar; }
 
+    constructor(uuid?: string, name?: string, avatar?: string) {
+        this.uuid = uuid;
+        this.user_name = name;
+        this.avatar = avatar;
+    }
+
 }
 
 @inheritSerialization(Creator)

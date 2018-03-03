@@ -70,6 +70,13 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         }
     }
 
+    public IsLiked(model: Status): boolean {
+        let index = model.LikeUserIDs.findIndex(i => i === this.identity.CurrentUUID);
+        if (index >= 0) { return true; }
+        index = model.LikeUsers.findIndex(i => i.Creator.UUID === this.identity.CurrentUUID);
+        return index >= 0;
+    }
+
     public async GetAllStatusAsync() {
         const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/all`, this.Options);
         this.apiLog([succeed, error, response], 'Try to fetch status-list', 'GetAllStatusAsync');

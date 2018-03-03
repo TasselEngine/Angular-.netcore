@@ -88,7 +88,7 @@ export class Status extends BsonBase {
     @serializeAs('like_users')
     @deserializeAs(LikeRelation, 'like_users')
     private liker_users: LikeRelation[];
-    public get LikeUsers(): LikeRelation[] { return this.liker_users || []; }
+    public get LikeUsers(): LikeRelation[] { return this.liker_users || (this.liker_users = []); }
 
     @serializeAs('liker_ids')
     @deserializeAs('liker_ids')
@@ -127,6 +127,17 @@ export class Status extends BsonBase {
         if (this._normalized) { return; }
         transform(this.details);
         this._normalized = true;
+        return this;
+    }
+
+    public AddLiker(id: string, name: string, avatar: string) {
+        this.LikeUsers.push(new LikeRelation(new Creator(id, name, avatar), new FormatTime(new Date())));
+        return this;
+    }
+
+    public RemoveLiker(id: string) {
+        this.liker_users = this.LikeUsers.filter(i => i.Creator.UUID !== id);
+        return this;
     }
 
 }

@@ -70,10 +70,7 @@ export class StatusIndexComponent extends TasselNavigationBase implements OnInit
     }
 
     public IsLiked(model: Status): boolean {
-        let index = model.LikeUserIDs.findIndex(i => i === this.identity.CurrentUUID);
-        if (index >= 0) { return true; }
-        index = model.LikeUsers.findIndex(i => i.Creator.UUID === this.identity.CurrentUUID);
-        return index >= 0;
+        return this.status.IsLiked(model);
     }
 
     public async ClickLike(model: Status) {

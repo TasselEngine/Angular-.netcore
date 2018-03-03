@@ -197,6 +197,48 @@
     display: none;
 }
 
+.modile-ctrlbar{
+    margin-top:12px;
+    padding:0px;
+    padding-bottom: 2px;
+}
+
+.modile-ctrlbar i {
+    font-size: 20px;
+    margin-right: 4px;
+    transition: 0.4s;
+}
+
+.modile-section{
+    border:0px solid #ececec;
+    border-top-width: 1px;
+    padding:8px;
+}
+
+.modile-addcmt {
+    padding-top:12px;
+    cursor: pointer;
+    display: inline-block;
+    color:#909090;
+    font-weight: bold;
+}
+
+.modile-addlike{
+    @extend .modile-addcmt;
+}
+
+.modile-addlike:hover i{
+    color: #ce4459;
+}
+
+.modile-addlike .islike{
+    color: #ce4459;
+}
+
+.modile-delete {
+    @extend .modile-addcmt;
+}
+
 @media(max-width:768px){
     .vm-comments-header{
         margin-bottom:0px;

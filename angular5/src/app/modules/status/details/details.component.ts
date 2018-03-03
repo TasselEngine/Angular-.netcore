@@ -39,10 +39,15 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     private showComments = true;
     public get ShowComments() { return this.showComments; }
 
+    private isLiked = false;
+    public get IsLiked() { return this.isLiked || false; }
+
     public get ImageSrcRoot() { return this.formater.ImageSrcRoot; }
 
     public get Formator() { return this.formater; }
     public get Logined() { return this.identity.IsLogined || false; }
+
+    public get IsWideScreen() { return window.innerWidth > 768; }
 
     private logger: Logger<StatusDetailsComponent>;
 
@@ -66,7 +71,10 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             }
             if (code === ServerStatus.Succeed) {
                 this.model = details;
-                this.model.Content = this.formater.ImageTickParse(this.model.Content, this.resources.AllStickersGroup, 24);
+                this.model.Normalize((content) => this.model.Content = this.formater.ImageTickParse(content, this.resources.AllStickersGroup, 24));
+                if (this.identity.IsLogined) {
+                    this.isLiked = this.status.IsLiked(details);
+                }
             } else {
                 this.logger.Warn(['Get status details failed', 'See the details : ', error.msg], 'ngOnInit');
                 this.navigator.GoToNotFound();
@@ -83,7 +91,8 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         this.root.OpenPhotoGallary(config);
     }
 
-    public OpenCommentPanel() {
+    /** must use lambda */
+    public OpenCommentPanel = () => {
         this.openEdit = !this.openEdit;
     }
 
@@ -103,7 +112,25 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         this.openEdit = false;
     }
 
-    public async DeleteStatus() {
+    /** must use lambda */
+    public LikeStatus = async () => {
+        const [succeed, code, error, result] = await this.status.LikeStatusAsync(this.model.ID, this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName);
+        if (succeed && code === ServerStatus.Succeed) {
+            if (result === 'deleted') {
+                this.model.LikeUserIDs = this.model.LikeUserIDs.filter(i => i !== this.identity.CurrentUUID);
+                this.model.RemoveLiker(this.identity.CurrentUUID);
+                this.isLiked = false;
+            } else {
+                this.model.LikeUserIDs.push(result);
+                this.model.AddLiker(this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName, this.identity.CurrentUser.Avatar);
+                this.isLiked = true;
+            }
+            this.model.LikersCount = this.model.LikeUserIDs.length;
+        }
+    }
+
+    /** must use lambda */
+    public DeleteStatus = async () => {
         const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
         const modal = this.toast.WarnModal(undefined, 'Do you really want delete this status? This action can\'t be rollback.', width, true, false, [async () => {
             const [succeed, code, error, _] = await this.status.DeleteStatusAsync(this.status_id);

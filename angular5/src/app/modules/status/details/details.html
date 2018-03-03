@@ -20,12 +20,23 @@
             <div class="vm-details-formatdiv" [innerHtml]="VM.Content"></div>
             <br/>
             <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
-            <p *ngIf="Logined">
-                <a class="vm-text-md" (click)="OpenCommentPanel()">Add comment</a>
-                <span *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core' "> |
-                    <a class="vm-text-md" (click)="DeleteStatus()">Delete</a>
-                </span>
-            </p>
+            <div *ngIf=" Logined" class="modile-ctrlbar" nz-row>
+                <div class="modile-section" nz-col [nzSpan]="IsWideScreen?3:8">
+                    <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-addlike', icss:IsLiked?'heart':'heart-o', label:'Like', todo:LikeStatus}"></ng-template>
+                </div>
+                <div class="modile-section" nz-col [nzSpan]="IsWideScreen?3:8">
+                    <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-addcmt', icss:'message', label:'Reply', todo:OpenCommentPanel}"></ng-template>
+                </div>
+                <div class="modile-section" nz-col [nzSpan]="IsWideScreen?3:8">
+                    <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-delete', icss:'delete', label:'Delete', todo:DeleteStatus}"></ng-template>
+                </div>
+            </div>
+            <ng-template #barSection let-css="css" let-todo="todo" let-icss="icss" let-label="label">
+                <div [class]="css" (click)="todo()">
+                    <i [class]="(IsLiked?'islike ':'') + 'anticon anticon-' + icss"></i>
+                    <span>{{label}}</span>
+                </div>
+            </ng-template>
         </div>
     </div>
     <div class="vm-comments-div">

@@ -16,8 +16,12 @@ export class LikeRelation {
     private create_time: number;
     private cttm: FormatTime;
     public get CreateTime(): FormatTime {
-        return !this.create_time ? undefined :
-            this.cttm || (this.cttm = FormatTime.Create(!this.create_time ? undefined : this.create_time * 1000, 0));
+        return this.cttm || (this.cttm = FormatTime.Create(!this.create_time ? undefined : this.create_time * 1000, 0));
+    }
+
+    constructor(user?: Creator, time?: FormatTime) {
+        this.creator = user;
+        this.cttm = time;
     }
 
     public static Parse = (i: ILikeRelation) => JsonHelper.FromJson<LikeRelation>(i, LikeRelation);

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, DoCheck, OnInit } from '@angular/core';
 import { Creator, LikeRelation } from '../../../model/app.model';
 import { IdentityService } from '../../../services/app.service';
 
@@ -9,7 +9,7 @@ import { IdentityService } from '../../../services/app.service';
         'likes-line.scss'
     ]
 })
-export class LikersLineComponent {
+export class LikersLineComponent implements OnInit, DoCheck {
 
     @Input('capacity')
     private capacity: number;
@@ -19,7 +19,32 @@ export class LikersLineComponent {
     private users: LikeRelation[];
     private usersCache: LikeRelation[];
     public get Users() {
-        if (this.users && this.identity.CurrentUUID) { // show me on the top.
+        this.parseUsers();
+        return this.usersCache || (this.usersCache = (this.users || []).slice(0, this.Capacity));
+    }
+
+    @Output()
+    OnUserClicked = new EventEmitter<string>();
+
+    private countCache = 0;
+
+    constructor(private identity: IdentityService) {
+
+    }
+
+    ngOnInit(): void {
+        this.countCache = (this.users || []).length;
+        console.log(this.countCache);
+    }
+
+    ngDoCheck(): void {
+        if (this.countCache === (this.users || []).length) { return; }
+        this.countCache = (this.users || []).length;
+        this.usersCache = null;
+    }
+
+    private parseUsers() {
+        if (this.users && this.identity.CurrentUUID) {
             const me_index = this.users.findIndex(i => i.Creator.UUID === this.identity.CurrentUUID);
             if (me_index >= 0) {
                 const me = this.users[me_index];
@@ -29,14 +54,6 @@ export class LikersLineComponent {
                 this.users.push(me);
             }
         }
-        return this.usersCache || (this.users || []).slice(0, this.Capacity);
-    }
-
-    @Output()
-    OnUserClicked = new EventEmitter<string>();
-
-    constructor(private identity: IdentityService) {
-
     }
 
     public readonly GoToUserDetails = (user?: Creator) => {
