@@ -59,7 +59,7 @@ export class Status extends BsonBase {
     @serializeAs('details')
     @deserializeAs('details')
     private details: string;
-    public get Content(): string { return this.details; }
+    public get Content(): string { return this._normalized ? this.details : 'Loading...'; }
     public set Content(value: string) { this.details = value; }
 
     @serializeAs('cover')
@@ -107,6 +107,8 @@ export class Status extends BsonBase {
     private creator: Creator;
     public get Creator(): Creator { return this.creator; }
 
+    private _normalized = false;
+
     public static Parse = (i: IStatus) => JsonHelper.FromJson<Status>(i, Status);
 
     public static ParseList = (coll: IStatus[]) => JsonHelper.FromJson<Status[]>(coll, Status);
@@ -119,6 +121,12 @@ export class Status extends BsonBase {
             case 'origin': return this.Images.map(i => head + i.URL);
             default: return this.Thumbnails.map(i => head + i);
         }
+    }
+
+    public Normalize(transform: (content: string) => void) {
+        if (this._normalized) { return; }
+        transform(this.details);
+        this._normalized = true;
     }
 
 }

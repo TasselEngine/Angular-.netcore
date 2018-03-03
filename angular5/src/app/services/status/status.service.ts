@@ -161,8 +161,12 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
 
 
     private parseAbstract(sta: Status) {
-        sta.Content = removeBasSticker(sta.Content);
-        sta.Content = this.formater.ImageTickParse(sta.Content, this.resources.AllStickersGroup);
+        setTimeout(() => {
+            sta.Normalize((content) => {
+                const value = removeBasSticker(content);
+                sta.Content = this.formater.ImageTickParse(value, this.resources.AllStickersGroup);
+            });
+        });
     }
 }
 

@@ -1,5 +1,22 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter, SimpleChanges, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 
+class ImageCache {
+
+    private container: { [key: string]: boolean } = {};
+
+    private setCache(key: string) {
+        this.container[key] = true;
+    }
+
+    public Check(key: string) {
+        if (this.container[key]) { return true; }
+        this.setCache(key);
+        return false;
+    }
+}
+
+const Container = new ImageCache();
+
 @Component({
     selector: 'tassel-pre-image',
     templateUrl: './pre-image.html',
@@ -53,33 +70,48 @@ export class PreloadingImageComponent implements OnInit, OnChanges {
 
     public hideimage = true;
     public showPic = false;
-    public showTemp = false;
     public Disposed = false;
+
+    private cache = Container;
+    private cached = false;
 
     constructor() {
 
     }
 
     ngOnInit(): void {
-        setTimeout(() => this.showTemp = true, 20);
-        setTimeout(() => this.url = this.origin, this.timeout);
+        this.checkAndInit();
+    }
+
+    private checkAndInit(url?: string) {
+        url = url || this.origin;
+        if (this.cache.Check(url)) {
+            setTimeout(() => {
+                this.url = url;
+                this.hideimage = false;
+                this.cached = true;
+                this.showPic = true;
+            });
+        } else {
+            setTimeout(() => this.url = url, 20);
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         for (const propName in changes) {
             if (propName === 'src' && changes[propName].currentValue) {
                 this.showPic = false;
-                this.url = this.origin;
                 this.hideimage = true;
-                setTimeout(() => this.showPic = true, 20);
+                this.checkAndInit();
             }
         }
     }
 
     public OnCurrentLoaded(event) {
-        this.hideimage = false;
-        setTimeout(() => this.showPic = true, 20);
         this.OnLoaded.emit(event);
+        if (this.cached) { return; }
+        setTimeout(() => this.hideimage = false);
+        setTimeout(() => this.showPic = true, this.timeout);
     }
 
     public OnCurrentClicked(event) {
