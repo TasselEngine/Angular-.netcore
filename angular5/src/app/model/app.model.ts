@@ -18,7 +18,6 @@ import { RouteErrors } from './enums/errors.enum';
 import { ServerStatus } from './enums/response.enum';
 import { StickersMap } from './models/commons/sticker/sticker.model';
 import { IBottomPopConfig, IBottomPopItem } from './models/commons/bottomPop/pop.contract';
-import { IPhotoGallaryConfig } from './models/commons/photoGallary/photo-gallary.contract';
 import { IServerLog } from './models/log/log.contract';
 import { ApplicationLog } from './models/log/log.model';
 
@@ -52,8 +51,7 @@ export {
     ILikeRelation,
     ISticker,
     IBottomPopConfig,
-    IBottomPopItem,
-    IPhotoGallaryConfig
+    IBottomPopItem
 };
 
 export {

@@ -3,7 +3,10 @@ import { AsyncableServiceBase } from '../base/service.base';
 import { Subject } from 'rxjs/Subject';
 import { CacheService } from './../cache/cache.service';
 import { Router } from '@angular/router';
-import { IBottomPopConfig, Image, IPhotoGallaryConfig } from '../../model/app.model';
+import { IBottomPopConfig, Image } from '../../model/app.model';
+import { Config as ImageGallaryConfig } from '../../modules/commons/photoGallary/contract';
+
+export { ImageGallaryConfig };
 
 interface IScrollState {
     TimeStamp: Date;
@@ -26,7 +29,7 @@ export class RootService extends AsyncableServiceBase {
     public readonly ScrollRebuildSubject: Subject<IScrollState> = new Subject<IScrollState>();
     public readonly WidthSubject: Subject<number> = new Subject<number>();
     public readonly BottomPopSubject: Subject<IBottomPopConfig> = new Subject<IBottomPopConfig>();
-    public readonly PhotoGallarySubject: Subject<IPhotoGallaryConfig> = new Subject<IPhotoGallaryConfig>();
+    public readonly PhotoGallarySubject: Subject<ImageGallaryConfig> = new Subject<ImageGallaryConfig>();
     public readonly RefreshButtonSubject: Subject<[boolean, Function]> = new Subject<[boolean, Function]>();
 
     constructor(private cache: CacheService) {
@@ -37,7 +40,7 @@ export class RootService extends AsyncableServiceBase {
         this.BottomPopSubject.next(config);
     }
 
-    public OpenPhotoGallary(config: IPhotoGallaryConfig) {
+    public OpenPhotoGallary(config: ImageGallaryConfig) {
         this.PhotoGallarySubject.next(config);
     }
 

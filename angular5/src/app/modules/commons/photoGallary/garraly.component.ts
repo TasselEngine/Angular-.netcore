@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { Image, IPhotoGallaryConfig } from '../../../model/app.model';
+import { Config, Image } from './contract';
 
 @Component({
     selector: 'tassel-photo-gallary',
@@ -9,7 +9,7 @@ import { Image, IPhotoGallaryConfig } from '../../../model/app.model';
 export class PhotoGallaryComponent implements OnInit, OnChanges {
 
     @Input('images')
-    private images: IPhotoGallaryConfig;
+    private images: Config;
     private copy: Image[];
     public get Images() { return this.copy; }
 
@@ -37,8 +37,8 @@ export class PhotoGallaryComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         for (const propName in changes) {
             if (propName === 'images' && changes[propName].currentValue) {
-                const config: IPhotoGallaryConfig = changes[propName].currentValue;
-                this.copy = config.images.map(i => new Image(null, config.srcRoot + i.URL, config.srcRoot + i.Thumbnail));
+                const config: Config = changes[propName].currentValue;
+                this.copy = config.images.map(i => ({ thumb: config.root + i.thumb, origin: config.root + i.origin }));
                 this.current = this.copy[config.selected];
                 this.Disposed = false;
                 setTimeout(() => this.showPop = true, 20);

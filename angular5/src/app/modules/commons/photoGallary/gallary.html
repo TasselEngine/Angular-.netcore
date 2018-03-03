@@ -1,7 +1,7 @@
 <div *ngIf="!Disposed">
     <div class="gallary-background" (click)="CloseThis()" [class.show-background]="ShowPop"></div>
     <div class="current-photo" (click)="CloseThis()" [class.show-photo]="ShowPop" [hidden]="hideImage">
-        <img class="pre-load" [class.after-load]="hideImage" [src]="Current.URL" (load)="OnCurrentLoaded()" />
+        <img class="pre-load" [class.after-load]="hideImage" [src]="Current.origin" (load)="OnCurrentLoaded()" />
     </div>
     <div class="current-photo pre-load" (click)="CloseThis()" [class.after-load]="!hideImage" [class.show-photo]="ShowPop">
         <tassel-common-loading animaWidth="120px" marginTop="240px" content="Loading..." contentSize="22px" contentColor="#fff">
@@ -9,6 +9,6 @@
     </div>
     <div class="bpanel-background" [class.show-backbpanel]="ShowPop"></div>
     <div class="bottom-panel" [class.show-bpanel]="ShowPop">
-        <img *ngFor="let image of Images; let i=index" [src]="image.Thumbnail" (click)="OnItemClicked(image)" />
+        <img *ngFor="let image of Images; let i=index" [src]="image.thumb" (click)="OnItemClicked(image)" />
     </div>
 </div>

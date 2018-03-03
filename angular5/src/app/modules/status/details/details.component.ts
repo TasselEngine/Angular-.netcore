@@ -76,7 +76,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
 
     public OnImageClicked(img_src: string) {
         const target_idx = this.model.Images.findIndex(i => this.ImageSrcRoot + i.Thumbnail === img_src);
-        const config = { selected: 0, images: this.model.Images, srcRoot: this.ImageSrcRoot };
+        const config = { selected: 0, images: this.model.Images.map(i => ({ thumb: i.Thumbnail, origin: i.URL })), root: this.ImageSrcRoot };
         if (target_idx >= 0) {
             config.selected = target_idx;
         }
