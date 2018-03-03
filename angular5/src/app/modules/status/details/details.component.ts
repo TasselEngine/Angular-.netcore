@@ -125,7 +125,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 this.model.AddLiker(this.identity.CurrentUUID, this.identity.CurrentUser.FriendlyName, this.identity.CurrentUser.Avatar);
                 this.isLiked = true;
             }
-            this.model.LikersCount = this.model.LikeUserIDs.length;
+            this.model.LikersCount = this.model.LikeUsers.length;
         }
     }
 

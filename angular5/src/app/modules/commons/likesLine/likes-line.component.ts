@@ -34,11 +34,12 @@ export class LikersLineComponent implements OnInit, DoCheck {
 
     ngOnInit(): void {
         this.countCache = (this.users || []).length;
-        console.log(this.countCache);
+        // console.log(this.countCache);
     }
 
     ngDoCheck(): void {
         if (this.countCache === (this.users || []).length) { return; }
+        // console.log(this.users.length);
         this.countCache = (this.users || []).length;
         this.usersCache = null;
     }
