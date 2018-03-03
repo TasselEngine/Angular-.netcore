@@ -1,6 +1,7 @@
 <div [class]=" 'preload-template ' + Css " *ngIf="!Disposed" [style.min-width]="Width" [style.min-height]="Height">
-    <img *ngIf="URL" class="notshow show" alt="image" [src]="URL" [style.width]="Width" [style.height]="Height" [class.show]="showPic"
-        (load)="OnCurrentLoaded($event)" (click)="OnCurrentClicked($event)" [hidden]="hideimage" />
+    <img *ngIf="URL" class="notshow show light-img" alt="image" [src]="URL" [style.width]="Width" [style.height]="Height" [class.show]="showPic"
+        [class.light-img]="Highlight" (load)="OnCurrentLoaded($event)" (click)="OnCurrentClicked($event)" [hidden]="hideimage"
+    />
     <!-- <img [class]=" 'notshow ' + Css" *ngIf="IsURL" [src]="Default" [style.width]="Width" [style.height]="Height" [hidden]="!hideimage"
     /> -->
     <preloading-div class="absolute" [class.absolute]="IsAbsolute" [hidden]="!hideimage">

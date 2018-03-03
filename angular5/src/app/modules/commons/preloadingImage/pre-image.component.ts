@@ -59,6 +59,10 @@ export class PreloadingImageComponent implements OnInit, OnChanges {
     private absolute: boolean;
     public get IsAbsolute() { return this.absolute || false; }
 
+    @Input()
+    private highlight = true;
+    public get Highlight() { return this.highlight || false; }
+
     @ViewChild('default')
     public defaultLoading: ElementRef;
 

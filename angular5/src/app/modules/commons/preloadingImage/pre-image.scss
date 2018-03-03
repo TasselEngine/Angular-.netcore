@@ -5,6 +5,7 @@
 .preload-template img{
     transition: 0.5s;
     margin-bottom: -4px;
+    cursor: pointer;
 }
 
 .preload-template div{
@@ -17,6 +18,10 @@
 
 .preload-template .absolute{
     position: absolute;
+}
+
+.light-img:hover{
+    opacity: 0.75;
 }
 
 .default-pre{
