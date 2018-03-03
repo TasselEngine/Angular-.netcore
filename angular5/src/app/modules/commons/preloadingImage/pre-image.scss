@@ -1,0 +1,41 @@
+.preload-template {
+    transition: 0.5s;
+}
+
+.preload-template img{
+    transition: 0.5s;
+    margin-bottom: -4px;
+}
+
+.preload-template div{
+    transition: 0.5s;
+}
+
+.preload-template preloading-div{
+    transition: 0.5s;
+}
+
+.preload-template .absolute{
+    position: absolute;
+}
+
+.default-pre{
+    background-color: rgba(128, 128, 128, 0.42);
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.default-pre i {
+    font-size: 48px;
+    margin-top:calc(50% - 24px);
+    margin-bottom:calc(50% - 24px);
+}
+
+.notshow{
+    opacity: 0;
+}
+
+.show{
+    opacity: 1;
+}

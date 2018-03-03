@@ -40,6 +40,7 @@ export class PhotoGallaryComponent implements OnInit, OnChanges {
                 const config: Config = changes[propName].currentValue;
                 this.copy = config.images.map(i => ({ thumb: config.root + i.thumb, origin: config.root + i.origin }));
                 this.current = this.copy[config.selected];
+                this.hideImage = true;
                 this.Disposed = false;
                 setTimeout(() => this.showPop = true, 20);
             }

@@ -3,6 +3,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../../extensions/extensions.module';
 import { NgModule } from '@angular/core';
+import { PreloadingImageModule } from '../preloadingImage/pre-image.module';
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { NgModule } from '@angular/core';
     imports: [
         CommonModule,
         ExtensionsModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        PreloadingImageModule
     ],
     providers: [],
     exports: [

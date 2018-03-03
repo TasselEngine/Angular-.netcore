@@ -18,7 +18,17 @@
     cursor: pointer;
 }
 
-.img-margin{
-    margin-right:4px;
-    margin-bottom: 4px;
+:host ::ng-deep .img-margin{
+    margin-right:1px;
+    margin-bottom: 1px;
+}
+
+:host ::ng-deep .tb-margin{
+    margin-right:1px;
+    margin-bottom: 0px;
+}
+
+:host ::ng-deep .blur-img{
+    opacity:0.3;
+    margin-bottom: -4px;
 }

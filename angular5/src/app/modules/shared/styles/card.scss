@@ -8,10 +8,6 @@
     transform: scale(1.01);
   }
   
-  :host ::ng-deep .custom-image img {
-      display: block;
-    }
-  
     :host ::ng-deep .custom-card {
       padding: 8px 12px;
     }
