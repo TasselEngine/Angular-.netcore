@@ -41,7 +41,7 @@ export class FormatService extends AsyncableServiceBase {
         if (coll[0] && coll[0] !== '') {
             const target = ticks.find(i => `[${i.key}]` === coll[0]);
             if (target) {
-                str = str.replace(coll[0], `</span><img ${size ? 'width="' + size + '"' : ''}src="${this.ImageSrcRoot}${target.value}" />&nbsp;<span>`);
+                str = str.replace(coll[0], `</span><img class="tassel-sticker" ${size ? 'width="' + size + '"' : ''}src="${this.ImageSrcRoot}${target.value}" />&nbsp;<span>`);
             }
             return this.goRegex(reg, str, ticks, size);
         } else {

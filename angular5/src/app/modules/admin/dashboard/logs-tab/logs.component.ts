@@ -42,7 +42,7 @@ export class AdminDashLogsComponent extends TasselAdminCompBase implements OnIni
         this.IsLoading = true;
         const [succeed, code, error, logs] = await this.admin.LoadApplicationLogsAsync(this.loadCount, skip);
         if (succeed && code === 0) {
-            logs.forEach(log => log.TargetKey = log.TargetKey ? this.formater.ImageTickParse(log.TargetKey || '', this.resources.AllStickersGroup, 20) : log.TargetKey);
+            logs.forEach(log => log.TargetKey = log.TargetKey ? this.formater.ImageTickParse(log.TargetKey || '', this.resources.AllStickersGroup) : log.TargetKey);
             this.logs.push(...logs);
             if (logs.length === 0) {
                 this.IsEnd = true;

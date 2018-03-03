@@ -9,6 +9,7 @@ import { AdminUserNameDisplayPipe } from './index/user-display.pipe';
 import { AdminUserTableComponent } from './users-table/user-table.component';
 import { AdminDashLogsComponent } from './logs-tab/logs.component';
 import { TimeFormatModule } from '../../commons/timeFormat/timeFormat.module';
+import { CommonLoadingModule } from '../../commons/loading/common-loading.module';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { TimeFormatModule } from '../../commons/timeFormat/timeFormat.module';
         ExtensionsModule,
         FormsModule,
         TimeFormatModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        CommonLoadingModule
     ],
     providers: [],
     exports: [

@@ -19,6 +19,11 @@ export class AdminUserTableComponent extends TasselAdminCompBase implements OnIn
     private users: User[];
     private admins: User[];
     private cores: User[];
+    public loaded = {
+        users: false,
+        admins: false,
+        cores: false
+    };
 
     public get AdminUsers() { return this.admins || []; }
     public get CoreUsers() { return this.cores || []; }
@@ -42,12 +47,15 @@ export class AdminUserTableComponent extends TasselAdminCompBase implements OnIn
     private loadUserList() {
         this.admin.GetAllCommonUserAsync().then(([succeed, code, error, users]) => {
             if (succeed && code === 0) { this.users = users; }
+            this.loaded.users = true;
         });
         this.admin.GetAllAdminAsync().then(([succeed, code, error, users]) => {
             if (succeed && code === 0) { this.admins = users; }
+            this.loaded.admins = true;
         });
         this.admin.GetAllCoreUserAsync().then(([succeed, code, error, users]) => {
             if (succeed && code === 0) { this.cores = users; }
+            this.loaded.cores = true;
         });
     }
 

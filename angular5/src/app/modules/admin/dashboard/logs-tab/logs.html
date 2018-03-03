@@ -48,6 +48,6 @@
     <ng-template #pending>
         <a [hidden]="IsEnd || IsLoading" (click)="LoadMore()">Load more</a>
         <b *ngIf="IsEnd">no more logs.</b>
-        <span *ngIf="IsLoading">loading...</span>
+        <tassel-common-loading *ngIf="IsLoading" animaWidth="24px" maxWidth="30px" marginTop="0px" padding="0"></tassel-common-loading>
     </ng-template>
 </nz-timeline>

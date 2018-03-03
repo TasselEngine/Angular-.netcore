@@ -5,9 +5,11 @@
     </div>
 
     <div class="users-table">
-        <nz-table #usersTable [nzDataSource]="CommonUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small">
-            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: usersTable }">
-            </ng-template>
+        <nz-table #usersTable [nzDataSource]="CommonUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
+            <div noResult>
+                <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.users }"></ng-template>
+            </div>
+            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: usersTable }"></ng-template>
         </nz-table>
     </div>
 
@@ -16,9 +18,11 @@
     </div>
 
     <div class="users-table">
-        <nz-table #adminsTable [nzDataSource]="AdminUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small">
-            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: adminsTable }">
-            </ng-template>
+        <nz-table #adminsTable [nzDataSource]="AdminUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
+            <div noResult>
+                <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.admins }"></ng-template>
+            </div>
+            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: adminsTable }"></ng-template>
         </nz-table>
     </div>
 
@@ -27,9 +31,11 @@
     </div>
 
     <div class="users-table">
-        <nz-table #coresTable [nzDataSource]="CoreUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small">
-            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: coresTable }">
-            </ng-template>
+        <nz-table #coresTable [nzDataSource]="CoreUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
+            <div noResult>
+                <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.cores }"></ng-template>
+            </div>
+            <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: coresTable }"></ng-template>
         </nz-table>
     </div>
 
@@ -39,28 +45,39 @@
     <nz-collapseset nzAccordion>
 
         <nz-collapse [nzTitle]=" 'User' + ' ' + CommonUsers.length " [nzActive]="true">
-            <nz-table #usersTable [nzDataSource]="CommonUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small">
-                <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: usersTable }">
-                </ng-template>
+            <nz-table #usersTable [nzDataSource]="CommonUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
+                <div noResult>
+                    <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.users }"></ng-template>
+                </div>
+                <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: usersTable }"></ng-template>
             </nz-table>
         </nz-collapse>
 
         <nz-collapse [nzTitle]=" 'Admin' + ' ' + AdminUsers.length ">
-            <nz-table #adminsTable [nzDataSource]="AdminUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small">
-                <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: adminsTable }">
-                </ng-template>
+            <nz-table #adminsTable [nzDataSource]="AdminUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
+                <div noResult>
+                    <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.admins }"></ng-template>
+                </div>
+                <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: adminsTable }"></ng-template>
             </nz-table>
         </nz-collapse>
 
         <nz-collapse [nzTitle]=" 'Core' + ' ' + CoreUsers.length">
-            <nz-table #coresTable [nzDataSource]="CoreUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small">
-                <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: coresTable }">
-                </ng-template>
+            <nz-table #coresTable [nzDataSource]="CoreUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
+                <div noResult>
+                    <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.cores }"></ng-template>
+                </div>
+                <ng-template [ngTemplateOutlet]="tableTemplate" [ngTemplateOutletContext]="{ model: coresTable }"></ng-template>
             </nz-table>
         </nz-collapse>
 
     </nz-collapseset>
 </div>
+
+<ng-template #tableNoResult let-loaded="loaded">
+    <span *ngIf="loaded">没有数据</span>
+    <tassel-common-loading *ngIf="!loaded" animaWidth="24px"></tassel-common-loading>
+</ng-template>
 
 <ng-template #tableTemplate let-model="model">
     <thead nz-thead>
@@ -95,10 +112,10 @@
             <td nz-td>{{data.Gender?'Male':'Female'}}</td>
             <td nz-td *ngIf="IsWideScreen">
                 <span>
-                    <a href="#">Action 一 {{data.name}}</a>
+                    <!-- <a href="#">Action 一 {{data.name}}</a>
                     <span nz-table-divider></span>
                     <a href="#">Delete</a>
-                    <span nz-table-divider></span>
+                    <span nz-table-divider></span> -->
                     <nz-dropdown>
                         <a class="ant-dropdown-link" nz-dropdown>
                             <span>Change role</span>
