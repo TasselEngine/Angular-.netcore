@@ -69,7 +69,7 @@ export class RouterService {
     }
 
     public GoToPath(path: string) {
-        this.routeSafely([path]);;
+        this.routeSafely([path]);
     }
 
     public GoHome() {

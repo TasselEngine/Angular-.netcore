@@ -75,6 +75,10 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 if (this.identity.IsLogined) {
                     this.isLiked = this.status.IsLiked(details);
                 }
+                const index = this.status.Cache.findIndex(i => i.ID === details.ID);
+                if (index >= 0) {
+                    this.status.Cache[index] = details;
+                }
             } else {
                 this.logger.Warn(['Get status details failed', 'See the details : ', error.msg], 'ngOnInit');
                 this.navigator.GoToNotFound();

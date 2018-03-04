@@ -16,7 +16,6 @@ export class PreLoadingImageDirective implements OnInit, OnChanges {
 
     @Input('data-src')
     private src: string;
-    private imagesrc: string;
 
     @Input('data-width')
     private width: number;
@@ -29,9 +28,6 @@ export class PreLoadingImageDirective implements OnInit, OnChanges {
 
     @Input('height')
     private styHeight: string;
-
-    @HostBinding('src')
-    public get ImageSrc() { return this.imagesrc; }
 
     @HostBinding('style.width')
     public get StyleWidth() { return !this.width ? (this.styWidth || '100%') : this.width + 'px'; }
@@ -57,15 +53,16 @@ export class PreLoadingImageDirective implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        if (!this.src) { return; }
         if (this.cache.Check(this.src)) {
             setTimeout(() => {
-                this.imagesrc = this.src;
+                this.loadImage();
                 this.loaded = true;
                 this.OnLoaded.emit(new Date());
             });
             return;
         } else {
-            setTimeout(() => this.imagesrc = this.src, 20);
+            setTimeout(() => this.loadImage(), 20);
         }
         this.element.onload = () => {
             if (this.openAimation) {
@@ -75,6 +72,10 @@ export class PreLoadingImageDirective implements OnInit, OnChanges {
             }
             this.OnLoaded.emit(new Date());
         };
+    }
+
+    private loadImage() {
+        this.element.setAttribute('src', this.src);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

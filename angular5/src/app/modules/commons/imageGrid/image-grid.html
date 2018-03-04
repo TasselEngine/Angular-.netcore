@@ -43,14 +43,14 @@
             <div nz-row>
                 <div nz-col [nzSpan]="12" *ngFor="let img of Images[0];let i = index" style="padding:1px">
                     <ws-pre-image>
-                        <img ws-image class="blur-img" [data-src]="img" (click)="OnImageClicked(img)" />
+                        <img ws-image [data-src]="img" (click)="OnImageClicked(img)" />
                     </ws-pre-image>
                 </div>
             </div>
             <div nz-row>
                 <div nz-col [nzSpan]="12" *ngFor="let img of Images[1];let i = index" style="padding:1px">
                     <ws-pre-image>
-                        <img ws-image class="blur-img" [data-src]="img" (click)="OnImageClicked(img)" />
+                        <img ws-image [data-src]="img" (click)="OnImageClicked(img)" />
                     </ws-pre-image>
                 </div>
             </div>

@@ -90,10 +90,11 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public ShowMainMenu() {
         const config = this.isAdminView ? {
             title: 'ADMIN MENU', items: [
-                { label: 'Home', onClick: () => this.navigator.GoHome() },
+                { label: 'Dashboard', onClick: () => this.navigator.GoToAdminDashboard() },
                 { label: 'Status', onClick: () => this.navigator.GoToAdminStatus() },
                 { label: 'Posts', onClick: () => { } },
                 { label: 'Notes', onClick: () => { } },
+                { label: 'Home', onClick: () => this.navigator.GoHome() },
             ]
         } : {
                 title: 'MENU', items: [
