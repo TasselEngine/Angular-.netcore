@@ -1,0 +1,41 @@
+ui-preload {
+    background-color: rgba(128, 128, 128, 0.42);
+    // background: #fff;
+    display: block;
+    transition: 0.5s;
+}
+
+:host ::ng-deep ui-preload img {
+    transition: 0.5s;
+}
+
+:host ::ng-deep .notshow{
+    opacity: 0;
+    margin-bottom: -6px;
+}
+
+:host ::ng-deep .show{
+    opacity: 1;
+    margin-bottom: -6px;
+}
+
+:host ::ng-deep .show:hover{
+    opacity: 0.75;
+}
+
+:host ::ng-deep .blur-img{
+    opacity:0.3;
+}
+
+.default-pre{
+    background-color: rgba(128, 128, 128, 0.42);
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.default-pre i {
+    font-size: 48px;
+    margin-top:calc(50% - 24px);
+    margin-bottom:calc(50% - 24px);
+}

@@ -1,41 +1,57 @@
 <div *ngIf="DivideType">
     <div *ngIf="images||src" class="img-pointer" [class.img-pointer]="CanPointer">
-        <tassel-pre-image *ngIf="Count===1" [src]="src || images[0]" (click)="OnImageClicked(src || images[0])" [timeout]="10"></tassel-pre-image>
+        <ws-pre-image *ngIf="Count===1">
+            <img ws-image [data-src]="src || images[0]" (click)="OnImageClicked(src || images[0])" />
+        </ws-pre-image>
         <div *ngIf="Count<=3 && Count>1 " nz-row>
             <div nz-col [nzSpan]="24/Count" *ngFor="let img of images;let i = index" style="padding:1px">
-                <tassel-pre-image css="tb-margin" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+1)*10"></tassel-pre-image>
+                <ws-pre-image [stroke]="1">
+                    <img ws-image [data-src]="img" (click)="OnImageClicked(img)" />
+                </ws-pre-image>
             </div>
         </div>
         <div *ngIf="Count>3&&Count!==4">
             <div nz-row>
                 <div nz-col [nzSpan]="8" *ngFor="let img of Images[0];let i = index" style="padding:1px">
-                    <tassel-pre-image css="tb-margin" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+1)*10"></tassel-pre-image>
+                    <ws-pre-image>
+                        <img ws-image [data-src]="img" (click)="OnImageClicked(img)" />
+                    </ws-pre-image>
                 </div>
             </div>
             <div nz-row>
                 <div nz-col [nzSpan]="8" *ngFor="let img of Images[1];let i = index" style="padding:1px">
-                    <tassel-pre-image css="tb-margin" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+4)*10"></tassel-pre-image>
+                    <ws-pre-image>
+                        <img ws-image [data-src]="img" (click)="OnImageClicked(img)" />
+                    </ws-pre-image>
                 </div>
             </div>
             <div *ngIf="Count>=6" nz-row>
                 <div nz-col [nzSpan]="8" *ngFor="let img of Images[2];let i=index" style="padding:1px">
                     <div class="img-more" *ngIf="i===2&&Count>9">
-                        <tassel-pre-image css="blur-img" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+7)*10"></tassel-pre-image>
+                        <ws-pre-image>
+                            <img ws-image class="blur-img" [data-src]="img" (click)="OnImageClicked(img)" />
+                        </ws-pre-image>
                         <span>{{Count-9}} + </span>
                     </div>
-                    <tassel-pre-image css="tb-margin" *ngIf="i!==2||Count<=9" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+9)*10"></tassel-pre-image>
+                    <ws-pre-image *ngIf="i!==2||Count<=9">
+                        <img ws-image [data-src]="img" (click)="OnImageClicked(img)" />
+                    </ws-pre-image>
                 </div>
             </div>
         </div>
         <div *ngIf="Count===4">
             <div nz-row>
                 <div nz-col [nzSpan]="12" *ngFor="let img of Images[0];let i = index" style="padding:1px">
-                    <tassel-pre-image css="tb-margin" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+1)*10"></tassel-pre-image>
+                    <ws-pre-image>
+                        <img ws-image class="blur-img" [data-src]="img" (click)="OnImageClicked(img)" />
+                    </ws-pre-image>
                 </div>
             </div>
             <div nz-row>
                 <div nz-col [nzSpan]="12" *ngFor="let img of Images[1];let i = index" style="padding:1px">
-                    <tassel-pre-image css="tb-margin" [src]="img" (onclick)="OnImageClicked(img)" [timeout]="(i+5)*10"></tassel-pre-image>
+                    <ws-pre-image>
+                        <img ws-image class="blur-img" [data-src]="img" (click)="OnImageClicked(img)" />
+                    </ws-pre-image>
                 </div>
             </div>
         </div>
@@ -43,18 +59,21 @@
 </div>
 <div *ngIf="!DivideType" class="img-pointer" [class.img-pointer]="CanPointer">
     <div nz-row nzType="flex" *ngIf="src">
-        <tassel-pre-image css="img-margin" [absolute]="true" [width]="ImgWidth" unit="px" [src]="src" (onclick)="OnImageClicked(src)"
-            [timeout]="10"></tassel-pre-image>
+        <ws-pre-image [stroke]="1">
+            <img ws-image [data-src]="src" [data-width]="ImgWidth" (click)="OnImageClicked(src)" />
+        </ws-pre-image>
     </div>
     <div nz-row nzType="flex" *ngIf="!src">
         <div *ngFor="let img of GridImages;let i=index">
             <div class="img-more" *ngIf="i===8&&limit">
-                <tassel-pre-image css="blur-img" [absolute]="true" [width]="ImgWidth" unit="px" [src]="img" (onclick)="OnImageClicked(img)"
-                    [timeout]="(i+9)*100"></tassel-pre-image>
+                <ws-pre-image [stroke]="1">
+                    <img ws-image class="blur-img" [data-src]="img" [data-width]="ImgWidth" (click)="OnImageClicked(img)" />
+                </ws-pre-image>
                 <span>{{Count-9}} + </span>
             </div>
-            <tassel-pre-image css="img-margin" [absolute]="true" *ngIf="!limit || i!==8&&limit" [width]="ImgWidth" unit="px" [src]="img"
-                (onclick)="OnImageClicked(img)" [timeout]="(i+1)*100"></tassel-pre-image>
+            <ws-pre-image [stroke]="1" *ngIf="!limit || i!==8&&limit">
+                <img ws-image [data-src]="img" [data-width]="ImgWidth" (click)="OnImageClicked(img)" />
+            </ws-pre-image>
         </div>
     </div>
 </div>

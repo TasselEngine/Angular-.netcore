@@ -1,0 +1,7 @@
+<ui-preload [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.margin-right]="Stroke" [style.margin-bottom]="Stroke">
+    <ng-content *ngIf="showImage" select="[ws-image]" class="notshow show"></ng-content>
+    <ng-content *ngIf="!showImage&&hasTemp" select="[pre-temp]"></ng-content>
+    <div *ngIf="!showImage&&!hasTemp" class="default-pre" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight">
+        <i class="anticon anticon-picture"></i>
+    </div>
+</ui-preload>

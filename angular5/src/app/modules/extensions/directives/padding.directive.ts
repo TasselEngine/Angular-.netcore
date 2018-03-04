@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, HostListener, HostBinding } from '@angular/core';
 
-@Directive({ selector: '[TasselPadding]' })
+@Directive({ selector: '[wsPadding]' })
 export class PaddingDirective {
 
     @HostBinding('style.padding-left')
@@ -15,9 +15,9 @@ export class PaddingDirective {
     @HostBinding('style.padding-bottom')
     public get paddingBottom() { return this.readPadding(false, 2); }
 
-    @Input() TasselPadding: number | [number, number];
+    @Input() wsPadding: number | [number, number];
 
-    @Input() PaddingDetails: [number, number, number, number];
+    @Input('details') PaddingDetails: [number, number, number, number];
 
     constructor(el: ElementRef) { }
 
@@ -25,11 +25,11 @@ export class PaddingDirective {
         if (this.PaddingDetails) {
             return `${this.PaddingDetails[index || 0]}px`;
         }
-        if (!this.TasselPadding) { return '0px'; }
-        if (this.TasselPadding instanceof Array) {
-            return `${this.TasselPadding[isLR ? 0 : 1]}px`;
+        if (!this.wsPadding) { return '0px'; }
+        if (this.wsPadding instanceof Array) {
+            return `${this.wsPadding[isLR ? 0 : 1]}px`;
         } else {
-            return this.TasselPadding + 'px';
+            return this.wsPadding + 'px';
         }
     }
 

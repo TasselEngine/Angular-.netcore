@@ -13,7 +13,7 @@ import { TinyMCEModule } from './tinyEditor/tinymce.module';
 import { CommonLoadingModule } from './loading/common-loading.module';
 import { LikeUserDivModule } from './likeUserDiv/like-user.module';
 import { TimeFormatModule } from './timeFormat/timeFormat.module';
-import { PreloadingImageModule } from './preloadingImage/pre-image.module';
+import { PreloadingImageModule } from './imagePreload/image-pre.module';
 
 @NgModule({
     exports: [

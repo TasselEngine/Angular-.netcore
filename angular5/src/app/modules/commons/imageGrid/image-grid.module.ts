@@ -3,7 +3,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { ExtensionsModule } from './../../extensions/extensions.module';
 import { NgModule } from '@angular/core';
-import { PreloadingImageModule } from '../preloadingImage/pre-image.module';
+import { PreloadingImageModule } from '../imagePreload/image-pre.module';
 
 @NgModule({
     declarations: [
