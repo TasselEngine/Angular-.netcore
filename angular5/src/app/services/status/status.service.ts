@@ -42,7 +42,7 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
         this.cacheStatus = [];
     }
 
-    public async GetAndRefreshStatus(from: number = 0, take = 5) {
+    public async GetAndRefreshStatus(from: number = null, take = 5) {
         return await this.getStatusColl(from, take);
     }
 
@@ -85,8 +85,8 @@ export class StatusService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<Status[]>(error);
     }
 
-    public async GetStatusSelectAsync(before: number, take = 10) {
-        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/gets?before=${before}&take=${take}`, this.Options);
+    public async GetStatusSelectAsync(before?: number, take = 10) {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/status/gets?before=${before || null}&take=${take}`, this.Options);
         this.apiLog([succeed, error, response], `Try to fetch ${take} status before stamp = ${before}`, 'GetStatusSelectAsync');
         return succeed ?
             StrictResult.Success(response.status, Status.ParseList(response.content), response.msg) :

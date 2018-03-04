@@ -7,7 +7,7 @@ import { Component, OnInit, HostBinding, Renderer2, AfterViewInit, ViewChild, El
 import { ServerService } from '../../../../services/server/server.service';
 import { pageShowAnimation } from '../../../../utils/app.utils';
 import { UserType } from '../../../../model/models/user/user.contract';
-import { RootService, AdminService } from '../../../../services/app.service';
+import { RootService, AdminService, MessageService } from '../../../../services/app.service';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { Location } from '@angular/common';
@@ -49,6 +49,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
 
   constructor(
     public identity: IdentityService,
+    private msgsrv: MessageService,
     private title: Title,
     private admin: AdminService,
     private render: Renderer2,

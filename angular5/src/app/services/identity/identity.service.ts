@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { IResponse, UnionUser, ServerStatus, UserType, User, WeiboUser } from '../../model/app.model';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class IdentityService extends HttpAsyncClientBase<IResponse> {
@@ -34,6 +35,9 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
 
     private token: string;
     public get Token() { return this.token; }
+
+    public OnLogined = new Subject<any>();
+    public OnLogout = new Subject<any>();
 
     private logger: Logger<IdentityService>;
 
@@ -68,6 +72,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
                 this.user = user;
                 this.logined = true;
                 this.isInit = true;
+                this.OnLogined.next(new Date());
             } else {
                 this.isInit = true;
                 this.logger.Warn(['Fetch user infos bad', 'See the exceptions below.', error.msg], 'BuildUserStateAsync');
@@ -89,6 +94,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         if (code === ServerStatus.Succeed) {
             this.user = user;
             await then();
+            this.OnLogined.next(new Date());
             this.setOptions(token);
             if (!remember) { return; }
             this.setLocalStorage(this.user, token);
@@ -132,6 +138,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
             }
             if (code02 === ServerStatus.Succeed) {
                 this.user = user;
+                this.OnLogined.next(new Date());
                 this.setOptions(token);
                 this.setLocalStorage(this.user, token);
             } else {
@@ -158,6 +165,7 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         this.user = undefined;
         window.localStorage.setItem(this.tokenKey, '');
         this.logined = false;
+        this.OnLogout.next(new Date());
         this.toast.InfoMessage('Logout successfully.');
         await this.WaitAndDo(then, 200);
     }

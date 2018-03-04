@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { IdentityService } from './../../../../services/identity/identity.service';
 import { pageShowAnimation } from './../../../../utils/app.utils';
-import { OnInit, HostBinding, Component } from '@angular/core';
+import { OnInit, HostBinding, Component, OnDestroy } from '@angular/core';
 import { TasselNavigationBase } from './../../../shared/components/base.component';
 
 @Component({
@@ -12,7 +12,7 @@ import { TasselNavigationBase } from './../../../shared/components/base.componen
         './profile.scss'
     ]
 })
-export class ProfileComponent extends TasselNavigationBase implements OnInit {
+export class ProfileComponent extends TasselNavigationBase implements OnInit, OnDestroy {
 
     @HostBinding('@routeAnimation') routeAnimation = true;
     @HostBinding('style.display') display = 'block';
@@ -20,6 +20,10 @@ export class ProfileComponent extends TasselNavigationBase implements OnInit {
     constructor(protected router: Router) { super(router); }
 
     ngOnInit(): void {
+
+    }
+
+    ngOnDestroy(): void {
 
     }
 

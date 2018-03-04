@@ -14,7 +14,7 @@ import {
   ToastService, ServerService, IdentityService,
   RootService, StatusService, FormatService,
   AdminService, ResourcesService, UtilsService,
-  CacheService, RouterService
+  CacheService, RouterService, MessageService
 } from './../services/app.service';
 
 export function AppInit(config: ServerService) {
@@ -59,6 +59,7 @@ export function AppInit(config: ServerService) {
     LoggerService,
     RouterService,
     ToastService,
+    MessageService,
     ServerService,
     CacheService,
     RootService,

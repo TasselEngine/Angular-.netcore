@@ -10,11 +10,13 @@ import { ServerService } from './server/server.service';
 import { IdentityService } from './identity/identity.service';
 import { CacheService } from './cache/cache.service';
 import { RouterService } from './router/router.service';
+import { MessageService } from './msg/message.service';
 
 export {
     ServerService,
     RouterService,
     IdentityService,
+    MessageService,
     RootService,
     ToastService,
     StatusService,
