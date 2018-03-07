@@ -29,7 +29,7 @@
                     </li>
                     <li *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
                         <p>
-                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">{{i18n.index_manage}}</a>
+                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">{{I18N.Get('Manage')}}</a>
                         </p>
                     </li>
                 </ul>

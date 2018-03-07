@@ -35,7 +35,6 @@ export class TasselComponentBase extends AsyncableServiceBase {
         this.formater = GlobalInjection.Injector.get(FormatService);
         this.notify = GlobalInjection.Injector.get(ToastService);
         this._i18nHandler = new I18N(this.i18nConfig);
-        console.log(this.i18nConfig);
     }
 
     protected subscribe<T>(observaber: IObservableHost<T> | [IObservableHost<T>, string], subscriber: (arg: T) => void) {
