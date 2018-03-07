@@ -8,7 +8,8 @@ import { RouteErrors, ServerStatus } from '../../../model/app.model';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { WSi18N, I18nToken, I18N } from '../../i18n/token';
+import { WSi18N } from '../../i18n/token';
+import { I18N } from '../../i18n/i18n.service';
 
 type IObservableHost<T> = Subject<T> | Observable<T>;
 
@@ -18,23 +19,21 @@ export class TasselComponentBase extends AsyncableServiceBase {
     protected readonly formater: FormatService;
     protected readonly logsrv: LoggerService;
     protected readonly notify: ToastService;
-    protected readonly i18nConfig: WSi18N;
 
     private _i18nHandler: I18N;
 
-    public get i18n() { return this.i18nConfig.current; }
+    public get i18n() { return this._i18nHandler.Locale; }
     public get I18N() { return this._i18nHandler; }
 
     private subscriptions: Array<[(string | IObservableHost<any>), Subscription]> = [];
 
     constructor() {
         super();
-        this.i18nConfig = GlobalInjection.Injector.get(I18nToken);
         this.server = GlobalInjection.Injector.get(ServerService);
         this.logsrv = GlobalInjection.Injector.get(LoggerService);
         this.formater = GlobalInjection.Injector.get(FormatService);
         this.notify = GlobalInjection.Injector.get(ToastService);
-        this._i18nHandler = new I18N(this.i18nConfig);
+        this._i18nHandler = GlobalInjection.Injector.get(I18N);
     }
 
     protected subscribe<T>(observaber: IObservableHost<T> | [IObservableHost<T>, string], subscriber: (arg: T) => void) {

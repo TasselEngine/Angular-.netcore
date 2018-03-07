@@ -16,6 +16,7 @@ import { UserDivComponent } from './components/user-div/user-div.component';
 import { BottomMenuComponent } from './components/bottom-menu/bottomMenu.component';
 import { LeftAdminContainerComponent } from './components/left-container/admin/admin.component';
 import { PhotoGallaryModule } from '../commons/photoGallary/photo-gallary.module';
+import { WSi18nModule } from '../i18n/i18n.module';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { PhotoGallaryModule } from '../commons/photoGallary/photo-gallary.module
         LeftCommonContainerComponent,
     ],
     imports: [
+        WSi18nModule,
         CommonModule,
         RoutersModule,
         ExtensionsModule,

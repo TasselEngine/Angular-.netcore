@@ -59,7 +59,6 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     protected router: Router) { super(router); }
 
   ngOnInit(): void {
-    console.log(this.i18n);
     this.initAppBroswerTitle();
     this.appRouteChangesDelegate();
     this.scrollPositionCacheEnabled();
