@@ -44,7 +44,7 @@ export class WSi18nModule {
         return {
             ngModule: WSi18nModule,
             providers: [
-                { provide: WSI18N_CONFIG, useValue: { locale: key || 'en-US' } },
+                { provide: WSI18N_CONFIG, useValue: { locale: key } },
                 { provide: I18N, useFactory: i18nFactory, deps: [WSI18N_CONFIG] }
             ]
         };
