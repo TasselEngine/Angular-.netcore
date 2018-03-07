@@ -11,6 +11,7 @@ import { RootService, AdminService, MessageService } from '../../../../services/
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { Location } from '@angular/common';
+import { WSi18N } from '../../../i18n/token';
 
 @Component({
   selector: 'tassel-root',
@@ -58,6 +59,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     protected router: Router) { super(router); }
 
   ngOnInit(): void {
+    console.log(this.i18n);
     this.initAppBroswerTitle();
     this.appRouteChangesDelegate();
     this.scrollPositionCacheEnabled();

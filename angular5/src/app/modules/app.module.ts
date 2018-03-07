@@ -16,6 +16,7 @@ import {
   AdminService, ResourcesService, UtilsService,
   CacheService, RouterService, MessageService
 } from './../services/app.service';
+import { WSi18nModule } from './i18n/i18n.module';
 
 export function AppInit(config: ServerService) {
   return async () => {
@@ -31,7 +32,8 @@ export function AppInit(config: ServerService) {
     SharedModule,
     ExtensionsModule,
     BrowserAnimationsModule,
-    NgZorroAntdModule.forRoot()
+    NgZorroAntdModule.forRoot(),
+    WSi18nModule.forRoot()
   ],
   providers: [
     {
