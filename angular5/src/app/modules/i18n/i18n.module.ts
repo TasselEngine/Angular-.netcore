@@ -8,7 +8,9 @@ export { WSi18N, I18N };
 
 declare function require(path: string): any;
 
-const i18nFiles = {
+export const WSI18N_CONFIG = new InjectionToken<WSi18N>('WSI18N_CONFIG');
+
+const i18nFiles: WSi18N = {
     current: null,
     locale: '',
     files: {
@@ -23,6 +25,14 @@ function findLocale(key: string, def = 'en-US') {
     return objURL[key] || def;
 }
 
+function i18nFactory(config: WSi18N) {
+    const locale = findLocale(config.locale, 'en-US');
+    const newFile = i18nFiles.files[locale];
+    i18nFiles.current = newFile || i18nFiles.files['en-US'];
+    i18nFiles.locale = newFile ? locale : 'en-US';
+    return new I18N(i18nFiles);
+}
+
 @NgModule({
     declarations: [WSi18nPipe, WSi18nDirective],
     exports: [WSi18nPipe, WSi18nDirective]
@@ -30,14 +40,12 @@ function findLocale(key: string, def = 'en-US') {
 export class WSi18nModule {
 
     public static forRoot(key = 'locale'): ModuleWithProviders {
-        const locale = findLocale('locale', 'en-US');
-        const newFile = i18nFiles.files[locale];
-        i18nFiles.current = newFile || i18nFiles.files['en-US'];
-        i18nFiles.locale = newFile ? locale : 'en-US';
+
         return {
             ngModule: WSi18nModule,
             providers: [
-                { provide: I18N, useValue: new I18N(i18nFiles) }
+                { provide: WSI18N_CONFIG, useValue: { locale: key || 'en-US' } },
+                { provide: I18N, useFactory: i18nFactory, deps: [WSI18N_CONFIG] }
             ]
         };
     }
