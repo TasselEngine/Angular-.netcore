@@ -25,7 +25,7 @@ function findLocale(key: string, def = 'en-US') {
     return objURL[key] || def;
 }
 
-function i18nFactory(config: WSi18N) {
+export function i18nFactory(config: WSi18N) {
     const locale = findLocale(config.locale, 'en-US');
     const newFile = i18nFiles.files[locale];
     i18nFiles.current = newFile || i18nFiles.files['en-US'];
