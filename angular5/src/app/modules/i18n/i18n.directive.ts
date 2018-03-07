@@ -15,10 +15,11 @@ export class WSi18nDirective implements OnInit {
 
     ngOnInit(): void {
         const [value, id] = (this.i18n || '').split('@@');
+        const seleValue = id && this._i18n.Locale[id];
         if (this.type === 'inner') {
-            this.view.nativeElement.innerHTML = this._i18n.Get(value);
+            this.view.nativeElement.innerText = seleValue || this._i18n.Get(this.view.nativeElement.innerText || value);
         } else {
-            this.view.nativeElement.value = this._i18n.Get(value);
+            this.view.nativeElement.value = seleValue || this._i18n.Get(this.view.nativeElement.value || value);
         }
         if (id) {
             this.view.nativeElement.id = id;

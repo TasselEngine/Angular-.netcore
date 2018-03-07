@@ -13,23 +13,23 @@
                 <ul class="slider-ul">
                     <li>
                         <p>
-                            <a [routerLink]="RouteLinks.Home" routerLinkActive="active" xi18n="Home@@index_home"></a>
+                            <a [routerLink]="RouteLinks.Home" routerLinkActive="active" xi18n>Home</a>
                         </p>
                     </li>
                     <li>
                         <p>
-                            <a (click)="RefreshStatusAndGo()" xi18n="Status@@index_status"></a>
+                            <a (click)="RefreshStatusAndGo()">{{ 'Status' | xi18n }}</a>
                         </p>
                     </li>
                     <li>
-                        <p xi18n="Posts@@index_posts"></p>
+                        <p xi18n>Posts</p>
                     </li>
                     <li>
-                        <p xi18n="Notes@@index_notes"></p>
+                        <p xi18n>Notes</p>
                     </li>
                     <li *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
                         <p>
-                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active" xi18n="Manage@@index_manage"></a>
+                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active" xi18n>Manage</a>
                         </p>
                     </li>
                 </ul>
