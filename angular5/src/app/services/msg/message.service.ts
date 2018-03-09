@@ -15,9 +15,11 @@ export class MessageService extends HttpAsyncClientBase<IResponse> {
 
     public get FormOptions() { return this.identity.FormOptions; }
 
-    private news: UserMessage[];
-    public get Unread() { return this.news || []; }
+    private messages: UserMessage[] = [];
+    public get Messages() { return this.messages || []; }
+    public get Unread() { return this.Messages.filter(i => !i.IsRead); }
 
+    private isinit = true;
     private timer: any;
 
     constructor(
@@ -30,20 +32,31 @@ export class MessageService extends HttpAsyncClientBase<IResponse> {
     }
 
     public async StartMessageFetch() {
-        const [succeed, code, error, unreads] = await this.GetUserMessagesAsync(1000, null, true);
-        if (succeed && code === 0) {
-            this.news = unreads;
+        let after = null;
+        if (this.Unread.length > 0) {
+            after = this.Unread[0].CreateTimeUnix;
         }
+        const [succeed, code, error, unreads] = await this.GetUserMessagesAsync(50, null, after, this.isinit ? null : true);
+        if (succeed && code === 0) {
+            this.messages.unshift(...unreads);
+        }
+        this.isinit = false;
         clearTimeout(this.timer);
         this.timer = setTimeout(() => this.StartMessageFetch(), 30000);
     }
 
     public StopMessageFetch() {
+        this.isinit = true;
         clearTimeout(this.timer);
     }
 
-    public GetUserMessagesAsync = async (count = 20, before?: number, unread?: boolean) => {
-        const generator = new UrlGenerator(this.Root).section(['message', 'fetch']).query('before', before).query('unread', unread).query('count', count);
+    public GetUserMessagesAsync = async (count = 20, before?: number, after?: number, unread?: boolean) => {
+        const generator = new UrlGenerator(this.Root)
+            .section(['message', 'fetch'])
+            .query('before', before)
+            .query('after', after)
+            .query('unread', unread)
+            .query('count', count);
         const [succeed, error, response] = await this.InvokeAsync(generator.toString(), this.Options);
         return succeed ?
             StrictResult.Success(response.status, UserMessage.ParseList(response.content || []), response.msg) :
