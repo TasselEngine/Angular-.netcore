@@ -20,6 +20,8 @@ import { StickersMap } from './models/commons/sticker/sticker.model';
 import { IBottomPopConfig, IBottomPopItem } from './models/commons/bottomPop/pop.contract';
 import { IServerLog } from './models/log/log.contract';
 import { ApplicationLog } from './models/log/log.model';
+import { ReadState, MessageType, IMessageSource, IUserMessage } from './models/message/message.contract';
+import { UserMessage, MessageSource } from './models/message/message.model';
 
 export {
     SrvTimeFormat,
@@ -32,7 +34,9 @@ export {
     LogRole,
     LogLevel,
     LogAction,
-    RouteErrors
+    RouteErrors,
+    ReadState,
+    MessageType
 };
 
 export {
@@ -51,7 +55,9 @@ export {
     ILikeRelation,
     ISticker,
     IBottomPopConfig,
-    IBottomPopItem
+    IBottomPopItem,
+    IMessageSource,
+    IUserMessage
 };
 
 export {
@@ -67,4 +73,6 @@ export {
     UserComment,
     LikeRelation,
     StickersMap,
+    UserMessage,
+    MessageSource
 };

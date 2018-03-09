@@ -1,6 +1,6 @@
 import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { TasselNavigationBase } from '../base.component';
-import { IdentityService, AdminService, RootService, StatusService } from '../../../../services/app.service';
+import { IdentityService, AdminService, RootService, StatusService, MessageService } from '../../../../services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { UnionUser, RouteStruct } from '../../../../model/app.model';
@@ -45,10 +45,13 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
 
     public get Logined() { return (this.identity && this.identity.IsLogined) || false; }
 
+    public get UnreadCount() { return this.message.Unread.length; }
+
     constructor(
         private status: StatusService,
         private admin: AdminService,
         private root: RootService,
+        private message: MessageService,
         protected router: Router) {
         super(router);
     }
@@ -120,6 +123,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         const config = {
             title: username, items: [
                 { label: 'Profile', onClick: () => this.ToUserProfile() },
+                { label: 'Message Box', onClick: () => this.ToMessageBox() },
                 { label: 'Logout', onClick: () => this.Logout() },
             ]
         };
@@ -154,6 +158,10 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         this.hideMenuAndPopover();
         await this.Delay(100);
         this.navigator.GoToAdminDashboard();
+    }
+
+    public ToMessageBox() {
+
     }
 
     private hideMenuAndPopover() {

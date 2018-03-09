@@ -1,35 +1,42 @@
 <div class="root-user-div" [class.two-icons]="ShowType=== 'two' " [class.three-icons]="ShowType=== 'three' ">
-    <!-- logined  Mobile view : Open user profile-->
-    <div *ngIf="Logined&&!IsWideScreen" class="avatar-div" (click)="ShowUserMenu()">
-        <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
-            <img [src]="CurrentUser.Photo" class="avatar-icon" />
-        </div>
-        <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
-            <i class="anticon anticon-user nologin-icon"></i>
-        </div>
-    </div>
-    <!-- logined  PC view : Open user profile-->
-    <nz-popover *ngIf="Logined&&IsWideScreen" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'"
-        [nzPlacement]="'leftBottom'">
-        <div class="avatar-div" nz-popover>
-            <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
-                <img [src]="CurrentUser.Photo" class="avatar-icon" /> - </div>
-            <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
-                <i class="anticon anticon-user nologin-icon"></i>
+
+    <nz-badge *ngIf="Logined" class="msg-badge" [nzCount]="UnreadCount">
+        <ng-template #content>
+            <!-- logined  Mobile view : Open user profile-->
+            <div *ngIf="!IsWideScreen" class="avatar-div" (click)="ShowUserMenu()">
+                <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
+                    <img [src]="CurrentUser.Photo" class="avatar-icon" />
+                </div>
+                <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
+                    <i class="anticon anticon-user nologin-icon"></i>
+                </div>
             </div>
-        </div>
-        <ng-template #nzTemplate>
-            <p>
-                <a (click)="ToUserProfile()">Profile</a>
-            </p>
-            <p *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core'">
-                <a (click)="ToAdminDashboard()">Manage</a>
-            </p>
-            <p>
-                <a (click)='Logout()'>Logout</a>
-            </p>
+            <!-- logined  PC view : Open user profile-->
+            <nz-popover *ngIf="IsWideScreen" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'" [nzPlacement]="'leftBottom'">
+                <div class="avatar-div" nz-popover>
+                    <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
+                        <img [src]="CurrentUser.Photo" class="avatar-icon" /> - </div>
+                    <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
+                        <i class="anticon anticon-user nologin-icon"></i>
+                    </div>
+                </div>
+                <ng-template #nzTemplate>
+                    <p>
+                        <a (click)="ToUserProfile()">Profile</a>
+                    </p>
+                    <p>
+                        <a (click)="ToMessageBox()">Message Box</a>
+                    </p>
+                    <p *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core'">
+                        <a (click)="ToAdminDashboard()">Manage</a>
+                    </p>
+                    <p>
+                        <a (click)='Logout()'>Logout</a>
+                    </p>
+                </ng-template>
+            </nz-popover>
         </ng-template>
-    </nz-popover>
+    </nz-badge>
     <!-- unlogined icon button : go to sign in-->
     <div *ngIf="!Logined" class="avatar-icon avatar-dark">
         <a [routerLink]="RouteLinks.Login" routerLinkActive="active">
