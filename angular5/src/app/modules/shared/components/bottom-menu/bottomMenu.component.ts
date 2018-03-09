@@ -43,7 +43,7 @@ export class BottomMenuComponent extends TasselNavigationBase implements OnInit,
     public CloseThis() {
         this.showPop = false;
         this.OnMenuClosed.emit(new Date());
-        setTimeout(() => this.Disposed = true, 350);
+        setTimeout(() => this.Disposed = true, 150);
     }
 
     public OnItemClicked(item: IBottomPopItem) {

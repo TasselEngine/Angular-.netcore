@@ -6,7 +6,7 @@
     background: #282828;;
     opacity: 0;
     z-index: 99;
-    transition: 0.35s;
+    transition: 0.15s;
 }
 
 .pop-main{
@@ -14,20 +14,21 @@
     top:100vh;
     width:100vw;
     height: 48vh;
-    background: -webkit-gradient(linear, 0 0, 100% 0, from(#383838), to(#585858));
+    background: -webkit-gradient(linear, 0 0, 100% 0, from(#1f63c2), to(#3d7ad0));
     text-align: center;
     opacity: 0.95;
     z-index: 100;
-    transition: 0.35s;
+    transition: 0.15s;
+    box-shadow: 0px -8px 12px rgba(0,0,0,0.1);
 }
 
 .show-background{
-    transition: 0.65s;
+    transition: 0.35s;
     opacity: 0.55;
 }
 
 .show-pop{
-    transition: 0.65s;
+    transition: 0.35s;
     transform:translateY(-48vh);
 }
 
@@ -59,13 +60,13 @@
     padding-top:8px;
     padding-bottom: 8px;
     font-size: 20px;
-    border:0px solid #686868;
+    border:0px solid #ffffff36;
     border-top-width: 1px;
     transition: 0.8s;
 }
 
 .pop-item:hover{
-    background:#282828;
+    background:#145abb;
 }
 
 .header-item{

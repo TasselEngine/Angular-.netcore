@@ -19,7 +19,8 @@
         <div class="vm-container">
             <div class="vm-details-formatdiv" [innerHtml]="VM.Content"></div>
             <br/>
-            <tassel-common-imggrid gridType="grid" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true" (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
+            <tassel-common-imggrid gridType="grid" [width]="IsWideScreen?160:112" [images]="VM.ParseUrls(ImageSrcRoot)" [canPointer]="true"
+                (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
             <div *ngIf=" Logined" class="modile-ctrlbar" nz-row>
                 <div class="modile-section" nz-col [nzSpan]="IsWideScreen?3:8">
                     <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-addlike', icss:IsLiked?'heart':'heart-o', label:'Like', todo:LikeStatus}"></ng-template>
