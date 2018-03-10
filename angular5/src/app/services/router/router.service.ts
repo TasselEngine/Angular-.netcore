@@ -8,6 +8,7 @@ import { Router, NavigationExtras } from '@angular/router';
 export class RouterService {
 
     private readonly profile_patch = 'profile';
+    private readonly message_patch = 'message';
     private readonly redirect_patch = 'redirect';
     private readonly details_patch = 'details';
     private readonly dashboard_patch = 'dashboard';
@@ -102,6 +103,10 @@ export class RouterService {
 
     public GoToUserProfile(uname?: string) {
         this.routeSafely([...this.userRoot, uname || this.user_name, this.profile_patch]);
+    }
+
+    public GoToUserMessage(uname?: string) {
+        this.routeSafely([...this.userRoot, uname || this.user_name, this.message_patch]);
     }
 
     public GoToUserRedirect(uid: string, from_path: string) {

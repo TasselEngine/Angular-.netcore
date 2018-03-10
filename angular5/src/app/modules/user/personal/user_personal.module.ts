@@ -7,12 +7,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonLoadingModule } from '../../commons/loading/common-loading.module';
+import { MessageBoxComponent } from './msgBox/msg-box.component';
 
 const overRoutes: Routes = [
     {
         path: '', children: [
             { path: 'redirect', component: UserRedirectComponent },
             { path: 'profile', component: ProfileComponent },
+            { path: 'message', component: MessageBoxComponent },
             { path: '', redirectTo: 'profile', pathMatch: 'full' },
             { path: '**', redirectTo: '/errors/404', pathMatch: 'full' }
         ]
@@ -22,7 +24,8 @@ const overRoutes: Routes = [
 @NgModule({
     declarations: [
         ProfileComponent,
-        UserRedirectComponent
+        UserRedirectComponent,
+        MessageBoxComponent
     ],
     imports: [
         CommonModule,
@@ -36,7 +39,8 @@ const overRoutes: Routes = [
     providers: [],
     exports: [
         ProfileComponent,
-        UserRedirectComponent
+        UserRedirectComponent,
+        MessageBoxComponent
     ]
 })
 export class UserPersonalModule { }

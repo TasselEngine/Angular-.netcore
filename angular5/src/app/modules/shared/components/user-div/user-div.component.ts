@@ -3,7 +3,7 @@ import { TasselNavigationBase } from '../base.component';
 import { IdentityService, AdminService, RootService, StatusService, MessageService } from '../../../../services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { UnionUser, RouteStruct } from '../../../../model/app.model';
+import { UnionUser, RouteStruct, IBottomPopConfig } from '../../../../model/app.model';
 
 @Component({
     selector: 'tassel-usericon-div',
@@ -91,24 +91,24 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     }
 
     public ShowMainMenu() {
-        const config = this.isAdminView ? {
-            title: 'ADMIN MENU', items: [
-                { label: 'Dashboard', onClick: () => this.navigator.GoToAdminDashboard() },
-                { label: 'Status', onClick: () => this.navigator.GoToAdminStatus() },
-                { label: 'Posts', onClick: () => { } },
-                { label: 'Notes', onClick: () => { } },
-                { label: 'Home', onClick: () => this.navigator.GoHome() },
+        const config: IBottomPopConfig = this.isAdminView ? {
+            title: 'ADMIN MENU', icon: 'anticon anticon-user', items: [
+                { label: 'Dashboard', icon: 'anticon anticon-pie-chart', onClick: () => this.navigator.GoToAdminDashboard() },
+                { label: 'Status', icon: 'anticon anticon-bulb', onClick: () => this.navigator.GoToAdminStatus() },
+                { label: 'Posts', icon: 'anticon anticon-file-text', onClick: () => { } },
+                { label: 'Notes', icon: 'anticon anticon-tag-o', onClick: () => { } },
+                { label: 'Home', icon: 'anticon anticon-home', onClick: () => this.navigator.GoHome() },
             ]
         } : {
-                title: 'MENU', items: [
-                    { label: 'Home', onClick: () => this.navigator.GoHome() },
-                    { label: 'Status', onClick: () => this.RefreshAndGoToStatus() },
-                    { label: 'Posts', onClick: () => { } },
-                    { label: 'Notes', onClick: () => { } },
+                title: 'MENU', icon: 'anticon anticon-inbox', items: [
+                    { label: 'Home', icon: 'anticon anticon-home', onClick: () => this.navigator.GoHome() },
+                    { label: 'Status', icon: 'anticon anticon-bulb', onClick: () => this.RefreshAndGoToStatus() },
+                    { label: 'Posts', icon: 'anticon anticon-file-text', onClick: () => { } },
+                    { label: 'Notes', icon: 'anticon anticon-tag-o', onClick: () => { } },
                 ]
             };
         if (!this.isAdminView && this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
-            config.items.push({ label: 'Manage', onClick: () => this.navigator.GoToAdminDashboard() });
+            config.items.push({ label: 'Manage', icon: 'anticon anticon-setting', onClick: () => this.navigator.GoToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);
     }
@@ -160,8 +160,10 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         this.navigator.GoToAdminDashboard();
     }
 
-    public ToMessageBox() {
-
+    public async ToMessageBox() {
+        this.hideMenuAndPopover();
+        await this.Delay(100);
+        this.navigator.GoToUserMessage();
     }
 
     private hideMenuAndPopover() {

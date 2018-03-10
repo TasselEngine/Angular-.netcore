@@ -9,13 +9,20 @@
     transition: 0.15s;
 }
 
+.pop-textcenter{
+    text-align: center;
+}
+
+.pop-smalltext{
+    font-size:15px;
+}
+
 .pop-main{
     position:absolute;
     top:100vh;
     width:100vw;
     height: 48vh;
     background: -webkit-gradient(linear, 0 0, 100% 0, from(#1f63c2), to(#3d7ad0));
-    text-align: center;
     opacity: 0.95;
     z-index: 100;
     transition: 0.15s;
@@ -38,6 +45,18 @@
     padding-bottom: 8px;
     font-weight: bold;
     height:60px;
+}
+
+.pop-title i {
+    color:white;
+    margin-left:12px;
+    margin-right:8px;
+}
+
+.ui-item i {
+    color:white;
+    margin-left:12px;
+    margin-right:8px;
 }
 
 .pop-main span{
