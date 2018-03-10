@@ -22,16 +22,16 @@
                 </div>
                 <ng-template #nzTemplate>
                     <p>
-                        <a (click)="ToUserProfile()">Profile</a>
+                        <a (click)="ToUserProfile()" xi18n section="user">Profile</a>
                     </p>
                     <p>
-                        <a (click)="ToMessageBox()">Message Box</a>
+                        <a (click)="ToMessageBox()">{{'Message Box' | xi18n:'user'}}</a>
                     </p>
                     <p *ngIf="CurrentUser.Role==='admin'||CurrentUser.Role==='core'">
-                        <a (click)="ToAdminDashboard()">Manage</a>
+                        <a (click)="ToAdminDashboard()">{{'Manage' | xi18n:'user'}}</a>
                     </p>
                     <p>
-                        <a (click)='Logout()'>Logout</a>
+                        <a (click)='Logout()'>{{'Logout' | xi18n:'user'}}</a>
                     </p>
                 </ng-template>
             </nz-popover>
@@ -56,7 +56,8 @@
         </a>
     </div>
     <!-- Laptop-PC Main Menu : <1280 >768 -->
-    <nz-popover *ngIf="!ShowSlider&&IsWideScreen" nzTitle="MENU" [(nzVisible)]="ShowMenu" [nzTrigger]="'click'" nzPlacement="leftBottom">
+    <nz-popover *ngIf="!ShowSlider&&IsWideScreen" [nzTitle]=" (IsAdminView? 'ADMIN MENU' : 'MENU') | xi18n:'bottom' " [(nzVisible)]="ShowMenu"
+        [nzTrigger]="'click'" nzPlacement="leftBottom">
         <div class="root-menu-icon root-menu-icon-shadow">
             <a nz-popover>
                 <i class="anticon anticon-inbox root-menu-size"></i>
@@ -64,28 +65,29 @@
         </div>
         <ng-template *ngIf="!IsAdminView" #nzTemplate>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                <a [routerLink]="RouteLinks.Home" routerLinkActive="active" xi18n>Home</a>
             </p>
             <p class="root-menu-item">
-                <a (click)="RefreshAndGoToStatus()">Status</a>
+                <a (click)="RefreshAndGoToStatus()" xi18n>Status</a>
             </p>
-            <p class="root-menu-item">Posts</p>
-            <p class="root-menu-item">Notes</p>
+            <p class="root-menu-item" xi18n>Posts</p>
+            <p class="root-menu-item" xi18n>Notes</p>
+            <p class="root-menu-item" xi18n>Search</p>
             <p *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
-                <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+                <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active" xi18n>Manage</a>
             </p>
         </ng-template>
         <ng-template *ngIf="IsAdminView" #nzTemplate>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Dashboard</a>
+                <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active" xi18n>Dashboard</a>
             </p>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.AdminStatus">Status</a>
+                <a [routerLink]="RouteLinks.AdminStatus" xi18n>Status</a>
             </p>
-            <p class="root-menu-item">Posts</p>
-            <p class="root-menu-item">Notes</p>
+            <p class="root-menu-item" xi18n>Posts</p>
+            <p class="root-menu-item" xi18n>Notes</p>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
+                <a [routerLink]="RouteLinks.Home" routerLinkActive="active" xi18n>Home</a>
             </p>
         </ng-template>
     </nz-popover>

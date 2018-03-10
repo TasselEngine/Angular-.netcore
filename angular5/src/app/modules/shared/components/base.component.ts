@@ -22,7 +22,9 @@ export class TasselComponentBase extends AsyncableServiceBase {
 
     private _i18nHandler: I18N;
 
-    public get i18n() { return this._i18nHandler.Locale; }
+    private _i18n_locale: any;
+    private _i18n_prefix: string;
+    public get i18n() { return this._i18n_locale || this._i18nHandler.Locale; }
     public get I18N() { return this._i18nHandler; }
 
     private subscriptions: Array<[(string | IObservableHost<any>), Subscription]> = [];
@@ -34,6 +36,16 @@ export class TasselComponentBase extends AsyncableServiceBase {
         this.formater = GlobalInjection.Injector.get(FormatService);
         this.notify = GlobalInjection.Injector.get(ToastService);
         this._i18nHandler = GlobalInjection.Injector.get(I18N);
+    }
+
+    protected setI18nPrefix(prefix: string) {
+        this._i18n_prefix = prefix;
+        this._i18n_locale = this._i18nHandler.Locale[prefix];
+    }
+
+    protected translate(input: string, prefix?: string | boolean) {
+        const realPre = prefix === false ? null : (!prefix || prefix === true) ? this._i18n_prefix : prefix;
+        return this._i18nHandler.Get(input, null, true, true, realPre);
     }
 
     protected subscribe<T>(observaber: IObservableHost<T> | [IObservableHost<T>, string], subscriber: (arg: T) => void) {

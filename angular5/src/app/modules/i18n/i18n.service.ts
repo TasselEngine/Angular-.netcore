@@ -20,26 +20,67 @@ export class I18N {
 
     public get Locale() { return this.i18n.current; }
 
-    public Get(KeyValue: string, isSearch = true): string | boolean | number {
-        if (this.Locale[KeyValue]) {
-            return this.Locale[KeyValue];
+    public CheckIdName(input: string, checkId = true): [string, string] {
+        let value: string;
+        let id: string;
+        if (checkId) {
+            [value, id] = (input || '').split('@@');
         } else {
-            if (this.cache[KeyValue]) {
-                return this.cache[KeyValue];
+            value = input;
+        }
+        return [value, id];
+    }
+
+    private findKeyByValue(file: any, value: string) {
+        return Object.keys(file).find(key => file[key] === value);
+    }
+
+    // value@@id ;  @@id ; value
+    public Get(input: string, iid?: string, isSearch = true, checkId = true, prefix = null) {
+        let locale = this.Locale;
+        let cache = this.cache;
+        if (prefix) {
+            locale = this.Locale[prefix];
+            if (!locale) { return input; }
+            if (!this.cache[prefix]) { this.cache[prefix] = {}; }
+            cache = this.cache[prefix];
+        }
+        if (cache[input]) {
+            return cache[input];
+        }
+        let [value, id] = [undefined, undefined];
+        if (checkId) {
+            if (!iid) {
+                [value, id] = this.CheckIdName(input, true);
+                if (id) {
+                    return cache[input] = cache[id] = locale[id] || value || input;
+                }
+            } else {
+                [value, id] = [input, iid];
+                return cache[id] = locale[id] || value;
             }
+        } else {
+            value = input;
+        }
+        if (value) {
             let real: any;
             for (const prop in this.i18n.files) {
                 if (prop) {
-                    const file = this.i18n.files[prop];
-                    const target = Object.keys(file).find(key => file[key] === KeyValue);
-                    if (target) {
-                        real = this.Locale[target] || KeyValue;
-                        this.cache[KeyValue] = real;
+                    const source = this.i18n.files[prop];
+                    if (!source) { continue; }
+                    const file = !!prefix ? source[prefix] : source;
+                    if (!file) { continue; }
+                    const key = this.findKeyByValue(file, value);
+                    if (key) {
+                        real = locale[key] || value;
+                        cache[input] = cache[key] = real;
                         break;
                     }
                 }
             }
-            return real || KeyValue;
+            return real || value;
         }
+        return input;
     }
+
 }

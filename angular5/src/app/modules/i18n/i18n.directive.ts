@@ -7,6 +7,8 @@ export class WSi18nDirective implements OnInit {
 
     @Input('xi18n') i18n: string;
 
+    @Input('section') prefix: string;
+
     @Input() type: 'value' | 'inner' = 'inner';
 
     constructor(private view: ElementRef, private _i18n: I18N) {
@@ -14,15 +16,17 @@ export class WSi18nDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        const [value, id] = (this.i18n || '').split('@@');
-        const seleValue = id && this._i18n.Locale[id];
-        if (this.type === 'inner') {
-            this.view.nativeElement.innerText = seleValue || this._i18n.Get(this.view.nativeElement.innerText || value);
-        } else {
-            this.view.nativeElement.value = seleValue || this._i18n.Get(this.view.nativeElement.value || value);
-        }
+        const [value, id] = this._i18n.CheckIdName(this.i18n || '', true);
         if (id) {
             this.view.nativeElement.id = id;
+        }
+        if (id) {
+            return this._i18n.Get(this.i18n, id, true, true, this.prefix);
+        }
+        if (this.type === 'inner') {
+            this.view.nativeElement.innerText = this._i18n.Get(this.i18n || this.view.nativeElement.innerText || value, null, true, false, this.prefix);
+        } else {
+            this.view.nativeElement.value = this._i18n.Get(this.i18n || this.view.nativeElement.value || value, null, true, false, this.prefix);
         }
         this.view.nativeElement.removeAttribute('xi18n');
     }

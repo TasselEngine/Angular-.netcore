@@ -55,6 +55,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         private message: MessageService,
         protected router: Router) {
         super(router);
+        this.setI18nPrefix('user');
     }
 
     ngOnInit(): void {
@@ -98,23 +99,24 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
 
     public ShowMainMenu() {
         const config: IBottomPopConfig = this.isAdminView ? {
-            title: 'ADMIN MENU', icon: 'anticon anticon-user', items: [
-                { label: 'Dashboard', icon: 'anticon anticon-pie-chart', onClick: () => this.navigator.GoToAdminDashboard() },
-                { label: 'Status', icon: 'anticon anticon-bulb', onClick: () => this.navigator.GoToAdminStatus() },
-                { label: 'Posts', icon: 'anticon anticon-file-text', onClick: () => { } },
-                { label: 'Notes', icon: 'anticon anticon-tag-o', onClick: () => { } },
-                { label: 'Home', icon: 'anticon anticon-home', onClick: () => this.navigator.GoHome() },
+            title: this.translate('ADMIN MENU', 'bottom'), icon: 'anticon anticon-user', items: [
+                { label: this.translate('Dashboard@@left_admin_dashboard', false), icon: 'anticon anticon-pie-chart', onClick: () => this.navigator.GoToAdminDashboard() },
+                { label: this.translate('@@index_status', false), icon: 'anticon anticon-bulb', onClick: () => this.navigator.GoToAdminStatus() },
+                { label: this.translate('@@index_posts', false), icon: 'anticon anticon-file-text', onClick: () => { } },
+                { label: this.translate('index_notes', false), icon: 'anticon anticon-tag-o', onClick: () => { } },
+                { label: this.translate('Home', false), icon: 'anticon anticon-home', onClick: () => this.navigator.GoHome() },
             ]
         } : {
-                title: 'MENU', icon: 'anticon anticon-inbox', items: [
-                    { label: 'Home', icon: 'anticon anticon-home', onClick: () => this.navigator.GoHome() },
-                    { label: 'Status', icon: 'anticon anticon-bulb', onClick: () => this.RefreshAndGoToStatus() },
-                    { label: 'Posts', icon: 'anticon anticon-file-text', onClick: () => { } },
-                    { label: 'Notes', icon: 'anticon anticon-tag-o', onClick: () => { } },
+                title: this.translate('MENU', 'bottom'), icon: 'anticon anticon-inbox', items: [
+                    { label: this.translate('Home@@index_home', false), icon: 'anticon anticon-home', onClick: () => this.navigator.GoHome() },
+                    { label: this.translate('Status', false), icon: 'anticon anticon-bulb', onClick: () => this.RefreshAndGoToStatus() },
+                    { label: this.translate('Posts', false), icon: 'anticon anticon-file-text', onClick: () => { } },
+                    { label: this.translate('Notes', false), icon: 'anticon anticon-tag-o', onClick: () => { } },
+                    { label: this.translate('Search', false), icon: 'anticon anticon-search', onClick: () => { } },
                 ]
             };
         if (!this.isAdminView && this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
-            config.items.push({ label: 'Manage', icon: 'anticon anticon-setting', onClick: () => this.navigator.GoToAdminDashboard() });
+            config.items.push({ label: this.translate('Manage'), icon: 'anticon anticon-setting', onClick: () => this.navigator.GoToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);
     }
@@ -128,13 +130,13 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
         const username = this.CurrentUser.FriendlyName;
         const config = {
             title: username, items: [
-                { label: 'Profile', onClick: () => this.ToUserProfile() },
-                { label: 'Message Box', onClick: () => this.ToMessageBox() },
-                { label: 'Logout', onClick: () => this.Logout() },
+                { label: this.translate('Profile'), onClick: () => this.ToUserProfile() },
+                { label: this.translate('Message Box'), onClick: () => this.ToMessageBox() },
+                { label: this.translate('Logout'), onClick: () => this.Logout() },
             ]
         };
         if (this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
-            config.items.push({ label: 'Manage', onClick: () => this.ToAdminDashboard() });
+            config.items.push({ label: this.translate('Manage'), onClick: () => this.ToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);
     }

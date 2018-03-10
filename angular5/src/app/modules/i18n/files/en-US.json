@@ -1,8 +1,20 @@
 {
-    "language": "en-US",
+    "language": "English(United States)",
     "index_home": "Home",
     "index_status": "Status",
     "index_posts": "Posts",
     "index_notes": "Notes",
-    "index_manage": "Manage"
+    "index_search": "Search",
+    "index_manage": "Manage",
+    "left_admin_dashboard": "Dashboard",
+    "bottom": {
+        "adminmenu": "ADMIN MENU",
+        "menu": "MENU"
+    },
+    "user": {
+        "profile": "Profile",
+        "message_box": "Message Box",
+        "logout": "Logout",
+        "manage": "Manage"
+    }
 }

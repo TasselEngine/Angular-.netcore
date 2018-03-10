@@ -4,5 +4,17 @@
     "index_status": "状态",
     "index_posts": "文章",
     "index_notes": "笔记",
-    "index_manage": "管理"
+    "index_search": "搜索",
+    "index_manage": "管理",
+    "left_admin_dashboard": "仪表板",
+    "bottom": {
+        "adminmenu": "控制台",
+        "menu": "主菜单"
+    },
+    "user": {
+        "profile": "个人主页",
+        "message_box": "消息盒子",
+        "logout": "注销",
+        "manage": "管理员中心"
+    }
 }

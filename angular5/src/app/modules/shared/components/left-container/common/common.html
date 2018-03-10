@@ -27,6 +27,9 @@
                     <li>
                         <p xi18n>Notes</p>
                     </li>
+                    <li>
+                        <p xi18n>Search</p>
+                    </li>
                     <li *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
                         <p>
                             <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active" xi18n>Manage</a>

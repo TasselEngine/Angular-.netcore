@@ -6,11 +6,9 @@ export class WSi18nPipe implements PipeTransform {
 
     constructor(private i18n: I18N) { }
 
-    transform(value: string, id?: string, search = true, i18n = this.i18n) {
+    transform(value: string, section?: string, search = true, i18n = this.i18n) {
         if (!i18n) { return value; }
-        const seleValue = id && this.i18n.Locale[id];
-        if (seleValue) { return seleValue; }
-        return i18n.Get(value, search);
+        return i18n.Get(value, null, search, true, section);
     }
 
 }
