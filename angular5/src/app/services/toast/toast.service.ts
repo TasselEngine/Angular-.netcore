@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { NzModalService, NzMessageService, NzNotificationService, NzModalSubject } from 'ng-zorro-antd';
+import { I18N } from '../../modules/i18n/i18n.module';
 
 @Injectable()
 export class ToastService {
 
     constructor(
+        private i18n: I18N,
         private notify: NzNotificationService,
         private message: NzMessageService,
         private modal: NzModalService) { }
@@ -72,8 +74,8 @@ export class ToastService {
             footer: false,
             onOk: funcs[0],
             onCancel: funcs[1],
-            okText: 'Yes',
-            cancelText: 'No'
+            okText: this.i18n.Locale.modal.ok_text,
+            cancelText: this.i18n.Locale.modal.cancel_text,
         });
     }
 
@@ -87,8 +89,8 @@ export class ToastService {
             footer: false,
             onOk: funcs[0],
             onCancel: funcs[1],
-            okText: 'Yes',
-            cancelText: 'No'
+            okText: this.i18n.Locale.modal.ok_text,
+            cancelText: this.i18n.Locale.modal.cancel_text,
         });
     }
 
@@ -102,8 +104,8 @@ export class ToastService {
             footer: false,
             onOk: funcs[0],
             onCancel: funcs[1],
-            okText: 'Yes',
-            cancelText: 'No'
+            okText: this.i18n.Locale.modal.ok_text,
+            cancelText: this.i18n.Locale.modal.cancel_text,
         });
     }
 
@@ -117,7 +119,7 @@ export class ToastService {
             footer: false,
             onOk: funcs[0],
             onCancel: funcs[1],
-            okText: 'Ok',
+            okText: this.i18n.Locale.modal.ok_text,
         });
     }
 

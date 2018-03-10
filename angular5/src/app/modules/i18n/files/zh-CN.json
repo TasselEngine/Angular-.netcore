@@ -7,6 +7,30 @@
     "index_search": "搜索",
     "index_manage": "管理",
     "left_admin_dashboard": "仪表板",
+    "time": {
+        "ago": "前",
+        "month": "个月",
+        "year": "年",
+        "day": "天",
+        "hour": "个小时",
+        "minute": "分钟",
+        "second": "秒",
+        "week": "个星期",
+        "just_now": "刚刚"
+    },
+    "modal": {
+        "ok_text": "好",
+        "cancel_text": "取消",
+        "action_failed": "操作失败"
+    },
+    "comment": {
+        "reply": "回复",
+        "comment": "评论",
+        "delete": "删除",
+        "repost": "转发",
+        "loading": "载入中...",
+        "delete_comment": "确定要删除本条评论吗? 注意，此操作不可恢复"
+    },
     "bottom": {
         "adminmenu": "控制台",
         "menu": "主菜单"
@@ -16,5 +40,17 @@
         "message_box": "消息盒子",
         "logout": "注销",
         "manage": "管理员中心"
+    },
+    "status": {
+        "loading": "正在加载...",
+        "cmt_deleted": "评论删除成功",
+        "delete_status": "确认删除当前状态吗? 注意，此操作无法恢复。",
+        "reply_success": "评论发送成功",
+        "like": "赞",
+        "dislike": "取消赞",
+        "comment": "评论",
+        "delete": "删除",
+        "cmts": "评论",
+        "likes": "赞"
     }
 }

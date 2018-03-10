@@ -3,6 +3,7 @@ import { UserComment, Creator, ModelType } from '../../../model/app.model';
 import { FormatService, ResourcesService, ToastService, IdentityService, RootService } from '../../../services/app.service';
 import { CommentEditorComponent } from '../commentEditor/comt-editor.component';
 import { Subscription } from 'rxjs/Subscription';
+import { TasselComponentBase } from '../../shared/components/base.component';
 
 interface IVM {
     ShowReply: boolean;
@@ -16,7 +17,7 @@ interface IVM {
         'comt-div.scss'
     ]
 })
-export class CommentDivComponent implements OnDestroy {
+export class CommentDivComponent extends TasselComponentBase implements OnDestroy {
 
     private _vm: IVM = { ShowReply: false, IsFormat: false };
     public get VM() { return this._vm; }
@@ -54,9 +55,11 @@ export class CommentDivComponent implements OnDestroy {
     constructor(
         private formator: FormatService,
         private identity: IdentityService,
-        private toast: ToastService,
         private root: RootService,
-        private resources: ResourcesService) { }
+        private resources: ResourcesService) {
+        super();
+        this.setI18nPrefix('comment');
+    }
 
     ngOnDestroy(): void {
         if (this.modalSubsc && !this.modalSubsc.closed) {
@@ -73,9 +76,9 @@ export class CommentDivComponent implements OnDestroy {
         } else {
 
         }
-        const config = { items: [{ label: 'Reply', onClick: () => this.ReplyClicked(reply && reply.Creator) }] };
+        const config = { items: [{ label: this.translate('Reply'), onClick: () => this.ReplyClicked(reply && reply.Creator) }] };
         if (this.IsCreator(reply || this.comment)) {
-            config.items.push({ label: 'Delete', onClick: () => this.DeleteClicked(reply || null) });
+            config.items.push({ label: this.translate('Delete'), onClick: () => this.DeleteClicked(reply || null) });
         }
         this.root.ShowBottomPop(config);
     }
@@ -92,7 +95,7 @@ export class CommentDivComponent implements OnDestroy {
 
     public DeleteClicked(comment?: UserComment) {
         const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
-        const modal = this.toast.WarnModal(undefined, 'Do you really want delete this comment? This action can\'t be rollback.', width, true, false, [() => {
+        const modal = this.toast.WarnModal(undefined, this.translate('Do you really want delete this comment? This action can\'t be rollback.'), width, true, false, [() => {
             const comt = comment || this.comment;
             if (comment) {
                 comt.ParentType = ModelType.Comment;

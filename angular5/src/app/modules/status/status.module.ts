@@ -15,6 +15,7 @@ import { CommentEditorModule } from '../commons/commentEditor/comt-editor.module
 import { CommonLoadingModule } from '../commons/loading/common-loading.module';
 import { LikeUserDivModule } from '../commons/likeUserDiv/like-user.module';
 import { TimeFormatModule } from '../commons/timeFormat/timeFormat.module';
+import { WSi18nModule } from '../i18n/i18n.module';
 
 const overRoutes: Routes = [
     {
@@ -35,6 +36,7 @@ const overRoutes: Routes = [
         CommonModule,
         ExtensionsModule,
         FormsModule,
+        WSi18nModule,
         ReactiveFormsModule,
         WaterfallPatchModule,
         WateriverPatchModule,

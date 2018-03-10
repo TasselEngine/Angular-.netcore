@@ -116,7 +116,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
                 ]
             };
         if (!this.isAdminView && this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
-            config.items.push({ label: this.translate('Manage'), icon: 'anticon anticon-setting', onClick: () => this.navigator.GoToAdminDashboard() });
+            config.items.push({ label: this.translate('Manage', false), icon: 'anticon anticon-setting', onClick: () => this.navigator.GoToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);
     }
@@ -129,14 +129,14 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public ShowUserMenu() {
         const username = this.CurrentUser.FriendlyName;
         const config = {
-            title: username, items: [
-                { label: this.translate('Profile'), onClick: () => this.ToUserProfile() },
-                { label: this.translate('Message Box'), onClick: () => this.ToMessageBox() },
-                { label: this.translate('Logout'), onClick: () => this.Logout() },
+            title: username, icon: 'anticon anticon-smile-o', items: [
+                { label: this.translate('Profile'), icon: 'anticon anticon-solution', onClick: () => this.ToUserProfile() },
+                { label: this.translate('Message Box'), icon: 'anticon anticon-message', onClick: () => this.ToMessageBox() },
+                { label: this.translate('Logout'), icon: 'anticon anticon-user-delete', onClick: () => this.Logout() },
             ]
         };
         if (this.Logined && (this.CurrentUser.Role === 'admin' || this.CurrentUser.Role === 'core')) {
-            config.items.push({ label: this.translate('Manage'), onClick: () => this.ToAdminDashboard() });
+            config.items.push({ label: this.translate('Manage'), icon: 'anticon anticon-setting', onClick: () => this.ToAdminDashboard() });
         }
         this.root.ShowBottomPop(config);
     }

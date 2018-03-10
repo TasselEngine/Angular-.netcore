@@ -1,4 +1,5 @@
-<tassel-common-loading *ngIf="!VM" [animaWidth]=" '120px' " [marginTop]=" '240px' " [content]=" 'Loading...' " [contentSize]=" '22px' ">
+<tassel-common-loading *ngIf="!VM" [animaWidth]=" '120px' " [marginTop]=" '240px' " [content]=" 'Loading...' | xi18n:'status' "
+    [contentSize]=" '22px' ">
 </tassel-common-loading>
 <div *ngIf="VM" class="vm-padding">
     <div class="vm-content-base">
@@ -23,7 +24,7 @@
                 (ImageClicked)="OnImageClicked($event)"></tassel-common-imggrid>
             <div *ngIf=" Logined" class="modile-ctrlbar" nz-row>
                 <div class="modile-section" nz-col [nzSpan]="IsWideScreen?3:8">
-                    <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-addlike', icss:IsLiked?'heart':'heart-o', label:'Like', todo:LikeStatus}"></ng-template>
+                    <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-addlike', icss:IsLiked?'heart':'heart-o', label:!IsLiked?'Like':'Dislike', todo:LikeStatus}"></ng-template>
                 </div>
                 <div class="modile-section" nz-col [nzSpan]="IsWideScreen?3:8">
                     <ng-template [ngTemplateOutlet]="barSection" [ngTemplateOutletContext]="{css:'modile-addcmt', icss:'message', label:'Reply', todo:OpenCommentPanel}"></ng-template>
@@ -35,7 +36,7 @@
             <ng-template #barSection let-css="css" let-todo="todo" let-icss="icss" let-label="label">
                 <div [class]="css" (click)="todo()">
                     <i [class]="(IsLiked?'islike ':'') + 'anticon anticon-' + icss"></i>
-                    <span>{{label}}</span>
+                    <span>{{label | xi18n:'status'}}</span>
                 </div>
             </ng-template>
         </div>
@@ -44,12 +45,12 @@
         <div class="vm-comments-header" nz-row nzType="flex">
             <div nz-col>
                 <a (click)="ShowDetails(true)" class="vm-header-actionlink">
-                    <p>COMMENT {{VM.CommentCount}}</p>
+                    <p>{{'COMMENT' | xi18n:'status'}} {{VM.CommentCount}}</p>
                 </a>
             </div>
             <div nz-col>
                 <a (click)="ShowDetails(false)" class="vm-header-actionlink">
-                    <p>LIKE {{VM.LikersCount}}</p>
+                    <p>{{'LIKE' | xi18n:'status'}} {{VM.LikersCount}}</p>
                 </a>
             </div>
             <div nz-col style="margin-top:6px;">

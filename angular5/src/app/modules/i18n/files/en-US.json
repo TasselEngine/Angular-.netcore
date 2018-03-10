@@ -7,6 +7,37 @@
     "index_search": "Search",
     "index_manage": "Manage",
     "left_admin_dashboard": "Dashboard",
+    "time": {
+        "ago": " ago",
+        "month": "month",
+        "months": "months",
+        "year": "year",
+        "years": "years",
+        "day": "day",
+        "days": "days",
+        "hour": "hour",
+        "hours": "hours",
+        "minute": "minute",
+        "minutes": "minutes",
+        "second": "second",
+        "seconds": "seconds",
+        "week": "week",
+        "weeks": "weeks",
+        "just_now": "just now"
+    },
+    "modal": {
+        "ok_text": "OK",
+        "cancel_text": "Cancel",
+        "action_failed": "Action Failed"
+    },
+    "comment": {
+        "reply": "Reply",
+        "comment": "Comment",
+        "delete": "Delete",
+        "repost": "Repost",
+        "loading": "Loading...",
+        "delete_comment": "Do you really want delete this comment? This action can't be rollback."
+    },
     "bottom": {
         "adminmenu": "ADMIN MENU",
         "menu": "MENU"
@@ -16,5 +47,17 @@
         "message_box": "Message Box",
         "logout": "Logout",
         "manage": "Manage"
+    },
+    "status": {
+        "loading": "Loading...",
+        "cmt_deleted": "comment deleted.",
+        "delete_status": "Do you really want delete this status? This action can't be rollback.",
+        "reply_success": "reply successfully.",
+        "like": "Like",
+        "dislike": "Dislike",
+        "comment": "Reply",
+        "delete": "Delete",
+        "cmts": "COMMENT",
+        "likes": "LIKE"
     }
 }

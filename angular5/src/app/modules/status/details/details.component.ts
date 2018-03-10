@@ -59,6 +59,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         private _render: Renderer2,
         protected router: Router) {
         super(router);
+        this.setI18nPrefix('status');
         this.logger = this.logsrv.GetLogger('StatusDetailsComponent').SetModule('status');
     }
 
@@ -136,10 +137,10 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
     /** must use lambda */
     public DeleteStatus = async () => {
         const width = window.innerWidth > 400 ? 400 : window.innerWidth - 48;
-        const modal = this.toast.WarnModal(undefined, 'Do you really want delete this status? This action can\'t be rollback.', width, true, false, [async () => {
+        const modal = this.toast.WarnModal(undefined, this.translate('Do you really want delete this status? This action can\'t be rollback.'), width, true, false, [async () => {
             const [succeed, code, error, _] = await this.status.DeleteStatusAsync(this.status_id);
             if (!succeed) {
-                this.toast.ErrorToast('Action Failed', 'Server errors.');
+                this.toast.ErrorToast(this.translate('Action Failed', 'modal'), 'Server errors.');
                 this.logger.Error(['Delete status failed', 'Server error'], 'DeleteStatus');
                 return;
             }
@@ -150,7 +151,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                     this.toast.SucceesMessage('status removed successfully.');
                 }, 100);
             } else {
-                this.toast.WarnToast('Action Failed', error.msg);
+                this.toast.WarnToast(this.translate('Action Failed', 'modal'), error.msg);
                 this.logger.Warn(['Delete status failed', 'See the details : ', error.msg], 'DeleteStatus');
             }
         }, undefined]);
@@ -173,7 +174,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         }
         const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, params);
         if (!succeed) {
-            this.toast.ErrorToast('Action Failed', 'Server errors.');
+            this.toast.ErrorToast(this.translate('Action Failed', 'modal'), 'Server errors.');
             this.logger.Error(['Add comment failed', 'Server error'], 'AddComment');
             return;
         }
@@ -187,9 +188,9 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 this.model.CommentCount += 1;
             }
             this.openEdit = false;
-            this.toast.SucceesMessage('reply successfully.');
+            this.toast.SucceesMessage(this.translate('reply successfully.'));
         } else {
-            this.toast.WarnToast('Action Failed', error.msg);
+            this.toast.WarnToast(this.translate('Action Failed', 'modal'), error.msg);
             this.logger.Warn(['Add comment failed', 'See the details : ', error.msg], 'AddComment');
         }
     }
@@ -211,7 +212,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         console.log(params);
         const [succeed, code, error, comment] = await this.status.DeleteCommentAsync(this.model.ID, params);
         if (!succeed) {
-            this.toast.ErrorToast('Action Failed', 'Server errors.');
+            this.toast.ErrorToast(this.translate('Action Failed', 'modal'), 'Server errors.');
             this.logger.Error(['Delete comment failed', 'Server error'], 'DeleteComment');
             return;
         }
@@ -223,9 +224,9 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
                 this.model.Comments = this.model.Comments.filter(i => i.ID !== vm.ID);
                 this.model.CommentCount -= 1;
             }
-            this.toast.SucceesMessage('comment deleted.');
+            this.toast.SucceesMessage(this.translate('comment deleted.'));
         } else {
-            this.toast.WarnToast('Action Failed', error.msg);
+            this.toast.WarnToast(this.translate('Action Failed', 'modal'), error.msg);
             this.logger.Warn(['Delete comment failed', 'See the details : ', error.msg], 'DeleteComment');
         }
     }
