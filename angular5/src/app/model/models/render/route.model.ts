@@ -25,6 +25,7 @@ export class RouteStruct implements IRouteStruct {
             this.coll = url.substring(1).split('/');
         }
         this.coll[0] = '/' + this.coll[0] || '';
+        console.log(this.coll);
     }
 
     private getRouteLevel(snapshot: RouterStateSnapshot) {

@@ -1,7 +1,7 @@
 <div *ngIf="ShouldShow" wsPadding [details]="IsWideScreen?[16,8,0,8]:[0,0,0,0]">
 
     <div class="title-div">
-        <h2>Dashboard</h2>
+        <h2 xi18n section="admin">Dashboard</h2>
     </div>
 
     <nz-tabset class="tab-container">
@@ -9,7 +9,7 @@
         <nz-tab>
             <ng-template #nzTabHeading>
                 <!-- <i [ngClass]="tab.icon"></i> -->
-                <span>Users</span>
+                <span xi18n section="admin">Users</span>
             </ng-template>
             <tassel-admin-usertable></tassel-admin-usertable>
         </nz-tab>
@@ -17,7 +17,7 @@
         <nz-tab>
             <ng-template #nzTabHeading>
                 <!-- <i [ngClass]="tab.icon"></i> -->
-                <span>Logs</span>
+                <span xi18n section="admin">Logs</span>
             </ng-template>
             <tassel-admin-logs></tassel-admin-logs>
         </nz-tab>

@@ -1,7 +1,7 @@
 <div *ngIf="IsWideScreen">
 
     <div class="section-title">
-        <span>User {{CommonUsers.length}}</span>
+        <span>{{'User' | xi18n:'admin'}} {{CommonUsers.length}}</span>
     </div>
 
     <div class="users-table">
@@ -14,7 +14,7 @@
     </div>
 
     <div class="section-title">
-        <span>Admin {{AdminUsers.length}}</span>
+        <span>{{'Admin' | xi18n:'admin'}} {{AdminUsers.length}}</span>
     </div>
 
     <div class="users-table">
@@ -27,7 +27,7 @@
     </div>
 
     <div class="section-title">
-        <span>Core {{CoreUsers.length}}</span>
+        <span>{{'Core' | xi18n:'admin'}} {{CoreUsers.length}}</span>
     </div>
 
     <div class="users-table">
@@ -44,7 +44,7 @@
 <div *ngIf=" !IsWideScreen">
     <nz-collapseset nzAccordion>
 
-        <nz-collapse [nzTitle]=" 'User' + ' ' + CommonUsers.length " [nzActive]="true">
+        <nz-collapse [nzTitle]=" translate('User') + ' ' + CommonUsers.length " [nzActive]="true">
             <nz-table #usersTable [nzDataSource]="CommonUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
                 <div noResult>
                     <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.users }"></ng-template>
@@ -53,7 +53,7 @@
             </nz-table>
         </nz-collapse>
 
-        <nz-collapse [nzTitle]=" 'Admin' + ' ' + AdminUsers.length ">
+        <nz-collapse [nzTitle]=" translate('Admin') + ' ' + AdminUsers.length ">
             <nz-table #adminsTable [nzDataSource]="AdminUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
                 <div noResult>
                     <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.admins }"></ng-template>
@@ -62,7 +62,7 @@
             </nz-table>
         </nz-collapse>
 
-        <nz-collapse [nzTitle]=" 'Core' + ' ' + CoreUsers.length">
+        <nz-collapse [nzTitle]=" translate('Core') + ' ' + CoreUsers.length">
             <nz-table #coresTable [nzDataSource]="CoreUsers" [nzPageSize]="IsWideScreen?10:5" nzSize="small" [nzCustomNoResult]="true">
                 <div noResult>
                     <ng-template [ngTemplateOutlet]="tableNoResult" [ngTemplateOutletContext]="{ loaded: loaded.cores }"></ng-template>
@@ -75,7 +75,7 @@
 </div>
 
 <ng-template #tableNoResult let-loaded="loaded">
-    <span *ngIf="loaded">没有数据</span>
+    <span *ngIf="loaded" xi18n section="admin">No Data.</span>
     <tassel-common-loading *ngIf="!loaded" animaWidth="24px"></tassel-common-loading>
 </ng-template>
 
@@ -83,16 +83,16 @@
     <thead nz-thead>
         <tr>
             <th nz-th [width]="IsWideScreen?'30%':'70%' ">
-                <b>UserName</b>
+                <b xi18n section="admin">UserName</b>
             </th>
             <th nz-th [width]="IsWideScreen?'18%':'30%' ">
-                <b>Gender</b>
+                <b xi18n section="admin">Gender</b>
             </th>
             <th *ngIf="IsWideScreen" nz-th width="32%">
-                <b>Action</b>
+                <b xi18n section="admin">Action</b>
             </th>
             <th *ngIf="IsWideScreen" nz-th width="20%">
-                <b>CreateTime</b>
+                <b xi18n section="admin">CreateTime</b>
             </th>
         </tr>
     </thead>
@@ -109,7 +109,7 @@
                     <a>{{data | adminUserDisplay}}</a>
                 </div>
             </td>
-            <td nz-td>{{data.Gender?'Male':'Female'}}</td>
+            <td nz-td>{{(data.Gender?'Male':'Female') | xi18n:'admin'}}</td>
             <td nz-td *ngIf="IsWideScreen">
                 <span>
                     <!-- <a href="#">Action 一 {{data.name}}</a>
@@ -118,18 +118,18 @@
                     <span nz-table-divider></span> -->
                     <nz-dropdown>
                         <a class="ant-dropdown-link" nz-dropdown>
-                            <span>Change role</span>
+                            <span xi18n section="admin">Change role</span>
                             <i class="anticon anticon-down"></i>
                         </a>
                         <ul nz-menu>
                             <li nz-menu-item *ngIf="data.Role!=='user' ">
-                                <a (click)="ChangeUserRole(data, 'user')">User</a>
+                                <a (click)="ChangeUserRole(data, 'user')" xi18n section="admin">User</a>
                             </li>
                             <li nz-menu-item *ngIf="data.Role!=='admin' ">
-                                <a (click)="ChangeUserRole(data, 'admin')">Admin</a>
+                                <a (click)="ChangeUserRole(data, 'admin')" xi18n section="admin">Admin</a>
                             </li>
                             <li nz-menu-item *ngIf="data.Role!=='core' ">
-                                <a (click)="ChangeUserRole(data, 'core')">Core</a>
+                                <a (click)="ChangeUserRole(data, 'core')" xi18n section="admin">Core</a>
                             </li>
                         </ul>
                     </nz-dropdown>

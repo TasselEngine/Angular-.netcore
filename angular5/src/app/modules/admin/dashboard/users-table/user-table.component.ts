@@ -37,6 +37,7 @@ export class AdminUserTableComponent extends TasselAdminCompBase implements OnIn
 
     constructor(protected router: Router) {
         super(router);
+        this.setI18nPrefix('admin');
         this.logger = this.logsrv.GetLogger('AdminUserTableComponent').SetModule('Admin');
     }
 
@@ -87,18 +88,18 @@ export class AdminUserTableComponent extends TasselAdminCompBase implements OnIn
         }
         const [succeed, code, error, _] = await action();
         if (!succeed) {
-            this.notify.ErrorToast('Update user role failed', 'Server errors.');
-            this.logger.Error(['Update user role failed', 'see in details', error], 'dismissOrAppoint');
+            this.notify.ErrorToast(this.translate('Update user role failed'), 'Server errors.');
+            this.logger.Error([this.translate('Update user role failed'), 'see in details', error], 'dismissOrAppoint');
             return;
         }
         if (code === 0) {
-            this.notify.SucceesMessage('Update user role successfully');
-            this.logger.Debug(['Update user role successfully'], 'dismissOrAppoint');
+            this.notify.SucceesMessage(this.translate('Update user role successfully'));
+            this.logger.Debug([this.translate('Update user role successfully')], 'dismissOrAppoint');
             user.ChangeRole(roleToUpdate);
             onSuccess();
         } else {
-            this.notify.WarnToast('Update user role failed', error.msg);
-            this.logger.Warn(['Update user role failed', error.msg], 'dismissOrAppoint');
+            this.notify.WarnToast(this.translate('Update user role failed'), error.msg);
+            this.logger.Warn([this.translate('Update user role failed'), error.msg], 'dismissOrAppoint');
         }
     }
 }

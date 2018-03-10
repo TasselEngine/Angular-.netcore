@@ -10,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { TinyMCEModule } from '../commons/tinyEditor/tinymce.module';
 import { AdminDashboargModule } from './dashboard/dashboard.module';
+import { WSi18nModule } from '../i18n/i18n.module';
 
 const overRoutes: Routes = [
     {
@@ -36,7 +37,8 @@ const overRoutes: Routes = [
         NgZorroAntdModule,
         TinyMCEModule,
         RouterModule.forChild(overRoutes),
-        AdminDashboargModule
+        AdminDashboargModule,
+        WSi18nModule
     ],
     providers: [],
     exports: [

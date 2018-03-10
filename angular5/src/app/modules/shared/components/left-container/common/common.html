@@ -13,7 +13,7 @@
                 <ul class="slider-ul">
                     <li>
                         <p>
-                            <a [routerLink]="RouteLinks.Home" routerLinkActive="active" xi18n>Home</a>
+                            <a [routerLink]="RouteLinks.Home" preserveQueryParams routerLinkActive="active" xi18n>Home</a>
                         </p>
                     </li>
                     <li>
@@ -32,7 +32,7 @@
                     </li>
                     <li *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')">
                         <p>
-                            <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">{{'Manage' | xi18n}}</a>
+                            <a [routerLink]="RouteLinks.AdminDashboard" preserveQueryParams routerLinkActive="active">{{'Manage' | xi18n}}</a>
                         </p>
                     </li>
                 </ul>

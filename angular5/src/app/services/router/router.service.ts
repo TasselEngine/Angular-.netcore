@@ -3,6 +3,7 @@ import { RouteErrors } from '../../model/app.model';
 import { Logger, LoggerService } from 'ws-logger';
 import { IdentityService } from '.././identity/identity.service';
 import { Router, NavigationExtras } from '@angular/router';
+import { I18N } from '../../modules/i18n/i18n.module';
 
 @Injectable()
 export class RouterService {
@@ -31,7 +32,7 @@ export class RouterService {
 
     public get AdminPrefix() { return this.adminRoot; }
 
-    private readonly route_maps = {
+    private readonly route_maps: { [key: string]: Array<any> } = {
         'Home': this.index,
         'NotFound': this.error404,
         'Forbidden': this.error401,
@@ -51,6 +52,7 @@ export class RouterService {
     private logger: Logger<RouterService>;
 
     constructor(
+        private i18n: I18N,
         private identity: IdentityService,
         private logsrv: LoggerService) {
         this.logger = this.logsrv.GetLogger('RouterService').SetModule('service');
@@ -58,6 +60,8 @@ export class RouterService {
 
     private routeSafely(commands: any[], navigate_extra?: NavigationExtras) {
         try {
+            navigate_extra = navigate_extra || { queryParams: {} };
+            navigate_extra.queryParams['locale'] = this.i18n.Language;
             this.router.navigate(commands, navigate_extra);
         } catch (error) {
             this.logger.Error(['Navigation failed', 'see more infomations below here.', error], 'routeSafely');

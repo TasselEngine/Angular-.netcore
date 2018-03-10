@@ -10,6 +10,7 @@ import { AdminUserTableComponent } from './users-table/user-table.component';
 import { AdminDashLogsComponent } from './logs-tab/logs.component';
 import { TimeFormatModule } from '../../commons/timeFormat/timeFormat.module';
 import { CommonLoadingModule } from '../../commons/loading/common-loading.module';
+import { WSi18nModule } from '../../i18n/i18n.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { CommonLoadingModule } from '../../commons/loading/common-loading.module
         FormsModule,
         TimeFormatModule,
         NgZorroAntdModule,
-        CommonLoadingModule
+        CommonLoadingModule,
+        WSi18nModule
     ],
     providers: [],
     exports: [
