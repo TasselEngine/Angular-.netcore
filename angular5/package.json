@@ -27,6 +27,7 @@
     "ng-zorro-antd": "^0.6.8",
     "rxjs": "^5.5.2",
     "tinymce": "^4.7.2",
+    "web-animations-js": "^2.3.1",
     "ws-async-base": "^1.0.2",
     "ws-format-httprequest": "^2.0.4",
     "ws-format-time": "^1.0.5",

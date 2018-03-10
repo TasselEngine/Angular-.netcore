@@ -1,4 +1,5 @@
-<div *ngIf="ShowEdit" [@flyInOut]="AnimaRun" class="vm-comt-edit vm-comt-edit-transp" [class.vm-comt-edit-transp]="IsTransparent">
+<div #self [hidden]="!ShowEdit" class="vm-comt-edit vm-comt-edit-transp" [class.vm-comt-edit-transp]="IsTransparent" [class.opc-none]="!openEditor"
+    [class.opc-all]="openEditor">
     <p *ngIf="Mentioned" class="vm-mentioned-name">@{{Mentioned.UserName}}</p>
     <nz-input nzType="textarea" nzRows="7" nzPlaceHolder="Input your reply here." (keyup)="OnInputKeyUp()" [(ngModel)]="VM.Comment"
         #replyInput></nz-input>

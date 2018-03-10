@@ -105,7 +105,7 @@ export class CommentDivComponent implements OnDestroy {
     public ReplyClicked(mentioned?: Creator) {
         const width = window.innerWidth > 800 ? 800 : window.innerWidth - 48;
         const modal = this.toast.ComponentModal(undefined, CommentEditorComponent, {
-            show: true,
+            openEditor: true,
             mentioned: mentioned || this.comment.Creator,
             transparent: true
         }, width, true, false);

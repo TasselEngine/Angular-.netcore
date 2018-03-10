@@ -4,6 +4,9 @@
     padding-bottom: 8px;
     background-color: #f3f3f3;
     margin-bottom: 8px;
+    transition: 0.35s;
+    opacity: 0;
+    transform-origin: top;
 }
 
 .vm-comt-edit-transp{
@@ -25,4 +28,14 @@
 
 .vm-btn-margin{
     margin-right: 4px;
+}
+
+.opc-none{
+    transform: scaleY(0);
+    opacity: 0;
+}
+
+.opc-all{
+    transform: scaleY(1);
+    opacity: 1;
 }

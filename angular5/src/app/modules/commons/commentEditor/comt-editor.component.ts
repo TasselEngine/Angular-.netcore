@@ -1,5 +1,4 @@
-import { trigger, style, transition, animate, state, group } from '@angular/animations';
-import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostBinding, OnInit, OnChanges, SimpleChanges, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { FormatService, ResourcesService } from '../../../services/app.service';
 import { ISticker, Creator } from '../../../model/app.model';
 import { NzModalSubject } from 'ng-zorro-antd';
@@ -17,35 +16,17 @@ interface IVM {
 @Component({
     selector: 'tassel-common-comtedit',
     templateUrl: 'comt-editor.html',
-    animations: [
-        trigger('flyInOut', [
-            state('*', style({ opacity: 0, height: 0 })),
-            state('active', style({ opacity: 1, height: '*' })),
-            state('inactive', style({ opacity: 0, height: 0 })),
-            transition('* => active', [
-                group([
-                    animate('0.3s ease-in-out', style({ height: '*' })),
-                    animate('0.5s 0.3s ease-in', style({ opacity: 1 }))
-                ])
-            ]),
-            transition('active => inactive', [
-                animate(300)
-            ])
-        ])
-    ],
     styleUrls: [
         'comt-editor.scss'
     ]
 })
-export class CommentEditorComponent {
+export class CommentEditorComponent implements OnInit, OnChanges {
 
-    @HostBinding('@flyInOut') animate = true;
+    private clientHeight: number;
 
-    @Input('anima')
-    private anima = true;
-    public get AnimaRun() { return this.anima ? 'active' : 'inactive'; }
+    @Input('open')
+    public openEditor = false;
 
-    @Input('show')
     private show = false;
     public get ShowEdit() { return this.show; }
 
@@ -63,10 +44,33 @@ export class CommentEditorComponent {
     @Output()
     OnCancel = new EventEmitter<any>();
 
+    @ViewChild('self')
+    private view: ElementRef;
+    public get View() { return this.view && this.view.nativeElement; }
+
     private _vm: IVM = { Comment: '' };
     public get VM() { return this._vm; }
 
-    constructor(private subject: NzModalSubject) { }
+    constructor(private subject: NzModalSubject, private _render: Renderer2) { }
+
+    ngOnInit(): void {
+        if (this.openEditor) {
+            this.startAnimas();
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        for (const propName in changes) {
+            if (propName === 'openEditor') {
+                const toopen = changes[propName].currentValue as boolean;
+                if (toopen) {
+                    this.startAnimas();
+                } else {
+                    this.endAnimas();
+                }
+            }
+        }
+    }
 
     public readonly TiebaImageClicked = (image: ISticker) => {
         this._vm.Comment += `[${image.key}]`;
@@ -97,4 +101,17 @@ export class CommentEditorComponent {
         this._vm.Comment = '';
     }
 
+
+    private endAnimas() {
+        this.openEditor = false;
+        this._render.setStyle(this.View, 'margin-bottom', `-${this.View.clientHeight}px`);
+        this.clientHeight = this.View.clientHeight;
+        setTimeout(() => this.show = false, 350);
+    }
+
+    private startAnimas() {
+        this.show = true;
+        this._render.setStyle(this.View, 'margin-bottom', '8px');
+        setTimeout(() => this.openEditor = true, 350);
+    }
 }

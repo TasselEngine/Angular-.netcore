@@ -57,10 +57,8 @@
             </div>
         </div>
         <div class="vm-comments" nz-row>
-            <div *ngIf="IsEdit" nz-col>
-                <tassel-common-comtedit [show]="true" [anima]="IsEdit" (OnCommentAdd)="AddComment($event)" (OnCancel)="CloseCommentAdd()"></tassel-common-comtedit>
-            </div>
-            <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments" nz-col>
+            <tassel-common-comtedit [open]="IsEdit" (OnCommentAdd)="AddComment($event)" (OnCancel)="CloseCommentAdd()"></tassel-common-comtedit>
+            <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="!ShowComments">
                 <div *ngIf="!VM.Comments||VM.Comments.length===0" class="vm-comt">
                     <p class="no-commit-p">There's no comment yet.
                         <span *ngIf="Logined">
@@ -76,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="ShowComments" nz-col>
+            <div class="vm-details-show vm-details-disappear" [class.vm-details-disappear]="ShowComments">
                 <div class="vm-comt" *ngFor="let relation of VM.LikeUsers">
                     <tassel-common-likeuser [user]="relation" (OnUserClicked)="GoToUserRedirect($event)"></tassel-common-likeuser>
                 </div>

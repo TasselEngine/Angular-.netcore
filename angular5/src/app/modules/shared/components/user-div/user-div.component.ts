@@ -29,6 +29,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     public ShowMenu = false;
 
     private isAdminView = false;
+    public get IsAdminView() { return this.isAdminView; }
 
     public get ShowType() {
         return this.ShowRefresh && !this.ShowSlider ? 'three' : (this.ShowRefresh && this.ShowSlider) || (!this.ShowRefresh && !this.ShowSlider) ? 'two' : 'one';
@@ -59,6 +60,7 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     ngOnInit(): void {
         this.menuInit();
         this.refreshButtonInit();
+        this.checkRoutes();
     }
 
     ngOnDestroy(): void {
@@ -76,9 +78,13 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
             this.ShowRefresh = false;
             this.isAdminView = false;
             this.refreshInvoker = null;
-            this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
-                .DoIncludes(() => this.isAdminView = true, this.navigator.AdminPrefix);
+            this.checkRoutes();
         });
+    }
+
+    private checkRoutes() {
+        this.routeStruct = RouteStruct.Create(this.router.routerState.snapshot.url)
+            .DoIncludes(() => this.isAdminView = true, this.navigator.AdminPrefix);
     }
 
     private refreshButtonInit() {

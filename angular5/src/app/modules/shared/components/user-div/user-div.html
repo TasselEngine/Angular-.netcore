@@ -62,7 +62,7 @@
                 <i class="anticon anticon-inbox root-menu-size"></i>
             </a>
         </div>
-        <ng-template #nzTemplate>
+        <ng-template *ngIf="!IsAdminView" #nzTemplate>
             <p class="root-menu-item">
                 <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
             </p>
@@ -73,6 +73,19 @@
             <p class="root-menu-item">Notes</p>
             <p *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
                 <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Manage</a>
+            </p>
+        </ng-template>
+        <ng-template *ngIf="IsAdminView" #nzTemplate>
+            <p class="root-menu-item">
+                <a [routerLink]="RouteLinks.AdminDashboard" routerLinkActive="active">Dashboard</a>
+            </p>
+            <p class="root-menu-item">
+                <a [routerLink]="RouteLinks.AdminStatus">Status</a>
+            </p>
+            <p class="root-menu-item">Posts</p>
+            <p class="root-menu-item">Notes</p>
+            <p class="root-menu-item">
+                <a [routerLink]="RouteLinks.Home" routerLinkActive="active">Home</a>
             </p>
         </ng-template>
     </nz-popover>
