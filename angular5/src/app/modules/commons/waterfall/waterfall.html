@@ -1,9 +1,6 @@
 <div #indexDiv>
     <div class="wf-loading-div wf-display wf-hidden" [class.wf-hidden]="Loaded">
-        <div>
-            <nz-spin [nzSize]="'large'"></nz-spin>
-            <!-- <span class="wf-loading-title">Loading</span> -->
-        </div>
+        <tassel-common-loading [borderSize]="5" [borderLine]="0.8" borderColor="#585858" padding="0"></tassel-common-loading>
     </div>
     <div nz-row>
 

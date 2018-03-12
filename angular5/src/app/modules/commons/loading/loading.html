@@ -1,8 +1,16 @@
-<div [style.maxWidth]="maxWidth||'unset'" [style.padding]="padding||'12px'">
+<div *ngIf="type==='colorful' " [style.maxWidth]="maxWidth||'unset'" [style.padding]="padding||'12px'">
     <div class="loader" [style.width]="animaWidth||'100px'" [style.marginTop]="marginTop|| 'unset' ">
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
         </svg>
+    </div>
+</div>
+<div *ngIf="type==='pure' " style="text-align:center" [style.maxWidth]="maxWidth||'unset'" [style.padding]="padding||'12px'">
+    <div class="loading-pure" [style.width]="outerVH" [style.height]="outerVH" [style.marginTop]="marginTop|| 'unset' ">
+        <div [style.width]="innerVH" [style.height]="innerVH" [style.border-color]="borderColor" [style.border-width]="stroke"></div>
+        <div [style.width]="innerVH" [style.height]="innerVH" [style.border-color]="borderColor" [style.border-width]="stroke"></div>
+        <div [style.width]="innerVH" [style.height]="innerVH" [style.border-color]="borderColor" [style.border-width]="stroke"></div>
+        <div [style.width]="innerVH" [style.height]="innerVH" [style.border-color]="borderColor" [style.border-width]="stroke"></div>
     </div>
 </div>
 <div style="text-align:center" [style.color]="contentColor || '#000' " [style.fontSize]="contentSize || '14px' " [style.marginTop]="contentTop|| '-12px' ">{{content}}</div>

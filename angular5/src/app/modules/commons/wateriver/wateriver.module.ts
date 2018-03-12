@@ -3,6 +3,7 @@ import { ExtensionsModule } from './../../extensions/extensions.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CommonLoadingModule } from '../loading/common-loading.module';
 
 @NgModule({
     declarations: [
@@ -12,6 +13,7 @@ import { NgModule } from '@angular/core';
         CommonModule,
         ExtensionsModule,
         NgZorroAntdModule,
+        CommonLoadingModule
     ],
     providers: [],
     exports: [

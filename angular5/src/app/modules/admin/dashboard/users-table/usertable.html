@@ -76,7 +76,7 @@
 
 <ng-template #tableNoResult let-loaded="loaded">
     <span *ngIf="loaded" xi18n section="admin">No Data.</span>
-    <tassel-common-loading *ngIf="!loaded" animaWidth="24px"></tassel-common-loading>
+    <tassel-common-loading *ngIf="!loaded" [borderSize]="4" [borderLine]="0.6" borderColor="#585858"></tassel-common-loading>
 </ng-template>
 
 <ng-template #tableTemplate let-model="model">
