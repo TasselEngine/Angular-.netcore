@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormatService, ResourcesService } from '../../../services/app.service';
 import { ISticker } from '../../../model/app.model';
 
@@ -10,6 +10,9 @@ import { ISticker } from '../../../model/app.model';
     ]
 })
 export class StickersGroupComponent {
+
+    @Input()
+    public uploadEnabled = false;
 
     @Output()
     OnStickerClicked = new EventEmitter<ISticker>();

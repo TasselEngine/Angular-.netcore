@@ -20,7 +20,9 @@
         "others": "Others"
     },
     "editor": {
-        " reply_input": "Input your reply here."
+        " reply_input": "Input your reply here.",
+        "submit": "Submit",
+        "cancel": "Cancel"
     },
     "time": {
         "ago": " ago",

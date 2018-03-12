@@ -20,7 +20,9 @@
         "others": "其他"
     },
     "editor": {
-        " reply_input": "请输入你的回复"
+        " reply_input": "请输入你的回复",
+        "submit": "确定",
+        "cancel": "取消"
     },
     "time": {
         "ago": "前",

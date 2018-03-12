@@ -1,7 +1,16 @@
-<nz-tabset nzTabPosition="top" nzSize="small">
+<nz-tabset nzTabPosition="top" nzSize="small" nzType="card">
+    <nz-tab *ngIf="uploadEnabled">
+        <ng-template #nzTabHeading>
+            <i class="anticon anticon-picture" style="font-size:22px"></i>
+        </ng-template>
+        <div class="vm-tieba-group">
+
+        </div>
+    </nz-tab>
     <nz-tab>
         <ng-template #nzTabHeading>
-            <span xi18n section="stickers">Tieba</span>
+            <!-- <span xi18n section="stickers">Tieba</span> -->
+            <img [src]="Formator.ImageConnect('/resources/system/images/tieba/middle/25.png')" height="20" />
         </ng-template>
         <div *ngIf="TiebaImages" class="vm-tieba-group">
             <img class="vm-tieba-img" width="28" *ngFor="let img of TiebaImages" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
@@ -10,7 +19,8 @@
     </nz-tab>
     <nz-tab>
         <ng-template #nzTabHeading>
-            <span xi18n section="stickers">Aru</span>
+            <!-- <span xi18n section="stickers">Aru</span> -->
+            <img [src]="Formator.ImageConnect('/resources/system/images/aru/asurprised.png')" height="20" />
         </ng-template>
         <div *ngIf="ArusStickers" class="vm-tieba-group">
             <img class="vm-tieba-img" width="28" *ngFor="let img of ArusStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
@@ -19,7 +29,8 @@
     </nz-tab>
     <nz-tab>
         <ng-template #nzTabHeading>
-            <span xi18n section="stickers">Weibo 01</span>
+            <!-- <span xi18n section="stickers">Weibo 01</span> -->
+            <img [src]="Formator.ImageConnect('/resources/system/images/sina/pop/mogician.png')" height="20" />
         </ng-template>
         <div *ngIf="SinaPopStickers" class="vm-tieba-group">
             <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of SinaPopStickers" [title]="img.key | keyDisplay" [alt]="img.key"
@@ -28,7 +39,8 @@
     </nz-tab>
     <nz-tab>
         <ng-template #nzTabHeading>
-            <span xi18n section="stickers">Weibo 02</span>
+            <!-- <span xi18n section="stickers">Weibo 02</span> -->
+            <img [src]="Formator.ImageConnect('/resources/system/images/sina/role/ameng-smg.png')" height="20" />
         </ng-template>
         <div *ngIf="SinaRoleStickers" class="vm-tieba-group">
             <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of SinaRoleStickers" [title]="img.key | keyDisplay" [alt]="img.key"
@@ -37,7 +49,8 @@
     </nz-tab>
     <nz-tab>
         <ng-template #nzTabHeading>
-            <span xi18n section="stickers">Others</span>
+            <!-- <span xi18n section="stickers">Others</span> -->
+            <img [src]="Formator.ImageConnect('/resources/system/images/sina/others/doge.png')" height="20" />
         </ng-template>
         <div *ngIf="OthersStickers" class="vm-tieba-group">
             <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of OthersStickers" [title]="img.key | keyDisplay" [alt]="img.key"
