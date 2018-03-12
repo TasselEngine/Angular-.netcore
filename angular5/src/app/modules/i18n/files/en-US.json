@@ -19,6 +19,9 @@
         "sina02": "Weibo 02",
         "others": "Others"
     },
+    "editor": {
+        " reply_input": "Input your reply here."
+    },
     "time": {
         "ago": " ago",
         "month": "month",

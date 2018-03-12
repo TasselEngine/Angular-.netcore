@@ -13,12 +13,12 @@
                 <ul class="slider-ul">
                     <li>
                         <p>
-                            <a [routerLink]="RouteLinks.AdminDashboard" preserveQueryParams routerLinkActive="active" xi18n>Dashboard</a>
+                            <a [routerLink]="RouteLinks.AdminDashboard" queryParamsHandling="merge" routerLinkActive="active" xi18n>Dashboard</a>
                         </p>
                     </li>
                     <li>
                         <p>
-                            <a [routerLink]="RouteLinks.AdminStatus" preserveQueryParams routerLinkActive="active" xi18n>Status</a>
+                            <a [routerLink]="RouteLinks.AdminStatus" queryParamsHandling="merge" routerLinkActive="active" xi18n>Status</a>
                         </p>
                     </li>
                     <li>
@@ -29,7 +29,7 @@
                     </li>
                     <li>
                         <p>
-                            <a [routerLink]="RouteLinks.Home" preserveQueryParams routerLinkActive="active" xi18n>Home</a>
+                            <a [routerLink]="RouteLinks.Home" queryParamsHandling="merge" routerLinkActive="active" xi18n>Home</a>
                         </p>
                     </li>
                 </ul>

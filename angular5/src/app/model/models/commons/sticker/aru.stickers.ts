@@ -12,10 +12,6 @@ export const arus = [
         'value': '/resources/system/images/aru/blood2.png'
     },
     {
-        'key': '#(aru-clap)',
-        'value': '/resources/system/images/aru/clap.png'
-    },
-    {
         'key': '#(aru-confuse)',
         'value': '/resources/system/images/aru/confuse.png'
     },
@@ -94,6 +90,10 @@ export const arus = [
     {
         'key': '#(aru-unhappy)',
         'value': '/resources/system/images/aru/unhappy.png'
+    },
+    {
+        'key': '#(aru-clap)',
+        'value': '/resources/system/images/aru/clap.png'
     },
     {
         'key': '#(aru-angry)',

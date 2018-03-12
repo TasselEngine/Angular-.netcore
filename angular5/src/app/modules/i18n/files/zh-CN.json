@@ -19,6 +19,9 @@
         "sina02": "微博 02",
         "others": "其他"
     },
+    "editor": {
+        " reply_input": "请输入你的回复"
+    },
     "time": {
         "ago": "前",
         "month": "个月",

@@ -39,7 +39,7 @@
     </nz-badge>
     <!-- unlogined icon button : go to sign in-->
     <div *ngIf="!Logined" class="avatar-icon avatar-dark">
-        <a [routerLink]="RouteLinks.Login" preserveQueryParams routerLinkActive="active">
+        <a [routerLink]="RouteLinks.Login" queryParamsHandling="merge" routerLinkActive="active">
             <i class="anticon anticon-user nologin-icon"></i>
         </a>
     </div>
@@ -65,7 +65,7 @@
         </div>
         <ng-template *ngIf="!IsAdminView" #nzTemplate>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.Home" preserveQueryParams routerLinkActive="active" xi18n>Home</a>
+                <a [routerLink]="RouteLinks.Home" queryParamsHandling="merge" routerLinkActive="active" xi18n>Home</a>
             </p>
             <p class="root-menu-item">
                 <a (click)="RefreshAndGoToStatus()" xi18n>Status</a>
@@ -74,20 +74,20 @@
             <p class="root-menu-item" xi18n>Notes</p>
             <p class="root-menu-item" xi18n>Search</p>
             <p *ngIf="Logined&&(CurrentUser.Role==='admin'||CurrentUser.Role==='core')" class="root-menu-item">
-                <a [routerLink]="RouteLinks.AdminDashboard" preserveQueryParams routerLinkActive="active" xi18n>Manage</a>
+                <a [routerLink]="RouteLinks.AdminDashboard" queryParamsHandling="merge" routerLinkActive="active" xi18n>Manage</a>
             </p>
         </ng-template>
         <ng-template *ngIf="IsAdminView" #nzTemplate>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.AdminDashboard" preserveQueryParams routerLinkActive="active" xi18n>Dashboard</a>
+                <a [routerLink]="RouteLinks.AdminDashboard" queryParamsHandling="merge" routerLinkActive="active" xi18n>Dashboard</a>
             </p>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.AdminStatus" preserveQueryParams xi18n>Status</a>
+                <a [routerLink]="RouteLinks.AdminStatus" queryParamsHandling="merge" xi18n>Status</a>
             </p>
             <p class="root-menu-item" xi18n>Posts</p>
             <p class="root-menu-item" xi18n>Notes</p>
             <p class="root-menu-item">
-                <a [routerLink]="RouteLinks.Home" preserveQueryParams routerLinkActive="active" xi18n>Home</a>
+                <a [routerLink]="RouteLinks.Home" queryParamsHandling="merge" routerLinkActive="active" xi18n>Home</a>
             </p>
         </ng-template>
     </nz-popover>

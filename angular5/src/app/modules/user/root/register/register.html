@@ -44,7 +44,7 @@
                         <span>Remember me and auto-login</span>
                     </label>
                     <button nz-button class="login-form-button" [nzType]="'primary'" [nzSize]="'large'">Register</button>Have an account already? You can
-                    <a [routerLink]="RouteLinks.Login" preserveQueryParams routerLinkActive="acrive">Login now</a> .
+                    <a [routerLink]="RouteLinks.Login" queryParamsHandling="merge" routerLinkActive="acrive">Login now</a> .
                 </div>
             </div>
         </form>
