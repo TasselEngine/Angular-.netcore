@@ -29,9 +29,13 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
     private sina_role: ISticker[];
     public get SinaRoleStickers() { return StickersMap.SinaRole || []; }
 
+    private sru_group: ISticker[];
+    public get ArusStickers() { return StickersMap.Aru || []; }
+
     private all_stickers: ISticker[];
     public get AllStickersGroup() {
-        return this.all_stickers || (this.all_stickers = [...this.TiebaImages, ...this.OthersStickers, ...this.SinaPopStickers, ...this.SinaRoleStickers]);
+        return this.all_stickers || (
+            this.all_stickers = [...this.TiebaImages, ...this.OthersStickers, ...this.SinaPopStickers, ...this.SinaRoleStickers, ...this.ArusStickers]);
     }
 
     private logger: Logger<ResourcesService>;
@@ -42,38 +46,6 @@ export class ResourcesService extends HttpAsyncClientBase<IResponse> {
         private server: ServerService) {
         super(http);
         this.logger = this.logsrv.GetLogger('ResourcesService').SetModule('service');
-    }
-
-    public readonly GetTiebaImagesAsync = async () => {
-        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/tieba`, this.Options);
-        this.apiLog([succeed, error, response], 'Try to get the middle tieba images group.', 'GetTiebaImagesAsync');
-        return succeed ?
-            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
-            StrictResult.Failed<ISticker[]>(error);
-    }
-
-    public readonly GetOthersStickersAsync = async () => {
-        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/others`, this.Options);
-        this.apiLog([succeed, error, response], 'Try to get the others stickers group.', 'GetOthersStickersAsync');
-        return succeed ?
-            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
-            StrictResult.Failed<ISticker[]>(error);
-    }
-
-    public readonly GetSinaPopStickersAsync = async () => {
-        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/sina_pop`, this.Options);
-        this.apiLog([succeed, error, response], 'Try to get the sina-pop stickers group.', 'GetSinaPopStickersAsync');
-        return succeed ?
-            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
-            StrictResult.Failed<ISticker[]>(error);
-    }
-
-    public readonly GetSinaRoleStickersAsync = async () => {
-        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/static/sina_role`, this.Options);
-        this.apiLog([succeed, error, response], 'Try to get the sina-role stickers group.', 'GetSinaRoleStickersAsync');
-        return succeed ?
-            StrictResult.Success(response.status, response.content as ISticker[], response.msg) :
-            StrictResult.Failed<ISticker[]>(error);
     }
 
     private readonly apiLog = (result: [boolean, IError, IResponse], title: string, method: string, descrip?: string) => {

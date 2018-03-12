@@ -12,6 +12,13 @@
         "light": "Light",
         "dark": "Dark"
     },
+    "stickers": {
+        "aru": "Aru",
+        "tieba": "Tieba",
+        "sina01": "Weibo 01",
+        "sina02": "Weibo 02",
+        "others": "Others"
+    },
     "time": {
         "ago": " ago",
         "month": "month",

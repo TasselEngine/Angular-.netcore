@@ -12,6 +12,13 @@
         "light": "亮",
         "dark": "暗"
     },
+    "stickers": {
+        "aru": "阿鲁",
+        "tieba": "贴吧",
+        "sina01": "微博 01",
+        "sina02": "微博 02",
+        "others": "其他"
+    },
     "time": {
         "ago": "前",
         "month": "个月",

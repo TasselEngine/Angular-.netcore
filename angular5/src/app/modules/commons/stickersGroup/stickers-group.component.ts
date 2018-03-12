@@ -18,6 +18,7 @@ export class StickersGroupComponent {
     public get OthersStickers() { return this.resources.OthersStickers; }
     public get SinaPopStickers() { return this.resources.SinaPopStickers; }
     public get SinaRoleStickers() { return this.resources.SinaRoleStickers; }
+    public get ArusStickers() { return this.resources.ArusStickers; }
     public get AllResources() { return this.resources.AllStickersGroup; }
 
     public get Formator() { return this.formator; }
