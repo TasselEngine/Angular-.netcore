@@ -1,4 +1,4 @@
-<nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [nzCollapsed]="!show" [nzTrigger]="null" class="slider-div root-slider">
+<nz-sider [nzWidth]="360" [nzCollapsedWidth]="0" [nzCollapsed]="!show" [nzTrigger]="null" class="slider-div root-slider slider-background">
     <div class="slider-inner">
         <div class="slider-listgp">
             <img src="assets/img/icon.jpg" class="main-icon" />
@@ -37,6 +37,12 @@
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+    <div class="switch-group" nz-row>
+        <div nz-col style="text-align:center">
+            <tassel-switch [isOn]="true" (OnChanged)="OnThemeChanged($event)" [onLabel]=" 'Light' | xi18n:'left_container' " [closeLabel]=" 'Dark' | xi18n:'left_container' "
+                [minWidth]="25"></tassel-switch>
         </div>
     </div>
 </nz-sider>

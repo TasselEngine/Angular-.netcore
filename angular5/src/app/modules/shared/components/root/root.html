@@ -1,4 +1,4 @@
-<nz-layout class="main-div">
+<nz-layout class="main-div" [class.tassel-theme-light]="IsLightTheme" [class.tassel-theme-dark]="!IsLightTheme">
 
     <nz-affix>
         <tassel-left-common *ngIf=" !IsAdminView" [config]="AppMain" [show]="!HideAll"></tassel-left-common>
@@ -18,7 +18,6 @@
     </nz-affix>
 
     <nz-content class="content-div root-content " [class.root-content-grant]="HideAll">
-        <link rel="stylesheet" href="/assets/css/styles.css">
         <div class="root-content-container root-content-inner root-content-back root-content-noback" [class.root-content-noback]="!ShowBack&&IsWideScreen">
             <router-outlet></router-outlet>
         </div>

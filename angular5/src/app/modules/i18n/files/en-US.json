@@ -7,6 +7,11 @@
     "index_search": "Search",
     "index_manage": "Manage",
     "left_admin_dashboard": "Dashboard",
+    "left_container": {
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark"
+    },
     "time": {
         "ago": " ago",
         "month": "month",

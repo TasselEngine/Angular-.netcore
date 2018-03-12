@@ -22,6 +22,8 @@ import { WSi18N } from '../../../i18n/token';
 })
 export class RootComponent extends TasselNavigationBase implements OnInit, OnDestroy, AfterViewInit {
 
+  public IsLightTheme = true;
+
   public ShowBack = true;
   public HideAll = true;
   public IsAdminView = false;
@@ -64,6 +66,7 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
     this.scrollPositionCacheEnabled();
     this.bottomMenuInit();
     this.photoGallatyInit();
+    this.themeHookInit();
   }
 
   ngOnDestroy(): void {
@@ -83,6 +86,12 @@ export class RootComponent extends TasselNavigationBase implements OnInit, OnDes
   }
 
   //#region inner methods
+
+  private themeHookInit() {
+    this.subscribe(this.root.ThemeSubject, (isLight) => {
+      this.IsLightTheme = isLight;
+    });
+  }
 
   private photoGallatyInit() {
     this.subscribe(this.root.PhotoGallarySubject, (images) => {

@@ -17,6 +17,7 @@ import { BottomMenuComponent } from './components/bottom-menu/bottomMenu.compone
 import { LeftAdminContainerComponent } from './components/left-container/admin/admin.component';
 import { PhotoGallaryModule } from '../commons/photoGallary/photo-gallary.module';
 import { WSi18nModule } from '../i18n/i18n.module';
+import { LabelSwitchModule } from '../commons/switch/switch.module';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { WSi18nModule } from '../i18n/i18n.module';
         ImageGridModule,
         PhotoGallaryModule,
         NgZorroAntdModule,
-        CommonLoadingModule
+        CommonLoadingModule,
+        LabelSwitchModule
     ],
     providers: [],
     exports: [

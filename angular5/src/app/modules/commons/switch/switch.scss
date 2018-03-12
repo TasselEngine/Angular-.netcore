@@ -1,0 +1,26 @@
+:host ::ng-deep .ant-switch {
+    background-color: #ffa500;
+}
+
+:host ::ng-deep .ant-switch-checked {
+    background-color:  rgba(0, 0, 0, 0.75);
+}
+
+:host ::ng-deep .ant-switch:focus {
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+    outline: 0;
+}
+
+:host ::ng-deep .ant-switch .span-text{
+    padding:0;
+    display: inline-block;
+    text-align: right;
+}
+
+:host ::ng-deep .ant-switch-checked .span-text {
+    text-align: left;
+}
+
+// :host ::ng-deep .ws-switch .ant-switch {
+//     position: relative;
+// }

@@ -1,12 +1,15 @@
 import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { TasselNavigationBase } from '../../base.component';
-import { IdentityService, StatusService } from '../../../../../services/app.service';
+import { IdentityService, StatusService, RootService } from '../../../../../services/app.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'tassel-left-common',
     templateUrl: './common.html',
-    styleUrls: ['./../../root/root.scss']
+    styleUrls: [
+        './../../root/root.scss',
+        './common.scss'
+    ]
 })
 export class LeftCommonContainerComponent extends TasselNavigationBase implements OnChanges {
 
@@ -22,8 +25,10 @@ export class LeftCommonContainerComponent extends TasselNavigationBase implement
 
     constructor(
         private status: StatusService,
+        private root: RootService,
         protected router: Router) {
         super(router);
+        this.setI18nPrefix('left_container');
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -33,6 +38,11 @@ export class LeftCommonContainerComponent extends TasselNavigationBase implement
     public RefreshStatusAndGo() {
         this.status.ClearStatusCollection();
         this.navigator.GoToStatusIndex();
+    }
+
+    public OnThemeChanged(isLight: boolean) {
+        console.log(isLight);
+        this.root.ChangeTheme(isLight);
     }
 
 }

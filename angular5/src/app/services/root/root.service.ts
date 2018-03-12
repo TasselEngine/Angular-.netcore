@@ -31,9 +31,14 @@ export class RootService extends AsyncableServiceBase {
     public readonly BottomPopSubject: Subject<IBottomPopConfig> = new Subject<IBottomPopConfig>();
     public readonly PhotoGallarySubject: Subject<ImageGallaryConfig> = new Subject<ImageGallaryConfig>();
     public readonly RefreshButtonSubject: Subject<[boolean, Function]> = new Subject<[boolean, Function]>();
+    public readonly ThemeSubject: Subject<boolean> = new Subject<boolean>();
 
     constructor(private cache: CacheService) {
         super();
+    }
+
+    public ChangeTheme(isLight: boolean) {
+        this.ThemeSubject.next(isLight);
     }
 
     public ShowBottomPop(config: IBottomPopConfig) {

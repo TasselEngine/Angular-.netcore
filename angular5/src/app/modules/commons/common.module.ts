@@ -14,6 +14,7 @@ import { CommonLoadingModule } from './loading/common-loading.module';
 import { LikeUserDivModule } from './likeUserDiv/like-user.module';
 import { TimeFormatModule } from './timeFormat/timeFormat.module';
 import { PreloadingImageModule } from './imagePreload/image-pre.module';
+import { LabelSwitchModule } from './switch/switch.module';
 
 @NgModule({
     exports: [
@@ -29,6 +30,7 @@ import { PreloadingImageModule } from './imagePreload/image-pre.module';
         LikersLineModule,
         LikeUserDivModule,
         TimeFormatModule,
+        LabelSwitchModule,
         TinyMCEModule
     ],
 })

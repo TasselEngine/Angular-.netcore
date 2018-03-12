@@ -7,6 +7,11 @@
     "index_search": "搜索",
     "index_manage": "管理",
     "left_admin_dashboard": "仪表板",
+    "left_container": {
+        "theme": "主题",
+        "light": "亮",
+        "dark": "暗"
+    },
     "time": {
         "ago": "前",
         "month": "个月",

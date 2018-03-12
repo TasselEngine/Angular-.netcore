@@ -1,0 +1,6 @@
+<nz-switch class="ws-switch" [(ngModel)]="bind">
+    <span class="span-text" *ngIf="onLabel" checked [style.min-width]="MinWidth">{{onLabel}}</span>
+    <i *ngIf="!onLabel" class=" anticon anticon-check" checked></i>
+    <span class="span-text" *ngIf="closeLabel" unchecked [style.min-width]="MinWidth">{{closeLabel}}</span>
+    <i *ngIf="!closeLabel" class=" anticon anticon-cross" unchecked></i>
+</nz-switch>
