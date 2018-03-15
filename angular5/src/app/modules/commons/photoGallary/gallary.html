@@ -4,7 +4,8 @@
         <img class="pre-load" [class.after-load]="hideImage" [src]="Current.origin" (load)="OnCurrentLoaded()" />
     </div>
     <div class="current-photo pre-load" (click)="CloseThis()" [class.after-load]="!hideImage" [class.show-photo]="ShowPop">
-        <tassel-common-loading animaWidth="120px" marginTop="240px" content="Loading..." contentSize="22px" contentColor="#fff">
+        <tassel-common-loading [borderSize]="8" [borderLine]="1" borderColor="#ff5070" marginTop="240px" content="Loading..." contentSize="22px"
+            contentColor="#fff">
         </tassel-common-loading>
     </div>
     <div class="bpanel-background" [class.show-backbpanel]="ShowPop"></div>
