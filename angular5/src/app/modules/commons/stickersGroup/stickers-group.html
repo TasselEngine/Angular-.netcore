@@ -1,60 +1,35 @@
 <nz-tabset nzTabPosition="top" nzSize="small" nzType="card">
+    <nz-tab>
+        <ng-template #nzTabHeading>
+            <div class="vm-icon-div">
+                <i class="anticon  anticon-clock-circle-o"></i>
+            </div>
+        </ng-template>
+        <div class="vm-tieba-group" *ngIf="cache.length>0">
+            <img class="vm-tieba-img" width="28" *ngFor="let img of cache" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+                (click)="StickerClicked(img)" />
+        </div>
+        <div class="vm-tieba-group" *ngIf="cache.length===0">
+            <p xi18n section="stickers">你最近还没有使用任何表情。</p>
+        </div>
+    </nz-tab>
+    <nz-tab *ngFor="let group of stickers">
+        <ng-template #nzTabHeading>
+            <img [src]="group.cover" height="21" class="label-img" [title]=" group.title | xi18n:'stickers' " />
+        </ng-template>
+        <div *ngIf="group.colls" class="vm-tieba-group">
+            <img class="vm-tieba-img" width="28" *ngFor="let img of group.colls" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
+                (click)="StickerClicked(img)" />
+        </div>
+    </nz-tab>
     <nz-tab *ngIf="uploadEnabled">
         <ng-template #nzTabHeading>
-            <i class="anticon anticon-picture" style="font-size:22px"></i>
+            <div class="vm-icon-div">
+                <i class="anticon anticon-picture"></i>
+            </div>
         </ng-template>
         <div class="vm-tieba-group">
 
-        </div>
-    </nz-tab>
-    <nz-tab>
-        <ng-template #nzTabHeading>
-            <!-- <span xi18n section="stickers">Tieba</span> -->
-            <img [src]="Formator.ImageConnect('/resources/system/images/tieba/middle/25.png')" height="20" />
-        </ng-template>
-        <div *ngIf="TiebaImages" class="vm-tieba-group">
-            <img class="vm-tieba-img" width="28" *ngFor="let img of TiebaImages" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
-                (click)="StickerClicked(img)" />
-        </div>
-    </nz-tab>
-    <nz-tab>
-        <ng-template #nzTabHeading>
-            <!-- <span xi18n section="stickers">Aru</span> -->
-            <img [src]="Formator.ImageConnect('/resources/system/images/aru/asurprised.png')" height="20" />
-        </ng-template>
-        <div *ngIf="ArusStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img" width="28" *ngFor="let img of ArusStickers" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
-                (click)="StickerClicked(img)" />
-        </div>
-    </nz-tab>
-    <nz-tab>
-        <ng-template #nzTabHeading>
-            <!-- <span xi18n section="stickers">Weibo 01</span> -->
-            <img [src]="Formator.ImageConnect('/resources/system/images/sina/pop/mogician.png')" height="20" />
-        </ng-template>
-        <div *ngIf="SinaPopStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of SinaPopStickers" [title]="img.key | keyDisplay" [alt]="img.key"
-                [src]="Formator.ImageConnect(img.value)" (click)="StickerClicked(img)" />
-        </div>
-    </nz-tab>
-    <nz-tab>
-        <ng-template #nzTabHeading>
-            <!-- <span xi18n section="stickers">Weibo 02</span> -->
-            <img [src]="Formator.ImageConnect('/resources/system/images/sina/role/ameng-smg.png')" height="20" />
-        </ng-template>
-        <div *ngIf="SinaRoleStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of SinaRoleStickers" [title]="img.key | keyDisplay" [alt]="img.key"
-                [src]="Formator.ImageConnect(img.value)" (click)="StickerClicked(img)" />
-        </div>
-    </nz-tab>
-    <nz-tab>
-        <ng-template #nzTabHeading>
-            <!-- <span xi18n section="stickers">Others</span> -->
-            <img [src]="Formator.ImageConnect('/resources/system/images/sina/others/doge.png')" height="20" />
-        </ng-template>
-        <div *ngIf="OthersStickers" class="vm-tieba-group">
-            <img class="vm-tieba-img vm-img-cover" width="36" *ngFor="let img of OthersStickers" [title]="img.key | keyDisplay" [alt]="img.key"
-                [src]="Formator.ImageConnect(img.value)" (click)="StickerClicked(img)" />
         </div>
     </nz-tab>
 </nz-tabset>

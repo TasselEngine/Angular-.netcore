@@ -17,7 +17,8 @@
         "tieba": "贴吧",
         "sina01": "微博 01",
         "sina02": "微博 02",
-        "others": "其他"
+        "others": "其他",
+        "no_current": "你最近还没有使用任何表情。"
     },
     "editor": {
         " reply_input": "请输入你的回复",

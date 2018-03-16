@@ -26,3 +26,24 @@
     margin-left:0.5px;
     margin-right:0.5px;
 }
+
+.vm-icon-div{
+    margin-top: 9px;
+}
+
+.vm-icon-div i {
+    display: inline-block;
+    font-size:20px
+}
+
+:host ::ng-deep .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+    padding: 0px 16px 4px;
+}
+
+:host ::ng-deep .ant-tabs.ant-tabs-card > .ant-tabs-bar .ant-tabs-nav-container {
+    height: 38px;
+}
+
+.label-img{
+    margin-top:5px;
+}

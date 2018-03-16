@@ -17,7 +17,8 @@
         "tieba": "Tieba",
         "sina01": "Weibo 01",
         "sina02": "Weibo 02",
-        "others": "Others"
+        "others": "Others",
+        "no_current": "No current stickers yet."
     },
     "editor": {
         " reply_input": "Input your reply here.",
