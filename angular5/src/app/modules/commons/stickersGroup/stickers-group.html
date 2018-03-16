@@ -15,11 +15,11 @@
     </nz-tab>
     <nz-tab *ngFor="let group of stickers">
         <ng-template #nzTabHeading>
-            <img [src]="group.cover" height="21" class="label-img" [title]=" group.title | xi18n:'stickers' " />
+            <img [src]="group.cover" [height]="group.size" class="label-img" [title]=" group.title | xi18n:'stickers' " />
         </ng-template>
         <div *ngIf="group.colls" class="vm-tieba-group">
-            <img class="vm-tieba-img" width="28" *ngFor="let img of group.colls" [title]="img.key | keyDisplay" [alt]="img.key" [src]="Formator.ImageConnect(img.value)"
-                (click)="StickerClicked(img)" />
+            <img class="vm-tieba-img" [width]="group.itemSize" *ngFor="let img of group.colls" [title]="img.key | keyDisplay" [alt]="img.key"
+                [src]="Formator.ImageConnect(img.value)" (click)="StickerClicked(img)" />
         </div>
     </nz-tab>
     <nz-tab *ngIf="uploadEnabled">

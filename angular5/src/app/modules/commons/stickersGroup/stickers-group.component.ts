@@ -48,11 +48,11 @@ export class StickersGroupComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.colls = [
-            { title: 'Tieba', colls: this.TiebaImages, size: 21, cover: this.url('/tieba/middle/25.png') },
-            { title: 'Aru', colls: this.ArusStickers, size: 21, cover: this.url('/aru/asurprised.png') },
-            { title: 'Weibo 01', colls: this.SinaPopStickers, size: 22, cover: this.url('/sina/pop/mogician.png') },
-            { title: 'Weibo 02', colls: this.SinaRoleStickers, size: 22, cover: this.url('/sina/role/ameng-smg.png') },
-            { title: 'Others', colls: this.OthersStickers, size: 22, cover: this.url('/sina/others/doge.png') }
+            { title: 'Tieba', colls: this.TiebaImages, size: 21, itemSize: 28, cover: this.url('/tieba/middle/25.png') },
+            { title: 'Aru', colls: this.ArusStickers, size: 21, itemSize: 24, cover: this.url('/aru/asurprised.png') },
+            { title: 'Weibo 01', colls: this.SinaPopStickers, size: 22, itemSize: 28, cover: this.url('/sina/pop/mogician.png') },
+            { title: 'Weibo 02', colls: this.SinaRoleStickers, size: 22, itemSize: 28, cover: this.url('/sina/role/ameng-smg.png') },
+            { title: 'Others', colls: this.OthersStickers, size: 22, itemSize: 28, cover: this.url('/sina/others/doge.png') }
         ];
         this.addSubp = this.addor.debounceTime(500).subscribe(image => {
             this.addStickerCache(image);
@@ -84,8 +84,8 @@ export class StickersGroupComponent implements OnInit, OnDestroy {
             this.cache.unshift(image);
         }
         this.cache = this.cache.filter((value, index, self) => self.indexOf(value) === index);
-        if (this.cache.length > 24) {
-            this.cache = this.cache.slice(0, 24);
+        if (this.cache.length > 27) {
+            this.cache = this.cache.slice(0, 27);
         }
         window.localStorage.setItem('ws-sticker-caches', JSON.stringify(this._caches));
         this.cache = [...this.cache];
