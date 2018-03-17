@@ -4,7 +4,7 @@ import { pageShowAnimation } from './../../../../utils/app.utils';
 import { OnInit, HostBinding, Component, OnDestroy } from '@angular/core';
 import { TasselNavigationBase } from './../../../shared/components/base.component';
 import { MessageService } from '../../../../services/app.service';
-import { MessageType } from '../../../../model/app.model';
+import { MessageType, UserMessage } from '../../../../model/app.model';
 
 @Component({
     selector: 'tassel-user-message-box',
@@ -47,8 +47,9 @@ export class MessageBoxComponent extends TasselNavigationBase implements OnInit,
 
     }
 
-    public GoToStatus(id: string) {
-        this.navigator.GoToStatusDetails(id);
+    public GoToStatus(hostid: string, sourceid: string) {
+        this.navigator.GoToStatusDetails(hostid);
+        this.message.Read(this.message.Messages.find(i => i.ID === sourceid));
     }
 
     public IsEmpry(content: string) {

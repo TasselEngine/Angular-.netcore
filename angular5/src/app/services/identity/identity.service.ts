@@ -94,8 +94,8 @@ export class IdentityService extends HttpAsyncClientBase<IResponse> {
         if (code === ServerStatus.Succeed) {
             this.user = user;
             await then();
-            this.OnLogined.next(new Date());
             this.setOptions(token);
+            this.OnLogined.next(new Date());
             if (!remember) { return; }
             this.setLocalStorage(this.user, token);
         } else {

@@ -7,6 +7,7 @@ import { IdentityService } from '../identity/identity.service';
 import { StrictResult, UrlGenerator } from '../../utils/app.utils';
 import { FormatService } from '../format/format.service';
 import { ResourcesService } from '../resources/resources.service';
+import { HttpType } from 'ws-format-httprequest';
 
 @Injectable()
 export class MessageService extends HttpAsyncClientBase<IResponse> {
@@ -65,8 +66,21 @@ export class MessageService extends HttpAsyncClientBase<IResponse> {
     }
 
     public StopMessageFetch() {
+        this.messages = [];
+        this.unread = [];
+        this.likes = [];
+        this.comments = [];
         this.isinit = true;
         clearTimeout(this.timer);
+    }
+
+    public async Read(model: UserMessage) {
+        if (!model) { return; }
+        const [succeed, code, error, _] = await this.ReadMessagesAsync([model.ID]);
+        if (succeed && code === 0) {
+            model.Read();
+            this.calculate();
+        }
     }
 
     private calculate() {
@@ -88,13 +102,12 @@ export class MessageService extends HttpAsyncClientBase<IResponse> {
             StrictResult.Failed<UserMessage[]>(error);
     }
 
-    // public ReadMessagesAsync = async (count = 20, before?: number, unread?: boolean) => {
-    //     const [succeed, error, response] = await this.InvokeAsync(
-    //         `${this.Root}/message/fetch?count=${count}&before=${before || null}&unread=${unread || null}`, this.Options);
-    //     return succeed ?
-    //         StrictResult.Success(response.status, response.content as any, response.msg) :
-    //         StrictResult.Failed<any>(error);
-    // }
+    public ReadMessagesAsync = async (ids: string[]) => {
+        const [succeed, error, response] = await this.InvokeAsync(`${this.Root}/message/read`, this.FormOptions, HttpType.PUT, JSON.stringify({ messages: ids || [] }));
+        return succeed ?
+            StrictResult.Success(response.status, response.content as null, response.msg) :
+            StrictResult.Failed<null>(error);
+    }
 
 }
 

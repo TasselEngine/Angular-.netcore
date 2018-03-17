@@ -32,7 +32,7 @@
 
 <ng-template let-model="model" let-index="index" #msgContent>
 
-    <div class="msg-card" [class.grey-back]="index%2===1" *ngIf="model" nz-row nzType="flex">
+    <div class="msg-card" [class.grey-back]="index%2===1" [class.is-read]="model.IsRead" *ngIf="model" nz-row nzType="flex">
         <div class="avatar-group" nz-col [nzSpan]="IsWideScreen?2:3">
             <img *ngIf="model.Creator.Avatar" [src]="model.Creator.Avatar" />
             <img *ngIf="!model.Creator.Avatar" src="/assets/img/unknown.png" />
@@ -91,10 +91,10 @@
 
 </ng-template>
 
-<ng-template let-model="model" #statusDisplay>
+<ng-template let-model="model" let-id="id" #statusDisplay>
     <span>{{ ' in status : ' | xi18n:'messageBox' }}</span>
     <span>"</span>
-    <a (click)="GoToStatus(model.HostID)">
+    <a (click)="GoToStatus(model.HostID, id)">
         <span class="fmt-absts" [innerHtml]="model.HostAbstract" #ctnHash></span>
         <span *ngIf="IsEmpry(model.HostAbstract)" xi18n section="messageBox">( click for more details )</span>
     </a>

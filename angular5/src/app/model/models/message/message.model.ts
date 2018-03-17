@@ -97,5 +97,9 @@ export class UserMessage extends BsonBase {
         return this;
     }
 
+    public Read(isRead = true) {
+        this.read_state = isRead ? ReadState.Read : ReadState.Unread;
+    }
+
 }
 
