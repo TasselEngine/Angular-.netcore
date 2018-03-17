@@ -8,6 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonLoadingModule } from '../../commons/loading/common-loading.module';
 import { MessageBoxComponent } from './msgBox/msg-box.component';
+import { WateriverPatchModule } from '../../commons/wateriver/wateriver.module';
+import { TimeFormatModule } from '../../commons/timeFormat/timeFormat.module';
+import { WSi18nModule } from '../../i18n/i18n.module';
 
 const overRoutes: Routes = [
     {
@@ -28,12 +31,15 @@ const overRoutes: Routes = [
         MessageBoxComponent
     ],
     imports: [
+        WSi18nModule,
         CommonModule,
         ExtensionsModule,
         FormsModule,
         ReactiveFormsModule,
         NgZorroAntdModule,
         CommonLoadingModule,
+        WateriverPatchModule,
+        TimeFormatModule,
         RouterModule.forChild(overRoutes)
     ],
     providers: [],

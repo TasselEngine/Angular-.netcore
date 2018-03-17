@@ -17,7 +17,10 @@ export class MessageSource {
     private tid: string;
     public get TargetID() { return this.tid; }
 
-    private abst: string;
+    @serializeAs('abst')
+    @deserializeAs('abst')
+    protected abst: string;
+    public get Abstract() { return this.abst; }
 
     @serializeAs(Number, 'host_type')
     @deserializeAs(Number, 'host_type')
@@ -31,8 +34,18 @@ export class MessageSource {
 
     @serializeAs('host_abst')
     @deserializeAs('host_abst')
-    private host_abst: string;
+    protected host_abst: string;
     public get HostAbstract() { return this.host_abst; }
+
+    private _normalized = false;
+
+    public Normalize(transform: (content: string) => string) {
+        if (this._normalized) { return; }
+        this.abst = transform(this.abst);
+        this.host_abst = transform(this.host_abst);
+        this._normalized = true;
+        return this;
+    }
 
 }
 
@@ -76,9 +89,10 @@ export class UserMessage extends BsonBase {
 
     public static ParseList = (coll: IUserMessage[]) => JsonHelper.FromJson<UserMessage[]>(coll, UserMessage);
 
-    public Normalize(transform: (content: string) => void) {
+    public Normalize(transform: (content: string) => string) {
         if (this._normalized) { return; }
-        transform(this.details);
+        this.details = transform(this.details);
+        this.Source.Normalize(transform);
         this._normalized = true;
         return this;
     }

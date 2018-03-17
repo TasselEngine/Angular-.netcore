@@ -59,6 +59,17 @@
         "logout": "注销",
         "manage": "管理员中心"
     },
+    "messageBox": {
+        "title": "消息盒子",
+        "likes": "赞",
+        "cmts": "评论",
+        "crt_cmt": "给你添加了一条评论，",
+        "quork": "。",
+        "from_status": "来自状态：",
+        "click_more": "( 点击查看更多细节 )",
+        "reply_you": "最近回复了你的评论，",
+        "like_you": "赞了你的想法，"
+    },
     "status": {
         "loading": "正在加载...",
         "cmt_deleted": "评论删除成功",

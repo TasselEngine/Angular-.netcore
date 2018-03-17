@@ -66,6 +66,17 @@
         "logout": "Logout",
         "manage": "Manage"
     },
+    "messageBox": {
+        "title": "Message Box",
+        "likes": "Likes",
+        "cmts": "Comments",
+        "crt_cmt": "Create a comment",
+        "quork": ".",
+        "from_status": " in status : ",
+        "click_more": "( click for more details )",
+        "reply_you": "Replied you",
+        "like_you": "Like your opinion"
+    },
     "status": {
         "loading": "Loading...",
         "cmt_deleted": "comment deleted.",

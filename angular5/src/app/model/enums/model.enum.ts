@@ -7,6 +7,7 @@ export enum ModelType {
     LikeEntry = 12,
     Status = 13,
     Post = 14,
+    Message = 21,
     Log = 31,
 }
 

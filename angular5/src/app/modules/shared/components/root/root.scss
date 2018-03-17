@@ -39,7 +39,7 @@
 
   .root-content{
       padding-top: 5px;
-      padding-bottom: 5px;
+      padding-bottom: 0px;
       min-height: 100vh;
       border-radius: 2px;
       transition: 0.25s;
@@ -137,6 +137,10 @@
         display: inherit;
     } 
 
+    .root-content-container{
+        min-height: 100vh;
+    }
+
   }
 
   @media(max-width:768px){
@@ -171,7 +175,7 @@
     } 
 
     .root-content-container{
-        min-height: calc(100vh + 155px);
+        min-height: 100vh;
     }
 
   }

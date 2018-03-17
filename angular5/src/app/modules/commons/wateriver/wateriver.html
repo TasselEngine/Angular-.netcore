@@ -4,9 +4,9 @@
     </div>
     <div nz-row>
         <div nz-col nzSpan="24">
-            <ng-template ngFor let-item [ngForOf]="Posts" [ngTemplateOutlet]="template">
-                <ng-template [ngTemplateOutletContext]="{ model: item }" [ngTemplateOutlet]="template"></ng-template>
-            </ng-template>
+            <ng-container *ngFor="let item of Posts; let i = index">
+                <ng-template [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ model: item, index : i }" [ngTemplateOutlet]="template"></ng-template>
+            </ng-container>
         </div>
     </div>
 </div>

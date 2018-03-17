@@ -28,6 +28,9 @@ export class WateriverComponent extends AsyncableServiceBase implements OnInit, 
     @Input('template')
     public template: TemplateRef<any>;
 
+    @Input()
+    public type: "dynamic" | "static";
+
     private isend = false;
     public Loaded = false;
 
@@ -36,6 +39,11 @@ export class WateriverComponent extends AsyncableServiceBase implements OnInit, 
     constructor(private root: RootService) { super(); }
 
     ngOnInit(): void {
+        this.type = this.type || "dynamic";
+        if (this.type === "static") {
+            this.Loaded = true;
+            return;
+        }
         if (!this._posts || this._posts.length === 0) {
             this.WaitAndDo(async () => {
                 const coll = await this._loader(0, 15);
@@ -54,6 +62,7 @@ export class WateriverComponent extends AsyncableServiceBase implements OnInit, 
     }
 
     ngAfterViewInit(): void {
+        if (this.type === "static") { return; }
         this.scrollSubp = this.root.ScrollSubject.subscribe(scroll => {
             if (this.isend) {
                 scroll.invoker();
