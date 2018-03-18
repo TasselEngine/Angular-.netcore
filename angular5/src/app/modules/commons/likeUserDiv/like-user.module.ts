@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LikeUserDivComponent } from './like-user.component';
+import { ExtensionsModule } from '../../extensions/extensions.module';
 
 @NgModule({
     declarations: [
@@ -8,6 +9,7 @@ import { LikeUserDivComponent } from './like-user.component';
     ],
     imports: [
         CommonModule,
+        ExtensionsModule
     ],
     providers: [],
     exports: [

@@ -24,6 +24,8 @@ export class FormatService extends AsyncableServiceBase {
     }
 
     public readonly ImageConnect = (path: string): string => {
+        if (!path) { return ""; }
+        if (!path.startsWith("/")) { return path; }
         return this.ImageSrcRoot + path;
     }
 

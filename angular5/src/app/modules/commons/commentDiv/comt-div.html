@@ -1,7 +1,7 @@
 <div>
     <div style="display:flex" [class.vm-pointer]="!IsWideScreen" (click)="ContentClicked('comment')">
         <div style="min-width:48px;">
-            <img *ngIf="Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" [alt]="Comment.Creator.UserName" [src]="Comment.Creator.Avatar"
+            <img *ngIf="Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" [alt]="Comment.Creator.UserName" [wsAvatar]="Comment.Creator.Avatar"
                 (click)="GoToUserDetails($event, Comment.Creator)" [title]="Comment.Creator.UserName" />
             <img *ngIf="!Comment.Creator.Avatar" class="vm-avatar-md vm-pointer" alt="no avatar." src="/assets/img/unknown.png" (click)="GoToUserDetails($event, Comment.Creator)"
                 [title]="Comment.Creator.UserName" />

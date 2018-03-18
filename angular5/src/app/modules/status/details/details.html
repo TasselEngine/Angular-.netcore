@@ -5,8 +5,7 @@
         <div *ngIf="VM.Creator" class="vm-header" nz-row nzType="flex" nzJustify="left">
             <div nz-col class="vm-avatar">
                 <div *ngIf="VM.Creator.Avatar">
-                    <img [src]="Formator.ImageConnect(VM.Creator.Avatar)" class="vm-avatar-icon" (click)="GoToUserRedirect(VM.Creator.UUID)"
-                    />
+                    <img [wsAvatar]="VM.Creator.Avatar" class="vm-avatar-icon" (click)="GoToUserRedirect(VM.Creator.UUID)" />
                 </div>
                 <div *ngIf="!VM.Creator.Avatar" class="vm-avatar-icon avatar-blue">
                     <i class="anticon anticon-user vm-nologin"></i>

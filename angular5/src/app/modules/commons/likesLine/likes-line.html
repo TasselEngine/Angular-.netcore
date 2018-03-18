@@ -1,6 +1,8 @@
 <div nz-row nzType="flex" class="ll-group-div">
     <a *ngFor="let user of Users;let i=index" class="ll-for768" [class.ll-for768]="i>=4">
-        <img [title]="user.Creator.UserName" *ngIf="user.Creator.Avatar" class="ll-avatar" [src]="user.Creator.Avatar" (click)="GoToUserDetails(user.Creator)" />
-        <img [title]="user.Creator.UserName" *ngIf="!user.Creator.Avatar" class="ll-avatar" src="/assets/img/unknown.png" (click)="GoToUserDetails(user.Creator)"/>
+        <img [title]="user.Creator.UserName" *ngIf="user.Creator.Avatar" class="ll-avatar" [wsAvatar]="user.Creator.Avatar" (click)="GoToUserDetails(user.Creator)"
+        />
+        <img [title]="user.Creator.UserName" *ngIf="!user.Creator.Avatar" class="ll-avatar" src="/assets/img/unknown.png" (click)="GoToUserDetails(user.Creator)"
+        />
     </a>
 </div>

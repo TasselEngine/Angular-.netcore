@@ -30,8 +30,8 @@ export class StickersGroupComponent implements OnInit, OnDestroy {
     public get Formator() { return this.formator; }
 
     private _caches: { [propName: string]: ISticker[] } = {};
-    private get cache() { return this._caches[this.identity.CurrentUUID] || []; }
-    private set cache(value: ISticker[]) { this._caches[this.identity.CurrentUUID] = value; }
+    public get cache() { return this._caches[this.identity.CurrentUUID] || []; }
+    public set cache(value: ISticker[]) { this._caches[this.identity.CurrentUUID] = value; }
 
     private colls = [];
     public get stickers() { return this.colls; }
