@@ -72,7 +72,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
             }
             if (code === ServerStatus.Succeed) {
                 this.model = details;
-                this.model.Normalize((content) => this.model.Content = this.formater.ImageTickParse(content, this.resources.AllStickersGroup, 24));
+                this.model.Normalize((content) => this.formater.ImageTickParse(content, this.resources.AllStickersGroup, 24));
                 if (this.identity.IsLogined) {
                     this.isLiked = this.status.IsLiked(details);
                 }
@@ -167,9 +167,12 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         };
         let is_reply = false;
         if (vm.Mentioned) {
-            params.m_uid = vm.Mentioned.UID;
-            params.mend_user = vm.Mentioned.UserName;
-            params.com_id = vm.CommentID;
+            params.reply_content = {
+                m_uid: vm.Mentioned.UID,
+                mend_user: vm.Mentioned.UserName,
+                com_id: vm.CommentID,
+                content: vm.ReplyDetails
+            };
             params.is_reply = is_reply = true;
         }
         const [succeed, code, error, comment] = await this.status.AddCommentAsync(this.model.ID, params);
@@ -181,7 +184,7 @@ export class StatusDetailsComponent extends TasselNavigationBase implements OnIn
         if (code === ServerStatus.Succeed) {
             comment.Content = this.formater.ImageTickParse(comment.Content, this.resources.AllStickersGroup);
             if (is_reply) {
-                const com = this.model.Comments.find(i => i.ID === params.com_id);
+                const com = this.model.Comments.find(i => i.ID === params.reply_content.com_id);
                 if (com) { com.Comments.push(comment); }
             } else {
                 this.model.Comments.push(comment);

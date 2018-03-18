@@ -10,7 +10,7 @@
                 <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
                     <div nz-row *ngIf="model.Creator" class="card-top-line">
                         <div nz-col nzSpan="12" class="card-top-udiv">
-                            <img *ngIf="model.Creator.Avatar" width="16" [src]="model.Creator.Avatar" />
+                            <img *ngIf="model.Creator.Avatar" width="16" [src]="Formator.ImageConnect(model.Creator.Avatar)" />
                             <img *ngIf="!model.Creator.Avatar" width="16" src="/assets/img/unknown.png" />
                             <span class="card-top-user">{{model.Creator.UserName | shortline:12}}</span>
                         </div>
@@ -47,7 +47,7 @@
             <div class="custom-card card-like-pointer" (click)="ItemClicked(model)">
                 <div nz-row *ngIf="model.Creator" class="card-top-line">
                     <div nz-col nzSpan="12" class="card-top-udiv">
-                        <img *ngIf="model.Creator.Avatar" width="16" height="16" [src]="model.Creator.Avatar" />
+                        <img *ngIf="model.Creator.Avatar" width="16" height="16" [src]="Formator.ImageConnect(model.Creator.Avatar)" />
                         <img *ngIf="!model.Creator.Avatar" width="16" height="16" src="/assets/img/unknown.png" />
                         <span class="card-top-user">{{model.Creator.UserName | shortline:12}}</span>
                     </div>

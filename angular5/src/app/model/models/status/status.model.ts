@@ -59,8 +59,10 @@ export class Status extends BsonBase {
     @serializeAs('details')
     @deserializeAs('details')
     private details: string;
-    public get Content(): string { return this._normalized ? this.details : 'Loading...'; }
-    public set Content(value: string) { this.details = value; }
+    private normalized_details: string;
+    public get ContentCache() { return this.details; }
+    public get Content(): string { return this._normalized ? this.normalized_details : 'Loading...'; }
+    public set Content(value: string) { this.normalized_details = value; }
 
     @serializeAs('cover')
     @deserializeAs('cover')
@@ -123,9 +125,9 @@ export class Status extends BsonBase {
         }
     }
 
-    public Normalize(transform: (content: string) => void) {
+    public Normalize(transform: (content: string) => string) {
         if (this._normalized) { return; }
-        transform(this.details);
+        this.normalized_details = transform(this.details);
         this._normalized = true;
         return this;
     }

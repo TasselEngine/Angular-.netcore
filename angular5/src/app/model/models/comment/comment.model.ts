@@ -21,8 +21,10 @@ export class UserComment {
     @serializeAs('details')
     @deserializeAs('details')
     private details: string;
-    public get Content(): string { return this.details; }
-    public set Content(value: string) { this.details = value; }
+    private normalized_details: string;
+    public get ContentCache(): string { return this.details; }
+    public get Content(): string { return this.normalized_details || this.details; }
+    public set Content(value: string) { this.normalized_details = value; }
 
     @serializeAs('ptype')
     @deserializeAs('ptype')
@@ -64,6 +66,15 @@ export class UserComment {
             this.uttm || (this.uttm = FormatTime.Create(!this.update_time ? undefined : this.update_time * 1000, 0));
     }
 
+    private _normalized = false;
+
     public static Parse = (i: UserComment) => JsonHelper.FromJson<UserComment>(i, UserComment);
+
+    public Normalize(transform: (content: string) => string) {
+        if (this._normalized) { return; }
+        this.normalized_details = transform(this.details);
+        this._normalized = true;
+        return this;
+    }
 
 }

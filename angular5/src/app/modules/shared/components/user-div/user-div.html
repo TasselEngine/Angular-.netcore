@@ -5,7 +5,7 @@
             <!-- logined  Mobile view : Open user profile-->
             <div *ngIf="!IsWideScreen" class="avatar-div" (click)="ShowUserMenu()">
                 <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
-                    <img [src]="CurrentUser.Photo" class="avatar-icon" />
+                    <img [src]="Formater.ImageConnect(CurrentUser.Photo)" class="avatar-icon" />
                 </div>
                 <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
                     <i class="anticon anticon-user nologin-icon"></i>
@@ -15,7 +15,7 @@
             <nz-popover *ngIf="IsWideScreen" [nzTitle]="CurrentUser.FriendlyName" [(nzVisible)]="ShowPopover" [nzTrigger]="'click'" [nzPlacement]="'leftBottom'">
                 <div class="avatar-div" nz-popover>
                     <div *ngIf="CurrentUser.Photo" class="avatar-icon root-menu-icon-shadow">
-                        <img [src]="CurrentUser.Photo" class="avatar-icon" /> - </div>
+                        <img [src]="Formater.ImageConnect(CurrentUser.Photo)" class="avatar-icon" /> - </div>
                     <div *ngIf="!CurrentUser.Photo" class="avatar-icon avatar-blue root-menu-icon-shadow">
                         <i class="anticon anticon-user nologin-icon"></i>
                     </div>

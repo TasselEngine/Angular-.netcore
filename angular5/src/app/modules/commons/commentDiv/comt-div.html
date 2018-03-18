@@ -33,7 +33,7 @@
                 <p class="vm-stamp-md">{{reply.CreateTime.FormatDateTime}}</p>
             </div>
             <div *ngIf="CanAct && IsWideScreen" class="vm-reply-md" nz-col>
-                <a (click)="ReplyClicked(reply.Creator)" xi18n section="comment">Reply</a>
+                <a (click)="ReplyClicked(reply.Creator, reply)" xi18n section="comment">Reply</a>
                 <span *ngIf="IsCreator(reply)"> |
                     <a (click)="DeleteClicked(reply)" xi18n section="comment">Delete</a>
                 </span>

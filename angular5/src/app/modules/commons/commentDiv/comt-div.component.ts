@@ -26,9 +26,9 @@ export class CommentDivComponent extends TasselComponentBase implements OnDestro
     private comment: UserComment;
     public get Comment() {
         if (this.comment && this.AllResources.length > 0 && !this._vm.IsFormat) {
-            this.comment.Content = this.formator.ImageTickParse(this.comment.Content, this.AllResources, 24);
+            this.comment.Normalize(content => this.formator.ImageTickParse(content, this.AllResources, 24));
             this.comment.Comments.forEach(reply => {
-                reply.Content = this.formator.ImageTickParse(reply.Content, this.AllResources, 20);
+                reply.Normalize(content => this.formator.ImageTickParse(content, this.AllResources, 20));
             });
             this._vm.IsFormat = true;
         }
@@ -105,7 +105,7 @@ export class CommentDivComponent extends TasselComponentBase implements OnDestro
         }, undefined]);
     }
 
-    public ReplyClicked(mentioned?: Creator) {
+    public ReplyClicked(mentioned?: Creator, reply?: UserComment) {
         const width = window.innerWidth > 800 ? 800 : window.innerWidth - 48;
         const modal = this.toast.ComponentModal(undefined, CommentEditorComponent, {
             openEditor: true,
@@ -114,7 +114,7 @@ export class CommentDivComponent extends TasselComponentBase implements OnDestro
         }, width, true, false);
         this.modalSubsc = modal.subscribe((result: any) => {
             if (typeof (result) !== 'string') {
-                this.AddComment(result);
+                this.AddComment(result, reply);
                 modal.destroy();
             } else if (result === 'onDestroy') {
                 this.modalSubsc.unsubscribe();
@@ -122,9 +122,10 @@ export class CommentDivComponent extends TasselComponentBase implements OnDestro
         });
     }
 
-    public AddComment(vm: any) {
+    public AddComment(vm: any, reply?: UserComment) {
         if (vm.Mentioned) {
             vm.CommentID = this.comment.ID;
+            vm.ReplyDetails = reply && reply.ContentCache;
         }
         this.OnCommentAdd.emit(vm);
     }

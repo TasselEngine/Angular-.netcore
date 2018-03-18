@@ -37,12 +37,23 @@ export class MessageSource {
     protected host_abst: string;
     public get HostAbstract() { return this.host_abst; }
 
+    @serializeAs('parent_id')
+    @deserializeAs('parent_id')
+    private parent_id: string;
+    public get ParentID() { return this.parent_id; }
+
+    @serializeAs('parent_abst')
+    @deserializeAs('parent_abst')
+    protected target_abst: string;
+    public get ParentAbstract() { return this.target_abst; }
+
     private _normalized = false;
 
     public Normalize(transform: (content: string) => string) {
         if (this._normalized) { return; }
         this.abst = transform(this.abst);
         this.host_abst = transform(this.host_abst);
+        this.target_abst = transform(this.target_abst);
         this._normalized = true;
         return this;
     }

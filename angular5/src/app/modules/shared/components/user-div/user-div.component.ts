@@ -38,6 +38,8 @@ export class UserDivComponent extends TasselNavigationBase implements OnInit, On
     private refreshInvoker: Function;
     private routeStruct: RouteStruct;
 
+    public get Formater() { return this.formater; }
+
     public get WindowWidth() { return window.innerWidth; }
     public get IsWideScreen() { return window.innerWidth > 768; }
     public get ShowSlider() { return window.innerWidth > 1280; }

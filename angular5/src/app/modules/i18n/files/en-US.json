@@ -75,7 +75,10 @@
         "from_status": " in status : ",
         "click_more": "( click for more details )",
         "reply_you": "Replied you",
-        "like_you": "Like your opinion"
+        "like_you": "Like your opinion",
+        "see_details": "See source details",
+        "read": "Read",
+        "unread": "Unread"
     },
     "status": {
         "loading": "Loading...",

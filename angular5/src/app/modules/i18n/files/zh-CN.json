@@ -63,12 +63,15 @@
         "title": "消息盒子",
         "likes": "赞",
         "cmts": "评论",
-        "crt_cmt": "给你添加了一条评论，",
+        "crt_cmt": "添加了一条评论",
         "quork": "。",
         "from_status": "来自状态：",
         "click_more": "( 点击查看更多细节 )",
-        "reply_you": "最近回复了你的评论，",
-        "like_you": "赞了你的想法，"
+        "reply_you": "回复了你",
+        "like_you": "赞了你的想法",
+        "see_details": "查看源页面",
+        "read": "已读",
+        "unread": "未读"
     },
     "status": {
         "loading": "正在加载...",

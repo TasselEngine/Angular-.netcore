@@ -152,11 +152,7 @@ export class UnionUser extends User {
     private avatar_url: string;
     public get AvatarUrl(): string { return this.avatar_url; }
 
-    public get Photo(): string {
-        return this.user_type !== UserType.Base ? this.avatar_url :
-            this.Avatar ? 'data:image/png;base64,' + this.Avatar :
-                undefined;
-    }
+    public get Photo(): string { return this.user_type !== UserType.Base ? this.avatar_url : this.Avatar; }
 
     public get FriendlyName(): string {
         return this.user_type !== UserType.Base ? this.screen_name :

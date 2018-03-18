@@ -8,15 +8,7 @@ h2 {
     font-weight: bold;
 }
 
-.is-read span{
-    color:#909090;
-}
-
-.is-read p{
-    color:#909090;
-}
-
-.is-read b{
+.is-read {
     color:#909090;
 }
 
@@ -86,21 +78,69 @@ h2 {
     padding-right:4px;
 }
 
+.is-read .msg-cthead{
+    color:#909090;
+}
+
 .text-right{
     text-align: right;
     font-size: 12px;
+}
+
+.time-stamp{
+    margin-left:8px;
+    font-size: 12px;
+}
+
+:host ::ng-deep .reply-dispcont{
+    padding-top:4px;
+    padding-bottom: 4px;
+    font-weight: bold;
+}
+
+:host ::ng-deep .reply-dispcont img{
+    width:20px;
+    margin-bottom: -6px;
+}
+
+.parent-dispcont{
+    border:1px solid #ececec;
+    background: #f9f9f9;
+    padding:4px;
+    margin-top:8px;
+    margin-bottom: 8px;
+}
+
+.source-link{
+    margin-top: 0px;
+}
+
+:host ::ng-deep .parent-dispcont img{
+    width:18px;
+    margin-bottom: -4px;
 }
 
 .msg-dtgroup{
     padding:4px;
     font-size: 14px;
     color: #686868;
-    padding-bottom:18px; 
+    padding-bottom:8px; 
 }
 
 :host ::ng-deep .fmt-absts img{
     width:18px;
     margin-bottom: -4px;
+}
+
+.weak-text{
+    color:#888;
+}
+
+.time-bar{
+    margin-left:-4px;
+    padding-bottom:4px;
+    font-size:10px;
+    font-weight: normal;
 }
 
 @media(max-width:768px){
@@ -122,6 +162,11 @@ h2 {
         margin-bottom: 0px;
         box-shadow: 0px 0px 0px #f9f9f9;
         border-top-color: #f6f6f6;
+    }
+
+    .msg-card:hover {
+        margin-bottom: 0px;
+        box-shadow: 0px 0px 0px #f9f9f9;
     }
 
     .tab-content{

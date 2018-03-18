@@ -25,6 +25,7 @@ export interface IMessageSource {
     host_type: ModelType;
     host_id: string;
     host_abst: string;
+    target_abst: string;
 }
 
 export interface IUserMessage extends IBsonBase {

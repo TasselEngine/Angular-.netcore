@@ -28,6 +28,10 @@ export class MessageBoxComponent extends TasselNavigationBase implements OnInit,
     public loaded = false;
     public get Loaded() { return this.loaded && this.message.Loaded; }
 
+    public get UserName() { return this.identity.CurrentUser.FriendlyName; }
+
+    public get Formater() { return this.formater; }
+
     constructor(
         private message: MessageService,
         protected router: Router) {
@@ -49,10 +53,14 @@ export class MessageBoxComponent extends TasselNavigationBase implements OnInit,
 
     public GoToStatus(hostid: string, sourceid: string) {
         this.navigator.GoToStatusDetails(hostid);
-        this.message.Read(this.message.Messages.find(i => i.ID === sourceid));
+        this.tryRead(sourceid);
     }
 
-    public IsEmpry(content: string) {
+    private tryRead(sourceid: string) {
+        this.message.Read(this.message.Messages.filter(i => !i.IsRead).find(i => i.ID === sourceid));
+    }
+
+    public IsEmpty(content: string) {
         return !content ? true : content.trim() === "<span></span>";
     }
 

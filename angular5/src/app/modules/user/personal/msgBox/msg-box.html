@@ -34,52 +34,86 @@
 
     <div class="msg-card" [class.grey-back]="index%2===1" [class.is-read]="model.IsRead" *ngIf="model" nz-row nzType="flex">
         <div class="avatar-group" nz-col [nzSpan]="IsWideScreen?2:3">
-            <img *ngIf="model.Creator.Avatar" [src]="model.Creator.Avatar" />
+            <img *ngIf="model.Creator.Avatar" [src]="Formater.ImageConnect(model.Creator.Avatar)" />
             <img *ngIf="!model.Creator.Avatar" src="/assets/img/unknown.png" />
         </div>
         <div class="msg-ctgroup" nz-col [nzSpan]="IsWideScreen?22:21">
             <div class="msg-cthead" nz-row>
-                <div nz-col nzSpan="12">{{model.Creator.UserName}}</div>
-                <div class="text-right" nz-col nzSpan="12">{{model.CreateTime | timeFormat}}</div>
+                <div nz-col nzSpan="18">
+                    <span>{{model.Creator.UserName}}</span>
+                    <span *ngIf="IsWideScreen">
+                        <ng-container *ngTemplateOutlet="timeDetails; context : {model : model}"></ng-container>
+                    </span>
+                </div>
+                <div class="text-right" nz-col nzSpan="6">
+                    <nz-tag *ngIf="model.IsRead" nzColor="#2db7f5">{{'Read' | xi18n:'messageBox'}}</nz-tag>
+                    <nz-tag *ngIf="!model.IsRead" nzColor="#ffa500">{{'Unread' | xi18n:'messageBox'}}</nz-tag>
+                </div>
             </div>
             <div class="msg-dtgroup">
-                <p>
-                    <ng-container [ngSwitch]="model.MessageType">
+                <ng-container [ngSwitch]="model.MessageType">
 
-                        <ng-container *ngSwitchCase="1">
-                            <span xi18n section="messageBox">Replied you</span>
-
-                            <ng-container *ngIf="model.Source.HostType===13">
-                                <ng-container *ngTemplateOutlet="statusDisplay; context : {model:model.Source, id:model.ID}"></ng-container>
-                            </ng-container>
-
-                            <span xi18n section="messageBox">.</span>
-                        </ng-container>
-
-                        <ng-container *ngSwitchCase="2">
-                            <span xi18n section="messageBox">Create a comment</span>
-
-                            <ng-container *ngIf="model.Source.HostType===13">
-                                <ng-container *ngTemplateOutlet="statusDisplay; context : {model:model.Source, id:model.ID}"></ng-container>
-                            </ng-container>
-
-                            <span xi18n section="messageBox">.</span>
-                        </ng-container>
-
-                        <ng-container *ngSwitchCase="3">
-                            <span xi18n section="messageBox">Like your opinion</span>
-
-                            <ng-container *ngIf="model.Source.HostType===13">
-                                <ng-container *ngTemplateOutlet="statusDisplay; context : {model:model.Source, id:model.ID}"></ng-container>
-                            </ng-container>
-
-                            <span>.</span>
-                        </ng-container>
-
+                    <!-- Reply -->
+                    <ng-container *ngSwitchCase="1">
+                        <div class="reply-dispcont" [innerHTML]="model.Source.Abstract"></div>
+                        <ng-container *ngTemplateOutlet="parentScope; context : {parent : model.Source.ParentAbstract}"></ng-container>
+                        <ng-container *ngTemplateOutlet="sourceLink; context : {model : model}"></ng-container>
                     </ng-container>
-                </p>
+
+                    <!-- Comment -->
+                    <ng-container *ngSwitchCase="2">
+                        <div class="reply-dispcont" [innerHTML]="model.Source.Abstract"></div>
+                        <ng-container *ngTemplateOutlet="sourceLink; context : {model : model}"></ng-container>
+                    </ng-container>
+
+                    <!-- Like -->
+                    <ng-container *ngSwitchCase="3">
+                        <ng-container *ngTemplateOutlet="hostScope; context : {parent : model.Source.HostAbstract}"></ng-container>
+                        <ng-container *ngTemplateOutlet="sourceLink; context : {model : model}"></ng-container>
+                    </ng-container>
+
+                </ng-container>
+
+            </div>
+            <div *ngIf="!IsWideScreen" class="msg-cthead weak-text time-bar" nz-row>
+                <ng-container *ngTemplateOutlet="timeDetails; context : {model : model}"></ng-container>
             </div>
         </div>
+    </div>
+</ng-template>
+
+<ng-template let-model="model" #timeDetails>
+    <span class="time-stamp">{{model.CreateTime | timeFormat}}</span>
+    <span class="time-stamp">
+        <ng-container *ngTemplateOutlet="msgType; context : {type: model.MessageType}"></ng-container>
+    </span>
+</ng-template>
+
+<ng-template let-type="type" #msgType>
+    <ng-container [ngSwitch]="type">
+        <span *ngSwitchCase="1" xi18n section="messageBox">Replied you</span>
+        <span *ngSwitchCase="2" xi18n section="messageBox">Create a comment</span>
+        <span *ngSwitchCase="3" xi18n section="messageBox">Like your opinion</span>
+    </ng-container>
+</ng-template>
+
+<ng-template let-model="model" #sourceLink>
+    <ng-container [ngSwitch]="model.Source.HostType">
+        <a *ngSwitchCase="13" xi18n section="messageBox" class="source-link" (click)="GoToStatus(model.Source.HostID, model.ID)">See source details</a>
+    </ng-container>
+</ng-template>
+
+<ng-template let-parent="parent" #parentScope>
+    <div *ngIf="!IsEmpty(parent)" class="parent-dispcont">
+        <span class="weak-text">@{{UserName}} :</span>
+        <span class="weak-text" [innerHTML]="parent"></span>
+    </div>
+</ng-template>
+
+<ng-template let-host="host" #hostScope>
+    <div *ngIf="!IsEmpty(host)" class="parent-dispcont">
+        <span class="weak-text">@{{UserName}} :</span>
+        <span class="weak-text" [innerHTML]="host"></span>
     </div>
 </ng-template>
 
@@ -89,14 +123,4 @@
 
 <ng-template let-model="model" #commentDisplay>
 
-</ng-template>
-
-<ng-template let-model="model" let-id="id" #statusDisplay>
-    <span>{{ ' in status : ' | xi18n:'messageBox' }}</span>
-    <span>"</span>
-    <a (click)="GoToStatus(model.HostID, id)">
-        <span class="fmt-absts" [innerHtml]="model.HostAbstract" #ctnHash></span>
-        <span *ngIf="IsEmpry(model.HostAbstract)" xi18n section="messageBox">( click for more details )</span>
-    </a>
-    <span>"</span>
 </ng-template>

@@ -17,9 +17,12 @@ export interface ICommentCreate {
     uid: string;
     user_name: string;
     content: string;
-    m_uid?: string;
-    mend_user?: string;
-    com_id?: string;
+    reply_content?: {
+        m_uid?: string;
+        mend_user?: string;
+        com_id?: string;
+        content?: string;
+    };
     is_reply: boolean;
 }
 
